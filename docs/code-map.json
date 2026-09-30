@@ -7621,49 +7621,55 @@
       },
       {
         "name": "module.test_pkce_one_use_expiry_and_no_secrets",
-        "line": 83,
+        "line": 87,
         "kind": "FunctionDef",
         "purpose": "Validate state, verifier/challenge and token request placement; credentials never reach disk/status."
       },
       {
         "name": "module.test_expired_oauth_state_does_not_exchange",
-        "line": 111,
+        "line": 115,
         "kind": "FunctionDef",
         "purpose": "Expired attempts cannot be reused even with the correct original state."
       },
       {
+        "name": "module.test_empty_gallery_does_not_fetch_art_or_publish_dataset",
+        "line": 125,
+        "kind": "FunctionDef",
+        "purpose": "An authenticated empty sample stays connected but cannot fabricate images or a dataset."
+      },
+      {
         "name": "module.test_bounded_gallery_preserves_caption_and_origin",
-        "line": 122,
+        "line": 143,
         "kind": "FunctionDef",
         "purpose": "Contract-test normalized raster/captions/AI metadata while enforcing no bearer token at CDN."
       },
       {
         "name": "module.test_import_fails_closed_and_leaves_no_dataset",
-        "line": 158,
+        "line": 179,
         "kind": "FunctionDef",
         "purpose": "Ownership, redirect, pagination and explicit opt-out failures never publish partial training datasets."
       },
       {
         "name": "module.test_no_arbitrary_image_url",
-        "line": 182,
+        "line": 203,
         "kind": "FunctionDef",
         "purpose": "Provider metadata cannot turn imports into arbitrary-host/private-network downloads."
       },
       {
         "name": "module.test_description_is_inert_and_bounded",
-        "line": 188,
+        "line": 209,
         "kind": "FunctionDef",
         "purpose": "Descriptions lose markup and hidden scripts rather than becoming UI HTML."
       },
       {
         "name": "module.test_rate_limit_error_does_not_echo_tokens",
-        "line": 194,
+        "line": 215,
         "kind": "FunctionDef",
         "purpose": "Remote error bodies/URLs are redacted and no automatic retry defeats provider limits."
       },
       {
         "name": "module.test_invalid_metadata_encoding_fails_safely",
-        "line": 206,
+        "line": 227,
         "kind": "FunctionDef",
         "purpose": "Malformed remote text returns a bounded validation error, not an uncaught decode failure."
       }
@@ -7714,271 +7720,313 @@
       {
         "name": "item",
         "scope": "connector_fixture.handler",
-        "line": 53,
+        "line": 57,
         "purpose": "item = {'deviationid': 'fixture-001', 'description': '<p>green circle</p><script>ignored</script>', 'tags': [{'tag_name': 'green'}]}"
       },
       {
         "name": "entries",
         "scope": "connector_fixture.handler",
-        "line": 64,
+        "line": 68,
         "purpose": "entries = None if kind == 'bad-metadata' else [item]"
       },
       {
         "name": "entries",
         "scope": "connector_fixture.handler",
-        "line": 66,
+        "line": 70,
         "purpose": "entries = [None]"
       },
       {
         "name": "clock",
         "scope": "connector_fixture",
-        "line": 76,
+        "line": 80,
         "purpose": "clock = [100.0]"
       },
       {
         "name": "connector",
         "scope": "connector_fixture",
-        "line": 77,
+        "line": 81,
         "purpose": "connector = DeviantArt(8016, httpx.MockTransport(handler), clock=lambda: clock[0])"
       },
       {
         "name": "result",
         "scope": "connector_fixture",
-        "line": 78,
+        "line": 82,
         "purpose": "result = connector.begin('12345')"
       },
       {
         "name": "query",
         "scope": "connector_fixture",
-        "line": 79,
+        "line": 83,
         "purpose": "query = parse_qs(httpx.URL(result['url']).query.decode())"
       },
       {
         "name": "tmp_path",
         "scope": "test_pkce_one_use_expiry_and_no_secrets",
-        "line": 83,
+        "line": 87,
         "purpose": "Function parameter"
       },
       {
         "name": "clock",
         "scope": "test_pkce_one_use_expiry_and_no_secrets",
-        "line": 85,
+        "line": 89,
         "purpose": "(connector, requests, query, clock)"
       },
       {
         "name": "connector",
         "scope": "test_pkce_one_use_expiry_and_no_secrets",
-        "line": 85,
+        "line": 89,
         "purpose": "(connector, requests, query, clock)"
       },
       {
         "name": "query",
         "scope": "test_pkce_one_use_expiry_and_no_secrets",
-        "line": 85,
+        "line": 89,
         "purpose": "(connector, requests, query, clock)"
       },
       {
         "name": "requests",
         "scope": "test_pkce_one_use_expiry_and_no_secrets",
-        "line": 85,
+        "line": 89,
         "purpose": "(connector, requests, query, clock)"
       },
       {
         "name": "verifier",
         "scope": "test_pkce_one_use_expiry_and_no_secrets",
-        "line": 86,
+        "line": 90,
         "purpose": "verifier = connector.pending['verifier']"
       },
       {
         "name": "expected",
         "scope": "test_pkce_one_use_expiry_and_no_secrets",
-        "line": 87,
+        "line": 91,
         "purpose": "expected = base64.urlsafe_b64encode(hashlib.sha256(verifier.encode()).digest()).decode().rstrip('=')"
       },
       {
         "name": "body",
         "scope": "test_pkce_one_use_expiry_and_no_secrets",
-        "line": 98,
+        "line": 102,
         "purpose": "body = parse_qs(requests[0].content.decode())"
       },
       {
         "name": "clock",
         "scope": "test_expired_oauth_state_does_not_exchange",
-        "line": 113,
+        "line": 117,
         "purpose": "(connector, requests, query, clock)"
       },
       {
         "name": "connector",
         "scope": "test_expired_oauth_state_does_not_exchange",
-        "line": 113,
+        "line": 117,
         "purpose": "(connector, requests, query, clock)"
       },
       {
         "name": "query",
         "scope": "test_expired_oauth_state_does_not_exchange",
-        "line": 113,
+        "line": 117,
         "purpose": "(connector, requests, query, clock)"
       },
       {
         "name": "requests",
         "scope": "test_expired_oauth_state_does_not_exchange",
-        "line": 113,
+        "line": 117,
         "purpose": "(connector, requests, query, clock)"
+      },
+      {
+        "name": "tmp_path",
+        "scope": "test_empty_gallery_does_not_fetch_art_or_publish_dataset",
+        "line": 125,
+        "purpose": "Function parameter"
+      },
+      {
+        "name": "_",
+        "scope": "test_empty_gallery_does_not_fetch_art_or_publish_dataset",
+        "line": 127,
+        "purpose": "(connector, requests, query, _)"
+      },
+      {
+        "name": "connector",
+        "scope": "test_empty_gallery_does_not_fetch_art_or_publish_dataset",
+        "line": 127,
+        "purpose": "(connector, requests, query, _)"
+      },
+      {
+        "name": "query",
+        "scope": "test_empty_gallery_does_not_fetch_art_or_publish_dataset",
+        "line": 127,
+        "purpose": "(connector, requests, query, _)"
+      },
+      {
+        "name": "requests",
+        "scope": "test_empty_gallery_does_not_fetch_art_or_publish_dataset",
+        "line": 127,
+        "purpose": "(connector, requests, query, _)"
+      },
+      {
+        "name": "output",
+        "scope": "test_empty_gallery_does_not_fetch_art_or_publish_dataset",
+        "line": 129,
+        "purpose": "output = tmp_path / 'dataset'"
+      },
+      {
+        "name": "request",
+        "scope": "test_empty_gallery_does_not_fetch_art_or_publish_dataset",
+        "line": 133,
+        "purpose": " for request in requests"
       },
       {
         "name": "flagged",
         "scope": "test_bounded_gallery_preserves_caption_and_origin",
-        "line": 122,
+        "line": 143,
         "purpose": "Function parameter"
       },
       {
         "name": "kind",
         "scope": "test_bounded_gallery_preserves_caption_and_origin",
-        "line": 122,
+        "line": 143,
         "purpose": "Function parameter"
       },
       {
         "name": "tmp_path",
         "scope": "test_bounded_gallery_preserves_caption_and_origin",
-        "line": 122,
+        "line": 143,
         "purpose": "Function parameter"
       },
       {
         "name": "_",
         "scope": "test_bounded_gallery_preserves_caption_and_origin",
-        "line": 124,
+        "line": 145,
         "purpose": "(connector, requests, query, _)"
       },
       {
         "name": "connector",
         "scope": "test_bounded_gallery_preserves_caption_and_origin",
-        "line": 124,
+        "line": 145,
         "purpose": "(connector, requests, query, _)"
       },
       {
         "name": "query",
         "scope": "test_bounded_gallery_preserves_caption_and_origin",
-        "line": 124,
+        "line": 145,
         "purpose": "(connector, requests, query, _)"
       },
       {
         "name": "requests",
         "scope": "test_bounded_gallery_preserves_caption_and_origin",
-        "line": 124,
+        "line": 145,
         "purpose": "(connector, requests, query, _)"
       },
       {
         "name": "output",
         "scope": "test_bounded_gallery_preserves_caption_and_origin",
-        "line": 126,
+        "line": 147,
         "purpose": "output = tmp_path / 'dataset'"
       },
       {
         "name": "manifest",
         "scope": "test_bounded_gallery_preserves_caption_and_origin",
-        "line": 127,
+        "line": 148,
         "purpose": "manifest = connector.gallery(output, 'Contract fixture', 24)"
       },
       {
         "name": "asset",
         "scope": "test_bounded_gallery_preserves_caption_and_origin",
-        "line": 132,
+        "line": 153,
         "purpose": "asset = next((request for request in requests if request.url.host == 'images.wixmp.com'))"
       },
       {
         "name": "request",
         "scope": "test_bounded_gallery_preserves_caption_and_origin",
-        "line": 132,
+        "line": 153,
         "purpose": " for request in requests if request.url.host == 'images.wixmp.com'"
       },
       {
         "name": "path",
         "scope": "test_bounded_gallery_preserves_caption_and_origin",
-        "line": 136,
+        "line": 157,
         "purpose": " for path in output.rglob('*.json')"
       },
       {
         "name": "kind",
         "scope": "test_import_fails_closed_and_leaves_no_dataset",
-        "line": 158,
+        "line": 179,
         "purpose": "Function parameter"
       },
       {
         "name": "pattern",
         "scope": "test_import_fails_closed_and_leaves_no_dataset",
-        "line": 158,
+        "line": 179,
         "purpose": "Function parameter"
       },
       {
         "name": "tmp_path",
         "scope": "test_import_fails_closed_and_leaves_no_dataset",
-        "line": 158,
+        "line": 179,
         "purpose": "Function parameter"
       },
       {
         "name": "_",
         "scope": "test_import_fails_closed_and_leaves_no_dataset",
-        "line": 160,
+        "line": 181,
         "purpose": "(connector, _, query, _)"
       },
       {
         "name": "_",
         "scope": "test_import_fails_closed_and_leaves_no_dataset",
-        "line": 160,
+        "line": 181,
         "purpose": "(connector, _, query, _)"
       },
       {
         "name": "connector",
         "scope": "test_import_fails_closed_and_leaves_no_dataset",
-        "line": 160,
+        "line": 181,
         "purpose": "(connector, _, query, _)"
       },
       {
         "name": "query",
         "scope": "test_import_fails_closed_and_leaves_no_dataset",
-        "line": 160,
+        "line": 181,
         "purpose": "(connector, _, query, _)"
       },
       {
         "name": "output",
         "scope": "test_import_fails_closed_and_leaves_no_dataset",
-        "line": 162,
+        "line": 183,
         "purpose": "output = tmp_path / 'dataset'"
       },
       {
         "name": "url",
         "scope": "test_no_arbitrary_image_url",
-        "line": 182,
+        "line": 203,
         "purpose": "Function parameter"
       },
       {
         "name": "connector",
         "scope": "test_rate_limit_error_does_not_echo_tokens",
-        "line": 196,
+        "line": 217,
         "purpose": "connector = DeviantArt(8016, httpx.MockTransport(lambda request: httpx.Response(429, json={'detail': 'private-secret'})))"
       },
       {
         "name": "request",
         "scope": "test_rate_limit_error_does_not_echo_tokens",
-        "line": 198,
+        "line": 219,
         "purpose": "Function parameter"
       },
       {
         "name": "error",
         "scope": "test_rate_limit_error_does_not_echo_tokens",
-        "line": 200,
+        "line": 221,
         "purpose": "pytest.raises(ValueError, match='HTTP 429') as error"
       },
       {
         "name": "connector",
         "scope": "test_invalid_metadata_encoding_fails_safely",
-        "line": 208,
+        "line": 229,
         "purpose": "connector = DeviantArt(8016, httpx.MockTransport(lambda request: httpx.Response(200, content=b'\\xff')))"
       },
       {
         "name": "request",
         "scope": "test_invalid_metadata_encoding_fails_safely",
-        "line": 209,
+        "line": 230,
         "purpose": "Function parameter"
       }
     ]

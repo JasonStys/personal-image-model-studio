@@ -1,6 +1,6 @@
 """Offline official-API contract fixtures; these tests never log in, fetch real art or claim live access."""
 
-# Index: declarations module.connector_fixture@L15, connector_fixture.handler@L21, module.test_pkce_one_use_expiry_and_no_secrets@L83, module.test_expired_oauth_state_does_not_exchange@L111, module.test_bounded_gallery_preserves_caption_and_origin@L122, module.test_import_fails_closed_and_leaves_no_dataset@L158, module.test_no_arbitrary_image_url@L182, module.test_description_is_inert_and_bounded@L188, module.test_rate_limit_error_does_not_echo_tokens@L194, module.test_invalid_metadata_encoding_fails_safely@L206; variables kind@L15, requests@L17, stream@L18, request@L21, path@L24, item@L32, item@L39, item@L53, entries@L64, entries@L66, clock@L76, connector@L77, result@L78, query@L79, tmp_path@L83, clock@L85, connector@L85, query@L85, requests@L85, verifier@L86, expected@L87, body@L98, clock@L113, connector@L113, query@L113, requests@L113, flagged@L122, kind@L122, tmp_path@L122, _@L124, connector@L124, query@L124, requests@L124, output@L126, manifest@L127, asset@L132, request@L132, path@L136, kind@L158, pattern@L158, tmp_path@L158, _@L160, _@L160, connector@L160, query@L160, output@L162, url@L182, connector@L196, request@L198, error@L200, connector@L208, request@L209. Purposes/parameters: docs/code-map.json.
+# Index: declarations module.connector_fixture@L15, connector_fixture.handler@L21, module.test_pkce_one_use_expiry_and_no_secrets@L87, module.test_expired_oauth_state_does_not_exchange@L115, module.test_empty_gallery_does_not_fetch_art_or_publish_dataset@L125, module.test_bounded_gallery_preserves_caption_and_origin@L143, module.test_import_fails_closed_and_leaves_no_dataset@L179, module.test_no_arbitrary_image_url@L203, module.test_description_is_inert_and_bounded@L209, module.test_rate_limit_error_does_not_echo_tokens@L215, module.test_invalid_metadata_encoding_fails_safely@L227; variables kind@L15, requests@L17, stream@L18, request@L21, path@L24, item@L32, item@L39, item@L57, entries@L68, entries@L70, clock@L80, connector@L81, result@L82, query@L83, tmp_path@L87, clock@L89, connector@L89, query@L89, requests@L89, verifier@L90, expected@L91, body@L102, clock@L117, connector@L117, query@L117, requests@L117, tmp_path@L125, _@L127, connector@L127, query@L127, requests@L127, output@L129, request@L133, flagged@L143, kind@L143, tmp_path@L143, _@L145, connector@L145, query@L145, requests@L145, output@L147, manifest@L148, asset@L153, request@L153, path@L157, kind@L179, pattern@L179, tmp_path@L179, _@L181, _@L181, connector@L181, query@L181, output@L183, url@L203, connector@L217, request@L219, error@L221, connector@L229, request@L230. Purposes/parameters: docs/code-map.json.
 import base64
 import hashlib
 import io
@@ -47,7 +47,11 @@ def connector_fixture(kind="ordinary"):
                 item["content"] = None
             return httpx.Response(
                 200,
-                json={"results": [item], "has_more": kind == "bad-pagination", "next_offset": 0},
+                json={
+                    "results": [] if kind == "empty-gallery" else [item],
+                    "has_more": kind == "bad-pagination",
+                    "next_offset": 0,
+                },
             )
         if path.endswith("/deviation/metadata"):
             item = {
@@ -115,6 +119,23 @@ def test_expired_oauth_state_does_not_exchange():
     with pytest.raises(ValueError, match="expired"):
         connector.finish(query["state"][0], "code")
     assert not requests
+    connector.close()
+
+
+def test_empty_gallery_does_not_fetch_art_or_publish_dataset(tmp_path):
+    """An authenticated empty sample stays connected but cannot fabricate images or a dataset."""
+    connector, requests, query, _ = connector_fixture("empty-gallery")
+    connector.finish(query["state"][0], "code")
+    output = tmp_path / "dataset"
+    with pytest.raises(ValueError, match="No supported images found"):
+        connector.gallery(output, "Empty own-gallery sample", 24)
+    assert connector.status()["connected"]
+    assert [request.url.path for request in requests] == [
+        "/oauth2/token",
+        "/api/v1/oauth2/user/whoami",
+        "/api/v1/oauth2/gallery/all",
+    ]
+    assert not list(tmp_path.iterdir())
     connector.close()
 
 

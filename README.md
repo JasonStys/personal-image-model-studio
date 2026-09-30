@@ -39,6 +39,8 @@ Open the private local session link printed by the launcher. It contains an ephe
 
 [Installation and packaging](docs/installation.md) · [Walkthrough](docs/user-guide.md) · [DeviantArt setup](docs/deviantart.md)
 
+Live DeviantArt authorization and identity lookup were verified. The approved own-gallery sample returned no supported images, so account-artwork training remains unvalidated until eligible permitted images are supplied. The real synthetic custom-model evidence above is separate; see the [live validation record](docs/reports/deviantart-live-validation.json).
+
 ## Reproduce validation
 
 ```bash

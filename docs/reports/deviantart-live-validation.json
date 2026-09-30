@@ -1,0 +1,33 @@
+{
+  "date": "2026-09-30",
+  "evidence_type": "sanitized actual local application observations, not a mocked provider response",
+  "authorization": {
+    "human_approved_provider_permissions": true,
+    "token_exchange": "passed",
+    "authenticated_identity": "passed",
+    "credentials": "process memory only; not exported in evidence"
+  },
+  "import": {
+    "scope": "authenticated own-gallery raster sample only",
+    "max_entries": 24,
+    "separate_training_rights_and_provider_terms_confirmation": true,
+    "http_status": 400,
+    "detail": "No supported images found",
+    "elapsed_seconds_approximately": 0.47,
+    "provider_item_and_skip_counts": "not exposed by this error; not inferred",
+    "own_gallery_browser_observation": "one application listing, not a training-image collection",
+    "attempt_dataset_registered": false,
+    "remaining_import_staging_directories": 0,
+    "account_artwork_training_started": false,
+    "favourites_or_other_artists_substituted": false
+  },
+  "separate_local_model": {
+    "source": "previously verified owned procedural synthetic data",
+    "training_steps": 6000,
+    "fresh_browser_generation_after_import": "completed",
+    "account_artwork_used": false,
+    "quality_boundary": "small learned shapes, not general-purpose photorealistic art"
+  },
+  "remaining_validation": "eligible permitted raster images and captions are required for live account-dataset ingestion/training",
+  "privacy": "no account name, client ID, provider entry IDs, artwork URLs, callback codes, tokens, private paths, artwork or weights"
+}
