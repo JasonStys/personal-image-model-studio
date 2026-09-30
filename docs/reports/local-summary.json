@@ -1,0 +1,16 @@
+{
+  "date": "2026-09-30",
+  "platform": "Windows 11",
+  "python": "3.12.10",
+  "node": "24.18.1",
+  "python_tests": {"passed": 56, "seconds": 27.68, "real_ml_cases": 11},
+  "in_process_statement_coverage_percent_rounded": 80,
+  "browser_tests": {"passed": 8, "seconds": 43.0, "projects": ["chromium", "firefox", "webkit", "mobile-viewport"]},
+  "browser_real_ml": {"passed": 1, "seconds": 29.4},
+  "pip_check": "passed",
+  "dependency_audit": "no known vulnerabilities; no ignored advisories",
+  "desktop_build": "passed; unsigned Windows portable shell",
+  "desktop_worker": "real 20-step training completed through packaged API and bundled worker source",
+  "deviantart_live": "not verified; public application registration/account authorization pending",
+  "privacy": "sanitized summary only; no runtime data, credentials, weights or machine paths"
+}

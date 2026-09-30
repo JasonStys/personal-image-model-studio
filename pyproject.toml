@@ -1,0 +1,30 @@
+[build-system]
+requires = ["setuptools>=83,<85"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "personal-image-model-studio"
+version = "0.1.0"
+description = "Local structured-prompt image generation, safe datasets, and real custom diffusion training."
+requires-python = ">=3.12"
+license = "MIT"
+dependencies = ["fastapi==0.142.1", "uvicorn==0.38.0", "pydantic==2.13.2", "Pillow>=12.0,<14", "httpx==0.28.1"]
+
+[project.optional-dependencies]
+ml = ["torch==2.14.0", "torchvision==0.29.0", "diffusers==0.38.0", "transformers==5.12.1", "safetensors==0.8.0", "numpy>=2.2,<3", "peft==0.21.1", "accelerate==1.15.0", "setuptools>=83,<85"]
+dev = ["pytest==9.0.3", "pytest-cov==7.0.0", "ruff==0.14.0", "hypothesis>=6.142,<7", "httpx2==2.13.1"]
+desktop = ["pywebview>=6,<7", "pyinstaller>=6.19,<7"]
+
+[project.scripts]
+image-studio = "studio.cli:main"
+
+[tool.setuptools.packages.find]
+include = ["studio*"]
+
+[tool.ruff]
+line-length = 100
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+markers = ["ml: real local tensor training/inference; requires ML extras"]
+
