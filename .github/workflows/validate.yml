@@ -28,7 +28,7 @@ jobs:
       - run: python -m pip install -e ".[dev]"
       - run: python -m ruff check studio scripts tests
       - run: python -m ruff format --check studio scripts tests
-      - run: python -m pytest tests/test_core.py tests/test_deviantart.py tests/test_jobs.py --cov=studio --cov-report=xml:artifacts/coverage.xml --junitxml=artifacts/contracts.xml
+      - run: python -m pytest tests/test_core.py tests/test_deviantart.py tests/test_quickdraw.py tests/test_jobs.py --cov=studio --cov-report=xml:artifacts/coverage.xml --junitxml=artifacts/contracts.xml
       - run: python -m pip check
       - uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
         if: always()

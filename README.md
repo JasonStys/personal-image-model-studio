@@ -39,12 +39,14 @@ Open the private local session link printed by the launcher. It contains an ephe
 
 [Installation and packaging](docs/installation.md) · [Walkthrough](docs/user-guide.md) · [DeviantArt setup](docs/deviantart.md)
 
+For a small real-artwork training example without an account, use the optional [licensed sketch sample](docs/licensed-sample.md). The actual app test trained a fresh 6,000-step model on 384 sketches and verified generation/seed replay; [measurements](docs/reports/quickdraw-training.json) also record its rough scribble-like outputs and weak category fidelity. Downloads require explicit opt-in; existing synthetic examples remain available.
+
 Live DeviantArt authorization and identity lookup were verified. The approved own-gallery sample returned no supported images, so account-artwork training remains unvalidated until eligible permitted images are supplied. The real synthetic custom-model evidence above is separate; see the [live validation record](docs/reports/deviantart-live-validation.json).
 
 ## Reproduce validation
 
 ```bash
-python -m pytest tests/test_core.py tests/test_deviantart.py tests/test_jobs.py
+python -m pytest tests/test_core.py tests/test_deviantart.py tests/test_quickdraw.py tests/test_jobs.py
 python -m pytest tests/test_ml.py
 python -m ruff check studio scripts tests
 python -m ruff format --check studio scripts tests
@@ -84,6 +86,7 @@ Demo outputs/checkpoints are local and ignored by Git. Use a new output director
 | `scripts/build_desktop.py`, `desktop_entry.py` | Native portable shell packaging/entry. |
 | `scripts/code_index.mjs`, `python_index.py` | Reproducible exact declaration/variable line headers and detailed code map. |
 | `tests/test_core.py`, `test_deviantart.py`, `test_jobs.py`, `test_ml.py` | Core/privacy/property, mocked provider-contract, lifecycle and real ML regression tests. |
+| `scripts/prepare_quickdraw.py`, `evaluate_quickdraw.py`, `tests/test_quickdraw.py` | Opt-in licensed sketch sampling, genuine checkpoint/inference evaluation and offline bounded-input tests. |
 | `tests/browser*.spec.ts`, `playwright.config.ts` | Real browser accessibility/portability and separate real ML-worker workflow. |
 | `.github/workflows/validate.yml` | Least-privilege pinned CI, scheduled audits and evidence artifacts. |
 | `requirements-cpu-audit.txt` | Upstream advisory lookup for pinned official CPU-wheel releases; not an installer. |

@@ -3,7 +3,7 @@
   "platform": "Windows 11",
   "python": "3.12.10",
   "node": "24.18.1",
-  "python_tests": {"passed": 67, "seconds": 49.70, "real_ml_cases": 11, "offline_connector_cases": 27},
+  "python_tests": {"passed": 85, "seconds": 35.26, "real_ml_cases": 11, "offline_connector_cases": 27, "offline_licensed_sample_cases": 18},
   "in_process_statement_coverage_percent_rounded": 81,
   "browser_tests": {"passed_across_runs": 8, "six_case_run_seconds": 37.9, "fresh_firefox_run_seconds": 16.4, "projects": ["chromium", "firefox", "webkit", "mobile-viewport"], "recovery": "isolated official Firefox runtime; no system setting changes"},
   "browser_real_ml": {"passed": 1, "seconds": 37.9},
@@ -14,5 +14,6 @@
   "fresh_cpu_custom_model": {"steps": 6000, "seconds": 444.24942710000323, "torch": "2.14.0+cpu", "ema_noise_mse": 0.0065314327366650105, "browser_registration_and_generation": "passed"},
   "hosted_validation": {"source_commit": "5cc135b252a552898f8581182319d7b89ccf5d89", "run": "https://github.com/JasonStys/personal-image-model-studio/actions/runs/36784162356", "conclusion": "success", "jobs_passed": 9},
   "deviantart_live": "human-authorized token exchange and identity verified; separately authorized own-gallery sample returned HTTP 400, no supported images; no account dataset or training produced",
+  "licensed_sketch_custom_model": {"images": 384, "train_images": 310, "heldout_images": 74, "steps": 6000, "seconds": 450.53727719999733, "ema_noise_mse": 0.02429596148431301, "same_seed_replay": "passed", "nine_generation_checks": "passed", "browser_generation": "passed", "visual_quality": "rough line fragments/scribbles; not reliably recognizable categories"},
   "privacy": "sanitized summary only; no runtime data, credentials, weights or machine paths"
 }

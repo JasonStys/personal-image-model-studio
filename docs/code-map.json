@@ -300,6 +300,728 @@
     "declarations": [],
     "variables": []
   },
+  "scripts/evaluate_quickdraw.py": {
+    "purpose": "Evaluate an actual licensed sketch checkpoint and export sanitized generated evidence only.",
+    "declarations": [
+      {
+        "name": "module.evaluate",
+        "line": 17,
+        "kind": "FunctionDef",
+        "purpose": "Require attributed public samples and matching verified model/data; reject existing output."
+      },
+      {
+        "name": "module.main",
+        "line": 123,
+        "kind": "FunctionDef",
+        "purpose": "Validate a selected checkpoint/data pair; leave weights, training artwork and private IDs local."
+      }
+    ],
+    "variables": [
+      {
+        "name": "dataset_path",
+        "scope": "evaluate",
+        "line": 17,
+        "purpose": "Function parameter"
+      },
+      {
+        "name": "model_path",
+        "scope": "evaluate",
+        "line": 17,
+        "purpose": "Function parameter"
+      },
+      {
+        "name": "output",
+        "scope": "evaluate",
+        "line": 17,
+        "purpose": "Function parameter"
+      },
+      {
+        "name": "dataset",
+        "scope": "evaluate",
+        "line": 21,
+        "purpose": "dataset = read_json(dataset_path / 'dataset.json', 16 * 1024 * 1024)"
+      },
+      {
+        "name": "records",
+        "scope": "evaluate",
+        "line": 22,
+        "purpose": "records = dataset['records']"
+      },
+      {
+        "name": "category",
+        "scope": "evaluate",
+        "line": 29,
+        "purpose": " for category in CATEGORIES"
+      },
+      {
+        "name": "record",
+        "scope": "evaluate",
+        "line": 30,
+        "purpose": " for record in records"
+      },
+      {
+        "name": "fingerprint",
+        "scope": "evaluate",
+        "line": 33,
+        "purpose": "(training, heldout, fingerprint)"
+      },
+      {
+        "name": "heldout",
+        "scope": "evaluate",
+        "line": 33,
+        "purpose": "(training, heldout, fingerprint)"
+      },
+      {
+        "name": "training",
+        "scope": "evaluate",
+        "line": 33,
+        "purpose": "(training, heldout, fingerprint)"
+      },
+      {
+        "name": "_",
+        "scope": "evaluate",
+        "line": 34,
+        "purpose": "(model, manifest, _)"
+      },
+      {
+        "name": "manifest",
+        "scope": "evaluate",
+        "line": 34,
+        "purpose": "(model, manifest, _)"
+      },
+      {
+        "name": "model",
+        "scope": "evaluate",
+        "line": 34,
+        "purpose": "(model, manifest, _)"
+      },
+      {
+        "name": "metrics",
+        "scope": "evaluate",
+        "line": 35,
+        "purpose": "metrics = manifest['validation']"
+      },
+      {
+        "name": "value",
+        "scope": "evaluate",
+        "line": 39,
+        "purpose": " for value in model.parameters()"
+      },
+      {
+        "name": "key",
+        "scope": "evaluate",
+        "line": 42,
+        "purpose": " for key in ('initial_noise_mse', 'final_noise_mse', 'ema_noise_mse')"
+      },
+      {
+        "name": "record",
+        "scope": "evaluate",
+        "line": 47,
+        "purpose": " for record in records if record['split'] == 'train'"
+      },
+      {
+        "name": "training_hashes",
+        "scope": "evaluate",
+        "line": 47,
+        "purpose": "training_hashes = {record['hash'] for record in records if record['split'] == 'train'}"
+      },
+      {
+        "name": "heldout_hashes",
+        "scope": "evaluate",
+        "line": 48,
+        "purpose": "heldout_hashes = {record['hash'] for record in records if record['split'] == 'validation'}"
+      },
+      {
+        "name": "record",
+        "scope": "evaluate",
+        "line": 48,
+        "purpose": " for record in records if record['split'] == 'validation'"
+      },
+      {
+        "name": "generations",
+        "scope": "evaluate",
+        "line": 52,
+        "purpose": "(samples, generations)"
+      },
+      {
+        "name": "samples",
+        "scope": "evaluate",
+        "line": 52,
+        "purpose": "(samples, generations)"
+      },
+      {
+        "name": "sheet",
+        "scope": "evaluate",
+        "line": 53,
+        "purpose": "Image.new('RGB', (384, 500), 'white') as sheet"
+      },
+      {
+        "name": "labels",
+        "scope": "evaluate",
+        "line": 54,
+        "purpose": "labels = ImageDraw.Draw(sheet)"
+      },
+      {
+        "name": "category",
+        "scope": "evaluate",
+        "line": 55,
+        "purpose": "(row, category)"
+      },
+      {
+        "name": "row",
+        "scope": "evaluate",
+        "line": 55,
+        "purpose": "(row, category)"
+      },
+      {
+        "name": "column",
+        "scope": "evaluate",
+        "line": 57,
+        "purpose": "(column, seed)"
+      },
+      {
+        "name": "seed",
+        "scope": "evaluate",
+        "line": 57,
+        "purpose": "(column, seed)"
+      },
+      {
+        "name": "name",
+        "scope": "evaluate",
+        "line": 58,
+        "purpose": "name = f'{category}-{seed}.png'"
+      },
+      {
+        "name": "path",
+        "scope": "evaluate",
+        "line": 59,
+        "purpose": "path = output / name"
+      },
+      {
+        "name": "config",
+        "scope": "evaluate",
+        "line": 60,
+        "purpose": "config = {'model_id': 'public-sketch-sample', 'prompt': {'description': f'black line drawing of {category} on white background'}, 'width': 128, 'height': 128, 'steps': 50, 'guidanc"
+      },
+      {
+        "name": "details",
+        "scope": "evaluate",
+        "line": 71,
+        "purpose": "details = generate(config, model_path, path, device='cpu')"
+      },
+      {
+        "name": "image",
+        "scope": "evaluate",
+        "line": 72,
+        "purpose": "Image.open(path) as image"
+      },
+      {
+        "name": "duplicate",
+        "scope": "evaluate",
+        "line": 77,
+        "purpose": "duplicate = output / 'repeat-seed.png'"
+      },
+      {
+        "name": "report",
+        "scope": "evaluate",
+        "line": 90,
+        "purpose": "report = {'evidence': 'Actual from-scratch training and learned inference on public hand drawings', 'source': SOURCE, 'license': LICENSE, 'attribution': ATTRIBUTION, 'modifications"
+      },
+      {
+        "name": "key",
+        "scope": "evaluate",
+        "line": 108,
+        "purpose": "(key, value)"
+      },
+      {
+        "name": "value",
+        "scope": "evaluate",
+        "line": 108,
+        "purpose": "(key, value)"
+      },
+      {
+        "name": "parser",
+        "scope": "main",
+        "line": 125,
+        "purpose": "parser = argparse.ArgumentParser()"
+      },
+      {
+        "name": "args",
+        "scope": "main",
+        "line": 129,
+        "purpose": "args = parser.parse_args()"
+      },
+      {
+        "name": "result",
+        "scope": "main",
+        "line": 130,
+        "purpose": "result = evaluate(args.model, args.dataset, args.output)"
+      }
+    ]
+  },
+  "scripts/prepare_quickdraw.py": {
+    "purpose": "Opt-in, bounded CC BY 4.0 hand-drawing sample; no accounts, executable files or bulk download.",
+    "declarations": [
+      {
+        "name": "module.raster",
+        "line": 26,
+        "kind": "FunctionDef",
+        "purpose": "Validate simplified XY strokes and render recognized drawings; discard participant metadata."
+      },
+      {
+        "name": "module.records",
+        "line": 75,
+        "kind": "FunctionDef",
+        "purpose": "Stream bounded NDJSON lines; stop early and never buffer an entire public category file."
+      },
+      {
+        "name": "module.prepare",
+        "line": 98,
+        "kind": "FunctionDef",
+        "purpose": "Atomically create a new attributed sample of three fixed categories; never overwrite data."
+      },
+      {
+        "name": "module.main",
+        "line": 170,
+        "kind": "FunctionDef",
+        "purpose": "Require explicit opt-in before fetching public data; report only non-account sample metadata."
+      }
+    ],
+    "variables": [
+      {
+        "name": "SOURCE",
+        "scope": "module",
+        "line": 17,
+        "purpose": "SOURCE = 'https://github.com/googlecreativelab/quickdraw-dataset'"
+      },
+      {
+        "name": "LICENSE",
+        "scope": "module",
+        "line": 18,
+        "purpose": "LICENSE = 'https://creativecommons.org/licenses/by/4.0/'"
+      },
+      {
+        "name": "BASE",
+        "scope": "module",
+        "line": 19,
+        "purpose": "BASE = 'https://storage.googleapis.com/quickdraw_dataset/full/simplified/'"
+      },
+      {
+        "name": "CATEGORIES",
+        "scope": "module",
+        "line": 20,
+        "purpose": "CATEGORIES = ('sun', 'flower', 'fish')"
+      },
+      {
+        "name": "MAX_BYTES",
+        "scope": "module",
+        "line": 21,
+        "purpose": "MAX_BYTES = 2 * 1024 * 1024"
+      },
+      {
+        "name": "MAX_LINE",
+        "scope": "module",
+        "line": 22,
+        "purpose": "MAX_LINE = 65536"
+      },
+      {
+        "name": "ATTRIBUTION",
+        "scope": "module",
+        "line": 23,
+        "purpose": "ATTRIBUTION = 'Quick, Draw! participants; dataset made available by Google, Inc.; CC BY 4.0'"
+      },
+      {
+        "name": "category",
+        "scope": "raster",
+        "line": 26,
+        "purpose": "Function parameter"
+      },
+      {
+        "name": "record",
+        "scope": "raster",
+        "line": 26,
+        "purpose": "Function parameter"
+      },
+      {
+        "name": "strokes",
+        "scope": "raster",
+        "line": 34,
+        "purpose": "strokes = record.get('drawing')"
+      },
+      {
+        "name": "points",
+        "scope": "raster",
+        "line": 37,
+        "purpose": "(points, total)"
+      },
+      {
+        "name": "total",
+        "scope": "raster",
+        "line": 37,
+        "purpose": "(points, total)"
+      },
+      {
+        "name": "stroke",
+        "scope": "raster",
+        "line": 38,
+        "purpose": "for stroke in strokes:\n    if not isinstance(stroke, list) or len(stroke) != 2:\n        raise ValueError('Expected simplified XY coordinates')\n    xs, ys = stroke\n    if not isinst"
+      },
+      {
+        "name": "xs",
+        "scope": "raster",
+        "line": 41,
+        "purpose": "(xs, ys)"
+      },
+      {
+        "name": "ys",
+        "scope": "raster",
+        "line": 41,
+        "purpose": "(xs, ys)"
+      },
+      {
+        "name": "total",
+        "scope": "raster",
+        "line": 48,
+        "purpose": "total += len(xs)"
+      },
+      {
+        "name": "value",
+        "scope": "raster",
+        "line": 51,
+        "purpose": " for value in xs + ys"
+      },
+      {
+        "name": "flat",
+        "scope": "raster",
+        "line": 55,
+        "purpose": "flat = [point for stroke in points for point in stroke]"
+      },
+      {
+        "name": "point",
+        "scope": "raster",
+        "line": 55,
+        "purpose": " for point in stroke"
+      },
+      {
+        "name": "stroke",
+        "scope": "raster",
+        "line": 55,
+        "purpose": " for stroke in points"
+      },
+      {
+        "name": "left",
+        "scope": "raster",
+        "line": 56,
+        "purpose": "(left, top)"
+      },
+      {
+        "name": "p",
+        "scope": "raster",
+        "line": 56,
+        "purpose": " for p in flat"
+      },
+      {
+        "name": "p",
+        "scope": "raster",
+        "line": 56,
+        "purpose": " for p in flat"
+      },
+      {
+        "name": "top",
+        "scope": "raster",
+        "line": 56,
+        "purpose": "(left, top)"
+      },
+      {
+        "name": "bottom",
+        "scope": "raster",
+        "line": 57,
+        "purpose": "(right, bottom)"
+      },
+      {
+        "name": "p",
+        "scope": "raster",
+        "line": 57,
+        "purpose": " for p in flat"
+      },
+      {
+        "name": "p",
+        "scope": "raster",
+        "line": 57,
+        "purpose": " for p in flat"
+      },
+      {
+        "name": "right",
+        "scope": "raster",
+        "line": 57,
+        "purpose": "(right, bottom)"
+      },
+      {
+        "name": "extent",
+        "scope": "raster",
+        "line": 58,
+        "purpose": "extent = max(right - left, bottom - top)"
+      },
+      {
+        "name": "scale",
+        "scope": "raster",
+        "line": 61,
+        "purpose": "scale = 104 / extent"
+      },
+      {
+        "name": "dx",
+        "scope": "raster",
+        "line": 62,
+        "purpose": "(dx, dy)"
+      },
+      {
+        "name": "dy",
+        "scope": "raster",
+        "line": 62,
+        "purpose": "(dx, dy)"
+      },
+      {
+        "name": "canvas",
+        "scope": "raster",
+        "line": 63,
+        "purpose": "Image.new('RGB', (128, 128), 'white') as canvas"
+      },
+      {
+        "name": "drawing",
+        "scope": "raster",
+        "line": 64,
+        "purpose": "drawing = ImageDraw.Draw(canvas)"
+      },
+      {
+        "name": "stroke",
+        "scope": "raster",
+        "line": 65,
+        "purpose": "for stroke in points:\n    projected = [(x * scale + dx, y * scale + dy) for x, y in stroke]\n    if len(projected) == 1:\n        x, y = projected[0]\n        drawing.ellipse((x - 2, "
+      },
+      {
+        "name": "projected",
+        "scope": "raster",
+        "line": 66,
+        "purpose": "projected = [(x * scale + dx, y * scale + dy) for x, y in stroke]"
+      },
+      {
+        "name": "x",
+        "scope": "raster",
+        "line": 66,
+        "purpose": "(x, y)"
+      },
+      {
+        "name": "y",
+        "scope": "raster",
+        "line": 66,
+        "purpose": "(x, y)"
+      },
+      {
+        "name": "x",
+        "scope": "raster",
+        "line": 68,
+        "purpose": "(x, y)"
+      },
+      {
+        "name": "y",
+        "scope": "raster",
+        "line": 68,
+        "purpose": "(x, y)"
+      },
+      {
+        "name": "deadline",
+        "scope": "records",
+        "line": 75,
+        "purpose": "Function parameter"
+      },
+      {
+        "name": "response",
+        "scope": "records",
+        "line": 75,
+        "purpose": "Function parameter"
+      },
+      {
+        "name": "lines",
+        "scope": "records",
+        "line": 77,
+        "purpose": "(pending, total, lines)"
+      },
+      {
+        "name": "pending",
+        "scope": "records",
+        "line": 77,
+        "purpose": "(pending, total, lines)"
+      },
+      {
+        "name": "total",
+        "scope": "records",
+        "line": 77,
+        "purpose": "(pending, total, lines)"
+      },
+      {
+        "name": "chunk",
+        "scope": "records",
+        "line": 78,
+        "purpose": "for chunk in response.iter_bytes(chunk_size=8192):\n    total += len(chunk)\n    if total > MAX_BYTES or time.monotonic() > deadline:\n        raise ValueError('Sample exceeded byte/t"
+      },
+      {
+        "name": "total",
+        "scope": "records",
+        "line": 79,
+        "purpose": "total += len(chunk)"
+      },
+      {
+        "name": "_",
+        "scope": "records",
+        "line": 84,
+        "purpose": "(line, _, rest)"
+      },
+      {
+        "name": "line",
+        "scope": "records",
+        "line": 84,
+        "purpose": "(line, _, rest)"
+      },
+      {
+        "name": "rest",
+        "scope": "records",
+        "line": 84,
+        "purpose": "(line, _, rest)"
+      },
+      {
+        "name": "pending",
+        "scope": "records",
+        "line": 85,
+        "purpose": "pending = bytearray(rest)"
+      },
+      {
+        "name": "lines",
+        "scope": "records",
+        "line": 86,
+        "purpose": "lines += 1"
+      },
+      {
+        "name": "output",
+        "scope": "prepare",
+        "line": 98,
+        "purpose": "Function parameter"
+      },
+      {
+        "name": "per_category",
+        "scope": "prepare",
+        "line": 98,
+        "purpose": "Function parameter"
+      },
+      {
+        "name": "transport",
+        "scope": "prepare",
+        "line": 98,
+        "purpose": "Function parameter"
+      },
+      {
+        "name": "output",
+        "scope": "prepare",
+        "line": 102,
+        "purpose": "output = output.resolve()"
+      },
+      {
+        "name": "deadline",
+        "scope": "prepare",
+        "line": 106,
+        "purpose": "deadline = time.monotonic() + 120"
+      },
+      {
+        "name": "counts",
+        "scope": "prepare",
+        "line": 107,
+        "purpose": "(counts, seen)"
+      },
+      {
+        "name": "seen",
+        "scope": "prepare",
+        "line": 107,
+        "purpose": "(counts, seen)"
+      },
+      {
+        "name": "temporary",
+        "scope": "prepare",
+        "line": 108,
+        "purpose": "tempfile.TemporaryDirectory(prefix='.quickdraw-', dir=output.parent) as temporary"
+      },
+      {
+        "name": "staging",
+        "scope": "prepare",
+        "line": 109,
+        "purpose": "staging = Path(temporary)"
+      },
+      {
+        "name": "client",
+        "scope": "prepare",
+        "line": 112,
+        "purpose": "httpx.Client(transport=transport, timeout=20, trust_env=False, follow_redirects=False) as client"
+      },
+      {
+        "name": "category",
+        "scope": "prepare",
+        "line": 113,
+        "purpose": "for category in CATEGORIES:\n    counts[category] = 0\n    with client.stream('GET', BASE + category + '.ndjson', headers={'Range': f'bytes=0-{MAX_BYTES - 1}', 'Accept-Encoding': 'id"
+      },
+      {
+        "name": "response",
+        "scope": "prepare",
+        "line": 119,
+        "purpose": "client.stream('GET', BASE + category + '.ndjson', headers={'Range': f'bytes=0-{MAX_BYTES - 1}', 'Accept-Encoding': 'identity'}) as response"
+      },
+      {
+        "name": "record",
+        "scope": "prepare",
+        "line": 122,
+        "purpose": "for record in records(response, deadline):\n    image = raster(record, category)\n    if image is None:\n        continue\n    with image:\n        fingerprint = hashlib.sha256(image.to"
+      },
+      {
+        "name": "image",
+        "scope": "prepare",
+        "line": 123,
+        "purpose": "image = raster(record, category)"
+      },
+      {
+        "name": "fingerprint",
+        "scope": "prepare",
+        "line": 127,
+        "purpose": "fingerprint = hashlib.sha256(image.tobytes()).hexdigest()"
+      },
+      {
+        "name": "path",
+        "scope": "prepare",
+        "line": 131,
+        "purpose": "path = staging / f'{category}-{counts[category]:03d}.png'"
+      },
+      {
+        "name": "summary",
+        "scope": "prepare",
+        "line": 154,
+        "purpose": "summary = {'source': SOURCE, 'license': LICENSE, 'attribution': ATTRIBUTION, 'counts': counts, 'total': sum(counts.values()), 'selection': 'first unique recognized drawings in boun"
+      },
+      {
+        "name": "category",
+        "scope": "prepare",
+        "line": 162,
+        "purpose": " for category in CATEGORIES"
+      },
+      {
+        "name": "parser",
+        "scope": "main",
+        "line": 172,
+        "purpose": "parser = argparse.ArgumentParser()"
+      },
+      {
+        "name": "args",
+        "scope": "main",
+        "line": 176,
+        "purpose": "args = parser.parse_args()"
+      }
+    ]
+  },
   "scripts/publish_evidence.py": {
     "purpose": "Create explicitly public synthetic validation evidence; never copies dataset paths, weights or credentials.",
     "declarations": [
@@ -8726,6 +9448,217 @@
         "scope": "test_pretrained_shard_index_cannot_escape_or_crash",
         "line": 310,
         "purpose": "base = random_sd(tmp_path / 'base')"
+      }
+    ]
+  },
+  "tests/test_quickdraw.py": {
+    "purpose": "Offline public-data parsing/raster/cleanup tests; CI never downloads a category or account art.",
+    "declarations": [
+      {
+        "name": "module.drawing",
+        "line": 12,
+        "kind": "FunctionDef",
+        "purpose": "Small generated XY fixture, not a redistributed participant drawing."
+      },
+      {
+        "name": "module.test_raster_discards_identity_and_preserves_geometry",
+        "line": 22,
+        "kind": "FunctionDef",
+        "purpose": "Pixels depend on strokes, not participant attributes; unrecognized drawings are not retained."
+      },
+      {
+        "name": "module.test_invalid_coordinates_fail_closed",
+        "line": 48,
+        "kind": "FunctionDef",
+        "purpose": "Malformed/nonfinite/unbounded or degenerate source coordinates cannot reach image allocation."
+      },
+      {
+        "name": "module.test_ndjson_limits",
+        "line": 59,
+        "kind": "FunctionDef",
+        "purpose": "Reject oversized/undecodable source lines with bounded errors."
+      },
+      {
+        "name": "module.test_stream_aggregate_budgets",
+        "line": 66,
+        "kind": "FunctionDef",
+        "purpose": "Even individually valid source lines cannot exceed total bytes or the monotonic deadline."
+      },
+      {
+        "name": "module.test_download_is_fixed_bounded_and_atomic",
+        "line": 74,
+        "kind": "FunctionDef",
+        "purpose": "Use generated fixtures to verify range bounds, deduplication, attribution and atomic publication."
+      },
+      {
+        "name": "test_download_is_fixed_bounded_and_atomic.handler",
+        "line": 78,
+        "kind": "FunctionDef",
+        "purpose": "Serve deterministic category fixtures; no network or real artwork is involved."
+      },
+      {
+        "name": "module.test_insufficient_or_unavailable_sample_leaves_no_output",
+        "line": 106,
+        "kind": "FunctionDef",
+        "purpose": "Empty input/redirect/provider limits cannot leave a partial sample or trigger a bypass."
+      }
+    ],
+    "variables": [
+      {
+        "name": "category",
+        "scope": "drawing",
+        "line": 12,
+        "purpose": "Function parameter"
+      },
+      {
+        "name": "index",
+        "scope": "drawing",
+        "line": 12,
+        "purpose": "Function parameter"
+      },
+      {
+        "name": "item",
+        "scope": "test_raster_discards_identity_and_preserves_geometry",
+        "line": 24,
+        "purpose": "item = drawing()"
+      },
+      {
+        "name": "first",
+        "scope": "test_raster_discards_identity_and_preserves_geometry",
+        "line": 25,
+        "purpose": "raster(item, 'sun') as first"
+      },
+      {
+        "name": "second",
+        "scope": "test_raster_discards_identity_and_preserves_geometry",
+        "line": 27,
+        "purpose": "raster(item, 'sun') as second"
+      },
+      {
+        "name": "patch",
+        "scope": "test_invalid_coordinates_fail_closed",
+        "line": 48,
+        "purpose": "Function parameter"
+      },
+      {
+        "name": "body",
+        "scope": "test_ndjson_limits",
+        "line": 59,
+        "purpose": "Function parameter"
+      },
+      {
+        "name": "budget",
+        "scope": "test_stream_aggregate_budgets",
+        "line": 66,
+        "purpose": "Function parameter"
+      },
+      {
+        "name": "body",
+        "scope": "test_stream_aggregate_budgets",
+        "line": 68,
+        "purpose": "body = (b'{\"bounded\":\"' + b'x' * 20000 + b'\"}\\n') * 106"
+      },
+      {
+        "name": "deadline",
+        "scope": "test_stream_aggregate_budgets",
+        "line": 69,
+        "purpose": "deadline = time.monotonic() + 5 if budget == 'bytes' else time.monotonic() - 1"
+      },
+      {
+        "name": "tmp_path",
+        "scope": "test_download_is_fixed_bounded_and_atomic",
+        "line": 74,
+        "purpose": "Function parameter"
+      },
+      {
+        "name": "requests",
+        "scope": "test_download_is_fixed_bounded_and_atomic",
+        "line": 76,
+        "purpose": "requests = []"
+      },
+      {
+        "name": "request",
+        "scope": "test_download_is_fixed_bounded_and_atomic.handler",
+        "line": 78,
+        "purpose": "Function parameter"
+      },
+      {
+        "name": "category",
+        "scope": "test_download_is_fixed_bounded_and_atomic.handler",
+        "line": 81,
+        "purpose": "category = request.url.path.rsplit('/', 1)[1].split('.')[0]"
+      },
+      {
+        "name": "offset",
+        "scope": "test_download_is_fixed_bounded_and_atomic.handler",
+        "line": 82,
+        "purpose": "offset = {'sun': 0, 'flower': 20, 'fish': 40}[category]"
+      },
+      {
+        "name": "body",
+        "scope": "test_download_is_fixed_bounded_and_atomic.handler",
+        "line": 83,
+        "purpose": "body = b'\\n'.join((json.dumps(drawing(category, offset + index)).encode() for index in range(20))) + b'\\n'"
+      },
+      {
+        "name": "index",
+        "scope": "test_download_is_fixed_bounded_and_atomic.handler",
+        "line": 85,
+        "purpose": " for index in range(20)"
+      },
+      {
+        "name": "output",
+        "scope": "test_download_is_fixed_bounded_and_atomic",
+        "line": 91,
+        "purpose": "output = tmp_path / 'sample'"
+      },
+      {
+        "name": "summary",
+        "scope": "test_download_is_fixed_bounded_and_atomic",
+        "line": 92,
+        "purpose": "summary = prepare(output, 16, httpx.MockTransport(handler))"
+      },
+      {
+        "name": "request",
+        "scope": "test_download_is_fixed_bounded_and_atomic",
+        "line": 95,
+        "purpose": " for request in requests"
+      },
+      {
+        "name": "request",
+        "scope": "test_download_is_fixed_bounded_and_atomic",
+        "line": 96,
+        "purpose": " for request in requests"
+      },
+      {
+        "name": "sidecar",
+        "scope": "test_download_is_fixed_bounded_and_atomic",
+        "line": 97,
+        "purpose": "sidecar = json.loads(next(output.glob('sun-*.json')).read_text())"
+      },
+      {
+        "name": "status",
+        "scope": "test_insufficient_or_unavailable_sample_leaves_no_output",
+        "line": 106,
+        "purpose": "Function parameter"
+      },
+      {
+        "name": "tmp_path",
+        "scope": "test_insufficient_or_unavailable_sample_leaves_no_output",
+        "line": 106,
+        "purpose": "Function parameter"
+      },
+      {
+        "name": "output",
+        "scope": "test_insufficient_or_unavailable_sample_leaves_no_output",
+        "line": 108,
+        "purpose": "output = tmp_path / 'sample'"
+      },
+      {
+        "name": "request",
+        "scope": "test_insufficient_or_unavailable_sample_leaves_no_output",
+        "line": 111,
+        "purpose": "Function parameter"
       }
     ]
   },

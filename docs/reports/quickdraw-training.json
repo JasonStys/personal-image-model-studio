@@ -1,0 +1,180 @@
+{
+  "evidence": "Actual from-scratch training and learned inference on public hand drawings",
+  "source": "https://github.com/googlecreativelab/quickdraw-dataset",
+  "license": "https://creativecommons.org/licenses/by/4.0/",
+  "attribution": "Quick, Draw! participants; dataset made available by Google, Inc.; CC BY 4.0",
+  "modifications": "recognized subset; vectors centered/rasterized to 32px; model outputs AI generated",
+  "no_endorsement_or_warranties": true,
+  "dataset": {
+    "total": 384,
+    "train_images": 310,
+    "heldout_images": 74,
+    "disjoint_normalized_pixels": true,
+    "fingerprint": "2005ff703a74a1ef25e7714915624d9f8af942e3a7665a4cca9c77b575199f19"
+  },
+  "trained_steps": 6000,
+  "learned_resolution": 32,
+  "settings": {
+    "name": "Quick Draw sketch sample — 6000 steps",
+    "steps": 6000,
+    "resolution": 32,
+    "batch_size": 16,
+    "learning_rate": 0.001,
+    "seed": 1337,
+    "device": "cpu",
+    "max_seconds": 1200,
+    "mode": "native"
+  },
+  "validation": {
+    "initial_noise_mse": 1.1428937911987305,
+    "final_noise_mse": 0.02635922282934189,
+    "ema_noise_mse": 0.02429596148431301,
+    "train_images": 310,
+    "heldout_images": 74,
+    "seconds": 450.53727719999733,
+    "steps_per_second": 13.317432993089602,
+    "device": "cpu",
+    "peak_cuda_allocated_bytes": null,
+    "parameter_count": 266275,
+    "torch": "2.14.0+cpu"
+  },
+  "heldout_noise_evaluation_examples": 16,
+  "inference_runtime": {
+    "torch": "2.14.0+cpu",
+    "device": "cpu"
+  },
+  "same_seed_replay": "passed on this CPU/software stack",
+  "distinct_prompt_seed_artifacts": 9,
+  "generations": [
+    {
+      "category": "sun",
+      "seed": 2026,
+      "details": {
+        "seconds": 0.3895644000003813,
+        "warnings": [],
+        "learned_resolution": 32,
+        "width": 128,
+        "height": 128,
+        "trained_steps": 6000,
+        "review": "Dimensions/finite pixels verified; no semantic correctness or visual safety judgement is claimed"
+      }
+    },
+    {
+      "category": "sun",
+      "seed": 2027,
+      "details": {
+        "seconds": 0.2626577000046382,
+        "warnings": [],
+        "learned_resolution": 32,
+        "width": 128,
+        "height": 128,
+        "trained_steps": 6000,
+        "review": "Dimensions/finite pixels verified; no semantic correctness or visual safety judgement is claimed"
+      }
+    },
+    {
+      "category": "sun",
+      "seed": 2028,
+      "details": {
+        "seconds": 0.28202779999992345,
+        "warnings": [],
+        "learned_resolution": 32,
+        "width": 128,
+        "height": 128,
+        "trained_steps": 6000,
+        "review": "Dimensions/finite pixels verified; no semantic correctness or visual safety judgement is claimed"
+      }
+    },
+    {
+      "category": "flower",
+      "seed": 2026,
+      "details": {
+        "seconds": 0.26520010000967886,
+        "warnings": [],
+        "learned_resolution": 32,
+        "width": 128,
+        "height": 128,
+        "trained_steps": 6000,
+        "review": "Dimensions/finite pixels verified; no semantic correctness or visual safety judgement is claimed"
+      }
+    },
+    {
+      "category": "flower",
+      "seed": 2027,
+      "details": {
+        "seconds": 0.28822289999516215,
+        "warnings": [],
+        "learned_resolution": 32,
+        "width": 128,
+        "height": 128,
+        "trained_steps": 6000,
+        "review": "Dimensions/finite pixels verified; no semantic correctness or visual safety judgement is claimed"
+      }
+    },
+    {
+      "category": "flower",
+      "seed": 2028,
+      "details": {
+        "seconds": 0.2638248000002932,
+        "warnings": [],
+        "learned_resolution": 32,
+        "width": 128,
+        "height": 128,
+        "trained_steps": 6000,
+        "review": "Dimensions/finite pixels verified; no semantic correctness or visual safety judgement is claimed"
+      }
+    },
+    {
+      "category": "fish",
+      "seed": 2026,
+      "details": {
+        "seconds": 0.25765230000251904,
+        "warnings": [],
+        "learned_resolution": 32,
+        "width": 128,
+        "height": 128,
+        "trained_steps": 6000,
+        "review": "Dimensions/finite pixels verified; no semantic correctness or visual safety judgement is claimed"
+      }
+    },
+    {
+      "category": "fish",
+      "seed": 2027,
+      "details": {
+        "seconds": 0.28815449999819975,
+        "warnings": [],
+        "learned_resolution": 32,
+        "width": 128,
+        "height": 128,
+        "trained_steps": 6000,
+        "review": "Dimensions/finite pixels verified; no semantic correctness or visual safety judgement is claimed"
+      }
+    },
+    {
+      "category": "fish",
+      "seed": 2028,
+      "details": {
+        "seconds": 0.27195949999440927,
+        "warnings": [],
+        "learned_resolution": 32,
+        "width": 128,
+        "height": 128,
+        "trained_steps": 6000,
+        "review": "Dimensions/finite pixels verified; no semantic correctness or visual safety judgement is claimed"
+      }
+    }
+  ],
+  "limitations": "Small proof-of-function sketch model; prefix sample is not representative. Noise MSE and distinct pixels do not establish semantic correctness, visual safety or polished artwork. No pretrained model or account artwork used.",
+  "browser_generation": {
+    "status": "completed",
+    "prompt": "black line drawing of flower on white background",
+    "seconds": 0.3046518999908585,
+    "warnings": [],
+    "learned_resolution": 32,
+    "width": 128,
+    "height": 128,
+    "trained_steps": 6000,
+    "review": "Dimensions/finite pixels verified; no semantic correctness or visual safety judgement is claimed"
+  },
+  "human_visual_review": "The inspected samples are mostly rough black line fragments/scribbles; requested categories are not reliably recognizable. This demonstrates working custom training and inference, not useful artistic quality."
+}

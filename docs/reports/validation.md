@@ -6,7 +6,7 @@ Local verification: 2026-09-30, Windows 11, Python 3.12.10, Node 24.18.1. Comman
 
 | Check | Observed result |
 | --- | --- |
-| `python -m pytest -p no:cacheprovider --basetemp=<fresh-owned-artifact-dir> --cov=studio` | **67 passed**, 49.70 seconds; 56 core/connector/job cases plus 11 real ML cases. Includes malformed-provider/input regressions and an explicit empty-gallery cleanup/no-download test. Earlier 66-case run passed in 34.94 seconds. |
+| `python -m pytest -p no:cacheprovider --basetemp=<fresh-owned-artifact-dir> --cov=studio` | **85 passed**, 35.26 seconds; 56 core/connector/job cases, 18 licensed-sample parser cases and 11 real ML cases. The earlier 67-case run passed in 49.70 seconds. |
 | In-process statement coverage | **81%** rounded, 1,618 statements, 312 missed. Browser/CLI/worker subprocess activity is not included in this coverage figure. This is not exhaustive proof of correctness. |
 | Real native training and resume | Fresh optimizer updates, held-out noise loss improvement, finite weights, EMA, and bitwise same-stack CPU continuous-versus-resumed state passed. |
 | Real generation/editing | Repeatable seed, changed numeric weights, regional conditioning, image editing, cancellation and exact protected-pixel preservation passed. |
@@ -17,10 +17,12 @@ Local verification: 2026-09-30, Windows 11, Python 3.12.10, Node 24.18.1. Comman
 | Browser/accessibility suite | All **8 cases passed** across runs: six Chromium/WebKit/mobile cases in 37.9 seconds; two Firefox cases in 16.4 seconds using a freshly downloaded isolated official runtime after the existing runtime failed to launch. Includes actual permission-warning visibility. Automated accessibility assertions are not a complete accessibility certification. |
 | Browser real-ML workflow | **1 passed**, 37.9 seconds: create owned data → train a new model in a subprocess → register it → generate → display its image. |
 | Windows portable shell | PyInstaller build succeeded. Its running authenticated API reached a configured independent worker; that worker trained a real 20-step model and registered it. Shared browser UI exercised against the packaged server. Native window controls were not independently automated/visually inspected. |
-| Source quality | Ruff lint/format, TypeScript type check, production Vite build, Prettier, and all 34 exact source declaration/variable indexes passed. |
+| Source quality | Ruff lint/format, TypeScript type check, production Vite build and all 37 exact source declaration/variable indexes passed locally after the sketch recipe addition. Prettier and browser validation also run in hosted CI. |
 | Dependency consistency/security | `pip check` passed; isolated-environment `pip-audit` found no known dependency vulnerabilities, with no advisory exemptions. The unpublished project itself has no PyPI advisory record and is checked through source/tests, not this database. `npm audit` also found zero known vulnerabilities. Absence of known advisories is not proof of safety. |
 
 The reference ML environment is Torch 2.14.0 CPU, Torchvision 0.29.0, Diffusers 0.38.0, Transformers 5.12.1, PEFT 0.21.1 and Accelerate 1.15.0. CPU package availability was checked on the official PyTorch index. The earlier genuine CUDA demonstration used a different stack, recorded separately below; it is not attributed to this CPU environment.
+
+The 18 offline sketch tests use generated XY fixtures, not downloaded participant artwork. They verify finite bounded coordinates, recognized filtering, line/aggregate byte/time limits, fixed public-host range requests, normalized-pixel uniqueness, attribution and atomic cleanup. Public-data fetch is explicit and excluded from CI. The 81% figure covers `studio`, not the optional recipe scripts; real recipe execution is recorded separately. Initial fixture failures and the narrowly scoped source-review permission recovery are documented in the [licensed sample guide](../licensed-sample.md).
 
 ### Test-environment incidents and recovery
 
@@ -35,6 +37,14 @@ The **fresh reference CPU model** has [sanitized measurements](synthetic-cpu-tra
 The **separate earlier GPU baseline** retains [sanitized measurements](synthetic-training.json) and its [contact sheet](synthetic-samples.png). It used the same owned split size and parameter count, 6,000 steps in 148.42 seconds on a local CUDA device, and held-out noise MSE 0.00808 (EMA 0.00669), versus initialization 1.13190. That report identifies Torch 2.11.0+cu128. The CPU/GPU runs are not a controlled comparative benchmark because the software/device stacks differ. `scripts/publish_evidence.py --prefix synthetic-cpu` preserves the earlier evidence and derives the runtime description from actual measurements rather than a hardcoded GPU label.
 
 These are small 32-pixel learned shape examples displayed larger, not high-resolution photorealistic images. Noise MSE does not establish prompt fidelity, visual safety, generalization to artwork or comparative model superiority. No website artwork, downloaded base model, password or provider token was used for this evidence.
+
+## Licensed sketch custom-model test
+
+After the operator requested a generic artwork sample, a bounded attributed public sketch subset was downloaded and visually inspected locally. The application imported all **384 unique sketches** and trained a **fresh 6,000-step native model through the browser UI/worker**, without a downloaded base model or account artwork. There were 310 training and 74 disjoint held-out normalized-pixel records. Actual CPU training took **450.54 seconds** (13.32 steps/second), using Torch 2.14.0+cpu and 266,275 parameters.
+
+Held-out noise MSE went from 1.14289 to 0.02636, with EMA 0.02430. The before/after noise measurement uses at most the first 16 held-out examples, not all 74; it is not a balanced category-quality benchmark. Verified safe tensors were finite, the model matched the imported dataset fingerprint, same-stack CPU seed replay passed, and nine category/seed generations produced distinct artifacts. A new browser generation then completed in 0.305 seconds and its image was displayed with the new model selected.
+
+Visual inspection found mostly rough black line fragments/scribbles, with unreliable category recognition. **This is a working training/inference proof, not a polished art generator.** Samples are internally learned at 32 pixels and resampled to 128 pixels for display. Source images, weights and generated PNGs remain local; the [public measurements](quickdraw-training.json) retain attribution/license links, observed results and limitations, without private paths or runtime IDs. See the [recipe and test plan](../licensed-sample.md). The optional importer/evaluator do not change the running app's API, models or provider permissions.
 
 ## Hosted verification
 
