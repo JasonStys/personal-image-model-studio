@@ -1,0 +1,148 @@
+{
+  "evidence": "Actual procedural-dataset training, not a mocked pipeline",
+  "trained_steps": 6000,
+  "status": "completed",
+  "learned_resolution": 32,
+  "validation": {
+    "initial_noise_mse": 1.134769082069397,
+    "final_noise_mse": 0.01298877689987421,
+    "ema_noise_mse": 0.0065314327366650105,
+    "train_images": 307,
+    "heldout_images": 73,
+    "seconds": 444.24942710000323,
+    "steps_per_second": 13.505926252211832,
+    "device": "cpu",
+    "peak_cuda_allocated_bytes": null,
+    "parameter_count": 266211,
+    "torch": "2.14.0+cpu"
+  },
+  "dataset_fingerprint": "c137a5084f1cc8f19a0d39a10f61e87ec8c6064b72ee8f0de28f6687582823b8",
+  "settings": {
+    "name": "Synthetic shapes native diffusion",
+    "dataset_ids": [
+      "synthetic"
+    ],
+    "steps": 6000,
+    "resolution": 32,
+    "batch_size": 16,
+    "learning_rate": 0.001,
+    "seed": 1337,
+    "device": "cpu",
+    "max_seconds": 1800,
+    "resume_model_id": null,
+    "mode": "native",
+    "base_model_id": null
+  },
+  "inference": [
+    {
+      "prompt": {
+        "description": "red circle on white background"
+      },
+      "seconds": 0.403040899996995,
+      "warnings": [],
+      "learned_resolution": 32,
+      "width": 128,
+      "height": 128,
+      "trained_steps": 6000,
+      "review": "Dimensions/finite pixels verified; no semantic correctness or visual safety judgement is claimed"
+    },
+    {
+      "prompt": {
+        "description": "green circle on white background"
+      },
+      "seconds": 0.3540487000136636,
+      "warnings": [],
+      "learned_resolution": 32,
+      "width": 128,
+      "height": 128,
+      "trained_steps": 6000,
+      "review": "Dimensions/finite pixels verified; no semantic correctness or visual safety judgement is claimed"
+    },
+    {
+      "prompt": {
+        "description": "blue circle on white background"
+      },
+      "seconds": 0.3360519999987446,
+      "warnings": [],
+      "learned_resolution": 32,
+      "width": 128,
+      "height": 128,
+      "trained_steps": 6000,
+      "review": "Dimensions/finite pixels verified; no semantic correctness or visual safety judgement is claimed"
+    },
+    {
+      "prompt": {
+        "description": "red square on white background"
+      },
+      "seconds": 0.3232961999892723,
+      "warnings": [],
+      "learned_resolution": 32,
+      "width": 128,
+      "height": 128,
+      "trained_steps": 6000,
+      "review": "Dimensions/finite pixels verified; no semantic correctness or visual safety judgement is claimed"
+    },
+    {
+      "prompt": {
+        "description": "green square on white background"
+      },
+      "seconds": 0.32033899999805726,
+      "warnings": [],
+      "learned_resolution": 32,
+      "width": 128,
+      "height": 128,
+      "trained_steps": 6000,
+      "review": "Dimensions/finite pixels verified; no semantic correctness or visual safety judgement is claimed"
+    },
+    {
+      "prompt": {
+        "description": "blue square on white background"
+      },
+      "seconds": 0.3114709999936167,
+      "warnings": [],
+      "learned_resolution": 32,
+      "width": 128,
+      "height": 128,
+      "trained_steps": 6000,
+      "review": "Dimensions/finite pixels verified; no semantic correctness or visual safety judgement is claimed"
+    },
+    {
+      "prompt": {
+        "description": "red triangle on white background"
+      },
+      "seconds": 0.29378759999235626,
+      "warnings": [],
+      "learned_resolution": 32,
+      "width": 128,
+      "height": 128,
+      "trained_steps": 6000,
+      "review": "Dimensions/finite pixels verified; no semantic correctness or visual safety judgement is claimed"
+    },
+    {
+      "prompt": {
+        "description": "green triangle on white background"
+      },
+      "seconds": 0.3013514999911422,
+      "warnings": [],
+      "learned_resolution": 32,
+      "width": 128,
+      "height": 128,
+      "trained_steps": 6000,
+      "review": "Dimensions/finite pixels verified; no semantic correctness or visual safety judgement is claimed"
+    },
+    {
+      "prompt": {
+        "description": "blue triangle on white background"
+      },
+      "seconds": 0.30449969999608584,
+      "warnings": [],
+      "learned_resolution": 32,
+      "width": 128,
+      "height": 128,
+      "trained_steps": 6000,
+      "review": "Dimensions/finite pixels verified; no semantic correctness or visual safety judgement is claimed"
+    }
+  ],
+  "limitations": "Small captioned procedural domain, not a general-purpose or photorealistic image model. Denoising MSE is not semantic quality.",
+  "runtime_note": "Actual training device cpu; Torch 2.14.0+cpu. Results from different devices/software stacks are not controlled comparative benchmarks."
+}

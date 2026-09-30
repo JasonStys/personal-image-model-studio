@@ -1,5 +1,5 @@
 /** Real navigation, authentication, data persistence, inert user text and accessible responsive UI. */
-// Index: declarations none; variables token@L5, page@L8, name@L19, result@L27, page@L41, response@L62. Purposes/parameters: docs/code-map.json.
+// Index: declarations none; variables token@L5, page@L8, name@L19, result@L27, page@L41, response@L64. Purposes/parameters: docs/code-map.json.
 import { test, expect } from "@playwright/test";
 import AxeBuilder from "@axe-core/playwright";
 const token = "test-session-" + "x".repeat(40);
@@ -41,6 +41,8 @@ test("private session and accessible responsive workspace", async ({
 test("owned dataset, glossary and guarded connector", async ({ page }) => {
   await page.goto(`/#token=${token}`);
   await page.getByRole("button", { name: "02 · Datasets & glossary" }).click();
+  await expect(page.getByText("Permission warning:")).toBeVisible();
+  await expect(page.getByText(/The token grant can be broader/)).toBeVisible();
   await page
     .getByRole("button", { name: "Create owned synthetic test dataset" })
     .click();

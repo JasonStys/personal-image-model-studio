@@ -6,9 +6,9 @@ A local-first image-generation workbench with **actual custom diffusion training
 
 It does not generate placeholder images when no model exists. Train a fresh compact native model or explicitly register an authorized, compatible local classic Stable Diffusion export. No third-party artwork or pretrained weights are distributed here.
 
-![Real learned synthetic samples](docs/reports/synthetic-samples.png)
+![Real learned synthetic CPU samples](docs/reports/synthetic-cpu-samples.png)
 
-Rows: circle, square, triangle. Columns: red, green, blue. These samples came from real learned weights after 6,000 optimizer updates on owned procedural shapes—not a procedural renderer at inference time. The small model still produces rough edges and is **not a general-purpose or photorealistic generator**. See [validation evidence](docs/reports/validation.md), including exact runtime versions and limitations.
+Rows: circle, square, triangle. Columns: red, green, blue. These samples came from real learned weights after 6,000 optimizer updates on owned procedural shapes, using the reference Torch 2.14 CPU environment—not a procedural renderer at inference time. The small model still produces rough edges and is **not a general-purpose or photorealistic generator**. See [validation evidence](docs/reports/validation.md), including exact runtime versions, separately retained earlier GPU evidence and limitations.
 
 ## Features
 
@@ -19,7 +19,7 @@ Rows: circle, square, triangle. Columns: red, green, blue. These samples came fr
 - Classic single-encoder Stable Diffusion safe-tensor imports and real attention-only LoRA training. Supported families are explicit; arbitrary executable models are rejected.
 - Human feedback, explicit revisions and consented feedback ZIP exports. Generated pixels keep their AI-origin labels; ordinary training excludes them. No hidden retraining or automatic score inflation.
 - Reviewed tag glossary, transparent local phrase rules, private run reports, bounded job queue, cancellation and interrupted-run recovery.
-- Prioritized read-only DeviantArt OAuth/PKCE connector for your own authorized gallery. Passwords stay in the provider browser; OAuth tokens stay in memory. Live account access requires your registered public client ID and authorization.
+- Prioritized DeviantArt OAuth/PKCE connector with read-only operations for your own authorized gallery. Provider token permissions may be broader, including Sta.sh management: review the actual consent screen. Passwords stay in the provider browser; OAuth tokens stay in memory. Live account access requires your registered public client ID and authorization.
 - Responsive browser UI and Windows portable native shell; shared browser interface is tested with Chromium, Firefox, WebKit and a mobile viewport. Native macOS/Linux packaging and mobile-native installers are not claimed.
 
 ## Run locally

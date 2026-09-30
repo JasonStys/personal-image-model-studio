@@ -14,6 +14,8 @@ Dependency advisories are audited without blanket exclusions. During development
 
 ## Complexity and bounds
 
+The DeviantArt connector only issues read operations after token exchange, but this does not restrict the token's provider-side capabilities. Live prompts advertised Sta.sh management even without an explicit `stash` scope. The UI warns about this wider permission boundary; account registration, account-access consent and training rights are separate approvals. See [connector setup](deviantart.md).
+
 | Operation | Dominant work / memory |
 | --- | --- |
 | Directory/ZIP ingestion | O(total source bytes + N log N) with sorted fingerprint; one bounded raster at a time plus O(N) metadata. N ≤ 10,000 unique images; folder traversal ≤ 40,000 entries per source. |

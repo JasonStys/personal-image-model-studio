@@ -1,6 +1,6 @@
 """Read-only own-gallery OAuth connector: PKCE, memory-only credentials and bounded imports."""
 
-# Index: declarations module.PlainText@L29, PlainText.__init__@L32, PlainText.handle_starttag@L37, PlainText.handle_endtag@L44, PlainText.handle_data@L49, module.description@L55, module.asset_url@L62, module.DeviantArt@L79, DeviantArt.__init__@L82, DeviantArt.begin@L99, DeviantArt.json_request@L127, DeviantArt.finish@L149, DeviantArt.status@L194, DeviantArt.disconnect@L204, DeviantArt.gallery@L209, DeviantArt.close@L358; variables API@L20, OAUTH@L21, HEADERS@L22, self@L32, attributes@L37, self@L37, tag@L37, self@L44, tag@L44, data@L49, self@L49, value@L55, parser@L57, value@L62, parsed@L64, domains@L65, host@L66, domain@L73, clock@L82, port@L82, self@L82, transport@L82, client_id@L99, self@L99, state@L104, verifier@L104, challenge@L105, params@L116, kwargs@L127, method@L127, self@L127, url@L127, response@L130, body@L135, chunk@L136, value@L140, code@L149, self@L149, state@L149, pending@L152, result@L162, access@L173, duration@L174, who@L182, username@L188, self@L194, connected@L197, self@L204, limit@L209, name@L209, output@L209, self@L209, token@L216, username@L216, auth@L217, offset@L219, seen@L219, skipped@L219, visited@L219, deadline@L220, temporary@L221, source@L222, page@L228, items@L240, item@L243, visited@L246, identity@L247, content@L257, skipped@L259, metadata@L261, entries@L267, details@L270, skipped@L278, url@L280, path@L281, response@L285, size@L297, destination@L298, chunk@L299, size@L300, tags@L310, tag@L312, ai@L315, value@L317, origin@L319, caption@L320, next_offset@L343, offset@L346, manifest@L347, self@L358. Purposes/parameters: docs/code-map.json.
+# Index: declarations module.PlainText@L29, PlainText.__init__@L32, PlainText.handle_starttag@L37, PlainText.handle_endtag@L44, PlainText.handle_data@L49, module.description@L55, module.asset_url@L62, module.DeviantArt@L81, DeviantArt.__init__@L84, DeviantArt.begin@L101, DeviantArt.json_request@L131, DeviantArt.finish@L153, DeviantArt.status@L198, DeviantArt.disconnect@L208, DeviantArt.gallery@L213, DeviantArt.close@L379; variables API@L20, OAUTH@L21, HEADERS@L22, self@L32, attributes@L37, self@L37, tag@L37, self@L44, tag@L44, data@L49, self@L49, value@L55, parser@L57, value@L62, parsed@L66, domains@L67, host@L68, domain@L75, clock@L84, port@L84, self@L84, transport@L84, client_id@L101, self@L101, state@L106, verifier@L106, challenge@L107, params@L118, kwargs@L131, method@L131, self@L131, url@L131, response@L134, body@L139, chunk@L140, value@L144, code@L153, self@L153, state@L153, pending@L156, result@L166, access@L177, duration@L178, who@L186, username@L192, self@L198, connected@L201, self@L208, limit@L213, name@L213, output@L213, self@L213, token@L220, username@L220, auth@L221, offset@L223, seen@L223, skipped@L223, visited@L223, deadline@L224, temporary@L225, source@L226, page@L232, items@L244, item@L247, visited@L250, identity@L253, author@L261, artist@L262, content@L265, skipped@L267, skipped@L272, metadata@L274, entries@L280, details@L288, raw_tags@L289, skipped@L299, url@L301, path@L302, response@L306, size@L318, destination@L319, chunk@L320, size@L321, tags@L331, tag@L333, ai@L336, value@L338, origin@L340, caption@L341, next_offset@L364, offset@L367, manifest@L368, self@L379. Purposes/parameters: docs/code-map.json.
 import base64
 import hashlib
 import json
@@ -61,6 +61,8 @@ def description(value: str) -> str:
 
 def asset_url(value: str) -> str:
     """Allow HTTPS provider raster CDN URLs only; reject credentials, redirects and arbitrary hosts."""
+    if not isinstance(value, str):
+        raise ValueError("Image URL must be text")
     parsed = urlsplit(value)
     domains = ("deviantart.com", "deviantart.net", "wixmp.com")
     host = (parsed.hostname or "").lower()
@@ -117,6 +119,8 @@ class DeviantArt:
                 "response_type": "code",
                 "client_id": client_id,
                 "redirect_uri": self.callback,
+                # whoami requires basic + user; provider consent may advertise broader Sta.sh access.
+                # Our API operations are read-only, not a guarantee that the granted token is read-only.
                 "scope": "basic browse user",
                 "state": state,
                 "code_challenge": challenge,
@@ -141,7 +145,7 @@ class DeviantArt:
             if not isinstance(value, dict):
                 raise ValueError("Invalid DeviantArt response shape")
             return value
-        except (httpx.HTTPError, json.JSONDecodeError):
+        except (httpx.HTTPError, json.JSONDecodeError, UnicodeDecodeError):
             raise ValueError(
                 "DeviantArt request unavailable or invalid; no credentials were logged"
             ) from None
@@ -244,6 +248,8 @@ class DeviantArt:
                     if visited >= limit:
                         break
                     visited += 1
+                    if not isinstance(item, dict):
+                        raise ValueError("Invalid gallery entry shape")
                     identity = item.get("deviationid", "")
                     if (
                         not isinstance(identity, str)
@@ -252,10 +258,17 @@ class DeviantArt:
                     ):
                         raise ValueError("Gallery contains an invalid or repeated entry")
                     seen.add(identity)
-                    if item.get("author", {}).get("username", "").casefold() != username.casefold():
+                    author = item.get("author")
+                    artist = author.get("username") if isinstance(author, dict) else None
+                    if not isinstance(artist, str) or artist.casefold() != username.casefold():
                         raise ValueError("Gallery author differs from your authenticated account")
-                    content = item.get("content", {})
-                    if item.get("is_mature") or not content.get("src"):
+                    content = item.get("content")
+                    if item.get("is_mature") or content is None:
+                        skipped += 1
+                        continue
+                    if not isinstance(content, dict):
+                        raise ValueError("Invalid gallery content shape")
+                    if not content.get("src"):
                         skipped += 1
                         continue
                     metadata = self.json_request(
@@ -265,9 +278,17 @@ class DeviantArt:
                         headers=auth,
                     )
                     entries = metadata.get("metadata", [])
-                    if len(entries) != 1 or entries[0].get("deviationid") != identity:
+                    if (
+                        not isinstance(entries, list)
+                        or len(entries) != 1
+                        or not isinstance(entries[0], dict)
+                        or entries[0].get("deviationid") != identity
+                    ):
                         raise ValueError("Missing/mismatched gallery caption metadata")
                     details = entries[0]
+                    raw_tags = details.get("tags", [])
+                    if not isinstance(raw_tags, list):
+                        raise ValueError("Invalid gallery tags shape")
                     # Respect explicit provider NoAI/opt-out flags. An account link is not a training license.
                     if (
                         details.get("is_ai_training_allowed") is False
@@ -309,7 +330,7 @@ class DeviantArt:
                         ) from None
                     tags = [
                         str(tag.get("tag_name", ""))[:100]
-                        for tag in details.get("tags", [])[:64]
+                        for tag in raw_tags[:64]
                         if isinstance(tag, dict)
                     ]
                     ai = any(

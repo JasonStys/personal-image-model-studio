@@ -320,25 +320,25 @@
       {
         "name": "args",
         "scope": "main",
-        "line": 14,
+        "line": 15,
         "purpose": "args = parser.parse_args()"
       },
       {
         "name": "result",
         "scope": "main",
-        "line": 15,
+        "line": 16,
         "purpose": "result = read_json(args.source / 'validation.json', 2000000)"
       },
       {
         "name": "training",
         "scope": "main",
-        "line": 16,
+        "line": 17,
         "purpose": "training = result['training']"
       },
       {
         "name": "destination",
         "scope": "main",
-        "line": 21,
+        "line": 22,
         "purpose": "destination = Path('docs/reports')"
       }
     ]
@@ -2976,55 +2976,55 @@
       },
       {
         "name": "module.DeviantArt",
-        "line": 79,
+        "line": 81,
         "kind": "ClassDef",
         "purpose": "One private app-session authorization; no passwords, client secrets or saved OAuth tokens."
       },
       {
         "name": "DeviantArt.__init__",
-        "line": 82,
+        "line": 84,
         "kind": "FunctionDef",
         "purpose": "Use fixed TLS endpoints and injectable contract-test transport, not arbitrary API base URLs."
       },
       {
         "name": "DeviantArt.begin",
-        "line": 99,
+        "line": 101,
         "kind": "FunctionDef",
         "purpose": "Start a ten-minute, one-use S256 flow for a registered PUBLIC client; no secret is accepted."
       },
       {
         "name": "DeviantArt.json_request",
-        "line": 127,
+        "line": 131,
         "kind": "FunctionDef",
         "purpose": "Bound decoded API bodies and redact remote errors/URLs/tokens from exceptions."
       },
       {
         "name": "DeviantArt.finish",
-        "line": 149,
+        "line": 153,
         "kind": "FunctionDef",
         "purpose": "Consume exact state before exchange and bind future imports to the authenticated username."
       },
       {
         "name": "DeviantArt.status",
-        "line": 194,
+        "line": 198,
         "kind": "FunctionDef",
         "purpose": "Expose account connection state, never token values; expiry requires browser reauthorization."
       },
       {
         "name": "DeviantArt.disconnect",
-        "line": 204,
+        "line": 208,
         "kind": "FunctionDef",
         "purpose": "Forget local memory credentials; users can revoke the app in provider account settings."
       },
       {
         "name": "DeviantArt.gallery",
-        "line": 209,
+        "line": 213,
         "kind": "FunctionDef",
         "purpose": "Import at most 96 own-gallery raster entries; no favourites, bypasses, uploads or auto-training."
       },
       {
         "name": "DeviantArt.close",
-        "line": 358,
+        "line": 379,
         "kind": "FunctionDef",
         "purpose": "Forget credentials and release only this connector's HTTP client."
       }
@@ -3117,457 +3117,481 @@
       {
         "name": "parsed",
         "scope": "asset_url",
-        "line": 64,
+        "line": 66,
         "purpose": "parsed = urlsplit(value)"
       },
       {
         "name": "domains",
         "scope": "asset_url",
-        "line": 65,
+        "line": 67,
         "purpose": "domains = ('deviantart.com', 'deviantart.net', 'wixmp.com')"
       },
       {
         "name": "host",
         "scope": "asset_url",
-        "line": 66,
+        "line": 68,
         "purpose": "host = (parsed.hostname or '').lower()"
       },
       {
         "name": "domain",
         "scope": "asset_url",
-        "line": 73,
+        "line": 75,
         "purpose": " for domain in domains"
       },
       {
         "name": "clock",
         "scope": "DeviantArt.__init__",
-        "line": 82,
+        "line": 84,
         "purpose": "Function parameter"
       },
       {
         "name": "port",
         "scope": "DeviantArt.__init__",
-        "line": 82,
+        "line": 84,
         "purpose": "Function parameter"
       },
       {
         "name": "self",
         "scope": "DeviantArt.__init__",
-        "line": 82,
+        "line": 84,
         "purpose": "Function parameter"
       },
       {
         "name": "transport",
         "scope": "DeviantArt.__init__",
-        "line": 82,
+        "line": 84,
         "purpose": "Function parameter"
       },
       {
         "name": "client_id",
         "scope": "DeviantArt.begin",
-        "line": 99,
+        "line": 101,
         "purpose": "Function parameter"
       },
       {
         "name": "self",
         "scope": "DeviantArt.begin",
-        "line": 99,
+        "line": 101,
         "purpose": "Function parameter"
       },
       {
         "name": "state",
         "scope": "DeviantArt.begin",
-        "line": 104,
+        "line": 106,
         "purpose": "(verifier, state)"
       },
       {
         "name": "verifier",
         "scope": "DeviantArt.begin",
-        "line": 104,
+        "line": 106,
         "purpose": "(verifier, state)"
       },
       {
         "name": "challenge",
         "scope": "DeviantArt.begin",
-        "line": 105,
+        "line": 107,
         "purpose": "challenge = base64.urlsafe_b64encode(hashlib.sha256(verifier.encode()).digest()).decode().rstrip('=')"
       },
       {
         "name": "params",
         "scope": "DeviantArt.begin",
-        "line": 116,
+        "line": 118,
         "purpose": "params = {'response_type': 'code', 'client_id': client_id, 'redirect_uri': self.callback, 'scope': 'basic browse user', 'state': state, 'code_challenge': challenge, 'code_challenge"
       },
       {
         "name": "kwargs",
         "scope": "DeviantArt.json_request",
-        "line": 127,
+        "line": 131,
         "purpose": "Function parameter"
       },
       {
         "name": "method",
         "scope": "DeviantArt.json_request",
-        "line": 127,
+        "line": 131,
         "purpose": "Function parameter"
       },
       {
         "name": "self",
         "scope": "DeviantArt.json_request",
-        "line": 127,
+        "line": 131,
         "purpose": "Function parameter"
       },
       {
         "name": "url",
         "scope": "DeviantArt.json_request",
-        "line": 127,
+        "line": 131,
         "purpose": "Function parameter"
       },
       {
         "name": "response",
         "scope": "DeviantArt.json_request",
-        "line": 130,
+        "line": 134,
         "purpose": "self.client.stream(method, url, **kwargs) as response"
       },
       {
         "name": "body",
         "scope": "DeviantArt.json_request",
-        "line": 135,
+        "line": 139,
         "purpose": "body = bytearray()"
       },
       {
         "name": "chunk",
         "scope": "DeviantArt.json_request",
-        "line": 136,
+        "line": 140,
         "purpose": "for chunk in response.iter_bytes():\n    body.extend(chunk)\n    if len(body) > 1024 * 1024:\n        raise ValueError('DeviantArt metadata exceeds 1 MiB')"
       },
       {
         "name": "value",
         "scope": "DeviantArt.json_request",
-        "line": 140,
+        "line": 144,
         "purpose": "value = json.loads(body)"
       },
       {
         "name": "code",
         "scope": "DeviantArt.finish",
-        "line": 149,
+        "line": 153,
         "purpose": "Function parameter"
       },
       {
         "name": "self",
         "scope": "DeviantArt.finish",
-        "line": 149,
+        "line": 153,
         "purpose": "Function parameter"
       },
       {
         "name": "state",
         "scope": "DeviantArt.finish",
-        "line": 149,
+        "line": 153,
         "purpose": "Function parameter"
       },
       {
         "name": "pending",
         "scope": "DeviantArt.finish",
-        "line": 152,
+        "line": 156,
         "purpose": "pending = self.pending"
       },
       {
         "name": "result",
         "scope": "DeviantArt.finish",
-        "line": 162,
+        "line": 166,
         "purpose": "result = self.json_request('POST', OAUTH + '/token', data={'client_id': pending['client_id'], 'grant_type': 'authorization_code', 'code': code, 'redirect_uri': self.callback, 'code"
       },
       {
         "name": "access",
         "scope": "DeviantArt.finish",
-        "line": 173,
+        "line": 177,
         "purpose": "access = result.get('access_token')"
       },
       {
         "name": "duration",
         "scope": "DeviantArt.finish",
-        "line": 174,
+        "line": 178,
         "purpose": "duration = result.get('expires_in')"
       },
       {
         "name": "who",
         "scope": "DeviantArt.finish",
-        "line": 182,
+        "line": 186,
         "purpose": "who = self.json_request('GET', API + '/user/whoami', params={'with_session': 'true'}, headers={'Authorization': 'Bearer ' + access})"
       },
       {
         "name": "username",
         "scope": "DeviantArt.finish",
-        "line": 188,
+        "line": 192,
         "purpose": "username = who.get('username')"
       },
       {
         "name": "self",
         "scope": "DeviantArt.status",
-        "line": 194,
+        "line": 198,
         "purpose": "Function parameter"
       },
       {
         "name": "connected",
         "scope": "DeviantArt.status",
-        "line": 197,
+        "line": 201,
         "purpose": "connected = bool(self.access and self.clock() < self.expires)"
       },
       {
         "name": "self",
         "scope": "DeviantArt.disconnect",
-        "line": 204,
+        "line": 208,
         "purpose": "Function parameter"
       },
       {
         "name": "limit",
         "scope": "DeviantArt.gallery",
-        "line": 209,
+        "line": 213,
         "purpose": "Function parameter"
       },
       {
         "name": "name",
         "scope": "DeviantArt.gallery",
-        "line": 209,
+        "line": 213,
         "purpose": "Function parameter"
       },
       {
         "name": "output",
         "scope": "DeviantArt.gallery",
-        "line": 209,
+        "line": 213,
         "purpose": "Function parameter"
       },
       {
         "name": "self",
         "scope": "DeviantArt.gallery",
-        "line": 209,
+        "line": 213,
         "purpose": "Function parameter"
       },
       {
         "name": "token",
         "scope": "DeviantArt.gallery",
-        "line": 216,
+        "line": 220,
         "purpose": "(token, username)"
       },
       {
         "name": "username",
         "scope": "DeviantArt.gallery",
-        "line": 216,
+        "line": 220,
         "purpose": "(token, username)"
       },
       {
         "name": "auth",
         "scope": "DeviantArt.gallery",
-        "line": 217,
+        "line": 221,
         "purpose": "auth = {'Authorization': 'Bearer ' + token}"
       },
       {
         "name": "offset",
         "scope": "DeviantArt.gallery",
-        "line": 219,
+        "line": 223,
         "purpose": "(seen, offset, skipped, visited)"
       },
       {
         "name": "seen",
         "scope": "DeviantArt.gallery",
-        "line": 219,
+        "line": 223,
         "purpose": "(seen, offset, skipped, visited)"
       },
       {
         "name": "skipped",
         "scope": "DeviantArt.gallery",
-        "line": 219,
+        "line": 223,
         "purpose": "(seen, offset, skipped, visited)"
       },
       {
         "name": "visited",
         "scope": "DeviantArt.gallery",
-        "line": 219,
+        "line": 223,
         "purpose": "(seen, offset, skipped, visited)"
       },
       {
         "name": "deadline",
         "scope": "DeviantArt.gallery",
-        "line": 220,
+        "line": 224,
         "purpose": "deadline = self.clock() + 300"
       },
       {
         "name": "temporary",
         "scope": "DeviantArt.gallery",
-        "line": 221,
+        "line": 225,
         "purpose": "tempfile.TemporaryDirectory(prefix='.da-import-', dir=output.parent) as temporary"
       },
       {
         "name": "source",
         "scope": "DeviantArt.gallery",
-        "line": 222,
+        "line": 226,
         "purpose": "source = Path(temporary)"
       },
       {
         "name": "page",
         "scope": "DeviantArt.gallery",
-        "line": 228,
+        "line": 232,
         "purpose": "page = self.json_request('GET', API + '/gallery/all', params={'username': username, 'offset': offset, 'limit': min(24, limit - visited), 'with_session': 'true', 'mature_content': '"
       },
       {
         "name": "items",
         "scope": "DeviantArt.gallery",
-        "line": 240,
+        "line": 244,
         "purpose": "items = page.get('results')"
       },
       {
         "name": "item",
         "scope": "DeviantArt.gallery",
-        "line": 243,
-        "purpose": "for item in items:\n    if visited >= limit:\n        break\n    visited += 1\n    identity = item.get('deviationid', '')\n    if not isinstance(identity, str) or not re.fullmatch('[A-Z"
+        "line": 247,
+        "purpose": "for item in items:\n    if visited >= limit:\n        break\n    visited += 1\n    if not isinstance(item, dict):\n        raise ValueError('Invalid gallery entry shape')\n    identity ="
       },
       {
         "name": "visited",
         "scope": "DeviantArt.gallery",
-        "line": 246,
+        "line": 250,
         "purpose": "visited += 1"
       },
       {
         "name": "identity",
         "scope": "DeviantArt.gallery",
-        "line": 247,
+        "line": 253,
         "purpose": "identity = item.get('deviationid', '')"
+      },
+      {
+        "name": "author",
+        "scope": "DeviantArt.gallery",
+        "line": 261,
+        "purpose": "author = item.get('author')"
+      },
+      {
+        "name": "artist",
+        "scope": "DeviantArt.gallery",
+        "line": 262,
+        "purpose": "artist = author.get('username') if isinstance(author, dict) else None"
       },
       {
         "name": "content",
         "scope": "DeviantArt.gallery",
-        "line": 257,
-        "purpose": "content = item.get('content', {})"
+        "line": 265,
+        "purpose": "content = item.get('content')"
       },
       {
         "name": "skipped",
         "scope": "DeviantArt.gallery",
-        "line": 259,
+        "line": 267,
+        "purpose": "skipped += 1"
+      },
+      {
+        "name": "skipped",
+        "scope": "DeviantArt.gallery",
+        "line": 272,
         "purpose": "skipped += 1"
       },
       {
         "name": "metadata",
         "scope": "DeviantArt.gallery",
-        "line": 261,
+        "line": 274,
         "purpose": "metadata = self.json_request('GET', API + '/deviation/metadata', params={'deviationids[]': identity, 'with_session': 'true'}, headers=auth)"
       },
       {
         "name": "entries",
         "scope": "DeviantArt.gallery",
-        "line": 267,
+        "line": 280,
         "purpose": "entries = metadata.get('metadata', [])"
       },
       {
         "name": "details",
         "scope": "DeviantArt.gallery",
-        "line": 270,
+        "line": 288,
         "purpose": "details = entries[0]"
+      },
+      {
+        "name": "raw_tags",
+        "scope": "DeviantArt.gallery",
+        "line": 289,
+        "purpose": "raw_tags = details.get('tags', [])"
       },
       {
         "name": "skipped",
         "scope": "DeviantArt.gallery",
-        "line": 278,
+        "line": 299,
         "purpose": "skipped += 1"
       },
       {
         "name": "url",
         "scope": "DeviantArt.gallery",
-        "line": 280,
+        "line": 301,
         "purpose": "url = asset_url(content['src'])"
       },
       {
         "name": "path",
         "scope": "DeviantArt.gallery",
-        "line": 281,
+        "line": 302,
         "purpose": "path = source / f'{identity}.png'"
       },
       {
         "name": "response",
         "scope": "DeviantArt.gallery",
-        "line": 285,
+        "line": 306,
         "purpose": "self.client.stream('GET', url, headers={'Accept': 'image/png,image/jpeg,image/webp'}) as response"
       },
       {
         "name": "size",
         "scope": "DeviantArt.gallery",
-        "line": 297,
+        "line": 318,
         "purpose": "size = 0"
       },
       {
         "name": "destination",
         "scope": "DeviantArt.gallery",
-        "line": 298,
+        "line": 319,
         "purpose": "path.open('wb') as destination"
       },
       {
         "name": "chunk",
         "scope": "DeviantArt.gallery",
-        "line": 299,
+        "line": 320,
         "purpose": "for chunk in response.iter_bytes():\n    size += len(chunk)\n    if size > 20 * 1024 * 1024 or self.clock() > deadline:\n        raise ValueError('Gallery raster exceeds size/time bud"
       },
       {
         "name": "size",
         "scope": "DeviantArt.gallery",
-        "line": 300,
+        "line": 321,
         "purpose": "size += len(chunk)"
       },
       {
         "name": "tags",
         "scope": "DeviantArt.gallery",
-        "line": 310,
-        "purpose": "tags = [str(tag.get('tag_name', ''))[:100] for tag in details.get('tags', [])[:64] if isinstance(tag, dict)]"
+        "line": 331,
+        "purpose": "tags = [str(tag.get('tag_name', ''))[:100] for tag in raw_tags[:64] if isinstance(tag, dict)]"
       },
       {
         "name": "tag",
         "scope": "DeviantArt.gallery",
-        "line": 312,
-        "purpose": " for tag in details.get('tags', [])[:64] if isinstance(tag, dict)"
+        "line": 333,
+        "purpose": " for tag in raw_tags[:64] if isinstance(tag, dict)"
       },
       {
         "name": "ai",
         "scope": "DeviantArt.gallery",
-        "line": 315,
+        "line": 336,
         "purpose": "ai = any((value.get('is_ai_generated') or value.get('is_ai_assisted') for value in (item, details)))"
       },
       {
         "name": "value",
         "scope": "DeviantArt.gallery",
-        "line": 317,
+        "line": 338,
         "purpose": " for value in (item, details)"
       },
       {
         "name": "origin",
         "scope": "DeviantArt.gallery",
-        "line": 319,
+        "line": 340,
         "purpose": "origin = 'ai_assisted' if ai else 'unknown'"
       },
       {
         "name": "caption",
         "scope": "DeviantArt.gallery",
-        "line": 320,
+        "line": 341,
         "purpose": "caption = ', '.join(filter(None, [str(item.get('title', ''))[:200], description(details.get('description', '')), ' '.join(tags)]))[:2000]"
       },
       {
         "name": "next_offset",
         "scope": "DeviantArt.gallery",
-        "line": 343,
+        "line": 364,
         "purpose": "next_offset = page.get('next_offset')"
       },
       {
         "name": "offset",
         "scope": "DeviantArt.gallery",
-        "line": 346,
+        "line": 367,
         "purpose": "offset = next_offset"
       },
       {
         "name": "manifest",
         "scope": "DeviantArt.gallery",
-        "line": 347,
+        "line": 368,
         "purpose": "manifest = import_dataset([str(source)], output, name)"
       },
       {
         "name": "self",
         "scope": "DeviantArt.close",
-        "line": 358,
+        "line": 379,
         "purpose": "Function parameter"
       }
     ]
@@ -7189,7 +7213,7 @@
       },
       {
         "name": "response",
-        "line": 62,
+        "line": 64,
         "kind": "variable",
         "purpose": "response = await page.request.post(\n    \"/api/connectors/deviantart/import\",\n    {\n      headers: { Authorization: `Bearer ${token}` },\n      data: {\n        name: \"Unauthorized\",\n"
       }
@@ -7597,45 +7621,51 @@
       },
       {
         "name": "module.test_pkce_one_use_expiry_and_no_secrets",
-        "line": 68,
+        "line": 83,
         "kind": "FunctionDef",
         "purpose": "Validate state, verifier/challenge and token request placement; credentials never reach disk/status."
       },
       {
         "name": "module.test_expired_oauth_state_does_not_exchange",
-        "line": 95,
+        "line": 111,
         "kind": "FunctionDef",
         "purpose": "Expired attempts cannot be reused even with the correct original state."
       },
       {
         "name": "module.test_bounded_gallery_preserves_caption_and_origin",
-        "line": 106,
+        "line": 122,
         "kind": "FunctionDef",
         "purpose": "Contract-test normalized raster/captions/AI metadata while enforcing no bearer token at CDN."
       },
       {
         "name": "module.test_import_fails_closed_and_leaves_no_dataset",
-        "line": 134,
+        "line": 158,
         "kind": "FunctionDef",
         "purpose": "Ownership, redirect, pagination and explicit opt-out failures never publish partial training datasets."
       },
       {
         "name": "module.test_no_arbitrary_image_url",
-        "line": 157,
+        "line": 182,
         "kind": "FunctionDef",
         "purpose": "Provider metadata cannot turn imports into arbitrary-host/private-network downloads."
       },
       {
         "name": "module.test_description_is_inert_and_bounded",
-        "line": 163,
+        "line": 188,
         "kind": "FunctionDef",
         "purpose": "Descriptions lose markup and hidden scripts rather than becoming UI HTML."
       },
       {
         "name": "module.test_rate_limit_error_does_not_echo_tokens",
-        "line": 169,
+        "line": 194,
         "kind": "FunctionDef",
         "purpose": "Remote error bodies/URLs are redacted and no automatic retry defeats provider limits."
+      },
+      {
+        "name": "module.test_invalid_metadata_encoding_fails_safely",
+        "line": 206,
+        "kind": "FunctionDef",
+        "purpose": "Malformed remote text returns a bounded validation error, not an uncaught decode failure."
       }
     ],
     "variables": [
@@ -7678,248 +7708,278 @@
       {
         "name": "item",
         "scope": "connector_fixture.handler",
-        "line": 43,
+        "line": 39,
+        "purpose": "item = None"
+      },
+      {
+        "name": "item",
+        "scope": "connector_fixture.handler",
+        "line": 53,
         "purpose": "item = {'deviationid': 'fixture-001', 'description': '<p>green circle</p><script>ignored</script>', 'tags': [{'tag_name': 'green'}]}"
+      },
+      {
+        "name": "entries",
+        "scope": "connector_fixture.handler",
+        "line": 64,
+        "purpose": "entries = None if kind == 'bad-metadata' else [item]"
+      },
+      {
+        "name": "entries",
+        "scope": "connector_fixture.handler",
+        "line": 66,
+        "purpose": "entries = [None]"
       },
       {
         "name": "clock",
         "scope": "connector_fixture",
-        "line": 61,
+        "line": 76,
         "purpose": "clock = [100.0]"
       },
       {
         "name": "connector",
         "scope": "connector_fixture",
-        "line": 62,
+        "line": 77,
         "purpose": "connector = DeviantArt(8016, httpx.MockTransport(handler), clock=lambda: clock[0])"
       },
       {
         "name": "result",
         "scope": "connector_fixture",
-        "line": 63,
+        "line": 78,
         "purpose": "result = connector.begin('12345')"
       },
       {
         "name": "query",
         "scope": "connector_fixture",
-        "line": 64,
+        "line": 79,
         "purpose": "query = parse_qs(httpx.URL(result['url']).query.decode())"
       },
       {
         "name": "tmp_path",
         "scope": "test_pkce_one_use_expiry_and_no_secrets",
-        "line": 68,
+        "line": 83,
         "purpose": "Function parameter"
       },
       {
         "name": "clock",
         "scope": "test_pkce_one_use_expiry_and_no_secrets",
-        "line": 70,
+        "line": 85,
         "purpose": "(connector, requests, query, clock)"
       },
       {
         "name": "connector",
         "scope": "test_pkce_one_use_expiry_and_no_secrets",
-        "line": 70,
+        "line": 85,
         "purpose": "(connector, requests, query, clock)"
       },
       {
         "name": "query",
         "scope": "test_pkce_one_use_expiry_and_no_secrets",
-        "line": 70,
+        "line": 85,
         "purpose": "(connector, requests, query, clock)"
       },
       {
         "name": "requests",
         "scope": "test_pkce_one_use_expiry_and_no_secrets",
-        "line": 70,
+        "line": 85,
         "purpose": "(connector, requests, query, clock)"
       },
       {
         "name": "verifier",
         "scope": "test_pkce_one_use_expiry_and_no_secrets",
-        "line": 71,
+        "line": 86,
         "purpose": "verifier = connector.pending['verifier']"
       },
       {
         "name": "expected",
         "scope": "test_pkce_one_use_expiry_and_no_secrets",
-        "line": 72,
+        "line": 87,
         "purpose": "expected = base64.urlsafe_b64encode(hashlib.sha256(verifier.encode()).digest()).decode().rstrip('=')"
       },
       {
         "name": "body",
         "scope": "test_pkce_one_use_expiry_and_no_secrets",
-        "line": 82,
+        "line": 98,
         "purpose": "body = parse_qs(requests[0].content.decode())"
       },
       {
         "name": "clock",
         "scope": "test_expired_oauth_state_does_not_exchange",
-        "line": 97,
+        "line": 113,
         "purpose": "(connector, requests, query, clock)"
       },
       {
         "name": "connector",
         "scope": "test_expired_oauth_state_does_not_exchange",
-        "line": 97,
+        "line": 113,
         "purpose": "(connector, requests, query, clock)"
       },
       {
         "name": "query",
         "scope": "test_expired_oauth_state_does_not_exchange",
-        "line": 97,
+        "line": 113,
         "purpose": "(connector, requests, query, clock)"
       },
       {
         "name": "requests",
         "scope": "test_expired_oauth_state_does_not_exchange",
-        "line": 97,
+        "line": 113,
         "purpose": "(connector, requests, query, clock)"
       },
       {
         "name": "flagged",
         "scope": "test_bounded_gallery_preserves_caption_and_origin",
-        "line": 106,
+        "line": 122,
         "purpose": "Function parameter"
       },
       {
         "name": "kind",
         "scope": "test_bounded_gallery_preserves_caption_and_origin",
-        "line": 106,
+        "line": 122,
         "purpose": "Function parameter"
       },
       {
         "name": "tmp_path",
         "scope": "test_bounded_gallery_preserves_caption_and_origin",
-        "line": 106,
+        "line": 122,
         "purpose": "Function parameter"
       },
       {
         "name": "_",
         "scope": "test_bounded_gallery_preserves_caption_and_origin",
-        "line": 108,
+        "line": 124,
         "purpose": "(connector, requests, query, _)"
       },
       {
         "name": "connector",
         "scope": "test_bounded_gallery_preserves_caption_and_origin",
-        "line": 108,
+        "line": 124,
         "purpose": "(connector, requests, query, _)"
       },
       {
         "name": "query",
         "scope": "test_bounded_gallery_preserves_caption_and_origin",
-        "line": 108,
+        "line": 124,
         "purpose": "(connector, requests, query, _)"
       },
       {
         "name": "requests",
         "scope": "test_bounded_gallery_preserves_caption_and_origin",
-        "line": 108,
+        "line": 124,
         "purpose": "(connector, requests, query, _)"
       },
       {
         "name": "output",
         "scope": "test_bounded_gallery_preserves_caption_and_origin",
-        "line": 110,
+        "line": 126,
         "purpose": "output = tmp_path / 'dataset'"
       },
       {
         "name": "manifest",
         "scope": "test_bounded_gallery_preserves_caption_and_origin",
-        "line": 111,
+        "line": 127,
         "purpose": "manifest = connector.gallery(output, 'Contract fixture', 24)"
       },
       {
         "name": "asset",
         "scope": "test_bounded_gallery_preserves_caption_and_origin",
-        "line": 116,
+        "line": 132,
         "purpose": "asset = next((request for request in requests if request.url.host == 'images.wixmp.com'))"
       },
       {
         "name": "request",
         "scope": "test_bounded_gallery_preserves_caption_and_origin",
-        "line": 116,
+        "line": 132,
         "purpose": " for request in requests if request.url.host == 'images.wixmp.com'"
       },
       {
         "name": "path",
         "scope": "test_bounded_gallery_preserves_caption_and_origin",
-        "line": 120,
+        "line": 136,
         "purpose": " for path in output.rglob('*.json')"
       },
       {
         "name": "kind",
         "scope": "test_import_fails_closed_and_leaves_no_dataset",
-        "line": 134,
+        "line": 158,
         "purpose": "Function parameter"
       },
       {
         "name": "pattern",
         "scope": "test_import_fails_closed_and_leaves_no_dataset",
-        "line": 134,
+        "line": 158,
         "purpose": "Function parameter"
       },
       {
         "name": "tmp_path",
         "scope": "test_import_fails_closed_and_leaves_no_dataset",
-        "line": 134,
+        "line": 158,
         "purpose": "Function parameter"
       },
       {
         "name": "_",
         "scope": "test_import_fails_closed_and_leaves_no_dataset",
-        "line": 136,
+        "line": 160,
         "purpose": "(connector, _, query, _)"
       },
       {
         "name": "_",
         "scope": "test_import_fails_closed_and_leaves_no_dataset",
-        "line": 136,
+        "line": 160,
         "purpose": "(connector, _, query, _)"
       },
       {
         "name": "connector",
         "scope": "test_import_fails_closed_and_leaves_no_dataset",
-        "line": 136,
+        "line": 160,
         "purpose": "(connector, _, query, _)"
       },
       {
         "name": "query",
         "scope": "test_import_fails_closed_and_leaves_no_dataset",
-        "line": 136,
+        "line": 160,
         "purpose": "(connector, _, query, _)"
       },
       {
         "name": "output",
         "scope": "test_import_fails_closed_and_leaves_no_dataset",
-        "line": 138,
+        "line": 162,
         "purpose": "output = tmp_path / 'dataset'"
       },
       {
         "name": "url",
         "scope": "test_no_arbitrary_image_url",
-        "line": 157,
+        "line": 182,
         "purpose": "Function parameter"
       },
       {
         "name": "connector",
         "scope": "test_rate_limit_error_does_not_echo_tokens",
-        "line": 171,
+        "line": 196,
         "purpose": "connector = DeviantArt(8016, httpx.MockTransport(lambda request: httpx.Response(429, json={'detail': 'private-secret'})))"
       },
       {
         "name": "request",
         "scope": "test_rate_limit_error_does_not_echo_tokens",
-        "line": 173,
+        "line": 198,
         "purpose": "Function parameter"
       },
       {
         "name": "error",
         "scope": "test_rate_limit_error_does_not_echo_tokens",
-        "line": 175,
+        "line": 200,
         "purpose": "pytest.raises(ValueError, match='HTTP 429') as error"
+      },
+      {
+        "name": "connector",
+        "scope": "test_invalid_metadata_encoding_fails_safely",
+        "line": 208,
+        "purpose": "connector = DeviantArt(8016, httpx.MockTransport(lambda request: httpx.Response(200, content=b'\\xff')))"
+      },
+      {
+        "name": "request",
+        "scope": "test_invalid_metadata_encoding_fails_safely",
+        "line": 209,
+        "purpose": "Function parameter"
       }
     ]
   },
