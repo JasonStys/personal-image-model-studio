@@ -12,6 +12,7 @@
   "desktop_build": "passed; unsigned Windows portable shell",
   "desktop_worker": "real 20-step training completed through packaged API and bundled worker source",
   "fresh_cpu_custom_model": {"steps": 6000, "seconds": 444.24942710000323, "torch": "2.14.0+cpu", "ema_noise_mse": 0.0065314327366650105, "browser_registration_and_generation": "passed"},
+  "hosted_validation": {"source_commit": "5cc135b252a552898f8581182319d7b89ccf5d89", "run": "https://github.com/JasonStys/personal-image-model-studio/actions/runs/36784162356", "conclusion": "success", "jobs_passed": 9},
   "deviantart_live": "public application registration verified; actual consent advertises broader Sta.sh management; no account grant/gallery import approved or verified",
   "privacy": "sanitized summary only; no runtime data, credentials, weights or machine paths"
 }
