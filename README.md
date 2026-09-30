@@ -84,6 +84,8 @@ Demo outputs/checkpoints are local and ignored by Git. Use a new output director
 | `tests/test_core.py`, `test_deviantart.py`, `test_jobs.py`, `test_ml.py` | Core/privacy/property, mocked provider-contract, lifecycle and real ML regression tests. |
 | `tests/browser*.spec.ts`, `playwright.config.ts` | Real browser accessibility/portability and separate real ML-worker workflow. |
 | `.github/workflows/validate.yml` | Least-privilege pinned CI, scheduled audits and evidence artifacts. |
+| `requirements-cpu-audit.txt` | Upstream advisory lookup for pinned official CPU-wheel releases; not an installer. |
+| `scripts/publish_evidence.py`, `.gitattributes` | Guarded synthetic-only public evidence export and stable text line endings. |
 | `docs/` | Architecture, requirements traceability, threats, complexity, research, operating instructions and validation reports. |
 | `.gitignore`, `LICENSE` | Private-artifact exclusions and software license. |
 

@@ -88,6 +88,7 @@ jobs:
         env:
           RUN_ML_BROWSER: '1'
       - run: python -m pip_audit --format json --output artifacts/dependency-audit.json
+      - run: python -m pip_audit --no-deps --disable-pip -r requirements-cpu-audit.txt --format json --output artifacts/cpu-upstream-audit.json
       - uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
         if: always()
         with:

@@ -1,0 +1,4 @@
+# Advisory lookup for upstream releases corresponding to official-index +cpu wheels.
+# This is not an installation file or a binary-integrity/CPU-build security guarantee.
+torch==2.14.0
+torchvision==0.29.0
