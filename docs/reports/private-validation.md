@@ -33,7 +33,8 @@ PID/create-time monitoring corrected them. Whole encrypted snapshots may delay
 metadata on a busy disk/CPU: browser operations are bounded at 30 seconds, without
 retries or weakened assertions. Recovery seals successfully **before** consuming
 its one-use code; simulated disk failure verifies that old credentials and unsaved
-work survive.
+work survive. CI also detected Windows' legacy stdout encoding in the source-map
+generator; its Python JSON stream is now explicitly UTF-8 on every platform.
 
 ## Reproduce / release evidence
 

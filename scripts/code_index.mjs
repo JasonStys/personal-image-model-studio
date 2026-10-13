@@ -1,5 +1,5 @@
 /** Regenerate/check exact AST source indexes; file edits are bulk mechanical metadata updates only. */
-// Index: declarations walk@L31, inventory@L45, visit@L59, names@L81, publish@L109; variables root@L8, check@L9, python@L10, files@L19, file@L27, directory@L31, entry@L34, file@L41, file@L45, source@L45, result@L47, tree@L54, declarations@L55, variables@L56, line@L57, node@L57, node@L59, comments@L67, comment@L74, comment@L75, identifiers@L80, name@L81, element@L84, name@L89, file@L109, text@L109, previous@L110, maps@L122, file@L123, source@L124, marker@L125, line@L126, lines@L128, result@L133, header@L134, value@L134, value@L134, line@L139. Purposes/parameters: docs/code-map.json.
+// Index: declarations walk@L31, inventory@L45, visit@L60, names@L82, publish@L110; variables root@L8, check@L9, python@L10, files@L19, file@L27, directory@L31, entry@L34, file@L41, file@L45, source@L45, result@L47, tree@L55, declarations@L56, variables@L57, line@L58, node@L58, node@L60, comments@L68, comment@L75, comment@L76, identifiers@L81, name@L82, element@L85, name@L90, file@L110, text@L110, previous@L111, maps@L123, file@L124, source@L125, marker@L126, line@L127, lines@L129, result@L134, header@L135, value@L135, value@L135, line@L140. Purposes/parameters: docs/code-map.json.
 import fs from "node:fs";
 import path from "node:path";
 import { spawnSync } from "node:child_process";
@@ -46,6 +46,7 @@ function inventory(file, source) {
   if (file.endsWith(".py")) {
     const result = spawnSync(python, ["scripts/python_index.py", file], {
       encoding: "utf8",
+      env: { ...process.env, PYTHONIOENCODING: "utf-8" },
     });
     if (result.status !== 0)
       throw new Error(result.stderr || "Python index failed");

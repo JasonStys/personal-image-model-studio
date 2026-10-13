@@ -117,7 +117,7 @@
         "name": "parts",
         "scope": "notices",
         "line": 34,
-        "purpose": "parts = ['Personal Image Model Studio � Jason Stys\\nThird-party dependency notices; see each upstream distribution for complete licensing.\\n']"
+        "purpose": "parts = ['Personal Image Model Studio — Jason Stys\\nThird-party dependency notices; see each upstream distribution for complete licensing.\\n']"
       },
       {
         "name": "name",
@@ -300,19 +300,19 @@
       },
       {
         "name": "visit",
-        "line": 59,
+        "line": 60,
         "kind": "FunctionDeclaration",
         "purpose": "function visit(node) {\n    if (\n      (ts.isFunctionDeclaration(node) ||\n        ts.isClassDeclaration(node) ||\n        ts.isInterfaceDeclaration(node) ||\n        ts.isTypeAliasDec"
       },
       {
         "name": "names",
-        "line": 81,
+        "line": 82,
         "kind": "FunctionDeclaration",
         "purpose": "function names(name) {\n        if (ts.isIdentifier(name)) identifiers.push(name);\n        else if (ts.isBindingPattern(name))\n          name.elements.forEach((element) => {\n       "
       },
       {
         "name": "publish",
-        "line": 109,
+        "line": 110,
         "kind": "FunctionDeclaration",
         "purpose": "/** Compare mechanical outputs or publish them; no nondeterministic timestamps/machine paths enter docs. */"
       }
@@ -382,55 +382,49 @@
         "name": "result",
         "line": 47,
         "kind": "variable",
-        "purpose": "result = spawnSync(python, [\"scripts/python_index.py\", file], {\n      encoding: \"utf8\",\n    })"
+        "purpose": "result = spawnSync(python, [\"scripts/python_index.py\", file], {\n      encoding: \"utf8\",\n      env: { ...process.env, PYTHONIOENCODING: \"utf-8\" },\n    })"
       },
       {
         "name": "tree",
-        "line": 54,
+        "line": 55,
         "kind": "variable",
         "purpose": "tree = ts.createSourceFile(file, source, ts.ScriptTarget.Latest, true)"
       },
       {
         "name": "declarations",
-        "line": 55,
+        "line": 56,
         "kind": "variable",
         "purpose": "declarations = []"
       },
       {
         "name": "variables",
-        "line": 56,
+        "line": 57,
         "kind": "variable",
         "purpose": "variables = []"
       },
       {
         "name": "line",
-        "line": 57,
+        "line": 58,
         "kind": "variable",
         "purpose": "line = (node) =>\n    tree.getLineAndCharacterOfPosition(node.getStart(tree)).line + 1"
       },
       {
         "name": "node",
-        "line": 57,
+        "line": 58,
         "kind": "parameter",
         "purpose": "node"
       },
       {
         "name": "node",
-        "line": 59,
+        "line": 60,
         "kind": "parameter",
         "purpose": "node"
       },
       {
         "name": "comments",
-        "line": 67,
+        "line": 68,
         "kind": "variable",
         "purpose": "comments = ts.getLeadingCommentRanges(source, node.pos) || []"
-      },
-      {
-        "name": "comment",
-        "line": 74,
-        "kind": "parameter",
-        "purpose": "comment"
       },
       {
         "name": "comment",
@@ -439,110 +433,116 @@
         "purpose": "comment"
       },
       {
+        "name": "comment",
+        "line": 76,
+        "kind": "parameter",
+        "purpose": "comment"
+      },
+      {
         "name": "identifiers",
-        "line": 80,
+        "line": 81,
         "kind": "variable",
         "purpose": "identifiers = []"
       },
       {
         "name": "name",
-        "line": 81,
+        "line": 82,
         "kind": "parameter",
         "purpose": "name"
       },
       {
         "name": "element",
-        "line": 84,
+        "line": 85,
         "kind": "parameter",
         "purpose": "element"
       },
       {
         "name": "name",
-        "line": 89,
+        "line": 90,
         "kind": "parameter",
         "purpose": "name"
       },
       {
         "name": "file",
-        "line": 109,
+        "line": 110,
         "kind": "parameter",
         "purpose": "file"
       },
       {
         "name": "text",
-        "line": 109,
+        "line": 110,
         "kind": "parameter",
         "purpose": "text"
       },
       {
         "name": "previous",
-        "line": 110,
+        "line": 111,
         "kind": "variable",
         "purpose": "previous = fs.existsSync(file)\n    ? fs.readFileSync(file, \"utf8\").replaceAll(\"\\r\\n\", \"\\n\")\n    : \"\""
       },
       {
         "name": "maps",
-        "line": 122,
+        "line": 123,
         "kind": "variable",
         "purpose": "maps = {}"
       },
       {
         "name": "file",
-        "line": 123,
+        "line": 124,
         "kind": "variable",
         "purpose": "file"
       },
       {
         "name": "source",
-        "line": 124,
+        "line": 125,
         "kind": "variable",
         "purpose": "source = fs.readFileSync(file, \"utf8\").replaceAll(\"\\r\\n\", \"\\n\")"
       },
       {
         "name": "marker",
-        "line": 125,
+        "line": 126,
         "kind": "variable",
         "purpose": "marker = file.endsWith(\".py\") ? \"# Index:\" : \"// Index:\""
       },
       {
         "name": "line",
-        "line": 126,
+        "line": 127,
         "kind": "parameter",
         "purpose": "line"
       },
       {
         "name": "lines",
-        "line": 128,
+        "line": 129,
         "kind": "variable",
         "purpose": "lines = source.split(\"\\n\")"
       },
       {
         "name": "result",
-        "line": 133,
+        "line": 134,
         "kind": "variable",
         "purpose": "result = inventory(file, source)"
       },
       {
         "name": "header",
-        "line": 134,
+        "line": 135,
         "kind": "variable",
         "purpose": "header = `${marker} declarations ${result.declarations.map((value) => `${value.name}@L${value.line}`).join(\", \") || \"none\"}; variables ${result.variables.map((value) => `${value.na"
       },
       {
         "name": "value",
-        "line": 134,
+        "line": 135,
         "kind": "parameter",
         "purpose": "value"
       },
       {
         "name": "value",
-        "line": 134,
+        "line": 135,
         "kind": "parameter",
         "purpose": "value"
       },
       {
         "name": "line",
-        "line": 139,
+        "line": 140,
         "kind": "parameter",
         "purpose": "line"
       }
@@ -8483,7 +8483,7 @@
         "name": "app",
         "scope": "create_private_app",
         "line": 328,
-        "purpose": "app = FastAPI(title='Personal Image Model Studio � Jason Stys', docs_url=None, redoc_url=None, openapi_url=None, lifespan=lifespan)"
+        "purpose": "app = FastAPI(title='Personal Image Model Studio — Jason Stys', docs_url=None, redoc_url=None, openapi_url=None, lifespan=lifespan)"
       },
       {
         "name": "error",
@@ -8886,7 +8886,7 @@
         "name": "parser",
         "scope": "main",
         "line": 39,
-        "purpose": "parser = argparse.ArgumentParser(description='Personal Image Model Studio � Jason Stys')"
+        "purpose": "parser = argparse.ArgumentParser(description='Personal Image Model Studio — Jason Stys')"
       },
       {
         "name": "args",
