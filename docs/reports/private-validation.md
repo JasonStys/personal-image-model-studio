@@ -65,6 +65,18 @@ Ruff, Prettier, exact source indexes, TypeScript compilation, pip compatibility
 and npm/Python/CPU-upstream advisory checks passed. Audits reported no known
 vulnerabilities at the recorded time, not a guarantee of no future advisories.
 
+Final executable source `6fe6bad00eb0c65b935272bb421b6b743fcb4fe0` passed
+[Validate run 38339824441](https://github.com/JasonStys/personal-image-model-studio/actions/runs/38339824441):
+all nine jobs green, **105** contract/privacy cases on each OS/Python combination
+and **12** ML cases (**117** distinct Python tests), with the same **26** browser
+scenarios and advisory/style/index checks green.
+[Native release run 38340099114](https://github.com/JasonStys/personal-image-model-studio/actions/runs/38340099114)
+then passed its prepare, **three actual executable** and publish jobs. Every OS
+passed all **11** packaged smoke groups. The resulting
+[0.2.0 download](https://github.com/JasonStys/personal-image-model-studio/releases/tag/v0.2.0)
+is published; earlier failed attempts were preserved as diagnostic history, not
+hidden or counted as passes. Release checksums cover each archive and executable.
+
 ## Deployment, rollback and limits
 
 Verify the archive checksum, extract in a controlled directory and use a private
