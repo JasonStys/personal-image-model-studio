@@ -1,5 +1,7 @@
 # Architecture and decisions
 
+**Current default:** [ADR: private local accounts](adr-private-local.md) adds an HttpOnly-cookie account boundary and encrypted locked workspace around the preserved ML service below. The bearer token is injected internally, never delivered to the account browser. The native CPU executable includes a fixed trusted worker and uses the normal browser. This document's original bearer/WebView diagram describes retained legacy mode, not new account authentication.
+
 The browser/native shell talks to the same authenticated loopback API. SQLite stores compact metadata; images, datasets and safe checkpoints remain private filesystem artifacts. One subprocess runs ML work at a time. Provider OAuth runs in a separate fixed-endpoint connector and never becomes a generic credential-bearing crawler.
 
 ```text

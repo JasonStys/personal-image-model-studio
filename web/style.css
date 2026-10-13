@@ -19,6 +19,83 @@
 body {
   margin: 0;
 }
+.account-screen {
+  display: block !important;
+  padding: 24px;
+  min-height: 100vh;
+}
+.portal-card {
+  max-width: 760px;
+  margin: 24px auto;
+  padding: 32px;
+  background: #fff;
+  border: 1px solid var(--border);
+  border-radius: 18px;
+}
+.portal-card h1 {
+  font-size: 30px;
+}
+.portal-card code {
+  display: block;
+  overflow-wrap: anywhere;
+  margin: 20px 0;
+  padding: 18px;
+  background: #edf3ee;
+}
+.portal-help {
+  margin: 20px 0;
+  max-width: 1000px;
+}
+.portal-help summary {
+  cursor: pointer;
+  font-weight: 650;
+  padding: 12px 0;
+}
+.creator {
+  color: #334e40;
+  font-size: 14px;
+}
+.creator a {
+  color: #234f70;
+  text-underline-offset: 3px;
+}
+.portal-buttons,
+.portal-toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  align-items: center;
+}
+#account-controls {
+  padding: 18px 26px;
+  background: #fff;
+  border-bottom: 1px solid var(--border);
+}
+#account-controls label {
+  margin: 0;
+}
+.portal-file-controls {
+  border: 1px dashed #638977;
+  padding: 12px;
+  margin-bottom: 14px;
+}
+@media (max-width: 600px) {
+  .account-screen {
+    padding: 10px;
+  }
+  .portal-card {
+    padding: 20px;
+  }
+  #account-controls {
+    padding: 12px;
+  }
+  .portal-toolbar {
+    align-items: stretch;
+  }
+  .portal-toolbar button {
+    flex: 1 1 140px;
+  }
+}
 #app {
   display: grid;
   grid-template-columns: 245px minmax(0, 1fr);

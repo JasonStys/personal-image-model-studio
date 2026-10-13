@@ -1,5 +1,7 @@
 # Threat model, complexity and performance
 
+**0.2 default:** [private account threat model](private-accounts.md) replaces the browser bearer session below with HttpOnly local accounts and encrypted locked archives. Active ML remains plaintext on the trusted device. This original section describes preserved legacy behavior/ML protections, not current credential transport. See the [account architecture decision](adr-private-local.md).
+
 ## Scope
 
 This is a private single-user loopback application, not a public multi-tenant service or an OS sandbox. Threats considered: hostile ZIP/JSON/raster/model inputs, accidental private-data publication, cross-site requests, unsafe executable model loaders, queue/compute exhaustion, misleading ML validation and credential leakage. A compromised local machine, hostile selected Python executable, concurrent filesystem attacker or unknown model bias is outside the protection offered here.

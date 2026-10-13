@@ -1,5 +1,7 @@
 # A complete local workflow
 
+**0.2 account mode:** first follow [private installation, login and unlock](private-installation.md). Pick files through the account file selectors instead of typing PC paths. The bundled CPU app supports native models; classic SD/LoRA below requires full source ML extras. Use Help and Lock/Sign out, and retain the independent vault phrase. Legacy bearer-session setup is not the default.
+
 1. Connect to the private local session. Open Datasets & glossary and create the owned synthetic dataset. Inspect its total/flagged counts.
 2. Select that dataset under Train & models. Start a native model at 32 learned pixels, batch 16, learning rate 0.001 and a bounded step/time budget. Tiny CPU/CI runs validate mechanics; thousands of GPU steps are more useful for the limited shape domain.
 3. Watch job progress or cancel explicitly. A completed model displays measured train/held-out image counts, before/after denoising loss and throughput. Noise-prediction MSE is not a semantic quality score.

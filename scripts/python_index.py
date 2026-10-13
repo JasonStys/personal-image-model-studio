@@ -1,6 +1,6 @@
 """AST-derived Python declaration/variable inventory; read source only and emit JSON for the code-map builder."""
 
-# Index: declarations module.inventory@L10, inventory.scope@L17; variables path@L10, source@L12, tree@L13, declarations@L14, variables@L14, child@L15, parent@L15, parents@L15, node@L17, names@L19, node@L21, node@L26, description@L28, parent@L46, value@L61, value@L62. Purposes/parameters: docs/code-map.json.
+# Index: declarations module.inventory@L10, inventory.scope@L19; variables path@L10, source@L12, line@L14, source@L14, tree@L15, declarations@L16, variables@L16, child@L17, parent@L17, parents@L17, node@L19, names@L21, node@L23, node@L28, description@L30, parent@L48, value@L63, value@L64. Purposes/parameters: docs/code-map.json.
 import ast
 import json
 import sys
@@ -10,6 +10,8 @@ from pathlib import Path
 def inventory(path: Path) -> dict:
     """Extract real declaration/argument/assignment locations and source-derived purposes without execution."""
     source = path.read_text(encoding="utf-8")
+    # Preserve line positions, but do not put generated indexes inside module-purpose metadata.
+    source = "\n".join("" if line.startswith("# Index:") else line for line in source.splitlines())
     tree = ast.parse(source)
     declarations, variables = [], []
     parents = {child: parent for parent in ast.walk(tree) for child in ast.iter_child_nodes(parent)}

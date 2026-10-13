@@ -1,0 +1,66 @@
+# Private account/CPU application validation — Jason Stys
+
+Recorded 2026-10-12 (America/Los_Angeles). New tests use fictional aliases,
+disposable directories and owned synthetic shapes; no provider account, private
+artwork or third-party model weights are accessed. Historical 6,000-step quality
+evidence is separate from short regression runs.
+
+## Risk-based gates
+
+| Risk | Executable checks |
+| --- | --- |
+| Credentials/cross-account reads | Password/session storage, second-user API denial, secret-free errors, recovery/revocation/deletion. |
+| Cross-site requests/injected scripts | Exact Host/Origin, mutation header, body cap, CSP/no-store/no-referrer, inert hostile labels, no browser credential storage. |
+| Archives/untrusted files | Authenticated decrypt-before-extract, tampered/wrong-key rejection, traversal/device names, links, ordered chunks/capacity, arbitrary path/runtime denial. |
+| Losing data during sealing | Lock/reopen, interrupted owner recovery, exclusive data-root lock, disk-failure credential preservation. |
+| Fake/nonfunctional learning | Optimizer updates, finite held-out metrics, EMA/RNG/resume, seed replay, masked/expanded pixels and native/LoRA regressions. |
+| Package works only in source | Execute frozen binaries; register, train, generate, encrypt/remove staging, reload identical pixels and revoke login. |
+| Usability/portability | Accessible login/help, responsive mobile viewport, file pickers, browser profiles and OS/Python contracts. |
+
+Local full source suite: **109 passed**, with ResourceWarnings treated as errors;
+three additional archive-portability regressions then passed in the **26-case**
+private suite (112 distinct Python cases total).
+Private browser workflows: **12 passed** across Chromium, WebKit and mobile.
+The genuine Chromium private training/generation/lock/reopen scenario also passed.
+A locally compiled Windows CPU executable passed all **11** smoke groups including
+two optimizer steps and learned PNG generation. Two steps prove execution,
+**not useful image quality**. Final release binaries require the exact-source CI
+gates below; preliminary binaries are not substituted as final release evidence.
+
+Tests exposed missing frozen Diffusers metadata and a Windows startup hang with a
+blocking stdin orphan guard. Recursive metadata collection and exact-parent
+PID/create-time monitoring corrected them. Whole encrypted snapshots may delay
+metadata on a busy disk/CPU: browser operations are bounded at 30 seconds, without
+retries or weakened assertions. Recovery seals successfully **before** consuming
+its one-use code; simulated disk failure verifies that old credentials and unsaved
+work survive.
+
+## Reproduce / release evidence
+
+Use the README commands and `python scripts/smoke_native.py <exact-built-executable>`.
+[Validate](https://github.com/JasonStys/personal-image-model-studio/actions/workflows/validate.yml)
+has six OS/Python contract jobs, legacy/private browser profiles, genuine CPU
+ML/browser jobs, audits, source indexes, formatting and legacy package compilation.
+[Native release](https://github.com/JasonStys/personal-image-model-studio/actions/workflows/release-native.yml)
+requires success for its exact SHA before creating a draft. It builds and executes
+Windows amd64, macOS arm64 and Linux x86_64 CPU packages, publishing only after all
+three succeed. Eleven smoke groups appear in each build log. Final run URLs/counts
+will be recorded after completion, not inferred from local success. CI artifact
+uploads are opt-in; checksummed downloads use Releases.
+
+## Deployment, rollback and limits
+
+Verify the archive checksum, extract in a controlled directory and use a private
+OS login/device encryption. No public deployment, provider sign-in, startup/firewall
+change or driver repair is required. Stop the service and cold-back up the **entire**
+protected account directory before upgrade/restore; an archive alone lacks login/key
+settings. Never overwrite a running data root. Roll back only to a compatible
+account-format build using a preserved backup/new isolated location; 0.1 legacy
+mode cannot read 0.2 encrypted data. Preserve originals on any failure.
+
+Remaining gates: independent penetration review, signing/notarization, recovery
+UX for incomplete hardware-crash state, broad hardware validation, native mobile
+apps and separate public-host privacy architecture. Active ML needs plaintext;
+administrators/malware/crashes remain threats. Tests and audits reduce known risks,
+not a guarantee that every attack/device is safe. Browser extensions/OS-injected
+content are not controlled by application CSP.

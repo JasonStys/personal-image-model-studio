@@ -1,12 +1,13 @@
 """One bounded local ML worker at a time; persistent status, timeout, cancellation and safe publication."""
 
-# Index: declarations module.Jobs@L18, Jobs.__init__@L21, Jobs.submit@L43, Jobs.cancel@L70, Jobs.execute@L77, Jobs.close@L213; variables TERMINAL@L15, interpreter@L22, self@L22, store@L22, worker_source@L22, record@L31, config@L43, kind@L43, references@L43, self@L43, j@L50, identity@L52, directory@L53, request@L55, record@L57, identity@L70, self@L70, record@L72, directory@L77, identity@L77, self@L77, record@L79, request@L84, timeout@L85, started@L86, environment@L87, key@L89, value@L89, word@L90, flags@L101, log@L103, process@L104, cancellation_started@L114, cancellation_started@L117, progress_path@L126, progress@L128, current@L129, result@L138, status@L139, model_path@L145, model@L146, image_path@L160, adapter_path@L175, adapter@L176, current@L194, current@L201, self@L213, record@L217. Purposes/parameters: docs/code-map.json.
+# Index: declarations module.Jobs@L19, Jobs.__init__@L22, Jobs.submit@L45, Jobs.cancel@L72, Jobs.execute@L79, Jobs.close@L246; variables TERMINAL@L16, interpreter@L23, self@L23, store@L23, worker_source@L23, record@L33, config@L45, kind@L45, references@L45, self@L45, j@L52, identity@L54, directory@L55, request@L57, record@L59, identity@L72, self@L72, record@L74, directory@L79, identity@L79, self@L79, record@L81, request@L86, timeout@L87, started@L88, permitted_environment@L89, environment@L111, key@L112, value@L112, flags@L128, log@L130, process@L131, cancellation_started@L145, cancellation_started@L148, progress_path@L157, progress@L159, current@L160, result@L171, status@L172, model_path@L178, model@L179, image_path@L193, adapter_path@L208, adapter@L209, current@L227, current@L234, self@L246, record@L250. Purposes/parameters: docs/code-map.json.
 import os
 import subprocess
 import sys
 import threading
 import time
 import uuid
+import psutil
 from concurrent.futures import ThreadPoolExecutor
 from pathlib import Path
 from studio.files import atomic_json, confined, read_json
@@ -25,6 +26,7 @@ class Jobs:
         self.store = store
         self.interpreter = interpreter if interpreter is not None else sys.executable
         self.worker_source = worker_source or Path(__file__).resolve().parents[1]
+        self.embedded = False
         self.executor = ThreadPoolExecutor(max_workers=1, thread_name_prefix="image-worker")
         self.lock = threading.Lock()
         self.closed = False
@@ -84,10 +86,30 @@ class Jobs:
         request = read_json(directory / "request.json")
         timeout = request["config"].get("max_seconds", 300) + 180
         started = time.monotonic()
+        permitted_environment = {
+            "PATH",
+            "PATHEXT",
+            "SYSTEMROOT",
+            "WINDIR",
+            "TEMP",
+            "TMP",
+            "HOME",
+            "USERPROFILE",
+            "APPDATA",
+            "LOCALAPPDATA",
+            "VIRTUAL_ENV",
+            "LD_LIBRARY_PATH",
+            "DYLD_LIBRARY_PATH",
+            "OMP_NUM_THREADS",
+            "MKL_NUM_THREADS",
+            "OPENBLAS_NUM_THREADS",
+            "CUDA_VISIBLE_DEVICES",
+            "CUDA_PATH",
+            "CUDA_HOME",
+            "NVIDIA_VISIBLE_DEVICES",
+        }
         environment = {
-            key: value
-            for key, value in os.environ.items()
-            if not any(word in key.upper() for word in ("TOKEN", "SECRET", "PASSWORD", "API_KEY"))
+            key: value for key, value in os.environ.items() if key.upper() in permitted_environment
         }
         environment.update(
             {
@@ -96,13 +118,22 @@ class Jobs:
                 "HF_HUB_OFFLINE": "1",
                 "TRANSFORMERS_OFFLINE": "1",
                 "PYTHONUNBUFFERED": "1",
+                "PIMS_PARENT_GUARD": "1",
+                "PIMS_PARENT_PID": str(os.getpid()),
+                "PIMS_PARENT_STARTED": str(psutil.Process().create_time()),
+                "HF_HUB_DISABLE_TELEMETRY": "1",
+                "DO_NOT_TRACK": "1",
             }
         )
         flags = subprocess.CREATE_NO_WINDOW if os.name == "nt" else 0
         try:
             with (directory / "worker.log").open("w", encoding="utf-8") as log:
                 process = subprocess.Popen(
-                    [self.interpreter, "-m", "studio.worker", str(directory)],
+                    (
+                        [sys.executable, "--studio-worker", str(directory)]
+                        if self.embedded
+                        else [self.interpreter, "-m", "studio.worker", str(directory)]
+                    ),
                     stdin=subprocess.DEVNULL,
                     stdout=log,
                     stderr=log,
@@ -133,6 +164,8 @@ class Jobs:
                     if process.poll() is None:
                         process.kill()
                     process.wait()
+                    if process.stdin:
+                        process.stdin.close()
             if not (directory / "result.json").exists():
                 raise ValueError("Worker did not publish a result; inspect its private log")
             result = read_json(directory / "result.json", 2_000_000)

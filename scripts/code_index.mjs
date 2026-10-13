@@ -1,5 +1,5 @@
 /** Regenerate/check exact AST source indexes; file edits are bulk mechanical metadata updates only. */
-// Index: declarations walk@L30, inventory@L44, visit@L58, names@L80, publish@L108; variables root@L8, check@L9, python@L10, files@L19, file@L26, directory@L30, entry@L33, file@L40, file@L44, source@L44, result@L46, tree@L53, declarations@L54, variables@L55, line@L56, node@L56, node@L58, comments@L66, comment@L73, comment@L74, identifiers@L79, name@L80, element@L83, name@L88, file@L108, text@L108, previous@L109, maps@L121, file@L122, source@L123, marker@L124, line@L125, lines@L127, result@L132, header@L133, value@L133, value@L133, line@L138. Purposes/parameters: docs/code-map.json.
+// Index: declarations walk@L31, inventory@L45, visit@L59, names@L81, publish@L109; variables root@L8, check@L9, python@L10, files@L19, file@L27, directory@L31, entry@L34, file@L41, file@L45, source@L45, result@L47, tree@L54, declarations@L55, variables@L56, line@L57, node@L57, node@L59, comments@L67, comment@L74, comment@L75, identifiers@L80, name@L81, element@L84, name@L89, file@L109, text@L109, previous@L110, maps@L122, file@L123, source@L124, marker@L125, line@L126, lines@L128, result@L133, header@L134, value@L134, value@L134, line@L139. Purposes/parameters: docs/code-map.json.
 import fs from "node:fs";
 import path from "node:path";
 import { spawnSync } from "node:child_process";
@@ -22,6 +22,7 @@ const files = [
   ...walk("tests"),
   ...walk("web"),
   "playwright.config.ts",
+  "playwright.private.config.ts",
 ]
   .filter((file) => /\.(py|ts|mjs)$/.test(file))
   .sort();

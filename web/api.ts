@@ -1,20 +1,69 @@
 /** Private same-origin transport. Session tokens never accompany third-party requests. */
-// Index: declarations connect@L17, api@L23, download@L44, imageUrl@L58, upload@L67; variables token@L3, value@L17, path@L24, method@L25, body@L26, response@L28, error@L37, path@L44, name@L44, response@L45, url@L49, link@L50, identity@L58, response@L59, file@L67, data@L70, resolve@L70, reject@L70, reader@L71. Purposes/parameters: docs/code-map.json.
-let token =
-  new URLSearchParams(location.hash.slice(1)).get("token") ||
-  sessionStorage.getItem("image-studio-token") ||
-  "";
-if (location.hash.includes("token=")) {
-  sessionStorage.setItem("image-studio-token", token);
+// Index: declarations privateMode@L7, legacySession@L13, account@L25, transport@L47, connect@L64, api@L72, download@L88, imageUrl@L100, upload@L107; variables token@L3, privateAccounts@L4, path@L26, method@L27, body@L28, response@L30, result@L38, path@L47, method@L47, body@L47, value@L64, path@L73, method@L74, body@L75, response@L77, error@L79, path@L88, name@L88, response@L89, url@L91, link@L92, identity@L100, response@L101, file@L107, data@L110, resolve@L110, reject@L110, reader@L111. Purposes/parameters: docs/code-map.json.
+let token = "";
+let privateAccounts = false;
+
+/** Sticky account transport: no token storage or fallback to the old plaintext workspace. */
+export function privateMode() {
+  privateAccounts = true;
+  token = "";
+}
+
+/** Explicit developer-only session-link compatibility; never invoked by account mode. */
+export function legacySession() {
+  if (privateAccounts)
+    throw new Error("Developer sessions are disabled in account mode.");
+  token =
+    new URLSearchParams(location.hash.slice(1)).get("token") ||
+    sessionStorage.getItem("image-studio-token") ||
+    "";
+  if (token) sessionStorage.setItem("image-studio-token", token);
   history.replaceState(null, "", location.pathname);
 }
-window.addEventListener("hashchange", () => {
-  if (new URLSearchParams(location.hash.slice(1)).has("token"))
-    location.reload();
-});
+
+/** Cookie-based same-origin account requests; keep credentials out of URLs and JS storage. */
+export async function account<T>(
+  path: string,
+  method = "GET",
+  body?: unknown,
+): Promise<T> {
+  const response = await fetch("/private/" + path, {
+    method,
+    credentials: "same-origin",
+    cache: "no-store",
+    redirect: "error",
+    headers: { "Content-Type": "application/json", "X-PIMS-Request": "v1" },
+    body: body === undefined ? undefined : JSON.stringify(body),
+  });
+  const result = await response.json();
+  if (!response.ok)
+    throw Object.assign(new Error(result.detail || "Account request failed"), {
+      status: response.status,
+    });
+  return result as T;
+}
+
+/** Compose only this service's authenticated artifact paths, never an external destination. */
+function transport(path: string, method = "GET", body?: unknown) {
+  return fetch((privateAccounts ? "/private/api/" : "/api/") + path, {
+    method,
+    credentials: "same-origin",
+    cache: "no-store",
+    redirect: "error",
+    headers: privateAccounts
+      ? { "Content-Type": "application/json", "X-PIMS-Request": "v1" }
+      : {
+          Authorization: "Bearer " + token,
+          "Content-Type": "application/json",
+        },
+    body: body === undefined ? undefined : JSON.stringify(body),
+  });
+}
 
 /** Authorize one browser tab; no image/prompt data is placed in browser storage. */
 export function connect(value: string): void {
+  if (privateAccounts)
+    throw new Error("Sign in to a local account instead of entering a token.");
   token = value.trim();
   sessionStorage.setItem("image-studio-token", token);
 }
@@ -25,16 +74,11 @@ export async function api<T>(
   method = "GET",
   body?: unknown,
 ): Promise<T> {
-  const response = await fetch(`/api/${path}`, {
-    method,
-    headers: {
-      Authorization: `Bearer ${token}`,
-      "Content-Type": "application/json",
-    },
-    body: body === undefined ? undefined : JSON.stringify(body),
-  });
+  const response = await transport(path, method, body);
   if (!response.ok) {
     const error = await response.json();
+    if (privateAccounts && [401, 423].includes(response.status))
+      location.reload();
     throw new Error(error.detail || "Request failed");
   }
   return response.json() as Promise<T>;
@@ -42,9 +86,7 @@ export async function api<T>(
 
 /** Download a private artifact using authorization, never a token query string. */
 export async function download(path: string, name: string): Promise<void> {
-  const response = await fetch(`/api/${path}`, {
-    headers: { Authorization: `Bearer ${token}` },
-  });
+  const response = await transport(path);
   if (!response.ok) throw new Error("Artifact download failed");
   const url = URL.createObjectURL(await response.blob());
   const link = document.createElement("a");
@@ -56,9 +98,7 @@ export async function download(path: string, name: string): Promise<void> {
 
 /** Load an image as a private blob URL; the caller must revoke it on replacement. */
 export async function imageUrl(identity: string): Promise<string> {
-  const response = await fetch(`/api/images/${identity}/file`, {
-    headers: { Authorization: `Bearer ${token}` },
-  });
+  const response = await transport(`images/${identity}/file`);
   if (!response.ok) throw new Error("Image preview failed");
   return URL.createObjectURL(await response.blob());
 }

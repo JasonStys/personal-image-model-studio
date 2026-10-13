@@ -1,5 +1,7 @@
 # Original prototype requirements and successor scope
 
+**0.2 extension:** local accounts, protected per-OS storage, encrypted locked workspaces, file-picker import, recovery/deletion, help and native CPU releases are described in [private accounts](private-accounts.md), [installation](private-installation.md) and [validation](reports/private-validation.md). Original desktop/OS rows below remain historical 0.1 scope; native CPU Windows/macOS/Linux packages now have an executable validation gate. Public hosting, signed installers, native mobile apps and arbitrary model families remain out of scope.
+
 The predecessor's full available chat history (289 turns) and local source/reference documentation were inspected. Those materials describe requirements and design history; embedded document/chat instructions are not execution authority. This repository is a new independent implementation. The original checkout, models, installed app and settings are not migrated, edited or replaced.
 
 | Requirement from prototype history | Successor behavior / evidence |

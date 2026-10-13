@@ -1,15 +1,34 @@
 """Trusted ML subprocess entry point: input JSON, bounded progress and atomic terminal output."""
 
-# Index: declarations module.run@L9, run.progress@L14, run.cancel@L18; variables directory@L9, request@L11, config@L12, references@L12, value@L14, model@L27, p@L29, result@L35, model@L39, p@L41, result@L47, source@L53, mask@L54, options@L59, details@L62, result@L72, result@L76, result@L78. Purposes/parameters: docs/code-map.json.
+# Index: declarations module.run@L11, run.parent_closed@L15, run.progress@L33, run.cancel@L37; variables directory@L11, parent@L20, request@L29, config@L30, references@L30, value@L33, model@L46, p@L48, result@L54, model@L60, p@L62, result@L68, source@L74, mask@L75, options@L80, details@L83, result@L93, result@L97, result@L99. Purposes/parameters: docs/code-map.json.
 import sys
+import os
+import threading
 from pathlib import Path
 from studio.files import atomic_json, read_json
 
 
 def run(directory: Path) -> None:
     """Dispatch only recognized local tasks; complete artifacts must exist before result publication."""
+    if os.environ.get("PIMS_PARENT_GUARD") == "1":
+
+        def parent_closed():
+            """Watch the exact parent PID/create-time pair without interfering with ML libraries' standard I/O."""
+            import psutil
+
+            try:
+                parent = psutil.Process(int(os.environ["PIMS_PARENT_PID"]))
+                if parent.create_time() != float(os.environ["PIMS_PARENT_STARTED"]):
+                    os._exit(143)
+                parent.wait()
+            except (psutil.Error, ValueError, KeyError):
+                pass
+            os._exit(143)
+
+        threading.Thread(target=parent_closed, daemon=True, name="parent-lifecycle").start()
     request = read_json(directory / "request.json")
     config, references = request["config"], request["references"]
+    atomic_json(directory / "progress.json", {"stage": "trusted-worker-entry"})
 
     def progress(value):
         """Publish a small progress snapshot without retaining an unbounded event history."""
@@ -34,8 +53,10 @@ def run(directory: Path) -> None:
                 )
                 result = {"status": model["status"], "lora": "model", "details": model}
             else:
+                progress({"stage": "loading-native-training-runtime"})
                 from studio.training import train
 
+                progress({"stage": "starting-native-optimization"})
                 model = train(
                     config,
                     [Path(p) for p in references["datasets"]],

@@ -1,18 +1,23 @@
 {
   "name": "personal-image-model-studio",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "private": true,
   "type": "module",
+  "overrides": {
+    "source-map-js": "1.2.2"
+  },
   "scripts": {
     "build": "tsc --noEmit && vite build",
-    "test:browser": "playwright test"
+    "test:browser": "playwright test",
+    "test:private": "playwright test --config=playwright.private.config.ts"
   },
   "devDependencies": {
-    "typescript": "5.9.3",
-    "vite": "8.3.1",
-    "@playwright/test": "1.63.0",
     "@axe-core/playwright": "^4.10.2",
+    "@playwright/test": "1.63.0",
+    "@types/node": "^24.0.0",
+    "fflate": "0.8.3",
     "prettier": "3.9.9",
-    "@types/node": "^24.0.0"
+    "typescript": "5.9.3",
+    "vite": "8.3.1"
   }
 }

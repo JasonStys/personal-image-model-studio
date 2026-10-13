@@ -1,5 +1,7 @@
 # Installation and packaging
 
+**0.2 default:** use the self-contained CPU account application and [private installation guide](private-installation.md). The instructions below describe the preserved **legacy developer shell**, not the default encrypted account app. Legacy artifacts are uploaded only when explicitly enabled in CI; use Releases for new CPU downloads.
+
 ## Browser/developer setup
 
 Use Python 3.12 and Node 24. Create a **new** `.venv` for this repository; do not reuse/upgrade an unrelated application's runtime. Install `.[dev,ml,desktop]`, run `npm ci` and `npm run build`, then `python -m studio.cli --port 8016`. The private token link printed by the CLI authorizes one local session. Tokens are not model/API credentials and must not be published. Closing the browser does not stop a separately launched server; stop its own terminal/server when finished.
