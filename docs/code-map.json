@@ -89,7 +89,7 @@
       },
       {
         "name": "module.main",
-        "line": 55,
+        "line": 47,
         "kind": "FunctionDef",
         "purpose": "Build native CPU features only; never silently ship GPU drivers, pretrained weights or private runtime data."
       }
@@ -111,174 +111,180 @@
         "name": "packages",
         "scope": "notices",
         "line": 19,
-        "purpose": "packages = ('torch', 'numpy', 'diffusers', 'safetensors', 'Pillow', 'cryptography', 'psutil', 'fastapi', 'starlette', 'uvicorn', 'pydantic', 'huggingface-hub', 'PyInstaller')"
+        "purpose": "packages = sorted({distribution.metadata['Name'] for distribution in importlib.metadata.distributions()})"
+      },
+      {
+        "name": "distribution",
+        "scope": "notices",
+        "line": 20,
+        "purpose": " for distribution in importlib.metadata.distributions()"
       },
       {
         "name": "parts",
         "scope": "notices",
-        "line": 34,
-        "purpose": "parts = ['Personal Image Model Studio — Jason Stys\\nThird-party dependency notices; see each upstream distribution for complete licensing.\\n']"
+        "line": 22,
+        "purpose": "parts = ['Personal Image Model Studio — Jason Stys\\nInstalled build/runtime dependency notices; some build-only packages are not included in the native CPU executable.\\n', f'Python"
       },
       {
         "name": "name",
         "scope": "notices",
-        "line": 37,
+        "line": 29,
         "purpose": "for name in packages:\n    distribution = importlib.metadata.distribution(name)\n    parts.append(f\"\\n=== {name} {distribution.version} ===\\nLicense: {distribution.metadata.get('Lice"
       },
       {
         "name": "distribution",
         "scope": "notices",
-        "line": 38,
+        "line": 30,
         "purpose": "distribution = importlib.metadata.distribution(name)"
       },
       {
         "name": "file",
         "scope": "notices",
-        "line": 42,
+        "line": 34,
         "purpose": "for file in distribution.files or []:\n    text = str(file)\n    if '.dist-info/' in text and 'license' in text.lower() and distribution.locate_file(file).is_file():\n        parts.ap"
       },
       {
         "name": "text",
         "scope": "notices",
-        "line": 43,
+        "line": 35,
         "purpose": "text = str(file)"
       },
       {
         "name": "root",
         "scope": "main",
-        "line": 57,
+        "line": 49,
         "purpose": "root = Path(__file__).resolve().parents[1]"
       },
       {
         "name": "output",
         "scope": "main",
-        "line": 60,
+        "line": 52,
         "purpose": "output = root / 'artifacts' / 'native'"
       },
       {
         "name": "command",
         "scope": "main",
-        "line": 63,
+        "line": 55,
         "purpose": "command = [sys.executable, '-m', 'PyInstaller', '--noconfirm', '--onefile', '--console', '--noupx', '--name', 'PersonalImageModelStudio', '--distpath', str(output), '--workpath', s"
       },
       {
         "name": "name",
         "scope": "main",
-        "line": 100,
+        "line": 92,
         "purpose": "for name in ('transformers', 'torchvision', 'peft', 'accelerate', 'tensorflow', 'webview', 'pytest', 'hypothesis', 'matplotlib', 'scipy', 'IPython'):\n    command += ['--exclude-mod"
       },
       {
         "name": "command",
         "scope": "main",
-        "line": 113,
+        "line": 105,
         "purpose": "command += ['--exclude-module', name]"
       },
       {
         "name": "executable",
         "scope": "main",
-        "line": 116,
+        "line": 108,
         "purpose": "executable = output / ('PersonalImageModelStudio.exe' if sys.platform == 'win32' else 'PersonalImageModelStudio')"
       },
       {
         "name": "system",
         "scope": "main",
-        "line": 121,
+        "line": 113,
         "purpose": "system = 'windows' if sys.platform == 'win32' else 'darwin' if sys.platform == 'darwin' else 'linux'"
       },
       {
         "name": "machine",
         "scope": "main",
-        "line": 124,
+        "line": 116,
         "purpose": "machine = platform.machine().lower()"
       },
       {
         "name": "architecture",
         "scope": "main",
-        "line": 125,
+        "line": 117,
         "purpose": "architecture = 'amd64' if system == 'windows' else 'arm64' if machine in {'arm64', 'aarch64'} else 'x86_64'"
       },
       {
         "name": "prefix",
         "scope": "main",
-        "line": 128,
+        "line": 120,
         "purpose": "prefix = f'PersonalImageModelStudio-{VERSION}-{system}-{architecture}'"
       },
       {
         "name": "notice",
         "scope": "main",
-        "line": 129,
+        "line": 121,
         "purpose": "notice = output / 'THIRD_PARTY.txt'"
       },
       {
         "name": "files",
         "scope": "main",
-        "line": 131,
+        "line": 123,
         "purpose": "files = {executable.name: executable, 'LICENSE': root / 'LICENSE', 'INSTALL.md': root / 'docs' / 'private-installation.md', 'THIRD_PARTY.txt': notice}"
       },
       {
         "name": "archive",
         "scope": "main",
-        "line": 138,
+        "line": 130,
         "purpose": "archive = output / (prefix + '.zip')"
       },
       {
         "name": "package",
         "scope": "main",
-        "line": 139,
+        "line": 131,
         "purpose": "zipfile.ZipFile(archive, 'w', compression=zipfile.ZIP_DEFLATED) as package"
       },
       {
         "name": "name",
         "scope": "main",
-        "line": 140,
+        "line": 132,
         "purpose": "(name, path)"
       },
       {
         "name": "path",
         "scope": "main",
-        "line": 140,
+        "line": 132,
         "purpose": "(name, path)"
       },
       {
         "name": "archive",
         "scope": "main",
-        "line": 143,
+        "line": 135,
         "purpose": "archive = output / (prefix + '.tar.gz')"
       },
       {
         "name": "package",
         "scope": "main",
-        "line": 144,
+        "line": 136,
         "purpose": "tarfile.open(archive, 'w:gz') as package"
       },
       {
         "name": "name",
         "scope": "main",
-        "line": 145,
+        "line": 137,
         "purpose": "(name, path)"
       },
       {
         "name": "path",
         "scope": "main",
-        "line": 145,
+        "line": 137,
         "purpose": "(name, path)"
       },
       {
         "name": "rows",
         "scope": "main",
-        "line": 147,
+        "line": 139,
         "purpose": "rows = []"
       },
       {
         "name": "file",
         "scope": "main",
-        "line": 148,
+        "line": 140,
         "purpose": "for file in (archive, executable):\n    with file.open('rb') as content:\n        rows.append(hashlib.file_digest(content, 'sha256').hexdigest() + '  ' + file.name)"
       },
       {
         "name": "content",
         "scope": "main",
-        "line": 149,
+        "line": 141,
         "purpose": "file.open('rb') as content"
       }
     ]
@@ -5550,37 +5556,43 @@
     "declarations": [
       {
         "name": "module.digest",
-        "line": 17,
+        "line": 18,
         "kind": "FunctionDef",
         "purpose": "Stream a SHA-256 digest without retaining a whole model in memory."
       },
       {
         "name": "module.confined",
-        "line": 23,
+        "line": 24,
         "kind": "FunctionDef",
         "purpose": "Resolve a known relative artifact path and reject traversal/symlink escapes."
       },
       {
         "name": "module.read_json",
-        "line": 31,
+        "line": 32,
         "kind": "FunctionDef",
         "purpose": "Read a size-bounded JSON object; reject duplicate keys and non-finite numbers."
       },
       {
         "name": "read_json.pairs",
-        "line": 36,
+        "line": 37,
         "kind": "FunctionDef",
         "purpose": "Reject duplicate keys instead of silently choosing the last value."
       },
       {
+        "name": "module.replace_file",
+        "line": 54,
+        "kind": "FunctionDef",
+        "purpose": "Atomically replace with at most eight attempts for Windows file-sharing errors; never relax ACLs."
+      },
+      {
         "name": "module.atomic_json",
-        "line": 53,
+        "line": 68,
         "kind": "FunctionDef",
         "purpose": "Publish complete JSON via same-directory replace; clean only this function's temp file."
       },
       {
         "name": "module.normalized_image",
-        "line": 67,
+        "line": 82,
         "kind": "FunctionDef",
         "purpose": "Decode one bounded supported raster, apply EXIF rotation and strip metadata on output."
       }
@@ -5589,133 +5601,151 @@
       {
         "name": "MAX_IMAGE_BYTES",
         "scope": "module",
-        "line": 12,
+        "line": 13,
         "purpose": "MAX_IMAGE_BYTES = 20 * 1024 * 1024"
       },
       {
         "name": "MAX_PIXELS",
         "scope": "module",
-        "line": 13,
+        "line": 14,
         "purpose": "MAX_PIXELS = 4194304"
       },
       {
         "name": "path",
         "scope": "digest",
-        "line": 17,
+        "line": 18,
         "purpose": "Function parameter"
       },
       {
         "name": "stream",
         "scope": "digest",
-        "line": 19,
+        "line": 20,
         "purpose": "path.open('rb') as stream"
       },
       {
         "name": "relative",
         "scope": "confined",
-        "line": 23,
+        "line": 24,
         "purpose": "Function parameter"
       },
       {
         "name": "root",
         "scope": "confined",
-        "line": 23,
+        "line": 24,
         "purpose": "Function parameter"
       },
       {
         "name": "path",
         "scope": "confined",
-        "line": 25,
+        "line": 26,
         "purpose": "path = (root / relative).resolve()"
       },
       {
         "name": "limit",
         "scope": "read_json",
-        "line": 31,
+        "line": 32,
         "purpose": "Function parameter"
       },
       {
         "name": "path",
         "scope": "read_json",
-        "line": 31,
+        "line": 32,
         "purpose": "Function parameter"
       },
       {
         "name": "items",
         "scope": "read_json.pairs",
-        "line": 36,
+        "line": 37,
         "purpose": "Function parameter"
       },
       {
         "name": "result",
         "scope": "read_json.pairs",
-        "line": 38,
+        "line": 39,
         "purpose": "result = dict(items)"
       },
       {
         "name": "value",
         "scope": "read_json",
-        "line": 43,
+        "line": 44,
         "purpose": "value = json.loads(path.read_text(encoding='utf-8'), object_pairs_hook=pairs, parse_constant=lambda value: (_ for _ in ()).throw(ValueError('Non-finite JSON')))"
       },
       {
         "name": "_",
         "scope": "read_json",
-        "line": 46,
+        "line": 47,
         "purpose": " for _ in ()"
       },
       {
         "name": "value",
         "scope": "read_json",
-        "line": 46,
+        "line": 47,
         "purpose": "Function parameter"
+      },
+      {
+        "name": "destination",
+        "scope": "replace_file",
+        "line": 54,
+        "purpose": "Function parameter"
+      },
+      {
+        "name": "source",
+        "scope": "replace_file",
+        "line": 54,
+        "purpose": "Function parameter"
+      },
+      {
+        "name": "attempt",
+        "scope": "replace_file",
+        "line": 56,
+        "purpose": "for attempt in range(8):\n    try:\n        os.replace(source, destination)\n        return\n    except PermissionError as error:\n        if getattr(error, 'winerror', None) not in {5,"
       },
       {
         "name": "path",
         "scope": "atomic_json",
-        "line": 53,
+        "line": 68,
         "purpose": "Function parameter"
       },
       {
         "name": "value",
         "scope": "atomic_json",
-        "line": 53,
+        "line": 68,
         "purpose": "Function parameter"
       },
       {
         "name": "descriptor",
         "scope": "atomic_json",
-        "line": 56,
+        "line": 71,
         "purpose": "(descriptor, temporary)"
       },
       {
         "name": "temporary",
         "scope": "atomic_json",
-        "line": 56,
+        "line": 71,
         "purpose": "(descriptor, temporary)"
       },
       {
         "name": "stream",
         "scope": "atomic_json",
-        "line": 58,
+        "line": 73,
         "purpose": "os.fdopen(descriptor, 'w', encoding='utf-8') as stream"
       },
       {
         "name": "path",
         "scope": "normalized_image",
-        "line": 67,
+        "line": 82,
         "purpose": "Function parameter"
       },
       {
         "name": "image",
         "scope": "normalized_image",
-        "line": 73,
+        "line": 88,
         "purpose": "Image.open(path) as image"
       },
       {
         "name": "normalized",
         "scope": "normalized_image",
-        "line": 78,
+        "line": 93,
         "purpose": "normalized = ImageOps.exif_transpose(image).convert('RGB')"
       }
     ]
@@ -11631,86 +11661,110 @@
         "purpose": "Create an owned fixture raster, not a substituted model generation result."
       },
       {
+        "name": "module.test_atomic_publication_transient_windows_reader",
+        "line": 44,
+        "kind": "FunctionDef",
+        "purpose": "Retry only recognized Windows sharing errors; keep old complete JSON on unrelated failures."
+      },
+      {
+        "name": "test_atomic_publication_transient_windows_reader.temporary_reader",
+        "line": 53,
+        "kind": "FunctionDef",
+        "purpose": "Simulate one transient file reader without changing real filesystem permissions."
+      },
+      {
+        "name": "module.test_atomic_publication_permanent_denial",
+        "line": 75,
+        "kind": "FunctionDef",
+        "purpose": "A persistent denial has a finite retry budget, preserves original data and removes only its temp file."
+      },
+      {
+        "name": "test_atomic_publication_permanent_denial.denied",
+        "line": 83,
+        "kind": "FunctionDef",
+        "purpose": "Simulate a permanent Windows denial in this disposable test only."
+      },
+      {
         "name": "module.test_reject_ignored_or_missing_images",
-        "line": 52,
+        "line": 107,
         "kind": "FunctionDef",
         "purpose": "Edit modes never silently ignore a source/mask or fabricate a required input."
       },
       {
         "name": "module.test_weight_grammar_rejects_ambiguity",
-        "line": 59,
+        "line": 114,
         "kind": "FunctionDef",
         "purpose": "Unsupported weight/nesting syntax must fail explicitly."
       },
       {
         "name": "module.test_structured_positive_negative_regions",
-        "line": 65,
+        "line": 120,
         "kind": "FunctionDef",
         "purpose": "Independent fields remain separate and numeric weights survive compilation."
       },
       {
         "name": "module.test_plain_unicode_weights_are_finite",
-        "line": 84,
+        "line": 139,
         "kind": "FunctionDef",
         "purpose": "Property-test plain Unicode spans without granting unsupported parenthesis syntax."
       },
       {
         "name": "module.test_phrase_policy_sees_weighted_and_normalized_text",
-        "line": 89,
+        "line": 144,
         "kind": "FunctionDef",
         "purpose": "Transparent word policy cannot be bypassed merely by adding numeric weight syntax."
       },
       {
         "name": "module.test_training_modes_and_limits",
-        "line": 95,
+        "line": 150,
         "kind": "FunctionDef",
         "purpose": "Native and LoRA configurations have different explicit prerequisites."
       },
       {
         "name": "module.test_zip_rejects_unsafe_members_before_extraction",
-        "line": 108,
+        "line": 163,
         "kind": "FunctionDef",
         "purpose": "Traversal and executable files never reach an extraction destination."
       },
       {
         "name": "module.test_quarantine_dedup_and_atomic_failure",
-        "line": 125,
+        "line": 180,
         "kind": "FunctionDef",
         "purpose": "Deduplication cannot erase AI-origin labels; conflicting provenance aborts publication."
       },
       {
         "name": "module.test_json_and_confinement",
-        "line": 148,
+        "line": 203,
         "kind": "FunctionDef",
         "purpose": "Strict JSON rejects ambiguous keys, NaN, nonobjects and oversized metadata."
       },
       {
         "name": "module.test_image_metadata_is_removed",
-        "line": 161,
+        "line": 216,
         "kind": "FunctionDef",
         "purpose": "Private EXIF data must not survive normalization, even when Pillow propagates image info."
       },
       {
         "name": "module.test_http_auth_origin_body_and_safe_errors",
-        "line": 174,
+        "line": 229,
         "kind": "FunctionDef",
         "purpose": "Authentication precedes parsing; hostile origins/hosts and bad payloads fail closed."
       },
       {
         "name": "module.test_http_synthetic_glossary_upload_feedback",
-        "line": 194,
+        "line": 249,
         "kind": "FunctionDef",
         "purpose": "Real synthetic import, validated glossary and consented feedback round-trip through HTTP/SQLite."
       },
       {
         "name": "module.test_store_feedback_export_and_latest_consent",
-        "line": 238,
+        "line": 293,
         "kind": "FunctionDef",
         "purpose": "Consent revocation wins over older opt-in; exported pixels stay labelled AI-origin."
       },
       {
         "name": "module.test_pretrained_inspection_blocks_executable_components",
-        "line": 265,
+        "line": 320,
         "kind": "FunctionDef",
         "purpose": "Even a local safe-tensor model cannot request arbitrary Python component classes."
       }
@@ -11759,243 +11813,351 @@
         "purpose": "image = Image.new('RGB', (32, 32), color)"
       },
       {
+        "name": "code",
+        "scope": "test_atomic_publication_transient_windows_reader",
+        "line": 44,
+        "purpose": "Function parameter"
+      },
+      {
+        "name": "monkeypatch",
+        "scope": "test_atomic_publication_transient_windows_reader",
+        "line": 44,
+        "purpose": "Function parameter"
+      },
+      {
+        "name": "tmp_path",
+        "scope": "test_atomic_publication_transient_windows_reader",
+        "line": 44,
+        "purpose": "Function parameter"
+      },
+      {
+        "name": "path",
+        "scope": "test_atomic_publication_transient_windows_reader",
+        "line": 48,
+        "purpose": "path = tmp_path / 'progress.json'"
+      },
+      {
+        "name": "replace",
+        "scope": "test_atomic_publication_transient_windows_reader",
+        "line": 50,
+        "purpose": "replace = files.os.replace"
+      },
+      {
+        "name": "attempts",
+        "scope": "test_atomic_publication_transient_windows_reader",
+        "line": 51,
+        "purpose": "(attempts, delays)"
+      },
+      {
+        "name": "delays",
+        "scope": "test_atomic_publication_transient_windows_reader",
+        "line": 51,
+        "purpose": "(attempts, delays)"
+      },
+      {
+        "name": "destination",
+        "scope": "test_atomic_publication_transient_windows_reader.temporary_reader",
+        "line": 53,
+        "purpose": "Function parameter"
+      },
+      {
+        "name": "source",
+        "scope": "test_atomic_publication_transient_windows_reader.temporary_reader",
+        "line": 53,
+        "purpose": "Function parameter"
+      },
+      {
+        "name": "error",
+        "scope": "test_atomic_publication_transient_windows_reader.temporary_reader",
+        "line": 57,
+        "purpose": "error = PermissionError('Synthetic file-sharing denial')"
+      },
+      {
+        "name": "monkeypatch",
+        "scope": "test_atomic_publication_permanent_denial",
+        "line": 75,
+        "purpose": "Function parameter"
+      },
+      {
+        "name": "tmp_path",
+        "scope": "test_atomic_publication_permanent_denial",
+        "line": 75,
+        "purpose": "Function parameter"
+      },
+      {
+        "name": "path",
+        "scope": "test_atomic_publication_permanent_denial",
+        "line": 79,
+        "purpose": "path = tmp_path / 'progress.json'"
+      },
+      {
+        "name": "attempts",
+        "scope": "test_atomic_publication_permanent_denial",
+        "line": 81,
+        "purpose": "(attempts, delays)"
+      },
+      {
+        "name": "delays",
+        "scope": "test_atomic_publication_permanent_denial",
+        "line": 81,
+        "purpose": "(attempts, delays)"
+      },
+      {
+        "name": "destination",
+        "scope": "test_atomic_publication_permanent_denial.denied",
+        "line": 83,
+        "purpose": "Function parameter"
+      },
+      {
+        "name": "source",
+        "scope": "test_atomic_publication_permanent_denial.denied",
+        "line": 83,
+        "purpose": "Function parameter"
+      },
+      {
+        "name": "error",
+        "scope": "test_atomic_publication_permanent_denial.denied",
+        "line": 86,
+        "purpose": "error = PermissionError('Synthetic permanent denial')"
+      },
+      {
         "name": "extra",
         "scope": "test_reject_ignored_or_missing_images",
-        "line": 52,
+        "line": 107,
         "purpose": "Function parameter"
       },
       {
         "name": "mode",
         "scope": "test_reject_ignored_or_missing_images",
-        "line": 52,
+        "line": 107,
         "purpose": "Function parameter"
       },
       {
         "name": "value",
         "scope": "test_weight_grammar_rejects_ambiguity",
-        "line": 59,
+        "line": 114,
         "purpose": "Function parameter"
       },
       {
         "name": "prompt",
         "scope": "test_structured_positive_negative_regions",
-        "line": 67,
+        "line": 122,
         "purpose": "prompt = Prompt(style='watercolor', tags='(blue:1.4)', negative_style='oil', subjects=[Subject(description='circle', region=(0, 0, 0.5, 1), negative='square')])"
       },
       {
         "name": "result",
         "scope": "test_structured_positive_negative_regions",
-        "line": 73,
+        "line": 128,
         "purpose": "result = compile_prompt(prompt.model_dump())"
       },
       {
         "name": "value",
         "scope": "test_plain_unicode_weights_are_finite",
-        "line": 84,
+        "line": 139,
         "purpose": "Function parameter"
       },
       {
         "name": "_",
         "scope": "test_plain_unicode_weights_are_finite",
-        "line": 86,
+        "line": 141,
         "purpose": "(_, weight)"
       },
       {
         "name": "weight",
         "scope": "test_plain_unicode_weights_are_finite",
-        "line": 86,
+        "line": 141,
         "purpose": "(_, weight)"
       },
       {
         "name": "member",
         "scope": "test_zip_rejects_unsafe_members_before_extraction",
-        "line": 108,
+        "line": 163,
         "purpose": "Function parameter"
       },
       {
         "name": "tmp_path",
         "scope": "test_zip_rejects_unsafe_members_before_extraction",
-        "line": 108,
+        "line": 163,
         "purpose": "Function parameter"
       },
       {
         "name": "source",
         "scope": "test_zip_rejects_unsafe_members_before_extraction",
-        "line": 110,
+        "line": 165,
         "purpose": "source = tmp_path / 'source.zip'"
       },
       {
         "name": "archive",
         "scope": "test_zip_rejects_unsafe_members_before_extraction",
-        "line": 111,
+        "line": 166,
         "purpose": "zipfile.ZipFile(source, 'w') as archive"
       },
       {
         "name": "entry",
         "scope": "test_zip_rejects_unsafe_members_before_extraction",
-        "line": 113,
+        "line": 168,
         "purpose": "entry = zipfile.ZipInfo(member)"
       },
       {
         "name": "destination",
         "scope": "test_zip_rejects_unsafe_members_before_extraction",
-        "line": 118,
+        "line": 173,
         "purpose": "destination = tmp_path / 'out'"
       },
       {
         "name": "tmp_path",
         "scope": "test_quarantine_dedup_and_atomic_failure",
-        "line": 125,
+        "line": 180,
         "purpose": "Function parameter"
       },
       {
         "name": "source",
         "scope": "test_quarantine_dedup_and_atomic_failure",
-        "line": 127,
+        "line": 182,
         "purpose": "source = tmp_path / 'source'"
       },
       {
         "name": "manifest",
         "scope": "test_quarantine_dedup_and_atomic_failure",
-        "line": 133,
+        "line": 188,
         "purpose": "manifest = import_dataset([str(source)], tmp_path / 'output', 'fixture')"
       },
       {
         "name": "split",
         "scope": "test_quarantine_dedup_and_atomic_failure",
-        "line": 137,
+        "line": 192,
         "purpose": " for split in ('train', 'validation')"
       },
       {
         "name": "record",
         "scope": "test_quarantine_dedup_and_atomic_failure",
-        "line": 138,
+        "line": 193,
         "purpose": " for record in eligible(manifest, split)"
       },
       {
         "name": "tmp_path",
         "scope": "test_json_and_confinement",
-        "line": 148,
+        "line": 203,
         "purpose": "Function parameter"
       },
       {
         "name": "path",
         "scope": "test_json_and_confinement",
-        "line": 150,
+        "line": 205,
         "purpose": "path = tmp_path / 'input.json'"
       },
       {
         "name": "value",
         "scope": "test_json_and_confinement",
-        "line": 151,
+        "line": 206,
         "purpose": "for value in ('{\"a\":1,\"a\":2}', '{\"a\":NaN}', '[]'):\n    path.write_text(value)\n    with pytest.raises(ValueError):\n        read_json(path)"
       },
       {
         "name": "tmp_path",
         "scope": "test_image_metadata_is_removed",
-        "line": 161,
+        "line": 216,
         "purpose": "Function parameter"
       },
       {
         "name": "image",
         "scope": "test_image_metadata_is_removed",
-        "line": 163,
+        "line": 218,
         "purpose": "image = Image.new('RGB', (8, 8))"
       },
       {
         "name": "exif",
         "scope": "test_image_metadata_is_removed",
-        "line": 164,
+        "line": 219,
         "purpose": "exif = Image.Exif()"
       },
       {
         "name": "path",
         "scope": "test_image_metadata_is_removed",
-        "line": 166,
+        "line": 221,
         "purpose": "path = tmp_path / 'image.png'"
       },
       {
         "name": "output",
         "scope": "test_image_metadata_is_removed",
-        "line": 169,
+        "line": 224,
         "purpose": "normalized_image(path) as output"
       },
       {
         "name": "client",
         "scope": "test_http_auth_origin_body_and_safe_errors",
-        "line": 174,
+        "line": 229,
         "purpose": "Function parameter"
       },
       {
         "name": "response",
         "scope": "test_http_auth_origin_body_and_safe_errors",
-        "line": 182,
+        "line": 237,
         "purpose": "response = client.post('/api/images', json={'name': 'secret-name', 'content': 'not-base64'})"
       },
       {
         "name": "response",
         "scope": "test_http_auth_origin_body_and_safe_errors",
-        "line": 184,
+        "line": 239,
         "purpose": "response = client.post('/api/images', json={'name': 'secret-name', 'content': base64.b64encode(b'not-an-image').decode()})"
       },
       {
         "name": "client",
         "scope": "test_http_synthetic_glossary_upload_feedback",
-        "line": 194,
+        "line": 249,
         "purpose": "Function parameter"
       },
       {
         "name": "response",
         "scope": "test_http_synthetic_glossary_upload_feedback",
-        "line": 196,
+        "line": 251,
         "purpose": "response = client.post('/api/datasets/synthetic')"
       },
       {
         "name": "identity",
         "scope": "test_http_synthetic_glossary_upload_feedback",
-        "line": 198,
+        "line": 253,
         "purpose": "identity = response.json()['id']"
       },
       {
         "name": "stream",
         "scope": "test_http_synthetic_glossary_upload_feedback",
-        "line": 217,
+        "line": 272,
         "purpose": "stream = io.BytesIO()"
       },
       {
         "name": "uploaded",
         "scope": "test_http_synthetic_glossary_upload_feedback",
-        "line": 219,
+        "line": 274,
         "purpose": "uploaded = client.post('/api/images', json={'name': 'owned source', 'content': base64.b64encode(stream.getvalue()).decode()}).json()"
       },
       {
         "name": "tmp_path",
         "scope": "test_store_feedback_export_and_latest_consent",
-        "line": 238,
+        "line": 293,
         "purpose": "Function parameter"
       },
       {
         "name": "store",
         "scope": "test_store_feedback_export_and_latest_consent",
-        "line": 240,
+        "line": 295,
         "purpose": "store = Store(tmp_path)"
       },
       {
         "name": "path",
         "scope": "test_store_feedback_export_and_latest_consent",
-        "line": 241,
+        "line": 296,
         "purpose": "path = tmp_path / 'owned.png'"
       },
       {
         "name": "archive",
         "scope": "test_store_feedback_export_and_latest_consent",
-        "line": 254,
+        "line": 309,
         "purpose": "zipfile.ZipFile(io.BytesIO(export_feedback(store))) as archive"
       },
       {
         "name": "tmp_path",
         "scope": "test_pretrained_inspection_blocks_executable_components",
-        "line": 265,
+        "line": 320,
         "purpose": "Function parameter"
       }
     ]

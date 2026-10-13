@@ -1,6 +1,6 @@
 """Offline contract, ingestion, privacy, provenance and persistence regression checks."""
 
-# Index: declarations module.client@L27, module.picture@L36, module.test_reject_ignored_or_missing_images@L52, module.test_weight_grammar_rejects_ambiguity@L59, module.test_structured_positive_negative_regions@L65, module.test_plain_unicode_weights_are_finite@L84, module.test_phrase_policy_sees_weighted_and_normalized_text@L89, module.test_training_modes_and_limits@L95, module.test_zip_rejects_unsafe_members_before_extraction@L108, module.test_quarantine_dedup_and_atomic_failure@L125, module.test_json_and_confinement@L148, module.test_image_metadata_is_removed@L161, module.test_http_auth_origin_body_and_safe_errors@L174, module.test_http_synthetic_glossary_upload_feedback@L194, module.test_store_feedback_export_and_latest_consent@L238, module.test_pretrained_inspection_blocks_executable_components@L265; variables TOKEN@L23, tmp_path@L27, app@L29, value@L32, color@L36, path@L36, image@L38, extra@L52, mode@L52, value@L59, prompt@L67, result@L73, value@L84, _@L86, weight@L86, member@L108, tmp_path@L108, source@L110, archive@L111, entry@L113, destination@L118, tmp_path@L125, source@L127, manifest@L133, split@L137, record@L138, tmp_path@L148, path@L150, value@L151, tmp_path@L161, image@L163, exif@L164, path@L166, output@L169, client@L174, response@L182, response@L184, client@L194, response@L196, identity@L198, stream@L217, uploaded@L219, tmp_path@L238, store@L240, path@L241, archive@L254, tmp_path@L265. Purposes/parameters: docs/code-map.json.
+# Index: declarations module.client@L27, module.picture@L36, module.test_atomic_publication_transient_windows_reader@L44, test_atomic_publication_transient_windows_reader.temporary_reader@L53, module.test_atomic_publication_permanent_denial@L75, test_atomic_publication_permanent_denial.denied@L83, module.test_reject_ignored_or_missing_images@L107, module.test_weight_grammar_rejects_ambiguity@L114, module.test_structured_positive_negative_regions@L120, module.test_plain_unicode_weights_are_finite@L139, module.test_phrase_policy_sees_weighted_and_normalized_text@L144, module.test_training_modes_and_limits@L150, module.test_zip_rejects_unsafe_members_before_extraction@L163, module.test_quarantine_dedup_and_atomic_failure@L180, module.test_json_and_confinement@L203, module.test_image_metadata_is_removed@L216, module.test_http_auth_origin_body_and_safe_errors@L229, module.test_http_synthetic_glossary_upload_feedback@L249, module.test_store_feedback_export_and_latest_consent@L293, module.test_pretrained_inspection_blocks_executable_components@L320; variables TOKEN@L23, tmp_path@L27, app@L29, value@L32, color@L36, path@L36, image@L38, code@L44, monkeypatch@L44, tmp_path@L44, path@L48, replace@L50, attempts@L51, delays@L51, destination@L53, source@L53, error@L57, monkeypatch@L75, tmp_path@L75, path@L79, attempts@L81, delays@L81, destination@L83, source@L83, error@L86, extra@L107, mode@L107, value@L114, prompt@L122, result@L128, value@L139, _@L141, weight@L141, member@L163, tmp_path@L163, source@L165, archive@L166, entry@L168, destination@L173, tmp_path@L180, source@L182, manifest@L188, split@L192, record@L193, tmp_path@L203, path@L205, value@L206, tmp_path@L216, image@L218, exif@L219, path@L221, output@L224, client@L229, response@L237, response@L239, client@L249, response@L251, identity@L253, stream@L272, uploaded@L274, tmp_path@L293, store@L295, path@L296, archive@L309, tmp_path@L320. Purposes/parameters: docs/code-map.json.
 import base64
 import io
 import json
@@ -38,6 +38,61 @@ def picture(path: Path, color="red"):
     image = Image.new("RGB", (32, 32), color)
     image.save(path)
     image.close()
+
+
+@pytest.mark.parametrize("code", [5, 32, 33, None])
+def test_atomic_publication_transient_windows_reader(tmp_path, monkeypatch, code):
+    """Retry only recognized Windows sharing errors; keep old complete JSON on unrelated failures."""
+    import studio.files as files
+
+    path = tmp_path / "progress.json"
+    atomic_json(path, {"step": 1})
+    replace = files.os.replace
+    attempts, delays = [], []
+
+    def temporary_reader(source, destination):
+        """Simulate one transient file reader without changing real filesystem permissions."""
+        attempts.append(1)
+        if len(attempts) == 1:
+            error = PermissionError("Synthetic file-sharing denial")
+            if code is not None:
+                error.winerror = code
+            raise error
+        replace(source, destination)
+
+    monkeypatch.setattr(files.os, "replace", temporary_reader)
+    monkeypatch.setattr(files.time, "sleep", delays.append)
+    if code is None:
+        with pytest.raises(PermissionError):
+            atomic_json(path, {"step": 2})
+        assert len(attempts) == 1 and not delays and read_json(path) == {"step": 1}
+    else:
+        atomic_json(path, {"step": 2})
+        assert len(attempts) == 2 and delays == [0.05] and read_json(path) == {"step": 2}
+    assert not list(tmp_path.glob(".publish-*"))
+
+
+def test_atomic_publication_permanent_denial(tmp_path, monkeypatch):
+    """A persistent denial has a finite retry budget, preserves original data and removes only its temp file."""
+    import studio.files as files
+
+    path = tmp_path / "progress.json"
+    atomic_json(path, {"step": 1})
+    attempts, delays = [], []
+
+    def denied(source, destination):
+        """Simulate a permanent Windows denial in this disposable test only."""
+        attempts.append(1)
+        error = PermissionError("Synthetic permanent denial")
+        error.winerror = 5
+        raise error
+
+    monkeypatch.setattr(files.os, "replace", denied)
+    monkeypatch.setattr(files.time, "sleep", delays.append)
+    with pytest.raises(PermissionError):
+        atomic_json(path, {"step": 2})
+    assert len(attempts) == 8 and len(delays) == 7 and sum(delays) < 2
+    assert read_json(path) == {"step": 1} and not list(tmp_path.glob(".publish-*"))
 
 
 @pytest.mark.parametrize(

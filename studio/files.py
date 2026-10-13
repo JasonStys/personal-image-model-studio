@@ -1,10 +1,11 @@
 """Bounded JSON, atomic publications, path confinement and image normalization utilities."""
 
-# Index: declarations module.digest@L17, module.confined@L23, module.read_json@L31, read_json.pairs@L36, module.atomic_json@L53, module.normalized_image@L67; variables MAX_IMAGE_BYTES@L12, MAX_PIXELS@L13, path@L17, stream@L19, relative@L23, root@L23, path@L25, limit@L31, path@L31, items@L36, result@L38, value@L43, _@L46, value@L46, path@L53, value@L53, descriptor@L56, temporary@L56, stream@L58, path@L67, image@L73, normalized@L78. Purposes/parameters: docs/code-map.json.
+# Index: declarations module.digest@L18, module.confined@L24, module.read_json@L32, read_json.pairs@L37, module.replace_file@L54, module.atomic_json@L68, module.normalized_image@L82; variables MAX_IMAGE_BYTES@L13, MAX_PIXELS@L14, path@L18, stream@L20, relative@L24, root@L24, path@L26, limit@L32, path@L32, items@L37, result@L39, value@L44, _@L47, value@L47, destination@L54, source@L54, attempt@L56, path@L68, value@L68, descriptor@L71, temporary@L71, stream@L73, path@L82, image@L88, normalized@L93. Purposes/parameters: docs/code-map.json.
 import hashlib
 import json
 import os
 import tempfile
+import time
 import warnings
 from pathlib import Path
 from PIL import Image, ImageOps
@@ -50,6 +51,20 @@ def read_json(path: Path, limit: int = 1_000_000) -> dict:
     return value
 
 
+def replace_file(source: str | Path, destination: Path) -> None:
+    """Atomically replace with at most eight attempts for Windows file-sharing errors; never relax ACLs."""
+    for attempt in range(8):
+        try:
+            os.replace(source, destination)
+            return
+        except PermissionError as error:
+            # Concurrent readers/antivirus can briefly deny deletion on Windows.
+            # Other errors fail immediately; permanent denials still fail within two seconds.
+            if getattr(error, "winerror", None) not in {5, 32, 33} or attempt == 7:
+                raise
+            time.sleep(min(0.05 * 2**attempt, 0.4))
+
+
 def atomic_json(path: Path, value: dict) -> None:
     """Publish complete JSON via same-directory replace; clean only this function's temp file."""
     path.parent.mkdir(parents=True, exist_ok=True)
@@ -59,7 +74,7 @@ def atomic_json(path: Path, value: dict) -> None:
             json.dump(value, stream, indent=2, allow_nan=False)
             stream.flush()
             os.fsync(stream.fileno())
-        os.replace(temporary, path)
+        replace_file(temporary, path)
     finally:
         Path(temporary).unlink(missing_ok=True)
 

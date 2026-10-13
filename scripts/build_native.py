@@ -1,5 +1,5 @@
 """Jason Stys: verified-source one-file CPU app packages, checksums and third-party notices for each build OS."""
-# Index: declarations module.notices@L17, module.main@L55; variables VERSION@L14, path@L17, packages@L19, parts@L34, name@L37, distribution@L38, file@L42, text@L43, root@L57, output@L60, command@L63, name@L100, command@L113, executable@L116, system@L121, machine@L124, architecture@L125, prefix@L128, notice@L129, files@L131, archive@L138, package@L139, name@L140, path@L140, archive@L143, package@L144, name@L145, path@L145, rows@L147, file@L148, content@L149. Purposes/parameters: docs/code-map.json.
+# Index: declarations module.notices@L17, module.main@L47; variables VERSION@L14, path@L17, packages@L19, distribution@L20, parts@L22, name@L29, distribution@L30, file@L34, text@L35, root@L49, output@L52, command@L55, name@L92, command@L105, executable@L108, system@L113, machine@L116, architecture@L117, prefix@L120, notice@L121, files@L123, archive@L130, package@L131, name@L132, path@L132, archive@L135, package@L136, name@L137, path@L137, rows@L139, file@L140, content@L141. Purposes/parameters: docs/code-map.json.
 
 import hashlib
 import importlib.metadata
@@ -16,23 +16,15 @@ VERSION = "0.2.0"
 
 def notices(path: Path):
     """Preserve installed dependency version/license attribution in a generated distribution artifact."""
-    packages = (
-        "torch",
-        "numpy",
-        "diffusers",
-        "safetensors",
-        "Pillow",
-        "cryptography",
-        "psutil",
-        "fastapi",
-        "starlette",
-        "uvicorn",
-        "pydantic",
-        "huggingface-hub",
-        "PyInstaller",
+    packages = sorted(
+        {distribution.metadata["Name"] for distribution in importlib.metadata.distributions()}
     )
     parts = [
-        "Personal Image Model Studio — Jason Stys\nThird-party dependency notices; see each upstream distribution for complete licensing.\n"
+        "Personal Image Model Studio — Jason Stys\nInstalled build/runtime dependency notices; some build-only packages are not included in the native CPU executable.\n",
+        f"Python {sys.version}\n{sys.copyright}\n",
+        (Path(__file__).resolve().parents[1] / "docs" / "licenses" / "python-3.12.txt").read_text(
+            encoding="utf-8"
+        ),
     ]
     for name in packages:
         distribution = importlib.metadata.distribution(name)

@@ -36,6 +36,14 @@ its one-use code; simulated disk failure verifies that old credentials and unsav
 work survive. CI also detected Windows' legacy stdout encoding in the source-map
 generator; its Python JSON stream is now explicitly UTF-8 on every platform.
 
+The first three-platform release attempt kept its release unpublished when a
+Windows concurrent-read collision denied atomic progress-file replacement.
+Publication now retries only Windows sharing/access codes (5/32/33), at most eight
+attempts and under two seconds of backoff, without changing permissions. Tests
+cover transient success, unrelated immediate failure, permanent bounded failure,
+preserved old JSON and removal of only its newly created temporary file. Packaged
+notices also retain Python's full license and installed dependency license texts.
+
 ## Reproduce / release evidence
 
 Use the README commands and `python scripts/smoke_native.py <exact-built-executable>`.
@@ -45,9 +53,17 @@ ML/browser jobs, audits, source indexes, formatting and legacy package compilati
 [Native release](https://github.com/JasonStys/personal-image-model-studio/actions/workflows/release-native.yml)
 requires success for its exact SHA before creating a draft. It builds and executes
 Windows amd64, macOS arm64 and Linux x86_64 CPU packages, publishing only after all
-three succeed. Eleven smoke groups appear in each build log. Final run URLs/counts
-will be recorded after completion, not inferred from local success. CI artifact
+three succeed. Eleven smoke groups appear in each build log. CI artifact
 uploads are opt-in; checksummed downloads use Releases.
+
+Exact source `97055c206995dfb7b2cd702cb105968e503951cf` passed
+[Validate run 38338416968](https://github.com/JasonStys/personal-image-model-studio/actions/runs/38338416968):
+all nine jobs green; **100** contract/privacy cases on each of six OS/Python
+combinations, **12** genuine ML cases, **8** legacy and **16** private browser
+scenarios across four profiles, plus **two** actual browser-to-ML-worker scenarios.
+Ruff, Prettier, exact source indexes, TypeScript compilation, pip compatibility
+and npm/Python/CPU-upstream advisory checks passed. Audits reported no known
+vulnerabilities at the recorded time, not a guarantee of no future advisories.
 
 ## Deployment, rollback and limits
 
