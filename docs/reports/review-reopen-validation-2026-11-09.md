@@ -1,0 +1,9 @@
+# Review after encrypted reopen — 2026-11-09
+
+Both first 0.3.0 source validation runs failed in the real private-ML browser journey, at `private-ml.spec.ts` after encrypted reopen: run 42726548816/job129533532425 and run42726540524/job129533500685. The application correctly starts the reopened workspace on Compose. The test tried to click the dataset-review button without first navigating to its visible Datasets panel. A repeated insertion of the new review assertion had introduced this test-journey error.
+
+The failed jobs had already passed all **12 genuine ML tests**, the real legacy ML browser journey, first dataset review, actual private training/generation, image preview and lock/reopen. That is partial execution evidence, not a claim that the full failed jobs passed. The remaining audits after the failing step were not reached.
+
+The correction adds explicit user navigation to **Datasets & glossary** before the post-reopen review. No product code, cryptographic work, dataset/model state, real tensor execution, expectations, retry settings or 180-second ML journey deadline changed. The test still requires sufficient eligible counts, zero sampled integrity errors and the persisted trained model after reopening.
+
+The ordinary four-profile owned-data browser regression now independently performs **lock → reopen on Compose → navigate to Datasets → select the saved dataset → regenerate the same report fingerprint → load both verified private previews → lock**. It also retains upload, export and stale-selection checks. All **four** strengthened journeys passed locally: Chromium15.7s, Firefox15.7s, WebKit14.1s, mobile12.9s. TypeScript/Vite, Prettier, exact source indexes and whitespace checks passed. These four repeat a subset of the earlier20 private journeys, not four additional unique workflows. No new local Torch training was performed; exact-source hosted real-ML/native release gates remain required.

@@ -1,5 +1,5 @@
 /** Jason Stys: real private login, account isolation, encrypted export, file pickers, recovery and accessible help. */
-// Index: declarations register@L12, unlock@L33, lock@L44; variables password@L8, phrase@L9, page@L12, alias@L17, recovery@L26, page@L33, page@L44, page@L54, destinations@L56, unlockBodies@L57, request@L58, identity@L66, event@L92, bytes@L96, url@L114, page@L133, browser@L134, context@L145, other@L146, page@L169, png@L176, archive@L180, response@L215, page@L228, identity@L230, page@L273, destinations@L276, request@L277, fixtures@L283, archive@L286, split@L287, fixture@L288, report@L322, images@L346, image@L348, downloading@L355, downloaded@L362, exported@L366, first@L380, second@L390, options@L392, option@L393, release@L395, held@L396, resolve@L396, responseReady@L399, ready@L400, resolve@L400, route@L403, response@L404, identity@L415, url@L431. Purposes/parameters: docs/code-map.json.
+// Index: declarations register@L12, unlock@L33, lock@L44; variables password@L8, phrase@L9, page@L12, alias@L17, recovery@L26, page@L33, page@L44, page@L54, destinations@L56, unlockBodies@L57, request@L58, identity@L66, event@L92, bytes@L96, url@L114, page@L133, browser@L134, context@L145, other@L146, page@L169, png@L176, archive@L180, response@L215, page@L228, identity@L230, page@L273, destinations@L276, request@L277, fixtures@L283, archive@L286, split@L287, fixture@L288, report@L322, images@L346, image@L348, downloading@L355, downloaded@L362, exported@L366, first@L380, second@L390, options@L392, option@L393, release@L395, held@L396, resolve@L396, responseReady@L399, ready@L400, resolve@L400, route@L403, response@L404, identity@L415, reopened@L446, images@L459, image@L461, url@L469. Purposes/parameters: docs/code-map.json.
 import { test, expect, type Page } from "@playwright/test";
 import AxeBuilder from "@axe-core/playwright";
 import { randomUUID } from "node:crypto";
@@ -425,6 +425,44 @@ test("trainer reviews owned data, exports exact evidence and cannot keep a stale
       exact: true,
     }),
   ).toBeDisabled();
+  await lock(page);
+  await unlock(page);
+  // Locked plaintext DOM is gone. Reopen on Compose, then explicitly navigate to the saved dataset.
+  await page
+    .getByRole("button", { name: "02 · Datasets & glossary", exact: true })
+    .click();
+  await page
+    .getByLabel("Dataset to review", { exact: true })
+    .selectOption(first);
+  await expect(
+    page.getByRole("button", {
+      name: "Download reviewed dataset report",
+      exact: true,
+    }),
+  ).toBeDisabled();
+  await page
+    .getByRole("button", { name: "Review dataset quality", exact: true })
+    .click();
+  const reopened = page.getByRole("region", {
+    name: "Dataset quality review",
+    exact: true,
+  });
+  await expect(reopened).toContainText(exported.report_sha256);
+  await reopened
+    .getByRole("button", { name: "Preview candidate pair", exact: true })
+    .click();
+  await expect(reopened.locator("img")).toHaveCount(2);
+  await expect
+    .poll(() =>
+      reopened
+        .locator("img")
+        .evaluateAll((images) =>
+          (images as HTMLImageElement[]).every(
+            (image) => image.naturalWidth > 0 && image.naturalWidth <= 192,
+          ),
+        ),
+    )
+    .toBe(true);
   await lock(page);
   expect(
     destinations.every(

@@ -101,6 +101,10 @@ test("real private custom training and generation through browser controls", asy
   await page
     .getByRole("button", { name: "Unlock or create workspace" })
     .click();
+  // Reopening deliberately returns to Compose; use the visible Dataset navigation before reviewing.
+  await page
+    .getByRole("button", { name: "02 · Datasets & glossary", exact: true })
+    .click();
   await page
     .getByRole("button", { name: "Review dataset quality", exact: true })
     .click();

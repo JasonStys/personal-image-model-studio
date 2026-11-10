@@ -12450,8 +12450,26 @@
         "purpose": "identity"
       },
       {
+        "name": "reopened",
+        "line": 446,
+        "kind": "variable",
+        "purpose": "reopened = page.getByRole(\"region\", {\n    name: \"Dataset quality review\",\n    exact: true,\n  })"
+      },
+      {
+        "name": "images",
+        "line": 459,
+        "kind": "parameter",
+        "purpose": "images"
+      },
+      {
+        "name": "image",
+        "line": 461,
+        "kind": "parameter",
+        "purpose": "image"
+      },
+      {
         "name": "url",
-        "line": 431,
+        "line": 469,
         "kind": "parameter",
         "purpose": "url"
       }
