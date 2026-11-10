@@ -59,3 +59,11 @@ The continuation's [hosted run 36784162356](https://github.com/JasonStys/persona
 Live DeviantArt inspection verified signed-in access, public registration, human-approved authorization and authenticated identity. Actual consent advertised Sta.sh management; read-only connector operations do not prove a read-only provider grant. The operator separately confirmed training rights/provider terms for the 24-entry attempt. The browser own-gallery view showed only one application listing, and the API import found no supported images. Its generic empty-result message does not identify item/skip counts, so an exact provider exclusion reason is not inferred. Eligible permitted artwork is still required to validate live account-dataset ingestion/training. Favourites or other artists' work were not substituted. A fresh browser generation using the existing genuinely trained CPU model completed after this empty import; account access is not required for local training/generation. See [sanitized live result](deviantart-live-validation.json).
 
 Signing/distribution, multi-gigabyte ML installation, native macOS/Linux/mobile packaging, semantic vision evaluation, arbitrary pretrained architectures and automated cloud provisioning remain outside this release. See [connector details](../deviantart.md), [requirements](../requirements.md) and [installation](../installation.md).
+
+## CodeQL security analysis
+
+The [three-language scan guide](../codeql.md) explains Python, JavaScript/TypeScript
+and GitHub Actions security-extended analysis. The [dated scan report](codeql-2026-11-09.md)
+records actual scan/extraction state and exact-location alert triage separately from
+configuration checks. Existing runtime, privacy, performance and platform gates remain
+required; a passing static-analysis job alone is not a zero-alert or safety claim.
