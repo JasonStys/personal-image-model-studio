@@ -385,7 +385,7 @@ def create_private_app(
         return {
             "ready": True,
             "mode": "private-local-accounts",
-            "version": "0.2.0",
+            "version": "0.3.0",
             "author": "Jason Stys",
             "validation_nonce": os.environ.get("PIMS_VALIDATION_NONCE"),
         }

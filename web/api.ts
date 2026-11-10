@@ -1,5 +1,5 @@
 /** Private same-origin transport. Session tokens never accompany third-party requests. */
-// Index: declarations privateMode@L7, legacySession@L13, account@L25, transport@L47, connect@L64, api@L72, download@L88, imageUrl@L100, upload@L107; variables token@L3, privateAccounts@L4, path@L26, method@L27, body@L28, response@L30, result@L38, path@L47, method@L47, body@L47, value@L64, path@L73, method@L74, body@L75, response@L77, error@L79, path@L88, name@L88, response@L89, url@L91, link@L92, identity@L100, response@L101, file@L107, data@L110, resolve@L110, reject@L110, reader@L111. Purposes/parameters: docs/code-map.json.
+// Index: declarations privateMode@L7, legacySession@L13, account@L25, transport@L47, connect@L64, api@L72, download@L88, imageUrl@L100, upload@L107, datasetImageUrl@L120; variables token@L3, privateAccounts@L4, path@L26, method@L27, body@L28, response@L30, result@L38, path@L47, method@L47, body@L47, value@L64, path@L73, method@L74, body@L75, response@L77, error@L79, path@L88, name@L88, response@L89, url@L91, link@L92, identity@L100, response@L101, file@L107, data@L110, resolve@L110, reject@L110, reader@L111, dataset@L121, image@L122, response@L126. Purposes/parameters: docs/code-map.json.
 let token = "";
 let privateAccounts = false;
 
@@ -114,4 +114,21 @@ export async function upload(file: File): Promise<unknown> {
     reader.readAsDataURL(file);
   });
   return api("images", "POST", { name: file.name, content: data });
+}
+
+/** Fetch only an authenticated normalized dataset thumbnail; never attach credentials to external URLs. */
+export async function datasetImageUrl(
+  dataset: string,
+  image: string,
+): Promise<string> {
+  if (!/^[a-f0-9]{32}$/.test(dataset) || !/^[a-f0-9]{64}$/.test(image))
+    throw new Error("Invalid dataset image identity");
+  const response = await transport(
+    `datasets/${dataset}/review/images/${image}`,
+  );
+  if (!response.ok)
+    throw new Error(
+      "Dataset preview unavailable; verify the imported image before training",
+    );
+  return URL.createObjectURL(await response.blob());
 }

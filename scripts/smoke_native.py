@@ -1,5 +1,5 @@
 """Jason Stys: genuine compiled CPU app tests; only disposable aliases, owned pixels and synthetic keys."""
-# Index: declarations module.wait_job@L19, module.stop@L34, module.main@L55; variables client@L19, identity@L19, deadline@L21, response@L23, j@L25, job@L25, process@L34, children@L38, child@L39, _@L45, pending@L45, child@L46, parser@L57, args@L60, executable@L61, temporary@L62, root@L63, selected@L64, port@L66, flags@L67, log_path@L68, nonce@L69, log@L70, process@L71, client@L92, deadline@L93, health@L101, credentials@L119, key@L124, dataset@L129, training@L131, model@L147, generated@L148, image@L161, result@L174, worker_log@L196. Purposes/parameters: docs/code-map.json.
+# Index: declarations module.wait_job@L19, module.stop@L34, module.main@L55; variables client@L19, identity@L19, deadline@L21, response@L23, j@L25, job@L25, process@L34, children@L38, child@L39, _@L45, pending@L45, child@L46, parser@L57, args@L60, executable@L61, temporary@L62, root@L63, selected@L64, port@L66, flags@L67, log_path@L68, nonce@L69, log@L70, process@L71, client@L92, deadline@L93, health@L101, credentials@L120, key@L125, dataset@L130, review@L132, training@L137, model@L153, generated@L154, image@L167, result@L180, worker_log@L203. Purposes/parameters: docs/code-map.json.
 
 import argparse
 import base64
@@ -112,6 +112,7 @@ def main():
                     assert (
                         health.json()["mode"] == "private-local-accounts"
                         and health.json()["author"] == "Jason Stys"
+                        and health.json()["version"] == "0.3.0"
                     )
                     assert client.get("/").status_code == 200
                     assert client.get("/private/api/workspace").status_code == 401
@@ -128,6 +129,11 @@ def main():
                     assert client.post("/private/unlock", json=key).status_code == 200
                     dataset = client.post("/private/api/datasets/synthetic", json={})
                     assert dataset.status_code == 200
+                    review = client.get(f"/private/api/datasets/{dataset.json()['id']}/review")
+                    assert review.status_code == 200, review.text
+                    assert review.json()["dataset_fingerprint"] == dataset.json()["fingerprint"]
+                    assert review.json()["minimum_training_counts_met"]
+                    assert review.json()["inspection"]["integrity_errors"] == []
                     training = client.post(
                         "/private/api/train",
                         json={
@@ -173,7 +179,7 @@ def main():
                     assert client.get("/private/account").status_code == 401
                 result = {
                     "passed": True,
-                    "version": "0.2.0",
+                    "version": "0.3.0",
                     "checks": [
                         "exact packaged launcher",
                         "author/private mode/UI",
@@ -181,6 +187,7 @@ def main():
                         "no legacy plaintext API",
                         "registration and key unlock",
                         "owned dataset",
+                        "bounded read-only dataset quality review",
                         "genuine CPU optimization",
                         "learned PNG generation",
                         "encrypted lock/plaintext removal",

@@ -1,8 +1,15 @@
 /** Structured browser workspace: explicit dataset/model/training/generation/feedback actions. */
-// Index: declarations mountStudio@L8, message@L60, act@L75, values@L101, form@L111, view@L126, options@L146, cards@L161, preview@L194, jobs@L209, refresh@L242; variables accountMode@L8, root@L9, workspace@L10, selectedImage@L11, currentUrl@L12, busy@L13, text@L60, failed@L60, target@L61, task@L75, controls@L79, previous@L84, button@L84, button@L85, error@L91, button@L95, index@L95, form@L101, key@L103, value@L103, id@L112, action@L113, value@L114, target@L115, target@L118, event@L119, name@L126, panel@L129, button@L132, button@L141, id@L147, items@L148, empty@L149, select@L151, before@L152, item@L155, option@L156, id@L162, items@L163, open@L164, identity@L164, target@L166, item@L168, card@L169, title@L171, detail@L174, button@L182, identity@L194, next@L195, image@L199, id@L209, target@L210, job@L212, card@L213, title@L215, status@L218, report@L221, cancel@L231, model@L250, model@L255, id@L258, identity@L267, selected@L269, input@L273, target@L274, item@L276, label@L277, input@L279, account@L289, runtime@L299, error@L306, value@L317, value@L321, subject@L322, value@L357, target@L357, value@L374, path@L379, value@L384, value@L385, value@L395, term@L399, value@L403, value@L408, result@L409, link@L414, value@L418, value@L424, value@L438, event@L451, file@L452, value@L456, form@L457, original@L458, image@L458. Purposes/parameters: docs/code-map.json.
+// Index: declarations mountStudio@L15, clearDatasetReview@L63, renderDatasetReview@L76, message@L203, act@L218, values@L244, form@L254, view@L269, options@L289, cards@L304, preview@L337, jobs@L352, refresh@L385; variables accountMode@L15, root@L16, workspace@L17, selectedImage@L18, currentUrl@L19, busy@L20, datasetReview@L21, reviewGeneration@L22, reviewImageUrls@L23, url@L65, report@L76, datasetId@L76, target@L77, heading@L79, identity@L82, counts@L86, key@L88, count@L88, label@L89, value@L91, origin@L96, name@L98, count@L98, eligibility@L101, scope@L106, errors@L109, errorList@L112, error@L113, item@L114, candidates@L119, explanation@L122, pairs@L125, pair@L126, item@L127, button@L129, preview@L132, generation@L135, results@L137, result@L142, index@L148, result@L149, image@L152, unavailable@L159, empty@L171, limits@L176, text@L177, item@L178, text@L203, failed@L203, target@L204, task@L218, controls@L222, previous@L227, button@L227, button@L228, error@L234, button@L238, index@L238, form@L244, key@L246, value@L246, id@L255, action@L256, value@L257, target@L258, target@L261, event@L262, name@L269, panel@L272, button@L275, button@L284, id@L290, items@L291, empty@L292, select@L294, before@L295, item@L298, option@L299, id@L305, items@L306, open@L307, identity@L307, target@L309, item@L311, card@L312, title@L314, detail@L317, button@L325, identity@L337, next@L338, image@L342, id@L352, target@L353, job@L355, card@L356, title@L358, status@L361, report@L364, cancel@L374, model@L393, model@L398, id@L401, identity@L411, selected@L413, input@L417, target@L418, item@L420, label@L421, input@L423, account@L433, runtime@L443, error@L450, value@L461, value@L465, subject@L466, value@L501, target@L501, value@L518, path@L523, value@L528, value@L529, value@L539, term@L543, value@L547, value@L552, result@L553, link@L558, value@L562, value@L568, value@L582, value@L591, generation@L593, result@L594, url@L613, link@L618, event@L630, file@L631, value@L635, form@L636, original@L637, image@L637, url@L659. Purposes/parameters: docs/code-map.json.
 import "./style.css";
-import { api, connect, download, imageUrl, upload } from "./api";
-import type { Workspace } from "./types";
+import {
+  api,
+  connect,
+  download,
+  imageUrl,
+  upload,
+  datasetImageUrl,
+} from "./api";
+import type { DatasetReview, Workspace } from "./types";
 
 /** Mount genuine ML controls only after private account unlock or an explicit developer session. */
 export function mountStudio(accountMode = false) {
@@ -11,6 +18,9 @@ export function mountStudio(accountMode = false) {
   let selectedImage = "";
   let currentUrl = "";
   let busy = false;
+  let datasetReview: DatasetReview | null = null;
+  let reviewGeneration = 0;
+  let reviewImageUrls: string[] = [];
 
   /** Static trusted markup only. All server/user values are inserted through textContent/options. */
   root.innerHTML = `
@@ -38,6 +48,139 @@ export function mountStudio(accountMode = false) {
 <section data-panel="history" hidden><div class="columns"><article><h2>Images & human feedback</h2><div id="images"></div><form id="feedback"><label>Image<select name="image" id="feedback-image"></select></label><label>Human score (-10 to 10)<input name="score" type="number" min="-10" max="10" value="0"></label><label>What went well<textarea name="good"></textarea></label><label>What to change<textarea name="change"></textarea></label><label>What to add<input name="add"></label><label>What to remove<input name="remove"></label><label class="check"><input name="allow_training" type="checkbox">Permit explicit feedback-dataset export for future training</label><button>Save human feedback</button><button type="button" id="revise">Use these notes for an explicit revision</button></form></article><article><h2>Run history & reports</h2><div id="history-jobs"></div></article></div></section>
 <section data-panel="method" hidden><article><h2>What is real—and what is not promised</h2><p>Real native optimization, held-out denoising evaluation, safe checkpoint reload/resume, numeric text weights, region-conditioned native denoising, masked edits and centered aspect expansion are executable features.</p><p>The compact native model learns a capped word vocabulary from your training captions. It is not a general language model. Unknown/truncated words are reported. Enlarged outputs do not gain learned high-resolution detail. Regional denoising is experimental, not guaranteed character placement.</p><p>Classic Stable Diffusion directories and LoRA adapters use an explicitly supplied local model. No arbitrary model architecture, executable remote model code, cloud provisioning, universal website crawler, visual AI-origin detector or reliable semantic scene judge is claimed.</p><p>Website data should be exported through an authorized provider API/account and imported locally. Never enter account passwords here. Reviewed tag definitions are editable, not automatically researched in your logged-in browser. Feedback never silently triggers retraining or guarantees a score of 10.</p><form id="policy"><label>Optional blocked positive phrases, one per line<textarea name="denied_terms" rows="4"></textarea></label><button>Save local phrase policy</button></form><p>Phrase matching is transparent but not a comprehensive content-safety system. Supplied pretrained safety-checker results are respected.</p></article></section>
 </div><footer class="page-footer">Source → reviewed dataset → learned model → reproducible artifact → human feedback</footer></main>`;
+
+  /** Trusted review controls; dataset names and evidence below are always text nodes. */
+  document.querySelector("[data-panel=data]")!.insertAdjacentHTML(
+    "beforeend",
+    `
+<article><h2>Review dataset quality before training</h2><p>Inspect caption and provenance gaps, eligible train/validation counts and a bounded sample of file integrity and cross-split visual similarity. Review is read-only: nothing is trained, relabelled or moved.</p>
+<form id="dataset-review-form"><label for="review-dataset">Dataset to review</label><select id="review-dataset" name="dataset" required></select><button>Review dataset quality</button></form>
+<button id="download-dataset-review" disabled>Download reviewed dataset report</button>
+<section id="dataset-review-result" role="region" aria-label="Dataset quality review"><p>Select a dataset, then review it. No report is available yet.</p></section></article>`,
+  );
+
+  /** Replace the visible report with explicit empty/changed state, dropping the old export reference. */
+  function clearDatasetReview(): void {
+    datasetReview = null;
+    reviewImageUrls.forEach((url) => URL.revokeObjectURL(url));
+    reviewImageUrls = [];
+    ++reviewGeneration;
+    document.querySelector("#dataset-review-result")!.textContent =
+      "Selection changed. Review this dataset before exporting its report.";
+    document.querySelector<HTMLButtonElement>(
+      "#download-dataset-review",
+    )!.disabled = true;
+  }
+
+  /** Render provenance and similarity evidence without deriving a model quality score or injecting HTML. */
+  function renderDatasetReview(report: DatasetReview, datasetId: string): void {
+    const target = document.querySelector("#dataset-review-result")!;
+    target.replaceChildren();
+    const heading = document.createElement("h3");
+    heading.textContent = "Read-only dataset review";
+    target.append(heading);
+    const identity = document.createElement("p");
+    identity.className = "review-fingerprint";
+    identity.textContent = `Dataset SHA-256: ${report.dataset_fingerprint} · Report SHA-256: ${report.report_sha256}`;
+    target.append(identity);
+    const counts = document.createElement("dl");
+    counts.className = "review-counts";
+    for (const [key, count] of Object.entries(report.counts)) {
+      const label = document.createElement("dt");
+      label.textContent = key.replaceAll("_", " ");
+      const value = document.createElement("dd");
+      value.textContent = String(count);
+      counts.append(label, value);
+    }
+    target.append(counts);
+    const origin = document.createElement("p");
+    origin.textContent = `Declared origins: ${Object.entries(report.origins)
+      .map(([name, count]) => `${name}: ${count}`)
+      .join("; ")}`;
+    target.append(origin);
+    const eligibility = document.createElement("p");
+    eligibility.textContent = report.minimum_training_counts_met
+      ? "Minimum training counts met. This does not establish dataset or model quality."
+      : "Not enough eligible data: native training needs at least 8 training and 2 validation examples.";
+    target.append(eligibility);
+    const scope = document.createElement("p");
+    scope.textContent = `Verified ${report.inspection.verified_images} images; ${report.inspection.remaining_eligible_not_verified} eligible images not verified. Maximum ${report.inspection.maximum_images} images / ${report.inspection.maximum_file_bytes} file bytes / ${report.inspection.maximum_pixels} decoded pixels. ${report.inspection.cross_split_comparisons} cross-split comparisons. ${report.inspection.budget_stopped ? "Byte or pixel budget stopped inspection." : "Image sample limit applies."}`;
+    target.append(scope);
+    const errors = document.createElement("p");
+    errors.textContent = `${report.inspection.integrity_errors.length} sampled file integrity errors.`;
+    target.append(errors);
+    const errorList = document.createElement("ul");
+    for (const error of report.inspection.integrity_errors) {
+      const item = document.createElement("li");
+      item.textContent = `${error.name} (${error.hash}): ${error.reason}`;
+      errorList.append(item);
+    }
+    target.append(errorList);
+    const candidates = document.createElement("h4");
+    candidates.textContent = `Near-duplicate candidates: ${report.candidate_pairs_total}`;
+    target.append(candidates);
+    const explanation = document.createElement("p");
+    explanation.textContent = `These are review candidates, not proven duplicates or leakage. ${report.method}. ${report.candidate_pairs_not_shown} candidate pairs not shown.`;
+    target.append(explanation);
+    const pairs = document.createElement("ol");
+    for (const pair of report.near_duplicate_candidates) {
+      const item = document.createElement("li");
+      item.textContent = `${pair.left.name} [${pair.left.split}, ${pair.left.hash}] ↔ ${pair.right.name} [${pair.right.split}, ${pair.right.hash}]: ${pair.difference_bits} different bits`;
+      const button = document.createElement("button");
+      button.type = "button";
+      button.textContent = "Preview candidate pair";
+      const preview = document.createElement("div");
+      preview.className = "dataset-pair-preview";
+      button.onclick = async () => {
+        const generation = reviewGeneration;
+        button.disabled = true;
+        const results = await Promise.allSettled([
+          datasetImageUrl(datasetId, pair.left.hash),
+          datasetImageUrl(datasetId, pair.right.hash),
+        ]);
+        if (generation !== reviewGeneration) {
+          for (const result of results)
+            if (result.status === "fulfilled")
+              URL.revokeObjectURL(result.value);
+          return;
+        }
+        preview.replaceChildren();
+        for (let index = 0; index < results.length; index++) {
+          const result = results[index];
+          if (result.status === "fulfilled") {
+            reviewImageUrls.push(result.value);
+            const image = document.createElement("img");
+            image.src = result.value;
+            image.alt = `${index === 0 ? pair.left.split : pair.right.split} candidate ${index === 0 ? pair.left.name : pair.right.name}`;
+            image.width = 192;
+            image.height = 192;
+            preview.append(image);
+          } else {
+            const unavailable = document.createElement("p");
+            unavailable.textContent =
+              "Candidate preview unavailable: source integrity or account access changed. Review again before training.";
+            preview.append(unavailable);
+          }
+        }
+      };
+      item.append(button, preview);
+      pairs.append(item);
+    }
+    target.append(pairs);
+    if (!report.near_duplicate_candidates.length) {
+      const empty = document.createElement("p");
+      empty.textContent =
+        "No candidates in the verified sample; remaining images were not checked.";
+      target.append(empty);
+    }
+    const limits = document.createElement("ul");
+    for (const text of report.limitations) {
+      const item = document.createElement("li");
+      item.textContent = text;
+      limits.append(item);
+    }
+    target.append(limits);
+  }
 
   /** Surface status text safely; never render backend/user values as HTML. */
   document.querySelector("[data-panel=data]")!.insertAdjacentHTML(
@@ -78,7 +221,7 @@ export function mountStudio(accountMode = false) {
     message("Working…");
     const controls = Array.from(
       document.querySelectorAll<HTMLButtonElement>(
-        "button:not(#download-image)",
+        "button:not(#download-image):not(#download-dataset-review)",
       ),
     );
     const previous = controls.map((button) => button.disabled);
@@ -259,6 +402,7 @@ export function mountStudio(accountMode = false) {
         options(id, workspace.image, true),
       );
       options("glossary-dataset", workspace.dataset);
+      options("review-dataset", workspace.dataset);
       cards("datasets", workspace.dataset);
       cards("models", workspace.model);
       cards(
@@ -442,6 +586,41 @@ export function mountStudio(accountMode = false) {
         "textarea[name=entries]",
       )!.value = JSON.stringify(value.entries, null, 2);
     });
+  document.querySelector<HTMLSelectElement>("#review-dataset")!.onchange =
+    clearDatasetReview;
+  form("dataset-review-form", async (value) => {
+    clearDatasetReview();
+    const generation = reviewGeneration;
+    const result = await api<DatasetReview>(`datasets/${value.dataset}/review`);
+    if (
+      generation !== reviewGeneration ||
+      document.querySelector<HTMLSelectElement>("#review-dataset")!.value !==
+        value.dataset
+    )
+      throw new Error(
+        "Dataset selection changed. Review the selected dataset again.",
+      );
+    datasetReview = result;
+    renderDatasetReview(result, value.dataset);
+    document.querySelector<HTMLButtonElement>(
+      "#download-dataset-review",
+    )!.disabled = false;
+  });
+  document.querySelector<HTMLButtonElement>(
+    "#download-dataset-review",
+  )!.onclick = () => {
+    if (!datasetReview) return;
+    const url = URL.createObjectURL(
+      new Blob([JSON.stringify(datasetReview, null, 2) + "\n"], {
+        type: "application/json",
+      }),
+    );
+    const link = document.createElement("a");
+    link.href = url;
+    link.download = `dataset-review-${datasetReview.dataset_fingerprint.slice(0, 12)}.json`;
+    link.click();
+    setTimeout(() => URL.revokeObjectURL(url), 1000);
+  };
   document.querySelector<HTMLButtonElement>("#synthetic")!.onclick = () =>
     void act(() => api("datasets/synthetic", "POST"));
   document.querySelector<HTMLButtonElement>("#download-image")!.onclick = () =>
@@ -477,6 +656,7 @@ export function mountStudio(accountMode = false) {
   };
   window.addEventListener("pagehide", () => {
     if (currentUrl) URL.revokeObjectURL(currentUrl);
+    reviewImageUrls.forEach((url) => URL.revokeObjectURL(url));
   });
   void refresh();
   setInterval(() => {

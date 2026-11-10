@@ -1,0 +1,28 @@
+{
+  "date": "2026-11-09",
+  "failed_jobs": [
+    129533532425,
+    129533500685
+  ],
+  "failure": "Test requested a hidden Dataset-panel control after app correctly reopened on Compose",
+  "classification": "test journey navigation fault; not a demonstrated product or tensor failure",
+  "partial_hosted_evidence": {
+    "real_ml_tests": 12,
+    "legacy_real_ml_browser": 1,
+    "private_training_generation_and_reopen": "reached before hidden-panel assertion",
+    "whole_job_pass": false
+  },
+  "correction": "Explicit Datasets navigation and reselection of retained registered dataset ID after asynchronous metadata options load",
+  "product_or_data_schema_changed": false,
+  "ml_journey_deadline_seconds": 180,
+  "retries_added": 0,
+  "local_strengthened_reopen_subset": {
+    "chromium_seconds": 15.7,
+    "firefox_seconds": 15.7,
+    "webkit_seconds": 14.1,
+    "mobile_seconds": 12.9,
+    "passed": 4
+  },
+  "format_types_build_index": "passed",
+  "exact_source_ci": "pending coordinator"
+}

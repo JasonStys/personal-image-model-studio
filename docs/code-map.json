@@ -8,6 +8,12 @@
         "line": 5,
         "kind": "variable",
         "purpose": "interpreter =\n  process.env.IMAGE_STUDIO_TEST_PYTHON ||\n  (process.platform === \"win32\" ? \".venv/Scripts/python.exe\" : \"python\")"
+      },
+      {
+        "name": "port",
+        "line": 8,
+        "kind": "variable",
+        "purpose": "port = Number(process.env.PIMS_LEGACY_QA_PORT ?? 8017)"
       }
     ]
   },
@@ -99,7 +105,7 @@
         "name": "VERSION",
         "scope": "module",
         "line": 14,
-        "purpose": "VERSION = '0.2.0'"
+        "purpose": "VERSION = '0.3.0'"
       },
       {
         "name": "path",
@@ -1656,55 +1662,61 @@
       {
         "name": "credentials",
         "scope": "main",
-        "line": 119,
+        "line": 120,
         "purpose": "credentials = {'alias': 'packaged_' + secrets.token_hex(6), 'password': 'synthetic-only-packaged-password'}"
       },
       {
         "name": "key",
         "scope": "main",
-        "line": 124,
+        "line": 125,
         "purpose": "key = {'key': base64.b64encode(b'k' * 32).decode(), 'salt': base64.b64encode(b's' * 16).decode()}"
       },
       {
         "name": "dataset",
         "scope": "main",
-        "line": 129,
+        "line": 130,
         "purpose": "dataset = client.post('/private/api/datasets/synthetic', json={})"
+      },
+      {
+        "name": "review",
+        "scope": "main",
+        "line": 132,
+        "purpose": "review = client.get(f\"/private/api/datasets/{dataset.json()['id']}/review\")"
       },
       {
         "name": "training",
         "scope": "main",
-        "line": 131,
+        "line": 137,
         "purpose": "training = client.post('/private/api/train', json={'name': 'Packaged genuine native model', 'dataset_ids': [dataset.json()['id']], 'steps': 2, 'batch_size': 2, 'resolution': 32, 'm"
       },
       {
         "name": "model",
         "scope": "main",
-        "line": 147,
+        "line": 153,
         "purpose": "model = client.get('/private/api/workspace').json()['model'][0]"
       },
       {
         "name": "generated",
         "scope": "main",
-        "line": 148,
+        "line": 154,
         "purpose": "generated = client.post('/private/api/generate', json={'model_id': model['id'], 'prompt': {'description': 'red circle on white background'}, 'width': 32, 'height': 32, 'steps': 2, "
       },
       {
         "name": "image",
         "scope": "main",
-        "line": 161,
+        "line": 167,
         "purpose": "image = client.get('/private/api/images/' + generated.json()['id'] + '/file')"
       },
       {
         "name": "result",
         "scope": "main",
-        "line": 174,
-        "purpose": "result = {'passed': True, 'version': '0.2.0', 'checks': ['exact packaged launcher', 'author/private mode/UI', 'unauthenticated denial', 'no legacy plaintext API', 'registration and"
+        "line": 180,
+        "purpose": "result = {'passed': True, 'version': '0.3.0', 'checks': ['exact packaged launcher', 'author/private mode/UI', 'unauthenticated denial', 'no legacy plaintext API', 'registration and"
       },
       {
         "name": "worker_log",
         "scope": "main",
-        "line": 196,
+        "line": 203,
         "purpose": "for worker_log in (root / 'data' / 'active' / 'jobs').glob('*/worker.log'):\n    print('Synthetic worker diagnostic:', worker_log.read_text(errors='replace')[-2500:])"
       }
     ]
@@ -1851,7 +1863,14 @@
   "studio/__init__.py": {
     "purpose": "Independent local-first successor to the Personal Custom Image Generator project.",
     "declarations": [],
-    "variables": []
+    "variables": [
+      {
+        "name": "__version__",
+        "scope": "module",
+        "line": 4,
+        "purpose": "__version__ = '0.3.0'"
+      }
+    ]
   },
   "studio/accounts.py": {
     "purpose": "Jason Stys: isolated account/session store; private local authentication and encrypted-vault configuration.\n\n\nPasswords are scrypt hashes, session/recovery secrets are SHA-256 digests of random\n256-bit values. No image pixels, encryption phrase, administrator read API or telemetry.",
@@ -2459,241 +2478,253 @@
     "declarations": [
       {
         "name": "module.Boundary",
-        "line": 28,
+        "line": 29,
         "kind": "ClassDef",
         "purpose": "Authenticate before body parsing and restrict Host/Origin and total request bytes."
       },
       {
         "name": "Boundary.__init__",
-        "line": 31,
+        "line": 32,
         "kind": "FunctionDef",
         "purpose": "Bind a strong private process token and exact localhost origin."
       },
       {
         "name": "Boundary.__call__",
-        "line": 37,
+        "line": 38,
         "kind": "AsyncFunctionDef",
         "purpose": "Validate headers and incrementally cap bodies before FastAPI receives input."
       },
       {
         "name": "Boundary.__call__.replay",
-        "line": 72,
+        "line": 73,
         "kind": "AsyncFunctionDef",
         "purpose": "Replay one bounded body; preserve the real receiver for later disconnect checks."
       },
       {
         "name": "Boundary.__call__.private_send",
-        "line": 80,
+        "line": 81,
         "kind": "AsyncFunctionDef",
         "purpose": "Apply private cache and browser isolation headers to every normal response."
       },
       {
         "name": "module.Upload",
-        "line": 98,
+        "line": 99,
         "kind": "ClassDef",
         "purpose": "Single base64 raster upload; filenames are labels, never filesystem paths."
       },
       {
         "name": "module.Policy",
-        "line": 106,
+        "line": 107,
         "kind": "ClassDef",
         "purpose": "Local transparent phrase blocks, not a semantic/visual safety classifier."
       },
       {
         "name": "module.AccountConnect",
-        "line": 113,
+        "line": 114,
         "kind": "ClassDef",
         "purpose": "Public application identifier only; this application never accepts a website password/secret."
       },
       {
         "name": "module.GalleryImport",
-        "line": 120,
+        "line": 121,
         "kind": "ClassDef",
         "purpose": "An own-gallery sample needs separate training-rights and provider-terms confirmation."
       },
       {
         "name": "module.RuntimeChoice",
-        "line": 130,
+        "line": 131,
         "kind": "ClassDef",
         "purpose": "Explicit operator-selected trusted Python executable, never shell text or interpreter arguments."
       },
       {
         "name": "module.create_app",
-        "line": 138,
+        "line": 139,
         "kind": "FunctionDef",
         "purpose": "Construct a single-user private workspace without changing other apps or requesting cloud credentials."
       },
       {
         "name": "create_app.lifespan",
-        "line": 158,
+        "line": 159,
         "kind": "AsyncFunctionDef",
         "purpose": "Cancel only this workspace's workers at shutdown; preserve all completed artifacts."
       },
       {
         "name": "create_app.invalid",
-        "line": 176,
+        "line": 177,
         "kind": "AsyncFunctionDef",
         "purpose": "Return concise validation messages without echoing base64 images or private prompts."
       },
       {
         "name": "create_app.bad_value",
-        "line": 184,
+        "line": 185,
         "kind": "AsyncFunctionDef",
         "purpose": "Surface bounded known application errors; no stack traces in browser responses."
       },
       {
         "name": "create_app.missing",
-        "line": 189,
+        "line": 190,
         "kind": "AsyncFunctionDef",
         "purpose": "Unknown object identities yield a generic 404."
       },
       {
         "name": "create_app.file_error",
-        "line": 194,
+        "line": 195,
         "kind": "AsyncFunctionDef",
         "purpose": "Invalid/inaccessible files must not expose machine paths or traceback text to the browser."
       },
       {
         "name": "create_app.account_status",
-        "line": 199,
+        "line": 200,
         "kind": "FunctionDef",
         "purpose": "Return public connection state without credentials."
       },
       {
         "name": "create_app.account_connect",
-        "line": 204,
+        "line": 205,
         "kind": "FunctionDef",
         "purpose": "Provide an official browser authorization link for a registered public application."
       },
       {
         "name": "create_app.account_disconnect",
-        "line": 209,
+        "line": 210,
         "kind": "FunctionDef",
         "purpose": "Forget this process's credentials; provider-side revocation is a separate user action."
       },
       {
         "name": "create_app.account_callback",
-        "line": 215,
+        "line": 216,
         "kind": "FunctionDef",
         "purpose": "Authenticate the provider callback by one-use state rather than the app's private bearer token."
       },
       {
         "name": "create_app.account_import",
-        "line": 226,
+        "line": 227,
         "kind": "FunctionDef",
         "purpose": "Normalize an explicit bounded own-gallery sample, retain labels and separate AI-origin records."
       },
       {
         "name": "create_app.feedback_export",
-        "line": 244,
+        "line": 245,
         "kind": "FunctionDef",
         "purpose": "Download explicitly consenting feedback data; generated images stay labelled AI-origin."
       },
       {
         "name": "create_app.health",
-        "line": 253,
+        "line": 254,
         "kind": "FunctionDef",
         "purpose": "Return process readiness without exposing workspace data or token."
       },
       {
         "name": "create_app.runtime_status",
-        "line": 258,
+        "line": 259,
         "kind": "FunctionDef",
         "purpose": "Show which private local interpreter will run trusted ML modules."
       },
       {
         "name": "create_app.runtime_choice",
-        "line": 263,
+        "line": 264,
         "kind": "FunctionDef",
         "purpose": "Change future worker executable only while idle, with explicit local trust acknowledgement."
       },
       {
         "name": "create_app.workspace",
-        "line": 280,
+        "line": 281,
         "kind": "FunctionDef",
         "purpose": "Return bounded model/dataset/image/job metadata to the authenticated local tab."
       },
       {
         "name": "create_app.dataset",
-        "line": 285,
+        "line": 286,
         "kind": "FunctionDef",
         "purpose": "Import explicit rights-approved directories/ZIPs and retain AI quarantine metadata separately."
       },
       {
+        "name": "create_app.dataset_review",
+        "line": 303,
+        "kind": "FunctionDef",
+        "purpose": "Review a known account-scoped dataset; caller input never chooses a machine path or model."
+      },
+      {
+        "name": "create_app.dataset_review_image",
+        "line": 313,
+        "kind": "FunctionDef",
+        "purpose": "Read-only account-scoped thumbnail; guessed IDs and paths never resolve arbitrary files."
+      },
+      {
         "name": "create_app.synthetic",
-        "line": 302,
+        "line": 326,
         "kind": "FunctionDef",
         "purpose": "Create and register owned procedural data for a genuine offline training test."
       },
       {
         "name": "create_app.glossary",
-        "line": 318,
+        "line": 342,
         "kind": "FunctionDef",
         "purpose": "Read operator-reviewed tag meanings stored inside the chosen dataset."
       },
       {
         "name": "create_app.glossary_save",
-        "line": 323,
+        "line": 347,
         "kind": "FunctionDef",
         "purpose": "Persist reviewed definitions with citations; never label a web search result verified automatically."
       },
       {
         "name": "create_app.model",
-        "line": 349,
+        "line": 373,
         "kind": "FunctionDef",
         "purpose": "Register an operator-selected verified local model; never downloads or executes custom model code."
       },
       {
         "name": "create_app.upload",
-        "line": 381,
+        "line": 405,
         "kind": "FunctionDef",
         "purpose": "Normalize one raster input into a private generated-identity PNG and strip EXIF metadata."
       },
       {
         "name": "create_app.image_file",
-        "line": 409,
+        "line": 433,
         "kind": "FunctionDef",
         "purpose": "Serve only registered local image artifacts behind the private session boundary."
       },
       {
         "name": "create_app.training",
-        "line": 418,
+        "line": 442,
         "kind": "FunctionDef",
         "purpose": "Validate selections before admitting a real training job; no placeholder training exists."
       },
       {
         "name": "create_app.generation",
-        "line": 438,
+        "line": 462,
         "kind": "FunctionDef",
         "purpose": "Compile numeric weights, enforce local policy and queue a supported learned inference job."
       },
       {
         "name": "create_app.cancellation",
-        "line": 457,
+        "line": 481,
         "kind": "FunctionDef",
         "purpose": "Cancel one known workspace job; completed results remain intact."
       },
       {
         "name": "create_app.report",
-        "line": 462,
+        "line": 486,
         "kind": "FunctionDef",
         "purpose": "Download an auditable job report; source paths/prompts are private and not telemetry."
       },
       {
         "name": "create_app.feedback_save",
-        "line": 470,
+        "line": 494,
         "kind": "FunctionDef",
         "purpose": "Store human notes and consent; a new revision/training run must be explicitly requested."
       },
       {
         "name": "create_app.feedback_read",
-        "line": 476,
+        "line": 500,
         "kind": "FunctionDef",
         "purpose": "Return recorded human feedback without fabricating model-generated scores."
       },
       {
         "name": "create_app.policy_save",
-        "line": 481,
+        "line": 505,
         "kind": "FunctionDef",
         "purpose": "Configure simple transparent phrase rules without claiming semantic enforcement."
       }
@@ -2702,721 +2733,769 @@
       {
         "name": "app",
         "scope": "Boundary.__init__",
-        "line": 31,
+        "line": 32,
         "purpose": "Function parameter"
       },
       {
         "name": "port",
         "scope": "Boundary.__init__",
-        "line": 31,
+        "line": 32,
         "purpose": "Function parameter"
       },
       {
         "name": "self",
         "scope": "Boundary.__init__",
-        "line": 31,
+        "line": 32,
         "purpose": "Function parameter"
       },
       {
         "name": "token",
         "scope": "Boundary.__init__",
-        "line": 31,
+        "line": 32,
         "purpose": "Function parameter"
       },
       {
         "name": "receive",
         "scope": "Boundary.__call__",
-        "line": 37,
+        "line": 38,
         "purpose": "Function parameter"
       },
       {
         "name": "scope",
         "scope": "Boundary.__call__",
-        "line": 37,
+        "line": 38,
         "purpose": "Function parameter"
       },
       {
         "name": "self",
         "scope": "Boundary.__call__",
-        "line": 37,
+        "line": 38,
         "purpose": "Function parameter"
       },
       {
         "name": "send",
         "scope": "Boundary.__call__",
-        "line": 37,
+        "line": 38,
         "purpose": "Function parameter"
       },
       {
         "name": "headers",
         "scope": "Boundary.__call__",
-        "line": 41,
+        "line": 42,
         "purpose": "headers = {k.decode().lower(): v.decode() for k, v in scope['headers']}"
       },
       {
         "name": "k",
         "scope": "Boundary.__call__",
-        "line": 41,
+        "line": 42,
         "purpose": "(k, v)"
       },
       {
         "name": "v",
         "scope": "Boundary.__call__",
-        "line": 41,
+        "line": 42,
         "purpose": "(k, v)"
       },
       {
         "name": "size",
         "scope": "Boundary.__call__",
-        "line": 55,
+        "line": 56,
         "purpose": "size = 0"
       },
       {
         "name": "chunks",
         "scope": "Boundary.__call__",
-        "line": 56,
+        "line": 57,
         "purpose": "chunks = []"
       },
       {
         "name": "message",
         "scope": "Boundary.__call__",
-        "line": 58,
+        "line": 59,
         "purpose": "message = await receive()"
       },
       {
         "name": "chunk",
         "scope": "Boundary.__call__",
-        "line": 61,
+        "line": 62,
         "purpose": "chunk = message.get('body', b'')"
       },
       {
         "name": "size",
         "scope": "Boundary.__call__",
-        "line": 62,
+        "line": 63,
         "purpose": "size += len(chunk)"
       },
       {
         "name": "consumed",
         "scope": "Boundary.__call__",
-        "line": 70,
+        "line": 71,
         "purpose": "consumed = False"
       },
       {
         "name": "consumed",
         "scope": "Boundary.__call__.replay",
-        "line": 76,
+        "line": 77,
         "purpose": "consumed = True"
       },
       {
         "name": "message",
         "scope": "Boundary.__call__.private_send",
-        "line": 80,
+        "line": 81,
         "purpose": "Function parameter"
       },
       {
         "name": "model_config",
         "scope": "Upload",
-        "line": 101,
+        "line": 102,
         "purpose": "model_config = ConfigDict(extra='forbid')"
       },
       {
         "name": "name",
         "scope": "Upload",
-        "line": 102,
+        "line": 103,
         "purpose": "name: str = Field(min_length=1, max_length=100)"
       },
       {
         "name": "content",
         "scope": "Upload",
-        "line": 103,
+        "line": 104,
         "purpose": "content: str = Field(max_length=7000000)"
       },
       {
         "name": "model_config",
         "scope": "Policy",
-        "line": 109,
+        "line": 110,
         "purpose": "model_config = ConfigDict(extra='forbid')"
       },
       {
         "name": "denied_terms",
         "scope": "Policy",
-        "line": 110,
+        "line": 111,
         "purpose": "denied_terms: list[str] = Field(default_factory=list, max_length=100)"
       },
       {
         "name": "model_config",
         "scope": "AccountConnect",
-        "line": 116,
+        "line": 117,
         "purpose": "model_config = ConfigDict(extra='forbid')"
       },
       {
         "name": "client_id",
         "scope": "AccountConnect",
-        "line": 117,
+        "line": 118,
         "purpose": "client_id: str = Field(pattern='^[0-9]{1,12}$')"
       },
       {
         "name": "model_config",
         "scope": "GalleryImport",
-        "line": 123,
+        "line": 124,
         "purpose": "model_config = ConfigDict(extra='forbid')"
       },
       {
         "name": "name",
         "scope": "GalleryImport",
-        "line": 124,
+        "line": 125,
         "purpose": "name: str = Field(min_length=1, max_length=80)"
       },
       {
         "name": "max_items",
         "scope": "GalleryImport",
-        "line": 125,
+        "line": 126,
         "purpose": "max_items: int = Field(default=24, ge=1, le=96)"
       },
       {
         "name": "rights_confirmed",
         "scope": "GalleryImport",
-        "line": 126,
+        "line": 127,
         "purpose": "rights_confirmed: Literal[True]"
       },
       {
         "name": "provider_terms_reviewed",
         "scope": "GalleryImport",
-        "line": 127,
+        "line": 128,
         "purpose": "provider_terms_reviewed: Literal[True]"
       },
       {
         "name": "model_config",
         "scope": "RuntimeChoice",
-        "line": 133,
+        "line": 134,
         "purpose": "model_config = ConfigDict(extra='forbid')"
       },
       {
         "name": "python",
         "scope": "RuntimeChoice",
-        "line": 134,
+        "line": 135,
         "purpose": "python: str = Field(min_length=1, max_length=1024)"
       },
       {
         "name": "trusted",
         "scope": "RuntimeChoice",
-        "line": 135,
+        "line": 136,
         "purpose": "trusted: Literal[True]"
       },
       {
         "name": "root",
         "scope": "create_app",
-        "line": 139,
+        "line": 140,
         "purpose": "Function parameter"
       },
       {
         "name": "token",
         "scope": "create_app",
-        "line": 140,
+        "line": 141,
         "purpose": "Function parameter"
       },
       {
         "name": "port",
         "scope": "create_app",
-        "line": 141,
-        "purpose": "Function parameter"
-      },
-      {
-        "name": "static",
-        "scope": "create_app",
         "line": 142,
         "purpose": "Function parameter"
       },
       {
-        "name": "interpreter",
+        "name": "static",
         "scope": "create_app",
         "line": 143,
         "purpose": "Function parameter"
       },
       {
-        "name": "connector_transport",
+        "name": "interpreter",
         "scope": "create_app",
         "line": 144,
         "purpose": "Function parameter"
       },
       {
-        "name": "worker_source",
+        "name": "connector_transport",
         "scope": "create_app",
         "line": 145,
         "purpose": "Function parameter"
       },
       {
+        "name": "worker_source",
+        "scope": "create_app",
+        "line": 146,
+        "purpose": "Function parameter"
+      },
+      {
         "name": "store",
         "scope": "create_app",
-        "line": 148,
+        "line": 149,
         "purpose": "store = Store(root)"
       },
       {
         "name": "interpreter",
         "scope": "create_app",
-        "line": 151,
+        "line": 152,
         "purpose": "interpreter = store.get('runtime', 'worker')['python']"
       },
       {
         "name": "jobs",
         "scope": "create_app",
-        "line": 154,
+        "line": 155,
         "purpose": "jobs = Jobs(store, interpreter, worker_source)"
       },
       {
         "name": "connector",
         "scope": "create_app",
-        "line": 155,
+        "line": 156,
         "purpose": "connector = DeviantArt(port, connector_transport)"
       },
       {
         "name": "app",
         "scope": "create_app.lifespan",
-        "line": 158,
+        "line": 159,
         "purpose": "Function parameter"
       },
       {
         "name": "app",
         "scope": "create_app",
-        "line": 164,
+        "line": 165,
         "purpose": "app = FastAPI(title='Personal Image Model Studio', docs_url=None, redoc_url=None, openapi_url=None, lifespan=lifespan)"
       },
       {
         "name": "error",
         "scope": "create_app.invalid",
-        "line": 176,
+        "line": 177,
         "purpose": "Function parameter"
       },
       {
         "name": "request",
         "scope": "create_app.invalid",
-        "line": 176,
+        "line": 177,
         "purpose": "Function parameter"
       },
       {
         "name": "e",
         "scope": "create_app.invalid",
-        "line": 179,
+        "line": 180,
         "purpose": " for e in error.errors()"
       },
       {
         "name": "error",
         "scope": "create_app.bad_value",
-        "line": 184,
+        "line": 185,
         "purpose": "Function parameter"
       },
       {
         "name": "request",
         "scope": "create_app.bad_value",
-        "line": 184,
+        "line": 185,
         "purpose": "Function parameter"
       },
       {
         "name": "error",
         "scope": "create_app.missing",
-        "line": 189,
+        "line": 190,
         "purpose": "Function parameter"
       },
       {
         "name": "request",
         "scope": "create_app.missing",
-        "line": 189,
+        "line": 190,
         "purpose": "Function parameter"
       },
       {
         "name": "error",
         "scope": "create_app.file_error",
-        "line": 194,
+        "line": 195,
         "purpose": "Function parameter"
       },
       {
         "name": "request",
         "scope": "create_app.file_error",
-        "line": 194,
+        "line": 195,
         "purpose": "Function parameter"
       },
       {
         "name": "data",
         "scope": "create_app.account_connect",
-        "line": 204,
+        "line": 205,
         "purpose": "Function parameter"
       },
       {
         "name": "request",
         "scope": "create_app.account_callback",
-        "line": 215,
+        "line": 216,
         "purpose": "Function parameter"
       },
       {
         "name": "params",
         "scope": "create_app.account_callback",
-        "line": 217,
+        "line": 218,
         "purpose": "params = request.query_params"
       },
       {
         "name": "key",
         "scope": "create_app.account_callback",
-        "line": 218,
+        "line": 219,
         "purpose": " for key in params"
       },
       {
         "name": "data",
         "scope": "create_app.account_import",
-        "line": 226,
+        "line": 227,
         "purpose": "Function parameter"
       },
       {
         "name": "identity",
         "scope": "create_app.account_import",
-        "line": 228,
+        "line": 229,
         "purpose": "identity = uuid.uuid4().hex"
       },
       {
         "name": "path",
         "scope": "create_app.account_import",
-        "line": 229,
+        "line": 230,
         "purpose": "path = store.root / 'datasets' / identity"
       },
       {
         "name": "result",
         "scope": "create_app.account_import",
-        "line": 230,
+        "line": 231,
         "purpose": "result = connector.gallery(path, data.name, data.max_items)"
       },
       {
         "name": "record",
         "scope": "create_app.account_import",
-        "line": 231,
+        "line": 232,
         "purpose": "record = {'id': identity, 'name': data.name, 'path': str(path), 'counts': result['counts'], 'fingerprint': result['fingerprint'], 'connector': result['connector']}"
       },
       {
         "name": "data",
         "scope": "create_app.runtime_choice",
-        "line": 263,
+        "line": 264,
         "purpose": "Function parameter"
       },
       {
         "name": "path",
         "scope": "create_app.runtime_choice",
-        "line": 265,
+        "line": 266,
         "purpose": "path = Path(data.python).resolve(strict=True)"
       },
       {
         "name": "job",
         "scope": "create_app.runtime_choice",
-        "line": 273,
+        "line": 274,
         "purpose": " for job in store.list('job')"
       },
       {
         "name": "kind",
         "scope": "create_app.workspace",
-        "line": 282,
+        "line": 283,
         "purpose": " for kind in ('model', 'dataset', 'image', 'job')"
       },
       {
         "name": "data",
         "scope": "create_app.dataset",
-        "line": 285,
+        "line": 286,
         "purpose": "Function parameter"
       },
       {
         "name": "identity",
         "scope": "create_app.dataset",
-        "line": 287,
+        "line": 288,
         "purpose": "identity = uuid.uuid4().hex"
       },
       {
         "name": "path",
         "scope": "create_app.dataset",
-        "line": 288,
+        "line": 289,
         "purpose": "path = store.root / 'datasets' / identity"
       },
       {
         "name": "result",
         "scope": "create_app.dataset",
-        "line": 289,
+        "line": 290,
         "purpose": "result = import_dataset(data.paths, path, data.name)"
       },
       {
         "name": "record",
         "scope": "create_app.dataset",
-        "line": 290,
+        "line": 291,
         "purpose": "record = {'id': identity, 'name': data.name, 'path': str(path), 'counts': result['counts'], 'fingerprint': result['fingerprint']}"
       },
       {
         "name": "identity",
+        "scope": "create_app.dataset_review",
+        "line": 303,
+        "purpose": "Function parameter"
+      },
+      {
+        "name": "character",
+        "scope": "create_app.dataset_review",
+        "line": 306,
+        "purpose": " for character in identity"
+      },
+      {
+        "name": "record",
+        "scope": "create_app.dataset_review",
+        "line": 309,
+        "purpose": "record = store.get('dataset', identity)"
+      },
+      {
+        "name": "identity",
+        "scope": "create_app.dataset_review_image",
+        "line": 313,
+        "purpose": "Function parameter"
+      },
+      {
+        "name": "image_hash",
+        "scope": "create_app.dataset_review_image",
+        "line": 313,
+        "purpose": "Function parameter"
+      },
+      {
+        "name": "character",
+        "scope": "create_app.dataset_review_image",
+        "line": 316,
+        "purpose": " for character in identity"
+      },
+      {
+        "name": "record",
+        "scope": "create_app.dataset_review_image",
+        "line": 319,
+        "purpose": "record = store.get('dataset', identity)"
+      },
+      {
+        "name": "content",
+        "scope": "create_app.dataset_review_image",
+        "line": 320,
+        "purpose": "content = dataset_thumbnail(confined(store.root, f'datasets/{identity}'), record['fingerprint'], image_hash)"
+      },
+      {
+        "name": "identity",
         "scope": "create_app.synthetic",
-        "line": 304,
+        "line": 328,
         "purpose": "identity = uuid.uuid4().hex"
       },
       {
         "name": "path",
         "scope": "create_app.synthetic",
-        "line": 305,
+        "line": 329,
         "purpose": "path = store.root / 'datasets' / identity"
       },
       {
         "name": "result",
         "scope": "create_app.synthetic",
-        "line": 306,
+        "line": 330,
         "purpose": "result = synthetic_dataset(path)"
       },
       {
         "name": "record",
         "scope": "create_app.synthetic",
-        "line": 307,
+        "line": 331,
         "purpose": "record = {'id': identity, 'name': result['name'], 'path': str(path), 'counts': result['counts'], 'fingerprint': result['fingerprint']}"
       },
       {
         "name": "identity",
         "scope": "create_app.glossary",
-        "line": 318,
+        "line": 342,
         "purpose": "Function parameter"
       },
       {
         "name": "body",
         "scope": "create_app.glossary_save",
-        "line": 323,
+        "line": 347,
         "purpose": "Function parameter"
       },
       {
         "name": "identity",
         "scope": "create_app.glossary_save",
-        "line": 323,
+        "line": 347,
         "purpose": "Function parameter"
       },
       {
         "name": "entries",
         "scope": "create_app.glossary_save",
-        "line": 325,
+        "line": 349,
         "purpose": "entries = body.get('entries', {})"
       },
       {
         "name": "term",
         "scope": "create_app.glossary_save",
-        "line": 328,
+        "line": 352,
         "purpose": "(term, value)"
       },
       {
         "name": "value",
         "scope": "create_app.glossary_save",
-        "line": 328,
+        "line": 352,
         "purpose": "(term, value)"
       },
       {
         "name": "path",
         "scope": "create_app.glossary_save",
-        "line": 344,
+        "line": 368,
         "purpose": "path = Path(store.get('dataset', identity)['path']) / 'glossary.json'"
       },
       {
         "name": "data",
         "scope": "create_app.model",
-        "line": 349,
+        "line": 373,
         "purpose": "Function parameter"
       },
       {
         "name": "path",
         "scope": "create_app.model",
-        "line": 351,
+        "line": 375,
         "purpose": "path = Path(data.path).resolve(strict=True)"
       },
       {
         "name": "details",
         "scope": "create_app.model",
-        "line": 355,
+        "line": 379,
         "purpose": "details = verify(path)"
       },
       {
         "name": "summary",
         "scope": "create_app.model",
-        "line": 356,
+        "line": 380,
         "purpose": "summary = {'resolution': details['resolution'], 'trained_steps': details['trained_steps'], **details['validation']}"
       },
       {
         "name": "summary",
         "scope": "create_app.model",
-        "line": 364,
+        "line": 388,
         "purpose": "summary = {'family': 'classic Stable Diffusion', 'inspection': 'Fixed component classes and safe tensor files inspected; worker validates tensor loading'}"
       },
       {
         "name": "identity",
         "scope": "create_app.model",
-        "line": 368,
+        "line": 392,
         "purpose": "identity = uuid.uuid4().hex"
       },
       {
         "name": "result",
         "scope": "create_app.model",
-        "line": 369,
+        "line": 393,
         "purpose": "result = {'id': identity, 'name': data.name, 'kind': data.kind, 'path': str(path), 'license_note': data.license_note, 'details': summary}"
       },
       {
         "name": "data",
         "scope": "create_app.upload",
-        "line": 381,
+        "line": 405,
         "purpose": "Function parameter"
       },
       {
         "name": "content",
         "scope": "create_app.upload",
-        "line": 384,
+        "line": 408,
         "purpose": "content = base64.b64decode(data.content, validate=True)"
       },
       {
         "name": "identity",
         "scope": "create_app.upload",
-        "line": 387,
+        "line": 411,
         "purpose": "identity = uuid.uuid4().hex"
       },
       {
         "name": "directory",
         "scope": "create_app.upload",
-        "line": 388,
+        "line": 412,
         "purpose": "directory = store.root / 'images'"
       },
       {
         "name": "temporary",
         "scope": "create_app.upload",
-        "line": 390,
+        "line": 414,
         "purpose": "temporary = directory / f'{identity}.upload'"
       },
       {
         "name": "path",
         "scope": "create_app.upload",
-        "line": 391,
+        "line": 415,
         "purpose": "path = directory / f'{identity}.png'"
       },
       {
         "name": "image",
         "scope": "create_app.upload",
-        "line": 394,
+        "line": 418,
         "purpose": "normalized_image(temporary) as image"
       },
       {
         "name": "record",
         "scope": "create_app.upload",
-        "line": 398,
+        "line": 422,
         "purpose": "record = {'id': identity, 'name': data.name, 'path': str(path), 'request': None, 'details': {'source': 'user-upload'}}"
       },
       {
         "name": "identity",
         "scope": "create_app.image_file",
-        "line": 409,
+        "line": 433,
         "purpose": "Function parameter"
       },
       {
         "name": "settings",
         "scope": "create_app.training",
-        "line": 418,
+        "line": 442,
         "purpose": "Function parameter"
       },
       {
         "name": "references",
         "scope": "create_app.training",
-        "line": 420,
+        "line": 444,
         "purpose": "references = {'datasets': [store.get('dataset', identity)['path'] for identity in settings.dataset_ids]}"
       },
       {
         "name": "identity",
         "scope": "create_app.training",
-        "line": 422,
+        "line": 446,
         "purpose": " for identity in settings.dataset_ids"
       },
       {
         "name": "resumed",
         "scope": "create_app.training",
-        "line": 426,
+        "line": 450,
         "purpose": "resumed = store.get('model', settings.resume_model_id)"
       },
       {
         "name": "base",
         "scope": "create_app.training",
-        "line": 431,
+        "line": 455,
         "purpose": "base = store.get('model', settings.base_model_id)"
       },
       {
         "name": "settings",
         "scope": "create_app.generation",
-        "line": 438,
+        "line": 462,
         "purpose": "Function parameter"
       },
       {
         "name": "compiled",
         "scope": "create_app.generation",
-        "line": 440,
+        "line": 464,
         "purpose": "compiled = compile_prompt(settings.prompt.model_dump())"
       },
       {
         "name": "policy",
         "scope": "create_app.generation",
-        "line": 441,
+        "line": 465,
         "purpose": "policy = store.list('policy', 1)"
       },
       {
         "name": "selected",
         "scope": "create_app.generation",
-        "line": 443,
+        "line": 467,
         "purpose": "selected = store.get('model', settings.model_id)"
       },
       {
         "name": "references",
         "scope": "create_app.generation",
-        "line": 444,
+        "line": 468,
         "purpose": "references = {'model_kind': selected['kind'], 'model': selected.get('base', selected['path'])}"
       },
       {
         "name": "identity",
         "scope": "create_app.cancellation",
-        "line": 457,
+        "line": 481,
         "purpose": "Function parameter"
       },
       {
         "name": "identity",
         "scope": "create_app.report",
-        "line": 462,
+        "line": 486,
         "purpose": "Function parameter"
       },
       {
         "name": "job",
         "scope": "create_app.report",
-        "line": 464,
+        "line": 488,
         "purpose": "job = store.get('job', identity)"
       },
       {
         "name": "feedback",
         "scope": "create_app.feedback_save",
-        "line": 470,
+        "line": 494,
         "purpose": "Function parameter"
       },
       {
         "name": "identity",
         "scope": "create_app.feedback_save",
-        "line": 470,
+        "line": 494,
         "purpose": "Function parameter"
       },
       {
         "name": "identity",
         "scope": "create_app.feedback_read",
-        "line": 476,
+        "line": 500,
         "purpose": "Function parameter"
       },
       {
         "name": "policy",
         "scope": "create_app.policy_save",
-        "line": 481,
+        "line": 505,
         "purpose": "Function parameter"
       },
       {
         "name": "term",
         "scope": "create_app.policy_save",
-        "line": 483,
+        "line": 507,
         "purpose": " for term in policy.denied_terms"
       },
       {
         "name": "static",
         "scope": "create_app",
-        "line": 488,
+        "line": 512,
         "purpose": "static = static or Path(__file__).resolve().parents[1] / 'dist'"
       }
     ]
@@ -4297,6 +4376,565 @@
         "scope": "ModelImport",
         "line": 140,
         "purpose": "license_note: Annotated[str, Field(min_length=1, max_length=500)]"
+      }
+    ]
+  },
+  "studio/dataset_review.py": {
+    "purpose": "Read-only, bounded dataset readiness review by Jason Stys.\n\n\nSummarizes caption/provenance/split evidence and sampled cross-split visual\nsimilarity. Candidates are review aids, never proof of leakage or authorization.\nExact declarations and variables are generated in docs/code-map.json.",
+    "declarations": [
+      {
+        "name": "module.manifest_records",
+        "line": 30,
+        "kind": "FunctionDef",
+        "purpose": "Validate exact normalized imported identities and the existing dataset fingerprint."
+      },
+      {
+        "name": "module.difference_hash",
+        "line": 81,
+        "kind": "FunctionDef",
+        "purpose": "Compute 64 horizontal grayscale comparisons; collisions and semantic differences remain possible."
+      },
+      {
+        "name": "module.review_dataset",
+        "line": 92,
+        "kind": "FunctionDef",
+        "purpose": "Inspect only normalized local data without altering manifests, training selection, models or pixels."
+      },
+      {
+        "name": "module.dataset_thumbnail",
+        "line": 215,
+        "kind": "FunctionDef",
+        "purpose": "Return a metadata-free bounded PNG only for a known, integrity-checked imported record."
+      }
+    ],
+    "variables": [
+      {
+        "name": "MAX_RECORDS",
+        "scope": "module",
+        "line": 22,
+        "purpose": "MAX_RECORDS = 10000"
+      },
+      {
+        "name": "MAX_SAMPLE",
+        "scope": "module",
+        "line": 23,
+        "purpose": "MAX_SAMPLE = 64"
+      },
+      {
+        "name": "MAX_SAMPLE_BYTES",
+        "scope": "module",
+        "line": 24,
+        "purpose": "MAX_SAMPLE_BYTES = 32 * 1024 * 1024"
+      },
+      {
+        "name": "MAX_SAMPLE_PIXELS",
+        "scope": "module",
+        "line": 25,
+        "purpose": "MAX_SAMPLE_PIXELS = 16777216"
+      },
+      {
+        "name": "MAX_PAIRS_SHOWN",
+        "scope": "module",
+        "line": 26,
+        "purpose": "MAX_PAIRS_SHOWN = 32"
+      },
+      {
+        "name": "ORIGINS",
+        "scope": "module",
+        "line": 27,
+        "purpose": "ORIGINS = {'human', 'synthetic_procedural', 'ai_generated', 'ai_assisted', 'unknown'}"
+      },
+      {
+        "name": "expected",
+        "scope": "manifest_records",
+        "line": 30,
+        "purpose": "Function parameter"
+      },
+      {
+        "name": "root",
+        "scope": "manifest_records",
+        "line": 30,
+        "purpose": "Function parameter"
+      },
+      {
+        "name": "manifest",
+        "scope": "manifest_records",
+        "line": 32,
+        "purpose": "manifest = read_json(root / 'dataset.json', 8 * 1024 * 1024)"
+      },
+      {
+        "name": "records",
+        "scope": "manifest_records",
+        "line": 33,
+        "purpose": "records = manifest.get('records')"
+      },
+      {
+        "name": "seen",
+        "scope": "manifest_records",
+        "line": 42,
+        "purpose": "seen = set()"
+      },
+      {
+        "name": "record",
+        "scope": "manifest_records",
+        "line": 43,
+        "purpose": "for record in records:\n    if not isinstance(record, dict):\n        raise ValueError('Invalid dataset review record')\n    identity = record.get('hash')\n    if not isinstance(identi"
+      },
+      {
+        "name": "identity",
+        "scope": "manifest_records",
+        "line": 46,
+        "purpose": "identity = record.get('hash')"
+      },
+      {
+        "name": "fingerprint",
+        "scope": "manifest_records",
+        "line": 68,
+        "purpose": "fingerprint = hashlib.sha256(json.dumps(sorted(((r['hash'], r['caption'], r['origin'], r['split']) for r in records)), ensure_ascii=False).encode()).hexdigest()"
+      },
+      {
+        "name": "r",
+        "scope": "manifest_records",
+        "line": 70,
+        "purpose": " for r in records"
+      },
+      {
+        "name": "image",
+        "scope": "difference_hash",
+        "line": 81,
+        "purpose": "Function parameter"
+      },
+      {
+        "name": "gray",
+        "scope": "difference_hash",
+        "line": 83,
+        "purpose": "image.convert('L') as gray"
+      },
+      {
+        "name": "small",
+        "scope": "difference_hash",
+        "line": 83,
+        "purpose": "gray.resize((9, 8), Image.Resampling.LANCZOS) as small"
+      },
+      {
+        "name": "pixels",
+        "scope": "difference_hash",
+        "line": 84,
+        "purpose": "pixels = small.tobytes()"
+      },
+      {
+        "name": "value",
+        "scope": "difference_hash",
+        "line": 85,
+        "purpose": "value = 0"
+      },
+      {
+        "name": "row",
+        "scope": "difference_hash",
+        "line": 86,
+        "purpose": "for row in range(8):\n    for column in range(8):\n        value = value << 1 | (pixels[row * 9 + column] > pixels[row * 9 + column + 1])"
+      },
+      {
+        "name": "column",
+        "scope": "difference_hash",
+        "line": 87,
+        "purpose": "for column in range(8):\n    value = value << 1 | (pixels[row * 9 + column] > pixels[row * 9 + column + 1])"
+      },
+      {
+        "name": "value",
+        "scope": "difference_hash",
+        "line": 88,
+        "purpose": "value = value << 1 | (pixels[row * 9 + column] > pixels[row * 9 + column + 1])"
+      },
+      {
+        "name": "expected",
+        "scope": "review_dataset",
+        "line": 92,
+        "purpose": "Function parameter"
+      },
+      {
+        "name": "root",
+        "scope": "review_dataset",
+        "line": 92,
+        "purpose": "Function parameter"
+      },
+      {
+        "name": "_",
+        "scope": "review_dataset",
+        "line": 94,
+        "purpose": "(_, records)"
+      },
+      {
+        "name": "records",
+        "scope": "review_dataset",
+        "line": 94,
+        "purpose": "(_, records)"
+      },
+      {
+        "name": "origins",
+        "scope": "review_dataset",
+        "line": 95,
+        "purpose": "origins = Counter((record['origin'] for record in records))"
+      },
+      {
+        "name": "record",
+        "scope": "review_dataset",
+        "line": 95,
+        "purpose": " for record in records"
+      },
+      {
+        "name": "eligible",
+        "scope": "review_dataset",
+        "line": 96,
+        "purpose": "eligible = [r for r in records if r['caption'].strip() and (not r['origin'].startswith('ai_'))]"
+      },
+      {
+        "name": "r",
+        "scope": "review_dataset",
+        "line": 96,
+        "purpose": " for r in records if r['caption'].strip() and (not r['origin'].startswith('ai_'))"
+      },
+      {
+        "name": "splits",
+        "scope": "review_dataset",
+        "line": 97,
+        "purpose": "splits = {split: sorted((r for r in eligible if r['split'] == split), key=lambda r: r['hash']) for split in ('train', 'validation')}"
+      },
+      {
+        "name": "r",
+        "scope": "review_dataset",
+        "line": 98,
+        "purpose": " for r in eligible if r['split'] == split"
+      },
+      {
+        "name": "r",
+        "scope": "review_dataset",
+        "line": 98,
+        "purpose": "Function parameter"
+      },
+      {
+        "name": "split",
+        "scope": "review_dataset",
+        "line": 99,
+        "purpose": " for split in ('train', 'validation')"
+      },
+      {
+        "name": "selected",
+        "scope": "review_dataset",
+        "line": 102,
+        "purpose": "selected = []"
+      },
+      {
+        "name": "index",
+        "scope": "review_dataset",
+        "line": 103,
+        "purpose": "for index in range(MAX_SAMPLE):\n    for split in ('train', 'validation'):\n        if index < len(splits[split]) and len(selected) < MAX_SAMPLE:\n            selected.append(splits[s"
+      },
+      {
+        "name": "split",
+        "scope": "review_dataset",
+        "line": 104,
+        "purpose": "for split in ('train', 'validation'):\n    if index < len(splits[split]) and len(selected) < MAX_SAMPLE:\n        selected.append(splits[split][index])"
+      },
+      {
+        "name": "errors",
+        "scope": "review_dataset",
+        "line": 107,
+        "purpose": "(sampled, errors)"
+      },
+      {
+        "name": "sampled",
+        "scope": "review_dataset",
+        "line": 107,
+        "purpose": "(sampled, errors)"
+      },
+      {
+        "name": "used_bytes",
+        "scope": "review_dataset",
+        "line": 108,
+        "purpose": "used_bytes = used_pixels = 0"
+      },
+      {
+        "name": "used_pixels",
+        "scope": "review_dataset",
+        "line": 108,
+        "purpose": "used_bytes = used_pixels = 0"
+      },
+      {
+        "name": "budget_stopped",
+        "scope": "review_dataset",
+        "line": 109,
+        "purpose": "budget_stopped = False"
+      },
+      {
+        "name": "record",
+        "scope": "review_dataset",
+        "line": 110,
+        "purpose": "for record in selected:\n    try:\n        file = confined(root, record['file'])\n        status = file.stat()\n        if not stat.S_ISREG(status.st_mode):\n            raise ValueErro"
+      },
+      {
+        "name": "file",
+        "scope": "review_dataset",
+        "line": 112,
+        "purpose": "file = confined(root, record['file'])"
+      },
+      {
+        "name": "status",
+        "scope": "review_dataset",
+        "line": 113,
+        "purpose": "status = file.stat()"
+      },
+      {
+        "name": "size",
+        "scope": "review_dataset",
+        "line": 116,
+        "purpose": "size = status.st_size"
+      },
+      {
+        "name": "budget_stopped",
+        "scope": "review_dataset",
+        "line": 120,
+        "purpose": "budget_stopped = True"
+      },
+      {
+        "name": "stream",
+        "scope": "review_dataset",
+        "line": 122,
+        "purpose": "file.open('rb') as stream"
+      },
+      {
+        "name": "content",
+        "scope": "review_dataset",
+        "line": 123,
+        "purpose": "content = stream.read(size + 1)"
+      },
+      {
+        "name": "header",
+        "scope": "review_dataset",
+        "line": 126,
+        "purpose": "Image.open(file) as header"
+      },
+      {
+        "name": "pixels",
+        "scope": "review_dataset",
+        "line": 127,
+        "purpose": "pixels = header.width * header.height"
+      },
+      {
+        "name": "budget_stopped",
+        "scope": "review_dataset",
+        "line": 129,
+        "purpose": "budget_stopped = True"
+      },
+      {
+        "name": "used_bytes",
+        "scope": "review_dataset",
+        "line": 131,
+        "purpose": "used_bytes += size"
+      },
+      {
+        "name": "used_pixels",
+        "scope": "review_dataset",
+        "line": 132,
+        "purpose": "used_pixels += pixels"
+      },
+      {
+        "name": "image",
+        "scope": "review_dataset",
+        "line": 133,
+        "purpose": "normalized_image(file) as image"
+      },
+      {
+        "name": "candidates",
+        "scope": "review_dataset",
+        "line": 148,
+        "purpose": "candidates = []"
+      },
+      {
+        "name": "comparisons",
+        "scope": "review_dataset",
+        "line": 149,
+        "purpose": "pair_count = comparisons = 0"
+      },
+      {
+        "name": "pair_count",
+        "scope": "review_dataset",
+        "line": 149,
+        "purpose": "pair_count = comparisons = 0"
+      },
+      {
+        "name": "index",
+        "scope": "review_dataset",
+        "line": 150,
+        "purpose": "(index, (left, left_hash))"
+      },
+      {
+        "name": "left",
+        "scope": "review_dataset",
+        "line": 150,
+        "purpose": "(left, left_hash)"
+      },
+      {
+        "name": "left_hash",
+        "scope": "review_dataset",
+        "line": 150,
+        "purpose": "(left, left_hash)"
+      },
+      {
+        "name": "right",
+        "scope": "review_dataset",
+        "line": 151,
+        "purpose": "(right, right_hash)"
+      },
+      {
+        "name": "right_hash",
+        "scope": "review_dataset",
+        "line": 151,
+        "purpose": "(right, right_hash)"
+      },
+      {
+        "name": "comparisons",
+        "scope": "review_dataset",
+        "line": 154,
+        "purpose": "comparisons += 1"
+      },
+      {
+        "name": "distance",
+        "scope": "review_dataset",
+        "line": 155,
+        "purpose": "distance = (left_hash ^ right_hash).bit_count()"
+      },
+      {
+        "name": "pair_count",
+        "scope": "review_dataset",
+        "line": 157,
+        "purpose": "pair_count += 1"
+      },
+      {
+        "name": "key",
+        "scope": "review_dataset",
+        "line": 161,
+        "purpose": " for key in ('hash', 'name', 'split')"
+      },
+      {
+        "name": "key",
+        "scope": "review_dataset",
+        "line": 162,
+        "purpose": " for key in ('hash', 'name', 'split')"
+      },
+      {
+        "name": "captions",
+        "scope": "review_dataset",
+        "line": 166,
+        "purpose": "captions = Counter((r['caption'].strip().casefold() for r in eligible))"
+      },
+      {
+        "name": "r",
+        "scope": "review_dataset",
+        "line": 166,
+        "purpose": " for r in eligible"
+      },
+      {
+        "name": "report",
+        "scope": "review_dataset",
+        "line": 167,
+        "purpose": "report = {'schema': 1, 'dataset_fingerprint': expected, 'counts': {'total': len(records), 'missing_captions': sum((not r['caption'].strip() for r in records)), 'ai_excluded': sum(("
+      },
+      {
+        "name": "r",
+        "scope": "review_dataset",
+        "line": 172,
+        "purpose": " for r in records"
+      },
+      {
+        "name": "r",
+        "scope": "review_dataset",
+        "line": 173,
+        "purpose": " for r in records"
+      },
+      {
+        "name": "r",
+        "scope": "review_dataset",
+        "line": 177,
+        "purpose": " for r in records"
+      },
+      {
+        "name": "expected",
+        "scope": "dataset_thumbnail",
+        "line": 215,
+        "purpose": "Function parameter"
+      },
+      {
+        "name": "identity",
+        "scope": "dataset_thumbnail",
+        "line": 215,
+        "purpose": "Function parameter"
+      },
+      {
+        "name": "root",
+        "scope": "dataset_thumbnail",
+        "line": 215,
+        "purpose": "Function parameter"
+      },
+      {
+        "name": "_",
+        "scope": "dataset_thumbnail",
+        "line": 219,
+        "purpose": "(_, records)"
+      },
+      {
+        "name": "records",
+        "scope": "dataset_thumbnail",
+        "line": 219,
+        "purpose": "(_, records)"
+      },
+      {
+        "name": "item",
+        "scope": "dataset_thumbnail",
+        "line": 220,
+        "purpose": " for item in records if item['hash'] == identity"
+      },
+      {
+        "name": "record",
+        "scope": "dataset_thumbnail",
+        "line": 220,
+        "purpose": "record = next((item for item in records if item['hash'] == identity), None)"
+      },
+      {
+        "name": "file",
+        "scope": "dataset_thumbnail",
+        "line": 223,
+        "purpose": "file = confined(root, record['file'])"
+      },
+      {
+        "name": "stream",
+        "scope": "dataset_thumbnail",
+        "line": 226,
+        "purpose": "file.open('rb') as stream"
+      },
+      {
+        "name": "content",
+        "scope": "dataset_thumbnail",
+        "line": 227,
+        "purpose": "content = stream.read(20 * 1024 * 1024 + 1)"
+      },
+      {
+        "name": "source",
+        "scope": "dataset_thumbnail",
+        "line": 235,
+        "purpose": "Image.open(io.BytesIO(content)) as source"
+      },
+      {
+        "name": "image",
+        "scope": "dataset_thumbnail",
+        "line": 238,
+        "purpose": "source.convert('RGB') as image"
+      },
+      {
+        "name": "output",
+        "scope": "dataset_thumbnail",
+        "line": 246,
+        "purpose": "output = io.BytesIO()"
       }
     ]
   },
@@ -5556,43 +6194,43 @@
     "declarations": [
       {
         "name": "module.digest",
-        "line": 18,
+        "line": 19,
         "kind": "FunctionDef",
         "purpose": "Stream a SHA-256 digest without retaining a whole model in memory."
       },
       {
         "name": "module.confined",
-        "line": 24,
+        "line": 25,
         "kind": "FunctionDef",
         "purpose": "Resolve a known relative artifact path and reject traversal/symlink escapes."
       },
       {
         "name": "module.read_json",
-        "line": 32,
+        "line": 33,
         "kind": "FunctionDef",
         "purpose": "Read a size-bounded JSON object; reject duplicate keys and non-finite numbers."
       },
       {
         "name": "read_json.pairs",
-        "line": 37,
+        "line": 42,
         "kind": "FunctionDef",
         "purpose": "Reject duplicate keys instead of silently choosing the last value."
       },
       {
         "name": "module.replace_file",
-        "line": 54,
+        "line": 59,
         "kind": "FunctionDef",
         "purpose": "Atomically replace with at most eight attempts for Windows file-sharing errors; never relax ACLs."
       },
       {
         "name": "module.atomic_json",
-        "line": 68,
+        "line": 73,
         "kind": "FunctionDef",
         "purpose": "Publish complete JSON via same-directory replace; clean only this function's temp file."
       },
       {
         "name": "module.normalized_image",
-        "line": 82,
+        "line": 87,
         "kind": "FunctionDef",
         "purpose": "Decode one bounded supported raster, apply EXIF rotation and strip metadata on output."
       }
@@ -5601,151 +6239,163 @@
       {
         "name": "MAX_IMAGE_BYTES",
         "scope": "module",
-        "line": 13,
+        "line": 14,
         "purpose": "MAX_IMAGE_BYTES = 20 * 1024 * 1024"
       },
       {
         "name": "MAX_PIXELS",
         "scope": "module",
-        "line": 14,
+        "line": 15,
         "purpose": "MAX_PIXELS = 4194304"
       },
       {
         "name": "path",
         "scope": "digest",
-        "line": 18,
+        "line": 19,
         "purpose": "Function parameter"
       },
       {
         "name": "stream",
         "scope": "digest",
-        "line": 20,
+        "line": 21,
         "purpose": "path.open('rb') as stream"
       },
       {
         "name": "relative",
         "scope": "confined",
-        "line": 24,
+        "line": 25,
         "purpose": "Function parameter"
       },
       {
         "name": "root",
         "scope": "confined",
-        "line": 24,
+        "line": 25,
         "purpose": "Function parameter"
       },
       {
         "name": "path",
         "scope": "confined",
-        "line": 26,
+        "line": 27,
         "purpose": "path = (root / relative).resolve()"
       },
       {
         "name": "limit",
         "scope": "read_json",
-        "line": 32,
+        "line": 33,
         "purpose": "Function parameter"
       },
       {
         "name": "path",
         "scope": "read_json",
-        "line": 32,
+        "line": 33,
         "purpose": "Function parameter"
+      },
+      {
+        "name": "stream",
+        "scope": "read_json",
+        "line": 37,
+        "purpose": "path.open('rb') as stream"
+      },
+      {
+        "name": "source",
+        "scope": "read_json",
+        "line": 38,
+        "purpose": "source = stream.read(limit + 1)"
       },
       {
         "name": "items",
         "scope": "read_json.pairs",
-        "line": 37,
+        "line": 42,
         "purpose": "Function parameter"
       },
       {
         "name": "result",
         "scope": "read_json.pairs",
-        "line": 39,
+        "line": 44,
         "purpose": "result = dict(items)"
       },
       {
         "name": "value",
         "scope": "read_json",
-        "line": 44,
-        "purpose": "value = json.loads(path.read_text(encoding='utf-8'), object_pairs_hook=pairs, parse_constant=lambda value: (_ for _ in ()).throw(ValueError('Non-finite JSON')))"
+        "line": 49,
+        "purpose": "value = json.loads(source.decode('utf-8'), object_pairs_hook=pairs, parse_constant=lambda value: (_ for _ in ()).throw(ValueError('Non-finite JSON')))"
       },
       {
         "name": "_",
         "scope": "read_json",
-        "line": 47,
+        "line": 52,
         "purpose": " for _ in ()"
       },
       {
         "name": "value",
         "scope": "read_json",
-        "line": 47,
+        "line": 52,
         "purpose": "Function parameter"
       },
       {
         "name": "destination",
         "scope": "replace_file",
-        "line": 54,
+        "line": 59,
         "purpose": "Function parameter"
       },
       {
         "name": "source",
         "scope": "replace_file",
-        "line": 54,
+        "line": 59,
         "purpose": "Function parameter"
       },
       {
         "name": "attempt",
         "scope": "replace_file",
-        "line": 56,
+        "line": 61,
         "purpose": "for attempt in range(8):\n    try:\n        os.replace(source, destination)\n        return\n    except PermissionError as error:\n        if getattr(error, 'winerror', None) not in {5,"
       },
       {
         "name": "path",
         "scope": "atomic_json",
-        "line": 68,
+        "line": 73,
         "purpose": "Function parameter"
       },
       {
         "name": "value",
         "scope": "atomic_json",
-        "line": 68,
+        "line": 73,
         "purpose": "Function parameter"
       },
       {
         "name": "descriptor",
         "scope": "atomic_json",
-        "line": 71,
+        "line": 76,
         "purpose": "(descriptor, temporary)"
       },
       {
         "name": "temporary",
         "scope": "atomic_json",
-        "line": 71,
+        "line": 76,
         "purpose": "(descriptor, temporary)"
       },
       {
         "name": "stream",
         "scope": "atomic_json",
-        "line": 73,
+        "line": 78,
         "purpose": "os.fdopen(descriptor, 'w', encoding='utf-8') as stream"
       },
       {
         "name": "path",
         "scope": "normalized_image",
-        "line": 82,
+        "line": 87,
         "purpose": "Function parameter"
       },
       {
         "name": "image",
         "scope": "normalized_image",
-        "line": 88,
+        "line": 93,
         "purpose": "Image.open(path) as image"
       },
       {
         "name": "normalized",
         "scope": "normalized_image",
-        "line": 93,
+        "line": 98,
         "purpose": "normalized = ImageOps.exif_transpose(image).convert('RGB')"
       }
     ]
@@ -11463,8 +12113,20 @@
         "purpose": "{\n  page,\n}"
       },
       {
+        "name": "datasetChoice",
+        "line": 41,
+        "kind": "variable",
+        "purpose": "datasetChoice = page.getByLabel(\"Dataset to review\", { exact: true })"
+      },
+      {
+        "name": "datasetId",
+        "line": 43,
+        "kind": "variable",
+        "purpose": "datasetId = await datasetChoice.inputValue()"
+      },
+      {
         "name": "image",
-        "line": 79,
+        "line": 92,
         "kind": "parameter",
         "purpose": "image: HTMLImageElement"
       }
@@ -11642,6 +12304,186 @@
         "line": 230,
         "kind": "variable",
         "purpose": "identity = await register(page)"
+      },
+      {
+        "name": "page",
+        "line": 273,
+        "kind": "parameter",
+        "purpose": "{\n  page,\n}"
+      },
+      {
+        "name": "destinations",
+        "line": 276,
+        "kind": "variable",
+        "purpose": "destinations: string[] = []"
+      },
+      {
+        "name": "request",
+        "line": 277,
+        "kind": "parameter",
+        "purpose": "request"
+      },
+      {
+        "name": "fixtures",
+        "line": 283,
+        "kind": "variable",
+        "purpose": "fixtures = JSON.parse(\n    readFileSync(\"tests/fixtures/dataset-review.json\", \"utf8\"),\n  )"
+      },
+      {
+        "name": "archive",
+        "line": 286,
+        "kind": "variable",
+        "purpose": "archive: Record<string, Uint8Array> = {}"
+      },
+      {
+        "name": "split",
+        "line": 287,
+        "kind": "variable",
+        "purpose": "split"
+      },
+      {
+        "name": "fixture",
+        "line": 288,
+        "kind": "variable",
+        "purpose": "fixture = fixtures[split]"
+      },
+      {
+        "name": "report",
+        "line": 322,
+        "kind": "variable",
+        "purpose": "report = page.getByRole(\"region\", {\n    name: \"Dataset quality review\",\n    exact: true,\n  })"
+      },
+      {
+        "name": "images",
+        "line": 346,
+        "kind": "parameter",
+        "purpose": "images"
+      },
+      {
+        "name": "image",
+        "line": 348,
+        "kind": "parameter",
+        "purpose": "image"
+      },
+      {
+        "name": "downloading",
+        "line": 355,
+        "kind": "variable",
+        "purpose": "downloading = page.waitForEvent(\"download\")"
+      },
+      {
+        "name": "downloaded",
+        "line": 362,
+        "kind": "variable",
+        "purpose": "downloaded = await downloading"
+      },
+      {
+        "name": "exported",
+        "line": 366,
+        "kind": "variable",
+        "purpose": "exported = JSON.parse(readFileSync((await downloaded.path())!, \"utf8\"))"
+      },
+      {
+        "name": "first",
+        "line": 380,
+        "kind": "variable",
+        "purpose": "first = await page\n    .getByLabel(\"Dataset to review\", { exact: true })\n    .inputValue()"
+      },
+      {
+        "name": "second",
+        "line": 390,
+        "kind": "variable",
+        "purpose": "second = await page\n    .locator(\"#review-dataset option\")\n    .evaluateAll((options) =>\n      (options as HTMLOptionElement[]).map((option) => option.value),\n    )"
+      },
+      {
+        "name": "options",
+        "line": 392,
+        "kind": "parameter",
+        "purpose": "options"
+      },
+      {
+        "name": "option",
+        "line": 393,
+        "kind": "parameter",
+        "purpose": "option"
+      },
+      {
+        "name": "release",
+        "line": 395,
+        "kind": "variable",
+        "purpose": "release!: () => void"
+      },
+      {
+        "name": "held",
+        "line": 396,
+        "kind": "variable",
+        "purpose": "held = new Promise<void>((resolve) => {\n    release = resolve;\n  })"
+      },
+      {
+        "name": "resolve",
+        "line": 396,
+        "kind": "parameter",
+        "purpose": "resolve"
+      },
+      {
+        "name": "responseReady",
+        "line": 399,
+        "kind": "variable",
+        "purpose": "responseReady!: () => void"
+      },
+      {
+        "name": "ready",
+        "line": 400,
+        "kind": "variable",
+        "purpose": "ready = new Promise<void>((resolve) => {\n    responseReady = resolve;\n  })"
+      },
+      {
+        "name": "resolve",
+        "line": 400,
+        "kind": "parameter",
+        "purpose": "resolve"
+      },
+      {
+        "name": "route",
+        "line": 403,
+        "kind": "parameter",
+        "purpose": "route"
+      },
+      {
+        "name": "response",
+        "line": 404,
+        "kind": "variable",
+        "purpose": "response = await route.fetch()"
+      },
+      {
+        "name": "identity",
+        "line": 415,
+        "kind": "parameter",
+        "purpose": "identity"
+      },
+      {
+        "name": "reopened",
+        "line": 446,
+        "kind": "variable",
+        "purpose": "reopened = page.getByRole(\"region\", {\n    name: \"Dataset quality review\",\n    exact: true,\n  })"
+      },
+      {
+        "name": "images",
+        "line": 459,
+        "kind": "parameter",
+        "purpose": "images"
+      },
+      {
+        "name": "image",
+        "line": 461,
+        "kind": "parameter",
+        "purpose": "image"
+      },
+      {
+        "name": "url",
+        "line": 469,
+        "kind": "parameter",
+        "purpose": "url"
       }
     ]
   },
@@ -12159,6 +13001,649 @@
         "scope": "test_pretrained_inspection_blocks_executable_components",
         "line": 320,
         "purpose": "Function parameter"
+      }
+    ]
+  },
+  "tests/test_dataset_review.py": {
+    "purpose": "Owned synthetic dataset review regressions by Jason Stys.\n\n\nActual image ingestion, fingerprints, bounded sampling, account isolation and\nread-only integrity are exercised without models, artwork downloads or API calls.",
+    "declarations": [
+      {
+        "name": "module.owned_sources",
+        "line": 26,
+        "kind": "FunctionDef",
+        "purpose": "Create distinct near-identical gradient rasters on both deterministic hash splits."
+      },
+      {
+        "name": "module.test_difference_hash_has_independent_horizontal_bit_oracle",
+        "line": 56,
+        "kind": "FunctionDef",
+        "purpose": "Rising rows yield zero bits, descending rows all bits; no self-derived expected hash."
+      },
+      {
+        "name": "module.test_actual_import_review_finds_cross_split_candidates_and_preserves_all_bytes",
+        "line": 65,
+        "kind": "FunctionDef",
+        "purpose": "Near-identical owned images are candidates, not asserted semantic duplicates or automatically moved."
+      },
+      {
+        "name": "module.test_full_metadata_summary_excludes_ai_and_uncaptioned_data",
+        "line": 95,
+        "kind": "FunctionDef",
+        "purpose": "Counts describe all records while integrity/similarity explicitly cover only the bounded eligible sample."
+      },
+      {
+        "name": "module.test_changed_pixels_or_missing_file_are_explicit_sample_errors",
+        "line": 121,
+        "kind": "FunctionDef",
+        "purpose": "Corrupt or absent imported bytes remain explicit unknown integrity failures, never passing samples."
+      },
+      {
+        "name": "module.test_review_sample_is_bounded_and_never_claims_unchecked_images_passed",
+        "line": 135,
+        "kind": "FunctionDef",
+        "purpose": "The default 64-image sample and comparison budget remain visible and cannot imply full inspection."
+      },
+      {
+        "name": "module.test_tampered_manifest_is_rejected_without_export_or_mutation",
+        "line": 160,
+        "kind": "FunctionDef",
+        "purpose": "Reject edited content/paths/types rather than reviewing a mislabeled imported fingerprint."
+      },
+      {
+        "name": "module.test_json_reader_caps_actual_descriptor_bytes_and_rejects_nonobjects",
+        "line": 172,
+        "kind": "FunctionDef",
+        "purpose": "Actual descriptor reads obey caller bounds and invalid files cannot become parsed manifests."
+      },
+      {
+        "name": "module.test_legacy_review_requires_auth_and_resolves_only_registered_dataset_ids",
+        "line": 185,
+        "kind": "FunctionDef",
+        "purpose": "The preserved token service accepts only registered dataset identities after authentication."
+      },
+      {
+        "name": "module.test_private_report_obeys_login_lock_account_scope_and_encrypted_reopen",
+        "line": 200,
+        "kind": "FunctionDef",
+        "purpose": "A real private report survives encrypted reopen but never crosses account, login or lock boundaries."
+      },
+      {
+        "name": "module.test_thumbnails_bind_imported_pixels_strip_metadata_and_reject_unknown_or_changed_data",
+        "line": 254,
+        "kind": "FunctionDef",
+        "purpose": "Only manifest identities produce bounded metadata-free previews; untrusted paths and changed files fail."
+      },
+      {
+        "name": "module.test_default_decoded_pixel_budget_stops_before_fifth_maximum_size_image",
+        "line": 273,
+        "kind": "FunctionDef",
+        "purpose": "The real 16-Mpixel aggregate budget limits actual imported 2048px rasters, independent of hash sampling count."
+      },
+      {
+        "name": "module.test_product_versions_and_fresh_release_target_are_coherent",
+        "line": 291,
+        "kind": "FunctionDef",
+        "purpose": "The new additive source ships as 0.3.0 without changing old release notes or private-store formats."
+      }
+    ],
+    "variables": [
+      {
+        "name": "path",
+        "scope": "owned_sources",
+        "line": 26,
+        "purpose": "Function parameter"
+      },
+      {
+        "name": "records",
+        "scope": "owned_sources",
+        "line": 29,
+        "purpose": "records = []"
+      },
+      {
+        "name": "index",
+        "scope": "owned_sources",
+        "line": 30,
+        "purpose": "for index in range(32):\n    with Image.new('RGB', (16, 16)) as image:\n        image.putdata([(x * 10 + 10, x * 10 + 10, x * 10 + 10) for y in range(16) for x in range(16)])\n       "
+      },
+      {
+        "name": "image",
+        "scope": "owned_sources",
+        "line": 31,
+        "purpose": "Image.new('RGB', (16, 16)) as image"
+      },
+      {
+        "name": "x",
+        "scope": "owned_sources",
+        "line": 33,
+        "purpose": " for x in range(16)"
+      },
+      {
+        "name": "y",
+        "scope": "owned_sources",
+        "line": 33,
+        "purpose": " for y in range(16)"
+      },
+      {
+        "name": "identity",
+        "scope": "owned_sources",
+        "line": 36,
+        "purpose": "identity = hashlib.sha256(f'{image.size}'.encode() + image.tobytes()).hexdigest()"
+      },
+      {
+        "name": "split",
+        "scope": "owned_sources",
+        "line": 37,
+        "purpose": "split = 'train' if int(identity[:8], 16) % 10 < 8 else 'validation'"
+      },
+      {
+        "name": "record",
+        "scope": "owned_sources",
+        "line": 38,
+        "purpose": " for record in records"
+      },
+      {
+        "name": "file",
+        "scope": "owned_sources",
+        "line": 39,
+        "purpose": "file = path / f'gradient-{split}.png'"
+      },
+      {
+        "name": "falling",
+        "scope": "test_difference_hash_has_independent_horizontal_bit_oracle",
+        "line": 58,
+        "purpose": "Image.new('L', (9, 8)) as falling"
+      },
+      {
+        "name": "rising",
+        "scope": "test_difference_hash_has_independent_horizontal_bit_oracle",
+        "line": 58,
+        "purpose": "Image.new('L', (9, 8)) as rising"
+      },
+      {
+        "name": "column",
+        "scope": "test_difference_hash_has_independent_horizontal_bit_oracle",
+        "line": 59,
+        "purpose": " for column in range(9)"
+      },
+      {
+        "name": "row",
+        "scope": "test_difference_hash_has_independent_horizontal_bit_oracle",
+        "line": 59,
+        "purpose": " for row in range(8)"
+      },
+      {
+        "name": "column",
+        "scope": "test_difference_hash_has_independent_horizontal_bit_oracle",
+        "line": 60,
+        "purpose": " for column in range(9)"
+      },
+      {
+        "name": "row",
+        "scope": "test_difference_hash_has_independent_horizontal_bit_oracle",
+        "line": 60,
+        "purpose": " for row in range(8)"
+      },
+      {
+        "name": "tmp_path",
+        "scope": "test_actual_import_review_finds_cross_split_candidates_and_preserves_all_bytes",
+        "line": 65,
+        "purpose": "Function parameter"
+      },
+      {
+        "name": "identities",
+        "scope": "test_actual_import_review_finds_cross_split_candidates_and_preserves_all_bytes",
+        "line": 67,
+        "purpose": "identities = owned_sources(tmp_path / 'source')"
+      },
+      {
+        "name": "root",
+        "scope": "test_actual_import_review_finds_cross_split_candidates_and_preserves_all_bytes",
+        "line": 68,
+        "purpose": "root = tmp_path / 'dataset'"
+      },
+      {
+        "name": "manifest",
+        "scope": "test_actual_import_review_finds_cross_split_candidates_and_preserves_all_bytes",
+        "line": 69,
+        "purpose": "manifest = import_dataset([str(tmp_path / 'source')], root, 'Owned audit fixture')"
+      },
+      {
+        "name": "before",
+        "scope": "test_actual_import_review_finds_cross_split_candidates_and_preserves_all_bytes",
+        "line": 70,
+        "purpose": "before = {file.relative_to(root).as_posix(): file.read_bytes() for file in root.rglob('*') if file.is_file()}"
+      },
+      {
+        "name": "file",
+        "scope": "test_actual_import_review_finds_cross_split_candidates_and_preserves_all_bytes",
+        "line": 72,
+        "purpose": " for file in root.rglob('*') if file.is_file()"
+      },
+      {
+        "name": "report",
+        "scope": "test_actual_import_review_finds_cross_split_candidates_and_preserves_all_bytes",
+        "line": 75,
+        "purpose": "report = review_dataset(root, manifest['fingerprint'])"
+      },
+      {
+        "name": "pair",
+        "scope": "test_actual_import_review_finds_cross_split_candidates_and_preserves_all_bytes",
+        "line": 83,
+        "purpose": " for pair in report['near_duplicate_candidates']"
+      },
+      {
+        "name": "side",
+        "scope": "test_actual_import_review_finds_cross_split_candidates_and_preserves_all_bytes",
+        "line": 84,
+        "purpose": " for side in ('left', 'right')"
+      },
+      {
+        "name": "record",
+        "scope": "test_actual_import_review_finds_cross_split_candidates_and_preserves_all_bytes",
+        "line": 85,
+        "purpose": " for record in identities"
+      },
+      {
+        "name": "file",
+        "scope": "test_actual_import_review_finds_cross_split_candidates_and_preserves_all_bytes",
+        "line": 90,
+        "purpose": " for file in root.rglob('*') if file.is_file()"
+      },
+      {
+        "name": "tmp_path",
+        "scope": "test_full_metadata_summary_excludes_ai_and_uncaptioned_data",
+        "line": 95,
+        "purpose": "Function parameter"
+      },
+      {
+        "name": "source",
+        "scope": "test_full_metadata_summary_excludes_ai_and_uncaptioned_data",
+        "line": 97,
+        "purpose": "source = tmp_path / 'source'"
+      },
+      {
+        "name": "caption",
+        "scope": "test_full_metadata_summary_excludes_ai_and_uncaptioned_data",
+        "line": 99,
+        "purpose": "(origin, caption)"
+      },
+      {
+        "name": "index",
+        "scope": "test_full_metadata_summary_excludes_ai_and_uncaptioned_data",
+        "line": 99,
+        "purpose": "(index, (origin, caption))"
+      },
+      {
+        "name": "origin",
+        "scope": "test_full_metadata_summary_excludes_ai_and_uncaptioned_data",
+        "line": 99,
+        "purpose": "(origin, caption)"
+      },
+      {
+        "name": "file",
+        "scope": "test_full_metadata_summary_excludes_ai_and_uncaptioned_data",
+        "line": 102,
+        "purpose": "file = source / f'extra-{index}.png'"
+      },
+      {
+        "name": "image",
+        "scope": "test_full_metadata_summary_excludes_ai_and_uncaptioned_data",
+        "line": 103,
+        "purpose": "Image.new('RGB', (32, 32), (200 + index, 0, 0)) as image"
+      },
+      {
+        "name": "root",
+        "scope": "test_full_metadata_summary_excludes_ai_and_uncaptioned_data",
+        "line": 106,
+        "purpose": "root = tmp_path / 'dataset'"
+      },
+      {
+        "name": "manifest",
+        "scope": "test_full_metadata_summary_excludes_ai_and_uncaptioned_data",
+        "line": 107,
+        "purpose": "manifest = import_dataset([str(source)], root, 'Mixed declarations')"
+      },
+      {
+        "name": "report",
+        "scope": "test_full_metadata_summary_excludes_ai_and_uncaptioned_data",
+        "line": 108,
+        "purpose": "report = review_dataset(root, manifest['fingerprint'])"
+      },
+      {
+        "name": "tmp_path",
+        "scope": "test_changed_pixels_or_missing_file_are_explicit_sample_errors",
+        "line": 121,
+        "purpose": "Function parameter"
+      },
+      {
+        "name": "root",
+        "scope": "test_changed_pixels_or_missing_file_are_explicit_sample_errors",
+        "line": 123,
+        "purpose": "root = tmp_path / 'dataset'"
+      },
+      {
+        "name": "manifest",
+        "scope": "test_changed_pixels_or_missing_file_are_explicit_sample_errors",
+        "line": 124,
+        "purpose": "manifest = synthetic_dataset(root, count=24)"
+      },
+      {
+        "name": "report",
+        "scope": "test_changed_pixels_or_missing_file_are_explicit_sample_errors",
+        "line": 127,
+        "purpose": "report = review_dataset(root, manifest['fingerprint'])"
+      },
+      {
+        "name": "error",
+        "scope": "test_changed_pixels_or_missing_file_are_explicit_sample_errors",
+        "line": 131,
+        "purpose": " for error in report['inspection']['integrity_errors']"
+      },
+      {
+        "name": "tmp_path",
+        "scope": "test_review_sample_is_bounded_and_never_claims_unchecked_images_passed",
+        "line": 135,
+        "purpose": "Function parameter"
+      },
+      {
+        "name": "root",
+        "scope": "test_review_sample_is_bounded_and_never_claims_unchecked_images_passed",
+        "line": 137,
+        "purpose": "root = tmp_path / 'dataset'"
+      },
+      {
+        "name": "manifest",
+        "scope": "test_review_sample_is_bounded_and_never_claims_unchecked_images_passed",
+        "line": 138,
+        "purpose": "manifest = synthetic_dataset(root, count=128)"
+      },
+      {
+        "name": "report",
+        "scope": "test_review_sample_is_bounded_and_never_claims_unchecked_images_passed",
+        "line": 139,
+        "purpose": "report = review_dataset(root, manifest['fingerprint'])"
+      },
+      {
+        "name": "field",
+        "scope": "test_tampered_manifest_is_rejected_without_export_or_mutation",
+        "line": 160,
+        "purpose": "Function parameter"
+      },
+      {
+        "name": "tmp_path",
+        "scope": "test_tampered_manifest_is_rejected_without_export_or_mutation",
+        "line": 160,
+        "purpose": "Function parameter"
+      },
+      {
+        "name": "value",
+        "scope": "test_tampered_manifest_is_rejected_without_export_or_mutation",
+        "line": 160,
+        "purpose": "Function parameter"
+      },
+      {
+        "name": "root",
+        "scope": "test_tampered_manifest_is_rejected_without_export_or_mutation",
+        "line": 162,
+        "purpose": "root = tmp_path / 'dataset'"
+      },
+      {
+        "name": "manifest",
+        "scope": "test_tampered_manifest_is_rejected_without_export_or_mutation",
+        "line": 163,
+        "purpose": "manifest = synthetic_dataset(root, count=24)"
+      },
+      {
+        "name": "before",
+        "scope": "test_tampered_manifest_is_rejected_without_export_or_mutation",
+        "line": 166,
+        "purpose": "before = (root / 'dataset.json').read_bytes()"
+      },
+      {
+        "name": "tmp_path",
+        "scope": "test_json_reader_caps_actual_descriptor_bytes_and_rejects_nonobjects",
+        "line": 172,
+        "purpose": "Function parameter"
+      },
+      {
+        "name": "file",
+        "scope": "test_json_reader_caps_actual_descriptor_bytes_and_rejects_nonobjects",
+        "line": 174,
+        "purpose": "file = tmp_path / 'source.json'"
+      },
+      {
+        "name": "tmp_path",
+        "scope": "test_legacy_review_requires_auth_and_resolves_only_registered_dataset_ids",
+        "line": 185,
+        "purpose": "Function parameter"
+      },
+      {
+        "name": "token",
+        "scope": "test_legacy_review_requires_auth_and_resolves_only_registered_dataset_ids",
+        "line": 187,
+        "purpose": "token = 'owned-test-session-' + 'x' * 40"
+      },
+      {
+        "name": "app",
+        "scope": "test_legacy_review_requires_auth_and_resolves_only_registered_dataset_ids",
+        "line": 188,
+        "purpose": "app = create_app(tmp_path / 'legacy', token, 8016)"
+      },
+      {
+        "name": "client",
+        "scope": "test_legacy_review_requires_auth_and_resolves_only_registered_dataset_ids",
+        "line": 189,
+        "purpose": "TestClient(app, base_url='http://127.0.0.1:8016') as client"
+      },
+      {
+        "name": "record",
+        "scope": "test_legacy_review_requires_auth_and_resolves_only_registered_dataset_ids",
+        "line": 192,
+        "purpose": "record = client.post('/api/datasets/synthetic').json()"
+      },
+      {
+        "name": "report",
+        "scope": "test_legacy_review_requires_auth_and_resolves_only_registered_dataset_ids",
+        "line": 193,
+        "purpose": "report = client.get(f\"/api/datasets/{record['id']}/review\")"
+      },
+      {
+        "name": "tmp_path",
+        "scope": "test_private_report_obeys_login_lock_account_scope_and_encrypted_reopen",
+        "line": 200,
+        "purpose": "Function parameter"
+      },
+      {
+        "name": "app",
+        "scope": "test_private_report_obeys_login_lock_account_scope_and_encrypted_reopen",
+        "line": 202,
+        "purpose": "app = create_private_app(tmp_path / 'private', 8056)"
+      },
+      {
+        "name": "key",
+        "scope": "test_private_report_obeys_login_lock_account_scope_and_encrypted_reopen",
+        "line": 203,
+        "purpose": "key = base64.b64encode(b'r' * 32).decode()"
+      },
+      {
+        "name": "salt",
+        "scope": "test_private_report_obeys_login_lock_account_scope_and_encrypted_reopen",
+        "line": 204,
+        "purpose": "salt = base64.b64encode(b's' * 16).decode()"
+      },
+      {
+        "name": "client",
+        "scope": "test_private_report_obeys_login_lock_account_scope_and_encrypted_reopen",
+        "line": 207,
+        "purpose": "TestClient(app, base_url='http://127.0.0.1:8056', headers={'X-PIMS-Request': 'v1'}) as client"
+      },
+      {
+        "name": "unknown",
+        "scope": "test_private_report_obeys_login_lock_account_scope_and_encrypted_reopen",
+        "line": 208,
+        "purpose": "unknown = '/private/api/datasets/' + 'a' * 32 + '/review'"
+      },
+      {
+        "name": "response",
+        "scope": "test_private_report_obeys_login_lock_account_scope_and_encrypted_reopen",
+        "line": 219,
+        "purpose": "response = client.post('/private/api/datasets/synthetic', json={})"
+      },
+      {
+        "name": "record",
+        "scope": "test_private_report_obeys_login_lock_account_scope_and_encrypted_reopen",
+        "line": 221,
+        "purpose": "record = response.json()"
+      },
+      {
+        "name": "url",
+        "scope": "test_private_report_obeys_login_lock_account_scope_and_encrypted_reopen",
+        "line": 222,
+        "purpose": "url = f\"/private/api/datasets/{record['id']}/review\""
+      },
+      {
+        "name": "report",
+        "scope": "test_private_report_obeys_login_lock_account_scope_and_encrypted_reopen",
+        "line": 223,
+        "purpose": "report = client.get(url)"
+      },
+      {
+        "name": "value",
+        "scope": "test_private_report_obeys_login_lock_account_scope_and_encrypted_reopen",
+        "line": 226,
+        "purpose": " for value in report.headers['cache-control'].split(',')"
+      },
+      {
+        "name": "original",
+        "scope": "test_private_report_obeys_login_lock_account_scope_and_encrypted_reopen",
+        "line": 228,
+        "purpose": "original = report.json()"
+      },
+      {
+        "name": "imported",
+        "scope": "test_private_report_obeys_login_lock_account_scope_and_encrypted_reopen",
+        "line": 229,
+        "purpose": "imported = read_json(app.state.manager.active / 'datasets' / record['id'] / 'dataset.json')"
+      },
+      {
+        "name": "thumbnail_url",
+        "scope": "test_private_report_obeys_login_lock_account_scope_and_encrypted_reopen",
+        "line": 230,
+        "purpose": "thumbnail_url = url + '/images/' + imported['records'][0]['hash']"
+      },
+      {
+        "name": "thumbnail",
+        "scope": "test_private_report_obeys_login_lock_account_scope_and_encrypted_reopen",
+        "line": 231,
+        "purpose": "thumbnail = client.get(thumbnail_url)"
+      },
+      {
+        "name": "image",
+        "scope": "test_private_report_obeys_login_lock_account_scope_and_encrypted_reopen",
+        "line": 233,
+        "purpose": "Image.open(io.BytesIO(thumbnail.content)) as image"
+      },
+      {
+        "name": "tmp_path",
+        "scope": "test_thumbnails_bind_imported_pixels_strip_metadata_and_reject_unknown_or_changed_data",
+        "line": 255,
+        "purpose": "Function parameter"
+      },
+      {
+        "name": "root",
+        "scope": "test_thumbnails_bind_imported_pixels_strip_metadata_and_reject_unknown_or_changed_data",
+        "line": 258,
+        "purpose": "root = tmp_path / 'dataset'"
+      },
+      {
+        "name": "manifest",
+        "scope": "test_thumbnails_bind_imported_pixels_strip_metadata_and_reject_unknown_or_changed_data",
+        "line": 259,
+        "purpose": "manifest = synthetic_dataset(root, count=24)"
+      },
+      {
+        "name": "record",
+        "scope": "test_thumbnails_bind_imported_pixels_strip_metadata_and_reject_unknown_or_changed_data",
+        "line": 260,
+        "purpose": "record = manifest['records'][0]"
+      },
+      {
+        "name": "thumbnail",
+        "scope": "test_thumbnails_bind_imported_pixels_strip_metadata_and_reject_unknown_or_changed_data",
+        "line": 261,
+        "purpose": "thumbnail = dataset_thumbnail(root, manifest['fingerprint'], record['hash'])"
+      },
+      {
+        "name": "image",
+        "scope": "test_thumbnails_bind_imported_pixels_strip_metadata_and_reject_unknown_or_changed_data",
+        "line": 262,
+        "purpose": "Image.open(io.BytesIO(thumbnail)) as image"
+      },
+      {
+        "name": "unknown",
+        "scope": "test_thumbnails_bind_imported_pixels_strip_metadata_and_reject_unknown_or_changed_data",
+        "line": 265,
+        "purpose": "for unknown in ['../private', '0' * 64]:\n    with pytest.raises(KeyError):\n        dataset_thumbnail(root, manifest['fingerprint'], unknown)"
+      },
+      {
+        "name": "tmp_path",
+        "scope": "test_default_decoded_pixel_budget_stops_before_fifth_maximum_size_image",
+        "line": 273,
+        "purpose": "Function parameter"
+      },
+      {
+        "name": "source",
+        "scope": "test_default_decoded_pixel_budget_stops_before_fifth_maximum_size_image",
+        "line": 275,
+        "purpose": "source = tmp_path / 'source'"
+      },
+      {
+        "name": "index",
+        "scope": "test_default_decoded_pixel_budget_stops_before_fifth_maximum_size_image",
+        "line": 277,
+        "purpose": "for index in range(5):\n    file = source / f'large-{index}.png'\n    with Image.new('RGB', (2048, 2048), (index * 30, 10, 20)) as image:\n        image.save(file)\n    file.with_suffi"
+      },
+      {
+        "name": "file",
+        "scope": "test_default_decoded_pixel_budget_stops_before_fifth_maximum_size_image",
+        "line": 278,
+        "purpose": "file = source / f'large-{index}.png'"
+      },
+      {
+        "name": "image",
+        "scope": "test_default_decoded_pixel_budget_stops_before_fifth_maximum_size_image",
+        "line": 279,
+        "purpose": "Image.new('RGB', (2048, 2048), (index * 30, 10, 20)) as image"
+      },
+      {
+        "name": "root",
+        "scope": "test_default_decoded_pixel_budget_stops_before_fifth_maximum_size_image",
+        "line": 282,
+        "purpose": "root = tmp_path / 'dataset'"
+      },
+      {
+        "name": "manifest",
+        "scope": "test_default_decoded_pixel_budget_stops_before_fifth_maximum_size_image",
+        "line": 283,
+        "purpose": "manifest = import_dataset([str(source)], root, 'Owned pixel budget boundary')"
+      },
+      {
+        "name": "report",
+        "scope": "test_default_decoded_pixel_budget_stops_before_fifth_maximum_size_image",
+        "line": 284,
+        "purpose": "report = review_dataset(root, manifest['fingerprint'])"
+      },
+      {
+        "name": "root",
+        "scope": "test_product_versions_and_fresh_release_target_are_coherent",
+        "line": 295,
+        "purpose": "root = Path(__file__).resolve().parents[1]"
+      },
+      {
+        "name": "release",
+        "scope": "test_product_versions_and_fresh_release_target_are_coherent",
+        "line": 303,
+        "purpose": "release = (root / '.github/workflows/release-native.yml').read_text()"
       }
     ]
   },
@@ -13972,57 +15457,63 @@
         "purpose": "dataset = client.post('/private/api/datasets/synthetic', json={})"
       },
       {
-        "name": "job",
+        "name": "review",
         "scope": "test_private_training_inference_and_encrypted_reopen",
         "line": 49,
+        "purpose": "review = client.get(f\"/private/api/datasets/{dataset.json()['id']}/review\")"
+      },
+      {
+        "name": "job",
+        "scope": "test_private_training_inference_and_encrypted_reopen",
+        "line": 54,
         "purpose": "job = client.post('/private/api/train', json={'name': 'Actual private custom model', 'dataset_ids': [dataset.json()['id']], 'steps': 20, 'batch_size': 4, 'resolution': 32, 'max_sec"
       },
       {
         "name": "trained",
         "scope": "test_private_training_inference_and_encrypted_reopen",
-        "line": 63,
+        "line": 68,
         "purpose": "trained = wait_for(client, job.json()['id'])"
       },
       {
         "name": "model",
         "scope": "test_private_training_inference_and_encrypted_reopen",
-        "line": 65,
+        "line": 70,
         "purpose": "model = client.get('/private/api/workspace').json()['model'][0]"
       },
       {
         "name": "outputs",
         "scope": "test_private_training_inference_and_encrypted_reopen",
-        "line": 66,
+        "line": 71,
         "purpose": "outputs = []"
       },
       {
         "name": "_",
         "scope": "test_private_training_inference_and_encrypted_reopen",
-        "line": 67,
+        "line": 72,
         "purpose": "for _ in range(2):\n    generated = client.post('/private/api/generate', json={'model_id': model['id'], 'prompt': {'description': 'red circle on white background'}, 'width': 32, 'he"
       },
       {
         "name": "generated",
         "scope": "test_private_training_inference_and_encrypted_reopen",
-        "line": 68,
+        "line": 73,
         "purpose": "generated = client.post('/private/api/generate', json={'model_id': model['id'], 'prompt': {'description': 'red circle on white background'}, 'width': 32, 'height': 32, 'steps': 4, "
       },
       {
         "name": "image",
         "scope": "test_private_training_inference_and_encrypted_reopen",
-        "line": 81,
+        "line": 86,
         "purpose": "image = client.get('/private/api/images/' + generated.json()['id'] + '/file')"
       },
       {
         "name": "archive",
         "scope": "test_private_training_inference_and_encrypted_reopen",
-        "line": 85,
+        "line": 90,
         "purpose": "archive = app.state.manager.archive(app.state.manager.owner)"
       },
       {
         "name": "saved",
         "scope": "test_private_training_inference_and_encrypted_reopen",
-        "line": 86,
+        "line": 91,
         "purpose": "saved = archive.stat().st_mtime_ns"
       }
     ]
@@ -14294,6 +15785,12 @@
         "line": 107,
         "kind": "FunctionDeclaration",
         "purpose": "/** Convert a bounded user-selected raster to base64, without reading arbitrary local paths. */"
+      },
+      {
+        "name": "datasetImageUrl",
+        "line": 120,
+        "kind": "FunctionDeclaration",
+        "purpose": "/** Fetch only an authenticated normalized dataset thumbnail; never attach credentials to external URLs. */"
       }
     ],
     "variables": [
@@ -14464,6 +15961,24 @@
         "line": 111,
         "kind": "variable",
         "purpose": "reader = new FileReader()"
+      },
+      {
+        "name": "dataset",
+        "line": 121,
+        "kind": "parameter",
+        "purpose": "dataset: string"
+      },
+      {
+        "name": "image",
+        "line": 122,
+        "kind": "parameter",
+        "purpose": "image: string"
+      },
+      {
+        "name": "response",
+        "line": 126,
+        "kind": "variable",
+        "purpose": "response = await transport(\n    `datasets/${dataset}/review/images/${image}`,\n  )"
       }
     ]
   },
@@ -14645,7 +16160,7 @@
         "name": "author",
         "line": 23,
         "kind": "variable",
-        "purpose": "author = `<p class=\"creator\">Made by Jason Stys · <a href=\"https://github.com/JasonStys\" target=\"_blank\" rel=\"noreferrer\">GitHub</a> · <a href=\"https://www.linkedin.com/in/jason-st"
+        "purpose": "author = `<p class=\"creator\">Personal Image Model Studio 0.3.0 · Made by Jason Stys · <a href=\"https://github.com/JasonStys\" target=\"_blank\" rel=\"noreferrer\">GitHub</a> · <a href=\""
       },
       {
         "name": "help",
@@ -15053,6 +16568,12 @@
         "line": 19,
         "kind": "InterfaceDeclaration",
         "purpose": "export interface Workspace {\n  model: Item[];\n  dataset: Item[];\n  image: Item[];\n  job: Job[];\n}"
+      },
+      {
+        "name": "DatasetReview",
+        "line": 27,
+        "kind": "InterfaceDeclaration",
+        "purpose": "/** Read-only local dataset evidence; sample limits and uncertainty are part of the displayed contract. */"
       }
     ],
     "variables": []
@@ -15062,67 +16583,79 @@
     "declarations": [
       {
         "name": "mountStudio",
-        "line": 8,
+        "line": 15,
         "kind": "FunctionDeclaration",
         "purpose": "/** Mount genuine ML controls only after private account unlock or an explicit developer session. */"
       },
       {
+        "name": "clearDatasetReview",
+        "line": 63,
+        "kind": "FunctionDeclaration",
+        "purpose": "/** Replace the visible report with explicit empty/changed state, dropping the old export reference. */"
+      },
+      {
+        "name": "renderDatasetReview",
+        "line": 76,
+        "kind": "FunctionDeclaration",
+        "purpose": "/** Render provenance and similarity evidence without deriving a model quality score or injecting HTML. */"
+      },
+      {
         "name": "message",
-        "line": 60,
+        "line": 203,
         "kind": "FunctionDeclaration",
         "purpose": "/** Surface status text safely; never render backend/user values as HTML. */"
       },
       {
         "name": "act",
-        "line": 75,
+        "line": 218,
         "kind": "FunctionDeclaration",
         "purpose": "/** Execute one explicit action and refresh metadata; prevent duplicate form submissions. */"
       },
       {
         "name": "values",
-        "line": 101,
+        "line": 244,
         "kind": "FunctionDeclaration",
         "purpose": "/** Read form values as plain strings; numeric/JSON interpretation remains explicit. */"
       },
       {
         "name": "form",
-        "line": 111,
+        "line": 254,
         "kind": "FunctionDeclaration",
         "purpose": "/** Bind a form to an explicit action without installing global delegated HTML handlers. */"
       },
       {
         "name": "view",
-        "line": 126,
+        "line": 269,
         "kind": "FunctionDeclaration",
         "purpose": "/** Switch visible workspace sections while preserving entered form values. */"
       },
       {
         "name": "options",
-        "line": 146,
+        "line": 289,
         "kind": "FunctionDeclaration",
         "purpose": "/** Update selects without resetting an existing selection during background polling. */"
       },
       {
         "name": "cards",
-        "line": 161,
+        "line": 304,
         "kind": "FunctionDeclaration",
         "purpose": "/** Render metadata cards using safe text nodes and scoped controls. */"
       },
       {
         "name": "preview",
-        "line": 194,
+        "line": 337,
         "kind": "FunctionDeclaration",
         "purpose": "/** Show a registered image and revoke the previous private blob to prevent browser memory leaks. */"
       },
       {
         "name": "jobs",
-        "line": 209,
+        "line": 352,
         "kind": "FunctionDeclaration",
         "purpose": "/** Render cancellable job statuses/reports without retaining full worker logs in the browser. */"
       },
       {
         "name": "refresh",
-        "line": 242,
+        "line": 385,
         "kind": "FunctionDeclaration",
         "purpose": "/** Poll bounded workspace metadata, preserving checked datasets and active form edits. */"
       }
@@ -15130,573 +16663,855 @@
     "variables": [
       {
         "name": "accountMode",
-        "line": 8,
+        "line": 15,
         "kind": "parameter",
         "purpose": "accountMode = false"
       },
       {
         "name": "root",
-        "line": 9,
+        "line": 16,
         "kind": "variable",
         "purpose": "root = document.querySelector<HTMLDivElement>(\"#app\")!"
       },
       {
         "name": "workspace",
-        "line": 10,
+        "line": 17,
         "kind": "variable",
         "purpose": "workspace: Workspace = { model: [], dataset: [], image: [], job: [] }"
       },
       {
         "name": "selectedImage",
-        "line": 11,
+        "line": 18,
         "kind": "variable",
         "purpose": "selectedImage = \"\""
       },
       {
         "name": "currentUrl",
-        "line": 12,
+        "line": 19,
         "kind": "variable",
         "purpose": "currentUrl = \"\""
       },
       {
         "name": "busy",
-        "line": 13,
+        "line": 20,
         "kind": "variable",
         "purpose": "busy = false"
       },
       {
+        "name": "datasetReview",
+        "line": 21,
+        "kind": "variable",
+        "purpose": "datasetReview: DatasetReview | null = null"
+      },
+      {
+        "name": "reviewGeneration",
+        "line": 22,
+        "kind": "variable",
+        "purpose": "reviewGeneration = 0"
+      },
+      {
+        "name": "reviewImageUrls",
+        "line": 23,
+        "kind": "variable",
+        "purpose": "reviewImageUrls: string[] = []"
+      },
+      {
+        "name": "url",
+        "line": 65,
+        "kind": "parameter",
+        "purpose": "url"
+      },
+      {
+        "name": "report",
+        "line": 76,
+        "kind": "parameter",
+        "purpose": "report: DatasetReview"
+      },
+      {
+        "name": "datasetId",
+        "line": 76,
+        "kind": "parameter",
+        "purpose": "datasetId: string"
+      },
+      {
+        "name": "target",
+        "line": 77,
+        "kind": "variable",
+        "purpose": "target = document.querySelector(\"#dataset-review-result\")!"
+      },
+      {
+        "name": "heading",
+        "line": 79,
+        "kind": "variable",
+        "purpose": "heading = document.createElement(\"h3\")"
+      },
+      {
+        "name": "identity",
+        "line": 82,
+        "kind": "variable",
+        "purpose": "identity = document.createElement(\"p\")"
+      },
+      {
+        "name": "counts",
+        "line": 86,
+        "kind": "variable",
+        "purpose": "counts = document.createElement(\"dl\")"
+      },
+      {
+        "name": "key",
+        "line": 88,
+        "kind": "variable",
+        "purpose": "[key, count]"
+      },
+      {
+        "name": "count",
+        "line": 88,
+        "kind": "variable",
+        "purpose": "[key, count]"
+      },
+      {
+        "name": "label",
+        "line": 89,
+        "kind": "variable",
+        "purpose": "label = document.createElement(\"dt\")"
+      },
+      {
+        "name": "value",
+        "line": 91,
+        "kind": "variable",
+        "purpose": "value = document.createElement(\"dd\")"
+      },
+      {
+        "name": "origin",
+        "line": 96,
+        "kind": "variable",
+        "purpose": "origin = document.createElement(\"p\")"
+      },
+      {
+        "name": "name",
+        "line": 98,
+        "kind": "parameter",
+        "purpose": "[name, count]"
+      },
+      {
+        "name": "count",
+        "line": 98,
+        "kind": "parameter",
+        "purpose": "[name, count]"
+      },
+      {
+        "name": "eligibility",
+        "line": 101,
+        "kind": "variable",
+        "purpose": "eligibility = document.createElement(\"p\")"
+      },
+      {
+        "name": "scope",
+        "line": 106,
+        "kind": "variable",
+        "purpose": "scope = document.createElement(\"p\")"
+      },
+      {
+        "name": "errors",
+        "line": 109,
+        "kind": "variable",
+        "purpose": "errors = document.createElement(\"p\")"
+      },
+      {
+        "name": "errorList",
+        "line": 112,
+        "kind": "variable",
+        "purpose": "errorList = document.createElement(\"ul\")"
+      },
+      {
+        "name": "error",
+        "line": 113,
+        "kind": "variable",
+        "purpose": "error"
+      },
+      {
+        "name": "item",
+        "line": 114,
+        "kind": "variable",
+        "purpose": "item = document.createElement(\"li\")"
+      },
+      {
+        "name": "candidates",
+        "line": 119,
+        "kind": "variable",
+        "purpose": "candidates = document.createElement(\"h4\")"
+      },
+      {
+        "name": "explanation",
+        "line": 122,
+        "kind": "variable",
+        "purpose": "explanation = document.createElement(\"p\")"
+      },
+      {
+        "name": "pairs",
+        "line": 125,
+        "kind": "variable",
+        "purpose": "pairs = document.createElement(\"ol\")"
+      },
+      {
+        "name": "pair",
+        "line": 126,
+        "kind": "variable",
+        "purpose": "pair"
+      },
+      {
+        "name": "item",
+        "line": 127,
+        "kind": "variable",
+        "purpose": "item = document.createElement(\"li\")"
+      },
+      {
+        "name": "button",
+        "line": 129,
+        "kind": "variable",
+        "purpose": "button = document.createElement(\"button\")"
+      },
+      {
+        "name": "preview",
+        "line": 132,
+        "kind": "variable",
+        "purpose": "preview = document.createElement(\"div\")"
+      },
+      {
+        "name": "generation",
+        "line": 135,
+        "kind": "variable",
+        "purpose": "generation = reviewGeneration"
+      },
+      {
+        "name": "results",
+        "line": 137,
+        "kind": "variable",
+        "purpose": "results = await Promise.allSettled([\n          datasetImageUrl(datasetId, pair.left.hash),\n          datasetImageUrl(datasetId, pair.right.hash),\n        ])"
+      },
+      {
+        "name": "result",
+        "line": 142,
+        "kind": "variable",
+        "purpose": "result"
+      },
+      {
+        "name": "index",
+        "line": 148,
+        "kind": "variable",
+        "purpose": "index = 0"
+      },
+      {
+        "name": "result",
+        "line": 149,
+        "kind": "variable",
+        "purpose": "result = results[index]"
+      },
+      {
+        "name": "image",
+        "line": 152,
+        "kind": "variable",
+        "purpose": "image = document.createElement(\"img\")"
+      },
+      {
+        "name": "unavailable",
+        "line": 159,
+        "kind": "variable",
+        "purpose": "unavailable = document.createElement(\"p\")"
+      },
+      {
+        "name": "empty",
+        "line": 171,
+        "kind": "variable",
+        "purpose": "empty = document.createElement(\"p\")"
+      },
+      {
+        "name": "limits",
+        "line": 176,
+        "kind": "variable",
+        "purpose": "limits = document.createElement(\"ul\")"
+      },
+      {
         "name": "text",
-        "line": 60,
+        "line": 177,
+        "kind": "variable",
+        "purpose": "text"
+      },
+      {
+        "name": "item",
+        "line": 178,
+        "kind": "variable",
+        "purpose": "item = document.createElement(\"li\")"
+      },
+      {
+        "name": "text",
+        "line": 203,
         "kind": "parameter",
         "purpose": "text: string"
       },
       {
         "name": "failed",
-        "line": 60,
+        "line": 203,
         "kind": "parameter",
         "purpose": "failed = false"
       },
       {
         "name": "target",
-        "line": 61,
+        "line": 204,
         "kind": "variable",
         "purpose": "target = document.querySelector<HTMLParagraphElement>(\"#message\")!"
       },
       {
         "name": "task",
-        "line": 75,
+        "line": 218,
         "kind": "parameter",
         "purpose": "task: () => Promise<unknown>"
       },
       {
         "name": "controls",
-        "line": 79,
+        "line": 222,
         "kind": "variable",
-        "purpose": "controls = Array.from(\n      document.querySelectorAll<HTMLButtonElement>(\n        \"button:not(#download-image)\",\n      ),\n    )"
+        "purpose": "controls = Array.from(\n      document.querySelectorAll<HTMLButtonElement>(\n        \"button:not(#download-image):not(#download-dataset-review)\",\n      ),\n    )"
       },
       {
         "name": "previous",
-        "line": 84,
+        "line": 227,
         "kind": "variable",
         "purpose": "previous = controls.map((button) => button.disabled)"
       },
       {
         "name": "button",
-        "line": 84,
+        "line": 227,
         "kind": "parameter",
         "purpose": "button"
       },
       {
         "name": "button",
-        "line": 85,
+        "line": 228,
         "kind": "parameter",
         "purpose": "button"
       },
       {
         "name": "error",
-        "line": 91,
+        "line": 234,
         "kind": "variable",
         "purpose": "error"
       },
       {
         "name": "button",
-        "line": 95,
+        "line": 238,
         "kind": "parameter",
         "purpose": "button"
       },
       {
         "name": "index",
-        "line": 95,
+        "line": 238,
         "kind": "parameter",
         "purpose": "index"
       },
       {
         "name": "form",
-        "line": 101,
+        "line": 244,
         "kind": "parameter",
         "purpose": "form: HTMLFormElement"
       },
       {
         "name": "key",
-        "line": 103,
+        "line": 246,
         "kind": "parameter",
         "purpose": "[key, value]"
       },
       {
         "name": "value",
-        "line": 103,
+        "line": 246,
         "kind": "parameter",
         "purpose": "[key, value]"
       },
       {
         "name": "id",
-        "line": 112,
+        "line": 255,
         "kind": "parameter",
         "purpose": "id: string"
       },
       {
         "name": "action",
-        "line": 113,
+        "line": 256,
         "kind": "parameter",
         "purpose": "action: (\n      value: Record<string, string>,\n      target: HTMLFormElement,\n    ) => Promise<unknown>"
       },
       {
         "name": "value",
-        "line": 114,
+        "line": 257,
         "kind": "parameter",
         "purpose": "value: Record<string, string>"
       },
       {
         "name": "target",
-        "line": 115,
+        "line": 258,
         "kind": "parameter",
         "purpose": "target: HTMLFormElement"
       },
       {
         "name": "target",
-        "line": 118,
+        "line": 261,
         "kind": "variable",
         "purpose": "target = document.querySelector<HTMLFormElement>(`#${id}`)!"
       },
       {
         "name": "event",
-        "line": 119,
+        "line": 262,
         "kind": "parameter",
         "purpose": "event"
       },
       {
         "name": "name",
-        "line": 126,
+        "line": 269,
         "kind": "parameter",
         "purpose": "name: string"
       },
       {
         "name": "panel",
-        "line": 129,
+        "line": 272,
         "kind": "parameter",
         "purpose": "panel"
       },
       {
         "name": "button",
-        "line": 132,
+        "line": 275,
         "kind": "parameter",
         "purpose": "button"
       },
       {
         "name": "button",
-        "line": 141,
+        "line": 284,
         "kind": "parameter",
         "purpose": "button"
       },
       {
         "name": "id",
-        "line": 147,
+        "line": 290,
         "kind": "parameter",
         "purpose": "id: string"
       },
       {
         "name": "items",
-        "line": 148,
+        "line": 291,
         "kind": "parameter",
         "purpose": "items: { id: string; name: string }[]"
       },
       {
         "name": "empty",
-        "line": 149,
+        "line": 292,
         "kind": "parameter",
         "purpose": "empty = false"
       },
       {
         "name": "select",
-        "line": 151,
+        "line": 294,
         "kind": "variable",
         "purpose": "select = document.querySelector<HTMLSelectElement>(`#${id}`)!"
       },
       {
         "name": "before",
-        "line": 152,
+        "line": 295,
         "kind": "variable",
         "purpose": "before = select.value"
       },
       {
         "name": "item",
-        "line": 155,
+        "line": 298,
         "kind": "parameter",
         "purpose": "item"
       },
       {
         "name": "option",
-        "line": 156,
+        "line": 299,
         "kind": "parameter",
         "purpose": "option"
       },
       {
         "name": "id",
-        "line": 162,
+        "line": 305,
         "kind": "parameter",
         "purpose": "id: string"
       },
       {
         "name": "items",
-        "line": 163,
+        "line": 306,
         "kind": "parameter",
         "purpose": "items: { name?: string; id: string; details?: unknown; counts?: unknown }[]"
       },
       {
         "name": "open",
-        "line": 164,
+        "line": 307,
         "kind": "parameter",
         "purpose": "open?: (identity: string) => void"
       },
       {
         "name": "identity",
-        "line": 164,
+        "line": 307,
         "kind": "parameter",
         "purpose": "identity: string"
       },
       {
         "name": "target",
-        "line": 166,
+        "line": 309,
         "kind": "variable",
         "purpose": "target = document.querySelector(`#${id}`)!"
       },
       {
         "name": "item",
-        "line": 168,
+        "line": 311,
         "kind": "parameter",
         "purpose": "item"
       },
       {
         "name": "card",
-        "line": 169,
+        "line": 312,
         "kind": "variable",
         "purpose": "card = document.createElement(\"div\")"
       },
       {
         "name": "title",
-        "line": 171,
+        "line": 314,
         "kind": "variable",
         "purpose": "title = document.createElement(\"strong\")"
       },
       {
         "name": "detail",
-        "line": 174,
+        "line": 317,
         "kind": "variable",
         "purpose": "detail = document.createElement(\"pre\")"
       },
       {
         "name": "button",
-        "line": 182,
+        "line": 325,
         "kind": "variable",
         "purpose": "button = document.createElement(\"button\")"
       },
       {
         "name": "identity",
-        "line": 194,
+        "line": 337,
         "kind": "parameter",
         "purpose": "identity: string"
       },
       {
         "name": "next",
-        "line": 195,
+        "line": 338,
         "kind": "variable",
         "purpose": "next = await imageUrl(identity)"
       },
       {
         "name": "image",
-        "line": 199,
+        "line": 342,
         "kind": "variable",
         "purpose": "image = document.querySelector<HTMLImageElement>(\"#preview\")!"
       },
       {
         "name": "id",
-        "line": 209,
+        "line": 352,
         "kind": "parameter",
         "purpose": "id: string"
       },
       {
         "name": "target",
-        "line": 210,
+        "line": 353,
         "kind": "variable",
         "purpose": "target = document.querySelector(`#${id}`)!"
       },
       {
         "name": "job",
-        "line": 212,
+        "line": 355,
         "kind": "parameter",
         "purpose": "job"
       },
       {
         "name": "card",
-        "line": 213,
+        "line": 356,
         "kind": "variable",
         "purpose": "card = document.createElement(\"div\")"
       },
       {
         "name": "title",
-        "line": 215,
+        "line": 358,
         "kind": "variable",
         "purpose": "title = document.createElement(\"strong\")"
       },
       {
         "name": "status",
-        "line": 218,
+        "line": 361,
         "kind": "variable",
         "purpose": "status = document.createElement(\"p\")"
       },
       {
         "name": "report",
-        "line": 221,
+        "line": 364,
         "kind": "variable",
         "purpose": "report = document.createElement(\"button\")"
       },
       {
         "name": "cancel",
-        "line": 231,
+        "line": 374,
         "kind": "variable",
         "purpose": "cancel = document.createElement(\"button\")"
       },
       {
         "name": "model",
-        "line": 250,
+        "line": 393,
         "kind": "parameter",
         "purpose": "model"
       },
       {
         "name": "model",
-        "line": 255,
+        "line": 398,
         "kind": "parameter",
         "purpose": "model"
       },
       {
         "name": "id",
-        "line": 258,
+        "line": 401,
         "kind": "parameter",
         "purpose": "id"
       },
       {
         "name": "identity",
-        "line": 267,
+        "line": 411,
         "kind": "parameter",
         "purpose": "identity"
       },
       {
         "name": "selected",
-        "line": 269,
+        "line": 413,
         "kind": "variable",
         "purpose": "selected = Array.from(\n        document.querySelectorAll<HTMLInputElement>(\n          \"input[name=dataset_ids]:checked\",\n        ),\n      ).map((input) => input.value)"
       },
       {
         "name": "input",
-        "line": 273,
+        "line": 417,
         "kind": "parameter",
         "purpose": "input"
       },
       {
         "name": "target",
-        "line": 274,
+        "line": 418,
         "kind": "variable",
         "purpose": "target = document.querySelector(\"#training-datasets\")!"
       },
       {
         "name": "item",
-        "line": 276,
+        "line": 420,
         "kind": "parameter",
         "purpose": "item"
       },
       {
         "name": "label",
-        "line": 277,
+        "line": 421,
         "kind": "variable",
         "purpose": "label = document.createElement(\"label\")"
       },
       {
         "name": "input",
-        "line": 279,
+        "line": 423,
         "kind": "variable",
         "purpose": "input = document.createElement(\"input\")"
       },
       {
         "name": "account",
-        "line": 289,
+        "line": 433,
         "kind": "variable",
         "purpose": "account = await api<{\n        connected: boolean;\n        username: string | null;\n        callback: string;\n      }>(\"connectors/deviantart\")"
       },
       {
         "name": "runtime",
-        "line": 299,
+        "line": 443,
         "kind": "variable",
         "purpose": "runtime = await api<{ python: string; configured: boolean }>(\n        \"runtime\",\n      )"
       },
       {
         "name": "error",
-        "line": 306,
+        "line": 450,
         "kind": "variable",
         "purpose": "error"
       },
       {
         "name": "value",
-        "line": 317,
+        "line": 461,
         "kind": "parameter",
         "purpose": "value"
       },
       {
         "name": "value",
-        "line": 321,
+        "line": 465,
         "kind": "parameter",
         "purpose": "value"
       },
       {
         "name": "subject",
-        "line": 322,
+        "line": 466,
         "kind": "variable",
         "purpose": "subject =\n      value.subject_description || value.subject_tags || value.framing\n        ? [\n            {\n              name: value.subject_name,\n              description: value."
       },
       {
         "name": "value",
-        "line": 357,
+        "line": 501,
         "kind": "parameter",
         "purpose": "value"
       },
       {
         "name": "target",
-        "line": 357,
+        "line": 501,
         "kind": "parameter",
         "purpose": "target"
       },
       {
         "name": "value",
-        "line": 374,
+        "line": 518,
         "kind": "parameter",
         "purpose": "value"
       },
       {
         "name": "path",
-        "line": 379,
+        "line": 523,
         "kind": "parameter",
         "purpose": "path"
       },
       {
         "name": "value",
-        "line": 384,
+        "line": 528,
         "kind": "parameter",
         "purpose": "value"
       },
       {
         "name": "value",
-        "line": 385,
+        "line": 529,
         "kind": "parameter",
         "purpose": "value"
       },
       {
         "name": "value",
-        "line": 395,
+        "line": 539,
         "kind": "parameter",
         "purpose": "value"
       },
       {
         "name": "term",
-        "line": 399,
+        "line": 543,
         "kind": "parameter",
         "purpose": "term"
       },
       {
         "name": "value",
-        "line": 403,
+        "line": 547,
         "kind": "parameter",
         "purpose": "value"
       },
       {
         "name": "value",
-        "line": 408,
+        "line": 552,
         "kind": "parameter",
         "purpose": "value"
       },
       {
         "name": "result",
-        "line": 409,
+        "line": 553,
         "kind": "variable",
         "purpose": "result = await api<{ url: string }>(\n      \"connectors/deviantart/connect\",\n      \"POST\",\n      value,\n    )"
       },
       {
         "name": "link",
-        "line": 414,
+        "line": 558,
         "kind": "variable",
         "purpose": "link = document.querySelector<HTMLAnchorElement>(\"#da-authorize\")!"
       },
       {
         "name": "value",
-        "line": 418,
+        "line": 562,
         "kind": "parameter",
         "purpose": "value"
       },
       {
         "name": "value",
-        "line": 424,
+        "line": 568,
         "kind": "parameter",
         "purpose": "value"
       },
       {
         "name": "value",
-        "line": 438,
+        "line": 582,
         "kind": "variable",
         "purpose": "value = await api<{ entries: unknown }>(\n        `datasets/${document.querySelector<HTMLSelectElement>(\"#glossary-dataset\")!.value}/glossary`,\n      )"
       },
       {
+        "name": "value",
+        "line": 591,
+        "kind": "parameter",
+        "purpose": "value"
+      },
+      {
+        "name": "generation",
+        "line": 593,
+        "kind": "variable",
+        "purpose": "generation = reviewGeneration"
+      },
+      {
+        "name": "result",
+        "line": 594,
+        "kind": "variable",
+        "purpose": "result = await api<DatasetReview>(`datasets/${value.dataset}/review`)"
+      },
+      {
+        "name": "url",
+        "line": 613,
+        "kind": "variable",
+        "purpose": "url = URL.createObjectURL(\n      new Blob([JSON.stringify(datasetReview, null, 2) + \"\\n\"], {\n        type: \"application/json\",\n      }),\n    )"
+      },
+      {
+        "name": "link",
+        "line": 618,
+        "kind": "variable",
+        "purpose": "link = document.createElement(\"a\")"
+      },
+      {
         "name": "event",
-        "line": 451,
+        "line": 630,
         "kind": "parameter",
         "purpose": "event"
       },
       {
         "name": "file",
-        "line": 452,
+        "line": 631,
         "kind": "variable",
         "purpose": "file = (event.target as HTMLInputElement).files?.[0]"
       },
       {
         "name": "value",
-        "line": 456,
+        "line": 635,
         "kind": "variable",
         "purpose": "value = values(document.querySelector<HTMLFormElement>(\"#feedback\")!)"
       },
       {
         "name": "form",
-        "line": 457,
+        "line": 636,
         "kind": "variable",
         "purpose": "form = document.querySelector<HTMLFormElement>(\"#generate\")!"
       },
       {
         "name": "original",
-        "line": 458,
+        "line": 637,
         "kind": "variable",
         "purpose": "original = workspace.image.find((image) => image.id === value.image)\n      ?.request as { prompt?: { description?: string } } | undefined"
       },
       {
         "name": "image",
-        "line": 458,
+        "line": 637,
         "kind": "parameter",
         "purpose": "image"
+      },
+      {
+        "name": "url",
+        "line": 659,
+        "kind": "parameter",
+        "purpose": "url"
       }
     ]
   }

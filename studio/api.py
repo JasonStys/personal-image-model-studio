@@ -1,6 +1,6 @@
 """Loopback-only authenticated API for datasets, models, job control, image history and feedback."""
 
-# Index: declarations module.Boundary@L28, Boundary.__init__@L31, Boundary.__call__@L37, Boundary.__call__.replay@L72, Boundary.__call__.private_send@L80, module.Upload@L98, module.Policy@L106, module.AccountConnect@L113, module.GalleryImport@L120, module.RuntimeChoice@L130, module.create_app@L138, create_app.lifespan@L158, create_app.invalid@L176, create_app.bad_value@L184, create_app.missing@L189, create_app.file_error@L194, create_app.account_status@L199, create_app.account_connect@L204, create_app.account_disconnect@L209, create_app.account_callback@L215, create_app.account_import@L226, create_app.feedback_export@L244, create_app.health@L253, create_app.runtime_status@L258, create_app.runtime_choice@L263, create_app.workspace@L280, create_app.dataset@L285, create_app.synthetic@L302, create_app.glossary@L318, create_app.glossary_save@L323, create_app.model@L349, create_app.upload@L381, create_app.image_file@L409, create_app.training@L418, create_app.generation@L438, create_app.cancellation@L457, create_app.report@L462, create_app.feedback_save@L470, create_app.feedback_read@L476, create_app.policy_save@L481; variables app@L31, port@L31, self@L31, token@L31, receive@L37, scope@L37, self@L37, send@L37, headers@L41, k@L41, v@L41, size@L55, chunks@L56, message@L58, chunk@L61, size@L62, consumed@L70, consumed@L76, message@L80, model_config@L101, name@L102, content@L103, model_config@L109, denied_terms@L110, model_config@L116, client_id@L117, model_config@L123, name@L124, max_items@L125, rights_confirmed@L126, provider_terms_reviewed@L127, model_config@L133, python@L134, trusted@L135, root@L139, token@L140, port@L141, static@L142, interpreter@L143, connector_transport@L144, worker_source@L145, store@L148, interpreter@L151, jobs@L154, connector@L155, app@L158, app@L164, error@L176, request@L176, e@L179, error@L184, request@L184, error@L189, request@L189, error@L194, request@L194, data@L204, request@L215, params@L217, key@L218, data@L226, identity@L228, path@L229, result@L230, record@L231, data@L263, path@L265, job@L273, kind@L282, data@L285, identity@L287, path@L288, result@L289, record@L290, identity@L304, path@L305, result@L306, record@L307, identity@L318, body@L323, identity@L323, entries@L325, term@L328, value@L328, path@L344, data@L349, path@L351, details@L355, summary@L356, summary@L364, identity@L368, result@L369, data@L381, content@L384, identity@L387, directory@L388, temporary@L390, path@L391, image@L394, record@L398, identity@L409, settings@L418, references@L420, identity@L422, resumed@L426, base@L431, settings@L438, compiled@L440, policy@L441, selected@L443, references@L444, identity@L457, identity@L462, job@L464, feedback@L470, identity@L470, identity@L476, policy@L481, term@L483, static@L488. Purposes/parameters: docs/code-map.json.
+# Index: declarations module.Boundary@L29, Boundary.__init__@L32, Boundary.__call__@L38, Boundary.__call__.replay@L73, Boundary.__call__.private_send@L81, module.Upload@L99, module.Policy@L107, module.AccountConnect@L114, module.GalleryImport@L121, module.RuntimeChoice@L131, module.create_app@L139, create_app.lifespan@L159, create_app.invalid@L177, create_app.bad_value@L185, create_app.missing@L190, create_app.file_error@L195, create_app.account_status@L200, create_app.account_connect@L205, create_app.account_disconnect@L210, create_app.account_callback@L216, create_app.account_import@L227, create_app.feedback_export@L245, create_app.health@L254, create_app.runtime_status@L259, create_app.runtime_choice@L264, create_app.workspace@L281, create_app.dataset@L286, create_app.dataset_review@L303, create_app.dataset_review_image@L313, create_app.synthetic@L326, create_app.glossary@L342, create_app.glossary_save@L347, create_app.model@L373, create_app.upload@L405, create_app.image_file@L433, create_app.training@L442, create_app.generation@L462, create_app.cancellation@L481, create_app.report@L486, create_app.feedback_save@L494, create_app.feedback_read@L500, create_app.policy_save@L505; variables app@L32, port@L32, self@L32, token@L32, receive@L38, scope@L38, self@L38, send@L38, headers@L42, k@L42, v@L42, size@L56, chunks@L57, message@L59, chunk@L62, size@L63, consumed@L71, consumed@L77, message@L81, model_config@L102, name@L103, content@L104, model_config@L110, denied_terms@L111, model_config@L117, client_id@L118, model_config@L124, name@L125, max_items@L126, rights_confirmed@L127, provider_terms_reviewed@L128, model_config@L134, python@L135, trusted@L136, root@L140, token@L141, port@L142, static@L143, interpreter@L144, connector_transport@L145, worker_source@L146, store@L149, interpreter@L152, jobs@L155, connector@L156, app@L159, app@L165, error@L177, request@L177, e@L180, error@L185, request@L185, error@L190, request@L190, error@L195, request@L195, data@L205, request@L216, params@L218, key@L219, data@L227, identity@L229, path@L230, result@L231, record@L232, data@L264, path@L266, job@L274, kind@L283, data@L286, identity@L288, path@L289, result@L290, record@L291, identity@L303, character@L306, record@L309, identity@L313, image_hash@L313, character@L316, record@L319, content@L320, identity@L328, path@L329, result@L330, record@L331, identity@L342, body@L347, identity@L347, entries@L349, term@L352, value@L352, path@L368, data@L373, path@L375, details@L379, summary@L380, summary@L388, identity@L392, result@L393, data@L405, content@L408, identity@L411, directory@L412, temporary@L414, path@L415, image@L418, record@L422, identity@L433, settings@L442, references@L444, identity@L446, resumed@L450, base@L455, settings@L462, compiled@L464, policy@L465, selected@L467, references@L468, identity@L481, identity@L486, job@L488, feedback@L494, identity@L494, identity@L500, policy@L505, term@L507, static@L512. Purposes/parameters: docs/code-map.json.
 import base64
 import binascii
 import secrets
@@ -16,7 +16,8 @@ from fastapi.staticfiles import StaticFiles
 from pydantic import BaseModel, ConfigDict, Field
 from studio.contracts import DatasetImport, Generation, Training, Feedback, ModelImport
 from studio.datasets import import_dataset, synthetic_dataset
-from studio.files import normalized_image, read_json, atomic_json
+from studio.dataset_review import review_dataset, dataset_thumbnail
+from studio.files import normalized_image, read_json, atomic_json, confined
 from studio.jobs import Jobs, TERMINAL
 from studio.prompts import compile_prompt, enforce_policy
 from studio.store import Store
@@ -297,6 +298,29 @@ def create_app(
         store.put("dataset", identity, record)
         store.quarantine(identity, result["records"])
         return record
+
+    @app.get("/api/datasets/{identity}/review")
+    def dataset_review(identity: str):
+        """Review a known account-scoped dataset; caller input never chooses a machine path or model."""
+        if len(identity) != 32 or any(
+            character not in "0123456789abcdef" for character in identity
+        ):
+            raise KeyError("Unknown dataset")
+        record = store.get("dataset", identity)
+        return review_dataset(confined(store.root, f"datasets/{identity}"), record["fingerprint"])
+
+    @app.get("/api/datasets/{identity}/review/images/{image_hash}")
+    def dataset_review_image(identity: str, image_hash: str):
+        """Read-only account-scoped thumbnail; guessed IDs and paths never resolve arbitrary files."""
+        if len(identity) != 32 or any(
+            character not in "0123456789abcdef" for character in identity
+        ):
+            raise KeyError("Unknown dataset")
+        record = store.get("dataset", identity)
+        content = dataset_thumbnail(
+            confined(store.root, f"datasets/{identity}"), record["fingerprint"], image_hash
+        )
+        return Response(content, media_type="image/png")
 
     @app.post("/api/datasets/synthetic")
     def synthetic():

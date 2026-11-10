@@ -1,6 +1,6 @@
 # Installation and packaging
 
-**0.2 default:** use the self-contained CPU account application and [private installation guide](private-installation.md). The instructions below describe the preserved **legacy developer shell**, not the default encrypted account app. Legacy artifacts are uploaded only when explicitly enabled in CI; use Releases for new CPU downloads.
+**0.3 default:** use the self-contained CPU account application and [private installation guide](private-installation.md). The instructions below describe the preserved **legacy developer shell**, not the default encrypted account app. Legacy artifacts are uploaded only when explicitly enabled in CI; use Releases for new CPU downloads.
 
 ## Browser/developer setup
 

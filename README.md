@@ -18,6 +18,12 @@ It does not generate placeholder images when no model exists. Train a fresh comp
 
 Rows: circle, square, triangle. Columns: red, green, blue. These samples came from real learned weights after 6,000 optimizer updates on owned procedural shapes, using the reference Torch 2.14 CPU environment—not a procedural renderer at inference time. The small model still produces rough edges and is **not a general-purpose or photorealistic generator**. See [validation evidence](docs/reports/validation.md), including exact runtime versions, separately retained earlier GPU evidence and limitations.
 
+## Review data before training
+
+Version **0.3.0** adds an account-scoped dataset review. Import owned or authorized images, select **Datasets & glossary → Dataset to review → Review dataset quality**, inspect missing captions, declared origins/license notes and eligible train/validation sizes, then preview possible cross-split near-duplicate pairs. Download the exact reviewed JSON if you need evidence before choosing training data. Changing the selection clears the report and export; stale responses cannot populate a different selection.
+
+This workflow is read-only. It does not change split assignments, captions, AI quarantine, training selection or weights. A grayscale visual hash produces **candidates**, not proven duplicates or a model-quality score. File/pixel checks cover an explicit bounded sample (64 images, 32 MiB encoded bytes, 16,777,216 decoded pixels); unchecked counts and pair truncation are displayed. Private 192px previews require matching imported identities and the active account. Rights/origin labels remain operator declarations. See [dataset review](docs/dataset-review.md).
+
 ## Features
 
 - Independent scene, style, tag, negative and subject fields; explicit `(phrase:1.4)` weights; optional experimental native subject boxes.
@@ -57,7 +63,7 @@ Live DeviantArt authorization and identity lookup were verified. The approved ow
 ## Reproduce validation
 
 ```bash
-python -m pytest tests/test_core.py tests/test_deviantart.py tests/test_quickdraw.py tests/test_jobs.py
+python -m pytest tests/test_core.py tests/test_deviantart.py tests/test_quickdraw.py tests/test_jobs.py tests/test_dataset_review.py
 python -m pytest tests/test_ml.py
 python -m pytest tests/test_private.py tests/test_private_ml.py
 python -m ruff check studio scripts tests
@@ -84,6 +90,7 @@ Demo outputs/checkpoints are local and ignored by Git. Use a new output director
 | `studio/private_workspace.py`, `vault.py`, `permissions.py` | Exclusive local engine, streaming encrypted archive, protected roots, lock/recovery lifecycle. |
 | `studio/prompts.py` | Numeric weight syntax, independent sections and phrase policy. |
 | `studio/files.py` | Atomic JSON, hashes, confinement and metadata-stripping raster decode. |
+| `studio/dataset_review.py` | Bounded read-only caption/provenance/split dossier, cross-split similarity candidates and verified private thumbnails. |
 | `studio/datasets.py` | Safe local/ZIP import, deduplication, splits, AI exclusion and owned fixtures. |
 | `studio/model.py` | Fresh word vocabulary, weighted text/time conditioning and compact denoiser. |
 | `studio/training.py` | Actual native optimization, held-out metrics, EMA and continuation. |
@@ -104,6 +111,7 @@ Demo outputs/checkpoints are local and ignored by Git. Use a new output director
 | `scripts/private_browser_server.py`, `playwright.private.config.ts`, `tests/private*.spec.ts` | Disposable profile services, real account browsers and genuine training workflows. |
 | `tests/test_private.py`, `test_private_ml.py` | Ownership/authentication, boundary/crypto/corruption/recovery and actual encrypted ML lifecycle tests. |
 | `scripts/code_index.mjs`, `python_index.py` | Reproducible exact declaration/variable line headers and detailed code map. |
+| `tests/test_dataset_review.py`, `tests/fixtures/dataset-review.json` | Owned gradient fixtures, independent hash oracle, input budgets, account privacy, unchanged-data and release-version regressions. |
 | `tests/test_core.py`, `test_deviantart.py`, `test_jobs.py`, `test_ml.py` | Core/privacy/property, mocked provider-contract, lifecycle and real ML regression tests. |
 | `scripts/prepare_quickdraw.py`, `evaluate_quickdraw.py`, `tests/test_quickdraw.py` | Opt-in licensed sketch sampling, genuine checkpoint/inference evaluation and offline bounded-input tests. |
 | `tests/browser*.spec.ts`, `playwright.config.ts` | Real browser accessibility/portability and separate real ML-worker workflow. |
