@@ -12,7 +12,7 @@ There are no repository-defined path exclusions, query exclusions or dismissed a
 
 The original baseline on 2026-11-09 had default setup `not-configured`, and the code-scanning
 API reported `no analysis found`. That is missing scan evidence, not a zero-vulnerability
-result. The first genuine hosted results and any corrections are recorded in the
+result. Genuine first hosted results, source-bound analysis IDs and any corrections are recorded in the
 [dated scan report](reports/codeql-2026-11-09.md).
 
 ## Workflow and trust boundary

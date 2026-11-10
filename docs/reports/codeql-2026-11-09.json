@@ -1,0 +1,62 @@
+{
+  "author": "Jason Stys",
+  "repository": "JasonStys/personal-image-model-studio",
+  "scope": "First genuine observed PR merge-ref security-extended scan; a source-bound historical observation, not a security certification",
+  "pullRequest": "https://github.com/JasonStys/personal-image-model-studio/pull/2",
+  "headCommit": "36571ed71983d7a95723cb9e41610d53591e8127",
+  "analyzedMergeCommit": "36354a52010921785b7e8532c07910e49856b0b9",
+  "ref": "refs/pull/2/merge",
+  "codeqlVersion": "2.27.4",
+  "actionCommit": "33d7b85da1a04171e211befe2c739303b9a4c066",
+  "querySuite": "security-extended",
+  "analyses": [
+    {
+      "language": "python",
+      "category": "/language:python",
+      "analysisId": 2132758449,
+      "analyzedCommit": "36354a52010921785b7e8532c07910e49856b0b9",
+      "extractedRepositoryPaths": 44,
+      "rules": 50,
+      "results": 0,
+      "error": "",
+      "warning": "",
+      "jobUrl": "https://github.com/JasonStys/personal-image-model-studio/actions/runs/42763975179/job/129656004580",
+      "sarifProcessing": "complete"
+    },
+    {
+      "language": "javascript-typescript",
+      "category": "/language:javascript-typescript",
+      "analysisId": 2132758590,
+      "analyzedCommit": "36354a52010921785b7e8532c07910e49856b0b9",
+      "extractedRepositoryPaths": 18,
+      "rules": 103,
+      "results": 0,
+      "error": "",
+      "warning": "",
+      "jobUrl": "https://github.com/JasonStys/personal-image-model-studio/actions/runs/42763975179/job/129656004205",
+      "sarifProcessing": "complete"
+    },
+    {
+      "language": "actions",
+      "category": "/language:actions",
+      "analysisId": 2132757057,
+      "analyzedCommit": "36354a52010921785b7e8532c07910e49856b0b9",
+      "extractedRepositoryPaths": 3,
+      "rules": 23,
+      "results": 0,
+      "error": "",
+      "warning": "",
+      "jobUrl": "https://github.com/JasonStys/personal-image-model-studio/actions/runs/42763975179/job/129656004471",
+      "sarifProcessing": "complete"
+    }
+  ],
+  "openAlertsOnQueriedRef": 0,
+  "sourceOrQueryExclusionsAdded": false,
+  "suppressionsOrDismissalsAdded": false,
+  "sarifResultsFabricated": false,
+  "limitations": [
+    "Language-specific extracted paths are not line/branch coverage or universal support for dynamic source.",
+    "Zero results/open alerts at this exact ref does not prove absence of vulnerabilities.",
+    "Existing runtime/browser/native/ML/isolation gates remain separate requirements."
+  ]
+}
