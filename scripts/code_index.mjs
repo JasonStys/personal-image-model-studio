@@ -1,5 +1,5 @@
 /** Regenerate/check exact AST source indexes; file edits are bulk mechanical metadata updates only. */
-// Index: declarations walk@L31, inventory@L45, visit@L60, names@L82, publish@L110; variables root@L8, check@L9, python@L10, files@L19, file@L27, directory@L31, entry@L34, file@L41, file@L45, source@L45, result@L47, tree@L55, declarations@L56, variables@L57, line@L58, node@L58, node@L60, comments@L68, comment@L75, comment@L76, identifiers@L81, name@L82, element@L85, name@L90, file@L110, text@L110, previous@L111, maps@L123, file@L124, source@L125, marker@L126, line@L127, lines@L129, result@L134, header@L135, value@L135, value@L135, line@L140. Purposes/parameters: docs/code-map.json.
+// Index: declarations walk@L31, inventory@L45, visit@L60, names@L82, publish@L110; variables root@L8, check@L9, python@L10, files@L19, file@L27, directory@L31, entry@L34, file@L41, file@L45, source@L45, result@L47, tree@L55, declarations@L56, variables@L57, line@L58, node@L58, node@L60, comments@L68, comment@L75, comment@L76, identifiers@L81, name@L82, element@L85, name@L90, file@L110, text@L110, previous@L111, error@L114, maps@L128, file@L129, source@L130, marker@L131, line@L132, lines@L134, result@L139, header@L140, value@L140, value@L140, line@L145. Purposes/parameters: docs/code-map.json.
 import fs from "node:fs";
 import path from "node:path";
 import { spawnSync } from "node:child_process";
@@ -108,9 +108,14 @@ function inventory(file, source) {
 
 /** Compare mechanical outputs or publish them; no nondeterministic timestamps/machine paths enter docs. */
 function publish(file, text) {
-  const previous = fs.existsSync(file)
-    ? fs.readFileSync(file, "utf8").replaceAll("\r\n", "\n")
-    : "";
+  let previous;
+  try {
+    previous = fs.readFileSync(file, "utf8").replaceAll("\r\n", "\n");
+  } catch (error) {
+    // Read once: a missing/deleted output can be regenerated, but access/I/O errors must fail.
+    if (error.code !== "ENOENT") throw error;
+    previous = "";
+  }
   if (previous === text) return;
   if (check)
     throw new Error(

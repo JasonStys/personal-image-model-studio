@@ -50,8 +50,9 @@ jobs:
       - run: python -m pip install -e ".[dev]"
       - run: npm ci
       - run: npm run build
-      - run: npx prettier --check web tests/*.ts playwright*.ts scripts/code_index.mjs index.html tsconfig.json package.json
+      - run: npx prettier --check web tests/*.ts tests/*.mjs playwright*.ts scripts/code_index.mjs index.html tsconfig.json package.json
       - run: node scripts/code_index.mjs --check
+      - run: npm run test:code-index
       - name: Bound official Ubuntu mirror access on the disposable runner
         timeout-minutes: 1
         shell: bash

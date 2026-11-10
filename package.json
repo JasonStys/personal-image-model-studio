@@ -8,6 +8,7 @@
   },
   "scripts": {
     "build": "tsc --noEmit && vite build",
+    "test:code-index": "node --test tests/code-index.test.mjs",
     "test:browser": "playwright test",
     "test:private": "playwright test --config=playwright.private.config.ts"
   },
