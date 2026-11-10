@@ -36,7 +36,7 @@ jobs:
           name: contracts-${{ matrix.os }}-${{ matrix.python }}
           path: artifacts/*.xml
   browsers:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     timeout-minutes: 20
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
@@ -52,7 +52,37 @@ jobs:
       - run: npm run build
       - run: npx prettier --check web tests/*.ts playwright*.ts scripts/code_index.mjs index.html tsconfig.json package.json
       - run: node scripts/code_index.mjs --check
-      - run: npx playwright install --with-deps chromium firefox webkit
+      - name: Bound official Ubuntu mirror access on the disposable runner
+        timeout-minutes: 1
+        shell: bash
+        run: |
+          test "$GITHUB_ACTIONS" = "true"
+          test "$RUNNER_OS" = "Linux"
+          test "$(uname -m)" = "x86_64"
+          . /etc/os-release
+          test "$ID" = "ubuntu"
+          test "$VERSION_ID" = "24.04"
+          test -f /etc/apt/apt-mirrors.txt
+          test -f /usr/share/keyrings/ubuntu-archive-keyring.gpg
+          grep -Eq '^URIs:[[:space:]]+mirror[+]file:/etc/apt/apt-mirrors[.]txt[[:space:]]*$' /etc/apt/sources.list.d/ubuntu.sources
+          grep -Eq '^Signed-By:[[:space:]]+/usr/share/keyrings/ubuntu-archive-keyring[.]gpg[[:space:]]*$' /etc/apt/sources.list.d/ubuntu.sources
+          # Preserve source suites, components and signature checks; avoid the stalled HTTP Azure mirror.
+          printf 'https://archive.ubuntu.com/ubuntu/\tpriority:1\nhttps://security.ubuntu.com/ubuntu/\tpriority:2\n' |
+            sudo tee /etc/apt/apt-mirrors.txt >/dev/null
+          # APT reads this leaf after the runner defaults; these are acquire, not APT::Acquire, keys.
+          printf '%s\n' 'Acquire::Retries "1";' 'Acquire::http::Timeout "15";' 'Acquire::https::Timeout "15";' |
+            sudo tee /etc/apt/apt.conf.d/zzzz-portfolio-network >/dev/null
+          apt_network_config="$(apt-config dump Acquire::Retries Acquire::http::Timeout Acquire::https::Timeout)"
+          printf '%s\n' "$apt_network_config"
+          grep -Fx 'Acquire::Retries "1";' <<< "$apt_network_config"
+          grep -Fx 'Acquire::http::Timeout "15";' <<< "$apt_network_config"
+          grep -Fx 'Acquire::https::Timeout "15";' <<< "$apt_network_config"
+      - name: Install operating-system browser dependencies
+        timeout-minutes: 10
+        run: npx --no-install playwright install-deps chromium firefox webkit
+      - name: Install the exact locked browsers
+        timeout-minutes: 5
+        run: npx --no-install playwright install chromium firefox webkit
       - run: npm run test:browser
       - run: npm run test:private
       - run: npm audit --audit-level=low
