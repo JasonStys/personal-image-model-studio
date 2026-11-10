@@ -1,9 +1,10 @@
 """Bounded JSON, atomic publications, path confinement and image normalization utilities."""
 
-# Index: declarations module.digest@L18, module.confined@L24, module.read_json@L32, read_json.pairs@L37, module.replace_file@L54, module.atomic_json@L68, module.normalized_image@L82; variables MAX_IMAGE_BYTES@L13, MAX_PIXELS@L14, path@L18, stream@L20, relative@L24, root@L24, path@L26, limit@L32, path@L32, items@L37, result@L39, value@L44, _@L47, value@L47, destination@L54, source@L54, attempt@L56, path@L68, value@L68, descriptor@L71, temporary@L71, stream@L73, path@L82, image@L88, normalized@L93. Purposes/parameters: docs/code-map.json.
+# Index: declarations module.digest@L19, module.confined@L25, module.read_json@L33, read_json.pairs@L42, module.replace_file@L59, module.atomic_json@L73, module.normalized_image@L87; variables MAX_IMAGE_BYTES@L14, MAX_PIXELS@L15, path@L19, stream@L21, relative@L25, root@L25, path@L27, limit@L33, path@L33, stream@L37, source@L38, items@L42, result@L44, value@L49, _@L52, value@L52, destination@L59, source@L59, attempt@L61, path@L73, value@L73, descriptor@L76, temporary@L76, stream@L78, path@L87, image@L93, normalized@L98. Purposes/parameters: docs/code-map.json.
 import hashlib
 import json
 import os
+import stat
 import tempfile
 import time
 import warnings
@@ -31,7 +32,11 @@ def confined(root: Path, relative: str) -> Path:
 
 def read_json(path: Path, limit: int = 1_000_000) -> dict:
     """Read a size-bounded JSON object; reject duplicate keys and non-finite numbers."""
-    if path.stat().st_size > limit:
+    if not stat.S_ISREG(path.stat().st_mode):
+        raise ValueError("JSON document must be a regular file")
+    with path.open("rb") as stream:
+        source = stream.read(limit + 1)
+    if len(source) > limit:
         raise ValueError("JSON document exceeds its limit")
 
     def pairs(items):
@@ -42,7 +47,7 @@ def read_json(path: Path, limit: int = 1_000_000) -> dict:
         return result
 
     value = json.loads(
-        path.read_text(encoding="utf-8"),
+        source.decode("utf-8"),
         object_pairs_hook=pairs,
         parse_constant=lambda value: (_ for _ in ()).throw(ValueError("Non-finite JSON")),
     )

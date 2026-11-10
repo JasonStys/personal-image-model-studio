@@ -24,3 +24,7 @@ Glossary definitions include `definition`, `source`, `reviewed`. They are editab
 Register a local exported **classic StableDiffusionPipeline** directory with safe tensors and an authorization/license note. No downloads occur during worker loading. Fixed components/schedulers are validated, custom Python/pickle files rejected and unsupported architectures reported. Supplied safety-checker flags prevent publication. A model without a checker is not advertised as safe for unrestricted use.
 
 Select LoRA mode, its registered base and approved datasets. The worker optimizes attention adapters, saves safe weights, metrics and a base-file fingerprint, then registers the adapter. It requires the unchanged original base directory for generation. Adapter training does not include semantic held-out evaluation or optimizer-resume state; inspect generated samples yourself before accepting it.
+
+## Review data before a training run
+
+After importing, choose **Datasets & glossary → Dataset to review → Review dataset quality**. Review caption/provenance counts, sampled integrity and possible cross-split near-duplicate pairs; preview the private thumbnails and download the reviewed JSON. Sampling and hash collisions are explicit. Fix problems in your source and import a fresh dataset, then choose datasets in Train manually. Review does not change training selection or weights. See [complete workflow and bounds](dataset-review.md).

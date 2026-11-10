@@ -1,0 +1,76 @@
+{
+  "date": "2026-11-09",
+  "repository": "personal-image-model-studio",
+  "product_version": "0.3.0",
+  "scope": "Local Windows Python3.14 Node24 core/account/browser validation, no local Torch/native package execution",
+  "feature": "Read-only authorized dataset readiness and cross-split similarity review with verified private previews",
+  "tests": {
+    "full_contract_security_account": 121,
+    "new_dataset_review_cases_included": 16,
+    "private_browsers": 20,
+    "legacy_browsers": 8,
+    "final_review_screenshot_subset": 4,
+    "engines": ["chromium", "firefox", "webkit", "mobile"],
+    "axe_review_violations": 0,
+    "mobile_page_overflow": false,
+    "external_requests_during_new_workflow": 0,
+    "resource_warnings_as_errors": true
+  },
+  "coverage": {
+    "full_core_lane_lines_covered": 1679,
+    "full_repository_lines": 2699,
+    "full_core_lane_line_rate": 0.6221,
+    "dataset_review_line_rate": 0.9206,
+    "branch_coverage_measured": false,
+    "interpretation": "ML-only modules intentionally unexecuted in local core-only environment; not a complete ML coverage claim"
+  },
+  "bounds": {
+    "manifest_bytes": 8388608,
+    "records": 10000,
+    "sample_images": 64,
+    "sample_file_bytes": 33554432,
+    "sample_pixels": 16777216,
+    "maximum_balanced_cross_split_comparisons": 1024,
+    "pairs_shown": 32,
+    "thumbnail_dimension": 192
+  },
+  "actual_synthetic_observations": {
+    "gradient_train": 1,
+    "gradient_validation": 1,
+    "cross_split_candidates": 1,
+    "sample_integrity_errors": 0,
+    "training_minimum_met": false,
+    "read_only_bytes_unchanged": true,
+    "default_pixel_budget_case": "Four actual2048x2048 images verified; fifth excluded at16777216pixel cap"
+  },
+  "quality": {
+    "ruff": "pass",
+    "ruff_format": "pass",
+    "prettier": "pass",
+    "typescript_vite": "pass",
+    "source_indexes": 56,
+    "pip_check": "pass",
+    "pip_audit_known_vulnerabilities": 0,
+    "npm_audit_known_vulnerabilities": 0,
+    "vite": "8.3.5"
+  },
+  "release": {
+    "new_target": "v0.3.0",
+    "old_v0_2_assets_notes_untouched": true,
+    "private_store_schema_migration": false,
+    "actual_training_after_review_gate_added": [
+      "tests/test_private_ml.py",
+      "tests/private-ml.spec.ts",
+      "scripts/smoke_native.py"
+    ],
+    "published_or_triggered_by_worker": false
+  },
+  "limitations": [
+    "No local Torch/ML extras, model training, pretrained LoRA or native packaging in this worker environment; strengthened genuine ML and three-platform native CI/release gates remain required",
+    "Grayscale similarity flags candidates, not proven duplication, leakage, semantic quality or AI origin",
+    "Only bounded sampled images verified; uninspected/failed counts remain explicit",
+    "Rights and origin labels remain operator declarations",
+    "No manual screen-reader or physical mobile-device validation",
+    "Unsigned portable app remains distinct from signed/notarized installer"
+  ]
+}

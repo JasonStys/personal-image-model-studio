@@ -1,10 +1,13 @@
 /** Real-browser configuration. ML workflow tests run in a dedicated ML-equipped lane. */
-// Index: declarations none; variables interpreter@L5. Purposes/parameters: docs/code-map.json.
+// Index: declarations none; variables interpreter@L5, port@L8. Purposes/parameters: docs/code-map.json.
 import { defineConfig, devices } from "@playwright/test";
 
 const interpreter =
   process.env.IMAGE_STUDIO_TEST_PYTHON ||
   (process.platform === "win32" ? ".venv/Scripts/python.exe" : "python");
+const port = Number(process.env.PIMS_LEGACY_QA_PORT ?? 8017);
+if (!Number.isSafeInteger(port) || port < 1024 || port > 65535)
+  throw new Error("Invalid PIMS_LEGACY_QA_PORT");
 export default defineConfig({
   testDir: "./tests",
   testMatch:
@@ -18,7 +21,7 @@ export default defineConfig({
     ["json", { outputFile: "artifacts/browser-results.json" }],
   ],
   use: {
-    baseURL: "http://127.0.0.1:8017",
+    baseURL: `http://127.0.0.1:${port}`,
     trace: "retain-on-failure",
     screenshot: "only-on-failure",
   },
@@ -32,8 +35,8 @@ export default defineConfig({
           { name: "mobile", use: { ...devices["iPhone 13"] } },
         ],
   webServer: {
-    command: `"${interpreter}" -m studio.cli --port 8017 --data runtime/browser-${Date.now()}`,
-    url: "http://127.0.0.1:8017/health",
+    command: `"${interpreter}" -m studio.cli --port ${port} --data runtime/browser-${Date.now()}`,
+    url: `http://127.0.0.1:${port}/health`,
     reuseExistingServer: false,
     timeout: 60000,
     env: { IMAGE_STUDIO_TOKEN: "test-session-" + "x".repeat(40) },

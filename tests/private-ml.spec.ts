@@ -1,5 +1,5 @@
 /** Jason Stys: browser-to-real-account worker, learned model, generated image and encrypted relaunch. */
-// Index: declarations none; variables page@L7, image@L79. Purposes/parameters: docs/code-map.json.
+// Index: declarations none; variables page@L7, image@L88. Purposes/parameters: docs/code-map.json.
 import { test, expect } from "@playwright/test";
 import { randomUUID } from "node:crypto";
 
@@ -38,6 +38,15 @@ test("real private custom training and generation through browser controls", asy
   await expect(page.locator("#datasets")).toContainText('"flagged": 0', {
     timeout: 30000,
   });
+  await page
+    .getByRole("button", { name: "Review dataset quality", exact: true })
+    .click();
+  await expect(
+    page.getByRole("region", { name: "Dataset quality review", exact: true }),
+  ).toContainText("Minimum training counts met");
+  await expect(
+    page.getByRole("region", { name: "Dataset quality review", exact: true }),
+  ).toContainText("0 sampled file integrity errors");
   await page
     .getByRole("button", { name: "03 · Train & models", exact: true })
     .click();
@@ -92,6 +101,15 @@ test("real private custom training and generation through browser controls", asy
   await page
     .getByRole("button", { name: "Unlock or create workspace" })
     .click();
+  await page
+    .getByRole("button", { name: "Review dataset quality", exact: true })
+    .click();
+  await expect(
+    page.getByRole("region", { name: "Dataset quality review", exact: true }),
+  ).toContainText("Minimum training counts met");
+  await expect(
+    page.getByRole("region", { name: "Dataset quality review", exact: true }),
+  ).toContainText("0 sampled file integrity errors");
   await page
     .getByRole("button", { name: "03 · Train & models", exact: true })
     .click();

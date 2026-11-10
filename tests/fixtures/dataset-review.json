@@ -1,0 +1,23 @@
+{
+  "train": {
+    "filename": "gradient-train.png",
+    "png_base64": "iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAIAAACQkWg2AAAAK0lEQVR4nGNkYGAQERHhIhowcXFxMZACmEhSzTCqgTjARKQ6OBjVwEAEAAAaBgIeuEA52AAAAABJRU5ErkJggg==",
+    "caption": "owned grayscale gradient",
+    "metadata": {
+      "origin": "synthetic_procedural",
+      "name": "<script>inert gradient</script>",
+      "license": "Created by Jason Stys as a synthetic test fixture"
+    }
+  },
+  "validation": {
+    "filename": "gradient-validation.png",
+    "png_base64": "iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAIAAACQkWg2AAAAK0lEQVR4nGNkZGQUFhbmIhowcXJyMpACmEhSzTCqgTjARKQ6OBjVwEAEAAAReAIbIcY0xQAAAABJRU5ErkJggg==",
+    "caption": "owned grayscale gradient",
+    "metadata": {
+      "origin": "synthetic_procedural",
+      "name": "<script>inert gradient</script>",
+      "license": "Created by Jason Stys as a synthetic test fixture"
+    }
+  },
+  "expected_fingerprint": "a10956f6c4bc618dace34261298fb5bcc0a94ace03a7654994715eb07810f185"
+}

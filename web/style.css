@@ -415,3 +415,38 @@ fieldset {
     min-height: 250px;
   }
 }
+
+/* Review evidence stays readable without changing original training selections or pixels. */
+#dataset-review-result {
+  overflow-wrap: anywhere;
+}
+.review-fingerprint {
+  font-family: ui-monospace, monospace;
+  font-size: 0.8rem;
+}
+.review-counts {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 0.5rem 1rem;
+}
+.review-counts dt {
+  font-weight: 600;
+}
+.review-counts dd {
+  margin: 0;
+  text-align: end;
+}
+
+.dataset-pair-preview {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-block: 0.5rem;
+}
+.dataset-pair-preview img {
+  max-width: 100%;
+  height: auto;
+  object-fit: contain;
+  background: #f5f5f5;
+  border: 1px solid #7b8d9e;
+}
