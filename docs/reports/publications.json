@@ -1,0 +1,109 @@
+{
+  "schemaVersion": 1,
+  "project": "personal-image-model-studio",
+  "author": "Jason Stys",
+  "editionDate": "2026-11-09",
+  "sourceBaseline": "0d9aa0a6733198325593ffc30cef8358125063d7",
+  "sourceUrl": "https://github.com/JasonStys/personal-image-model-studio/tree/0d9aa0a6733198325593ffc30cef8358125063d7",
+  "functionalEvidenceBaseline": "0d9aa0a6733198325593ffc30cef8358125063d7",
+  "evidenceObservedAt": "2026-11-10T07:59:19.060757+00:00",
+  "workflowEvidence": [
+    {
+      "conclusion": "success",
+      "event": "push",
+      "headSha": "0d9aa0a6733198325593ffc30cef8358125063d7",
+      "name": "CodeQL",
+      "status": "completed",
+      "url": "https://github.com/JasonStys/personal-image-model-studio/actions/runs/42775889532"
+    },
+    {
+      "conclusion": "success",
+      "event": "push",
+      "headSha": "0d9aa0a6733198325593ffc30cef8358125063d7",
+      "name": "Validate",
+      "status": "completed",
+      "url": "https://github.com/JasonStys/personal-image-model-studio/actions/runs/42775889779"
+    }
+  ],
+  "summary": "Review authorized datasets for caption, provenance, split and integrity evidence; inspect bounded cross-split similarity candidates with private thumbnails and export exact reports before training.",
+  "rationale": "Helps users investigate training inputs without treating similarity, declared rights or sample counts as proof of data or model quality.",
+  "limitations": [
+    "Integrity and similarity inspect at most 64 eligible images, 32 MiB encoded bytes and 16,777,216 decoded pixels; only 32 candidate pairs are shown, with omissions explicit.",
+    "Grayscale hash matches are candidates, not proof of leakage, semantic quality or AI origin. Rights and provenance labels are operator declarations, not legal verification.",
+    "The compact native model is not a general photorealistic generator. CPU downloads support native models only; compatible Stable Diffusion/LoRA imports need the explicitly configured full source/runtime.",
+    "One unlocked local engine trusts the OS and active service. CPU downloads are unsigned portable applications, not a public hosted service or native mobile installation."
+  ],
+  "documents": [
+    {
+      "filename": "project-guide.docx",
+      "mimeType": "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+      "bytes": 230003,
+      "sha256": "bf4ef35277c63bd29f8ff8204421a8cd5a487948486705ea029c706188cd30ad",
+      "sourceBaseline": "0d9aa0a6733198325593ffc30cef8358125063d7",
+      "visualReview": {
+        "approved": true,
+        "method": "Every rendered page individually viewed at readable original resolution",
+        "pageCount": 5,
+        "renderedPageSha256": {
+          "page-1.png": "f984a50761074e4e83231b056398a77cbaf6dea483c972a5972cc3d416e2caa6",
+          "page-2.png": "4c6393095e6b47df5858c4152093c23a519f46027b477fe6c8a9bfd2ed4bb56f",
+          "page-3.png": "30f325aaf75b09a310f86f071740dad8fe312af1c7de1bb1777b14249fda0e74",
+          "page-4.png": "f17e00bf96e3e676a68187acf341f0414dfd2916b9c33c4554034f9ec9c01348",
+          "page-5.png": "f51a43cec70e51f7ad386d22f5e9c60734c5b6a945f0546c2eabb001cf06ee22"
+        }
+      }
+    },
+    {
+      "filename": "validation-review.docx",
+      "mimeType": "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+      "bytes": 46835,
+      "sha256": "ec85862c9bd441205872d7cc4ae06dfe2917c5b71d14109a6ce5aec59c429c7f",
+      "sourceBaseline": "0d9aa0a6733198325593ffc30cef8358125063d7",
+      "visualReview": {
+        "approved": true,
+        "method": "Every rendered page individually viewed at readable original resolution",
+        "pageCount": 7,
+        "renderedPageSha256": {
+          "page-1.png": "9921854e06dd12a59c318752a2dab829c5c2694b8a43c3212fd8e0e02a0e7ee2",
+          "page-2.png": "79d35f99736b1010ebfda3ffd0ca3af7da95bad2bb9c2919f3f891f407172ddd",
+          "page-3.png": "f7a15691b5685850e031aa19d22faa43ae3eb3bc6b511ab8bfc528f2e4c6b64c",
+          "page-4.png": "e4860b29eb9d695c1ab8feda6a1bef1c3d55a67944b0582668b97cf83f9008fa",
+          "page-5.png": "cf586eda5640090215411d31299bcf9dfe530f5bd013322538bd10cff454b80a",
+          "page-6.png": "4877ae0e49907c9a9053b8c1b668572df89f348937b6d0f9c25cc85855c0ac39",
+          "page-7.png": "609c439807dc049a31df82a8a21a413a0ae84c98c0154ec85baad3a6ef1d8362"
+        }
+      }
+    },
+    {
+      "filename": "validation-evidence.xlsx",
+      "mimeType": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+      "bytes": 7415,
+      "sha256": "d1d4d9195d4e6071ca90c2b0ffd3989a9d9adeb9c4317823c26960d81212831e",
+      "sourceBaseline": "0d9aa0a6733198325593ffc30cef8358125063d7",
+      "visualReview": {
+        "approved": true,
+        "tabsReviewed": ["Workflow evidence", "Test sources"],
+        "previewSha256": {
+          "workflow-evidence.png": "243b131993d2acac020957e4747a471e5dcd38995290e53909ace1cc0efb8c07",
+          "test-sources.png": "f44e971055e6eb25be34c6583f875a560e7cb16bb77488809ccf7eec7852cf6e"
+        },
+        "tables": [
+          {
+            "name": "WorkflowEvidence",
+            "range": "A7:D9",
+            "autoFilter": true
+          },
+          {
+            "name": "TestSources",
+            "range": "A7:C20",
+            "autoFilter": true
+          }
+        ],
+        "formulaCount": 4,
+        "failureSensitivityReceiptPassed": true,
+        "formulaErrors": 0
+      }
+    }
+  ],
+  "scope": "Reviewed documentation editions of the cited source. Checksums identify bytes, not authorship. Historical measurements retain their own dates; integration CI must be checked separately."
+}
