@@ -80,46 +80,46 @@ Demo outputs/checkpoints are local and ignored by Git. Use a new output director
 
 ## Layout and file responsibilities
 
-| File/group | Responsibility |
-| --- | --- |
-| `studio/contracts.py` | Closed bounded input schemas and cross-field validation. |
-| `studio/api.py` | Preserved internal ML API and legacy single-user routes, provenance and artifacts. |
-| `studio/cli.py` | Legacy browser/native launch and per-process bearer session. |
-| `studio/private_cli.py`, `private_api.py` | Default account launcher, loopback/CSRF boundary, account routes, uploads and scoped ML proxy. |
-| `studio/accounts.py` | Scrypt passwords, session/recovery digests, throttles and versioned key configuration. |
-| `studio/private_workspace.py`, `vault.py`, `permissions.py` | Exclusive local engine, streaming encrypted archive, protected roots, lock/recovery lifecycle. |
-| `studio/prompts.py` | Numeric weight syntax, independent sections and phrase policy. |
-| `studio/files.py` | Atomic JSON, hashes, confinement and metadata-stripping raster decode. |
-| `studio/dataset_review.py` | Bounded read-only caption/provenance/split dossier, cross-split similarity candidates and verified private thumbnails. |
-| `studio/datasets.py` | Safe local/ZIP import, deduplication, splits, AI exclusion and owned fixtures. |
-| `studio/model.py` | Fresh word vocabulary, weighted text/time conditioning and compact denoiser. |
-| `studio/training.py` | Actual native optimization, held-out metrics, EMA and continuation. |
-| `studio/checkpoints.py` | Fixed-architecture safe-tensor manifests, integrity and optimizer recovery. |
-| `studio/native.py` | Learned DDIM sampling, regions and source-preserving edits. |
-| `studio/formats.py` | Fixed pretrained classes, file budgets and base-model fingerprints. |
-| `studio/pretrained.py` | Offline classic SD generation and real LoRA adapter training. |
-| `studio/jobs.py`, `worker.py` | Serialized bounded subprocess lifecycle and trusted dispatch. |
-| `studio/store.py` | Parameterized short-lived SQLite connections and quarantine database. |
-| `studio/feedback.py` | Explicit latest-consent AI-labelled feedback export. |
-| `studio/deviantart.py` | Own-gallery OAuth/PKCE, memory credentials, bounded metadata/raster downloads. |
-| `studio/__init__.py` | Package marker. |
-| `web/main.ts`, `portal.ts`, `workspace.ts`, `api.ts`, `types.ts`, `style.css` | Fail-closed mode selection, login/key derivation/help, ML UI, cookie transport, contracts and responsive styling. |
-| `index.html`, `tsconfig.json`, `package*.json`, `pyproject.toml` | Entry document, strict compilation, locked browser dependencies and Python extras. |
-| `scripts/train_demo.py` | Real fresh training and learned sample contact sheet. |
-| `scripts/build_desktop.py`, `desktop_entry.py` | Native portable shell packaging/entry. |
-| `scripts/build_native.py`, `native_entry.py`, `smoke_native.py` | Checksummed CPU executable, embedded worker entry and actual packaged account/ML validation. |
-| `scripts/private_browser_server.py`, `playwright.private.config.ts`, `tests/private*.spec.ts` | Disposable profile services, real account browsers and genuine training workflows. |
-| `tests/test_private.py`, `test_private_ml.py` | Ownership/authentication, boundary/crypto/corruption/recovery and actual encrypted ML lifecycle tests. |
-| `scripts/code_index.mjs`, `python_index.py` | Reproducible exact declaration/variable line headers and detailed code map. |
-| `tests/test_dataset_review.py`, `tests/fixtures/dataset-review.json` | Owned gradient fixtures, independent hash oracle, input budgets, account privacy, unchanged-data and release-version regressions. |
-| `tests/test_core.py`, `test_deviantart.py`, `test_jobs.py`, `test_ml.py` | Core/privacy/property, mocked provider-contract, lifecycle and real ML regression tests. |
-| `scripts/prepare_quickdraw.py`, `evaluate_quickdraw.py`, `tests/test_quickdraw.py` | Opt-in licensed sketch sampling, genuine checkpoint/inference evaluation and offline bounded-input tests. |
-| `tests/browser*.spec.ts`, `playwright.config.ts` | Real browser accessibility/portability and separate real ML-worker workflow. |
-| `.github/workflows/validate.yml`, `release-native.yml` | Pinned validation/audits and exact-source three-platform draft-to-published release gates. |
-| `requirements-cpu-audit.txt` | Upstream advisory lookup for pinned official CPU-wheel releases; not an installer. |
-| `scripts/publish_evidence.py`, `.gitattributes` | Guarded synthetic-only public evidence export and stable text line endings. |
-| `docs/` | Architecture, requirements traceability, threats, complexity, research, operating instructions and validation reports. |
-| `.gitignore`, `LICENSE`, `SECURITY.md` | Private-artifact exclusions, software license and safe vulnerability reporting. |
+| File/group                                                                                    | Responsibility                                                                                                                    |
+| --------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------- |
+| `studio/contracts.py`                                                                         | Closed bounded input schemas and cross-field validation.                                                                          |
+| `studio/api.py`                                                                               | Preserved internal ML API and legacy single-user routes, provenance and artifacts.                                                |
+| `studio/cli.py`                                                                               | Legacy browser/native launch and per-process bearer session.                                                                      |
+| `studio/private_cli.py`, `private_api.py`                                                     | Default account launcher, loopback/CSRF boundary, account routes, uploads and scoped ML proxy.                                    |
+| `studio/accounts.py`                                                                          | Scrypt passwords, session/recovery digests, throttles and versioned key configuration.                                            |
+| `studio/private_workspace.py`, `vault.py`, `permissions.py`                                   | Exclusive local engine, streaming encrypted archive, protected roots, lock/recovery lifecycle.                                    |
+| `studio/prompts.py`                                                                           | Numeric weight syntax, independent sections and phrase policy.                                                                    |
+| `studio/files.py`                                                                             | Atomic JSON, hashes, confinement and metadata-stripping raster decode.                                                            |
+| `studio/dataset_review.py`                                                                    | Bounded read-only caption/provenance/split dossier, cross-split similarity candidates and verified private thumbnails.            |
+| `studio/datasets.py`                                                                          | Safe local/ZIP import, deduplication, splits, AI exclusion and owned fixtures.                                                    |
+| `studio/model.py`                                                                             | Fresh word vocabulary, weighted text/time conditioning and compact denoiser.                                                      |
+| `studio/training.py`                                                                          | Actual native optimization, held-out metrics, EMA and continuation.                                                               |
+| `studio/checkpoints.py`                                                                       | Fixed-architecture safe-tensor manifests, integrity and optimizer recovery.                                                       |
+| `studio/native.py`                                                                            | Learned DDIM sampling, regions and source-preserving edits.                                                                       |
+| `studio/formats.py`                                                                           | Fixed pretrained classes, file budgets and base-model fingerprints.                                                               |
+| `studio/pretrained.py`                                                                        | Offline classic SD generation and real LoRA adapter training.                                                                     |
+| `studio/jobs.py`, `worker.py`                                                                 | Serialized bounded subprocess lifecycle and trusted dispatch.                                                                     |
+| `studio/store.py`                                                                             | Parameterized short-lived SQLite connections and quarantine database.                                                             |
+| `studio/feedback.py`                                                                          | Explicit latest-consent AI-labelled feedback export.                                                                              |
+| `studio/deviantart.py`                                                                        | Own-gallery OAuth/PKCE, memory credentials, bounded metadata/raster downloads.                                                    |
+| `studio/__init__.py`                                                                          | Package marker.                                                                                                                   |
+| `web/main.ts`, `portal.ts`, `workspace.ts`, `api.ts`, `types.ts`, `style.css`                 | Fail-closed mode selection, login/key derivation/help, ML UI, cookie transport, contracts and responsive styling.                 |
+| `index.html`, `tsconfig.json`, `package*.json`, `pyproject.toml`                              | Entry document, strict compilation, locked browser dependencies and Python extras.                                                |
+| `scripts/train_demo.py`                                                                       | Real fresh training and learned sample contact sheet.                                                                             |
+| `scripts/build_desktop.py`, `desktop_entry.py`                                                | Native portable shell packaging/entry.                                                                                            |
+| `scripts/build_native.py`, `native_entry.py`, `smoke_native.py`                               | Checksummed CPU executable, embedded worker entry and actual packaged account/ML validation.                                      |
+| `scripts/private_browser_server.py`, `playwright.private.config.ts`, `tests/private*.spec.ts` | Disposable profile services, real account browsers and genuine training workflows.                                                |
+| `tests/test_private.py`, `test_private_ml.py`                                                 | Ownership/authentication, boundary/crypto/corruption/recovery and actual encrypted ML lifecycle tests.                            |
+| `scripts/code_index.mjs`, `python_index.py`                                                   | Reproducible exact declaration/variable line headers and detailed code map.                                                       |
+| `tests/test_dataset_review.py`, `tests/fixtures/dataset-review.json`                          | Owned gradient fixtures, independent hash oracle, input budgets, account privacy, unchanged-data and release-version regressions. |
+| `tests/test_core.py`, `test_deviantart.py`, `test_jobs.py`, `test_ml.py`                      | Core/privacy/property, mocked provider-contract, lifecycle and real ML regression tests.                                          |
+| `scripts/prepare_quickdraw.py`, `evaluate_quickdraw.py`, `tests/test_quickdraw.py`            | Opt-in licensed sketch sampling, genuine checkpoint/inference evaluation and offline bounded-input tests.                         |
+| `tests/browser*.spec.ts`, `playwright.config.ts`                                              | Real browser accessibility/portability and separate real ML-worker workflow.                                                      |
+| `.github/workflows/validate.yml`, `release-native.yml`                                        | Pinned validation/audits and exact-source three-platform draft-to-published release gates.                                        |
+| `requirements-cpu-audit.txt`                                                                  | Upstream advisory lookup for pinned official CPU-wheel releases; not an installer.                                                |
+| `scripts/publish_evidence.py`, `.gitattributes`                                               | Guarded synthetic-only public evidence export and stable text line endings.                                                       |
+| `docs/`                                                                                       | Architecture, requirements traceability, threats, complexity, research, operating instructions and validation reports.            |
+| `.gitignore`, `LICENSE`, `SECURITY.md`                                                        | Private-artifact exclusions, software license and safe vulnerability reporting.                                                   |
 
 [Detailed source map](docs/code-map.json) includes each declaration, argument/local variable, actual line and source-derived purpose. Header indexes are generated and checked in CI so line references cannot silently drift.
 
@@ -134,3 +134,17 @@ GitHub Actions `security-extended` analysis, review steps and unsupported scope.
 The [dated scan report](docs/reports/codeql-2026-11-09.md) distinguishes actual results
 from pending/missing evidence. Static scanning supplements the existing runtime,
 dependency, privacy and isolation checks; it does not certify every input or platform.
+
+## Documentation editions
+
+Start with the [organized handbook](docs/handbook.md) for current usage, design, security and test guidance. Reviewed downloadable editions: [project-guide.docx](docs/reports/project-guide.docx) · [validation-review.docx](docs/reports/validation-review.docx) · [validation-evidence.xlsx](docs/reports/validation-evidence.xlsx).
+
+[Publication identities and source scope](docs/reports/publications.json) · [Documentation validation record](docs/reports/documentation-refresh-2026-11-09.md). Historical results retain their own tested revision and date.
+
+The edition files have distinct roles: `docs/handbook.md` organizes the editable
+usage/design/security/test material; `project-guide.docx` is the user/developer
+guide; `validation-review.docx` separates actual source and dated test/scan scope;
+`validation-evidence.xlsx` indexes workflows and test sources with filters;
+`publications.json` binds exact reviewed bytes and source identities; and
+`documentation-refresh-2026-11-09.md` records the publication checks and limits.
+All edition artifacts are in `docs/reports/` except the handbook.
