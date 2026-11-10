@@ -33,3 +33,11 @@ Big-O describes scaling, not measured latency, quality or peak GPU allocator res
 ## Release checklist
 
 Run contract/property/queue/provider tests, real native/resume/edit/LoRA tests, strict UI build, source-index check, browser accessibility/mobile tests, real browser-worker scenario, dependency compatibility/audits and native package build. Inspect real synthetic outputs and screenshots. Confirm Git excludes runtime/data/credentials/models and stage only reviewed source/docs/public evidence. Check every required GitHub job at the final commit. Live website authentication and native platforms not actually exercised remain explicitly unverified.
+
+## CodeQL security analysis
+
+The [three-language scan guide](codeql.md) explains Python, JavaScript/TypeScript
+and GitHub Actions security-extended analysis. The [dated scan report](reports/codeql-2026-11-09.md)
+records actual scan/extraction state and exact-location alert triage separately from
+configuration checks. Existing runtime, privacy, performance and platform gates remain
+required; a passing static-analysis job alone is not a zero-alert or safety claim.

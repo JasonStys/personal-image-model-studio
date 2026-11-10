@@ -126,3 +126,11 @@ Demo outputs/checkpoints are local and ignored by Git. Use a new output director
 ## Scope and responsible use
 
 Use only data/models you own or are permitted to process and train on. Account access is not a copyright/license grant. AI-origin detection uses explicit labels—not an infallible visual detector. A human checks captions, rights, image quality and safety. Accounts isolate local records, but only one account may unlock the engine at a time. This is not hardened multi-tenant hosting and must not be exposed to a public network. An archive download alone lacks account/key settings: cold-back up the complete protected data root. The [requirements matrix](docs/requirements.md) separates preserved capabilities and limitations.
+
+## CodeQL source security review
+
+The [CodeQL guide](docs/codeql.md) defines genuine Python, JavaScript/TypeScript and
+GitHub Actions `security-extended` analysis, review steps and unsupported scope.
+The [dated scan report](docs/reports/codeql-2026-11-09.md) distinguishes actual results
+from pending/missing evidence. Static scanning supplements the existing runtime,
+dependency, privacy and isolation checks; it does not certify every input or platform.

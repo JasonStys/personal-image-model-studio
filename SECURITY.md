@@ -14,3 +14,11 @@ artwork, real credentials, recovery codes or tokens. Avoid public exploit detail
 until a fix/disclosure plan is agreed. No response-time/SLA or independent security
 certification is promised. Check audits and release checksums; unsigned applications
 still need your own publisher/device trust decision.
+
+## CodeQL source security review
+
+The [CodeQL guide](docs/codeql.md) defines genuine Python, JavaScript/TypeScript and
+GitHub Actions `security-extended` analysis, review steps and unsupported scope.
+The [dated scan report](docs/reports/codeql-2026-11-09.md) distinguishes actual results
+from pending/missing evidence. Static scanning supplements the existing runtime,
+dependency, privacy and isolation checks; it does not certify every input or platform.
