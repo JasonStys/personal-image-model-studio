@@ -12113,8 +12113,20 @@
         "purpose": "{\n  page,\n}"
       },
       {
+        "name": "datasetChoice",
+        "line": 41,
+        "kind": "variable",
+        "purpose": "datasetChoice = page.getByLabel(\"Dataset to review\", { exact: true })"
+      },
+      {
+        "name": "datasetId",
+        "line": 43,
+        "kind": "variable",
+        "purpose": "datasetId = await datasetChoice.inputValue()"
+      },
+      {
         "name": "image",
-        "line": 88,
+        "line": 92,
         "kind": "parameter",
         "purpose": "image: HTMLImageElement"
       }

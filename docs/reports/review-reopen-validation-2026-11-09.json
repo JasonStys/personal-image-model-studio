@@ -12,7 +12,7 @@
     "private_training_generation_and_reopen": "reached before hidden-panel assertion",
     "whole_job_pass": false
   },
-  "correction": "Explicit Datasets navigation before post-reopen review",
+  "correction": "Explicit Datasets navigation and reselection of retained registered dataset ID after asynchronous metadata options load",
   "product_or_data_schema_changed": false,
   "ml_journey_deadline_seconds": 180,
   "retries_added": 0,
