@@ -1,5 +1,5 @@
 """Jason Stys: real-account auth, crypto, scope, file-import and interrupted local-workspace regressions."""
-# Index: declarations module.client@L24, module.register@L31, module.unlock@L38, module.raster@L44, module.test_real_registration_headers_and_empty_scope@L52, module.test_wrong_phrase_lock_archive_and_reload@L74, module.test_independent_accounts_and_locked_files@L99, module.test_origin_host_csrf_deny_before_mutation@L133, module.test_credentials_recovery_expiry_and_deletion@L142, module.test_expired_session@L183, module.test_upload_sequence_and_arbitrary_path_runtime_block@L191, module.test_portable_archive_names@L235, module.test_streaming_archive_integrity@L241, module.test_reserved_archive_metadata@L262, module.test_portable_snapshot_case_collision@L271, module.test_no_secret_fields_in_validation@L289, module.test_instance_lock_and_recovery_ownership@L298, module.test_recovery_disk_failure_preserves_credentials@L325, test_recovery_disk_failure_preserves_credentials.unavailable@L334; variables HEADERS@L17, PASSWORD@L18, KEY@L19, SALT@L20, tmp_path@L24, app@L26, session@L27, alias@L31, client@L31, response@L33, client@L38, key@L38, response@L40, stream@L46, image@L47, client@L52, account@L57, manager@L68, client@L74, uploaded@L78, identity@L82, manager@L84, owner@L85, archive@L88, bad@L90, client@L99, image@L103, cookies@L106, second@L113, change@L133, client@L133, result@L135, client@L142, recovery@L144, saved_cookies@L146, new_password@L147, response@L148, manager@L175, db@L179, client@L183, db@L186, client@L191, tmp_path@L191, start@L210, completed@L218, name@L235, tmp_path@L241, original@L243, archive@L246, key@L247, output@L250, damaged@L253, name@L262, tmp_path@L262, root@L264, root@L275, paths@L276, name@L277, path@L277, client@L289, result@L291, tmp_path@L298, root@L300, first@L301, client@L302, manager@L307, second@L312, client@L313, client@L325, monkeypatch@L325, recovery@L329, original@L332, args@L334, kwargs@L334, body@L339, manager@L341. Purposes/parameters: docs/code-map.json.
+# Index: declarations module.client@L24, module.register@L31, module.unlock@L38, module.raster@L44, module.test_real_registration_headers_and_empty_scope@L52, module.test_wrong_phrase_lock_archive_and_reload@L74, module.test_independent_accounts_and_locked_files@L99, module.test_origin_host_csrf_deny_before_mutation@L133, module.test_credentials_recovery_expiry_and_deletion@L142, module.test_expired_session@L183, module.test_upload_sequence_and_arbitrary_path_runtime_block@L191, module.test_complete_import_requests_cannot_cross_account_root@L233, test_complete_import_requests_cannot_cross_account_root.forbidden_reader@L250, module.test_record_keys_never_become_paths_and_glossary_stays_account_scoped@L273, module.test_portable_archive_names@L303, module.test_streaming_archive_integrity@L309, module.test_reserved_archive_metadata@L330, module.test_portable_snapshot_case_collision@L339, module.test_no_secret_fields_in_validation@L357, module.test_instance_lock_and_recovery_ownership@L366, module.test_recovery_disk_failure_preserves_credentials@L393, test_recovery_disk_failure_preserves_credentials.unavailable@L402; variables HEADERS@L17, PASSWORD@L18, KEY@L19, SALT@L20, tmp_path@L24, app@L26, session@L27, alias@L31, client@L31, response@L33, client@L38, key@L38, response@L40, stream@L46, image@L47, client@L52, account@L57, manager@L68, client@L74, uploaded@L78, identity@L82, manager@L84, owner@L85, archive@L88, bad@L90, client@L99, image@L103, cookies@L106, second@L113, change@L133, client@L133, result@L135, client@L142, recovery@L144, saved_cookies@L146, new_password@L147, response@L148, manager@L175, db@L179, client@L183, db@L186, client@L191, tmp_path@L191, start@L210, completed@L218, client@L234, monkeypatch@L234, route@L234, selection@L234, tmp_path@L234, active@L242, choices@L243, args@L250, kwargs@L250, body@L257, response@L267, client@L273, dataset@L279, glossary@L280, expected@L281, active@L286, before@L287, p@L287, key@L288, response@L289, p@L291, name@L303, tmp_path@L309, original@L311, archive@L314, key@L315, output@L318, damaged@L321, name@L330, tmp_path@L330, root@L332, root@L343, paths@L344, name@L345, path@L345, client@L357, result@L359, tmp_path@L366, root@L368, first@L369, client@L370, manager@L375, second@L380, client@L381, client@L393, monkeypatch@L393, recovery@L397, original@L400, args@L402, kwargs@L402, body@L407, manager@L409. Purposes/parameters: docs/code-map.json.
 
 import base64
 import io
@@ -226,6 +226,74 @@ def test_upload_sequence_and_arbitrary_path_runtime_block(client, tmp_path):
         ).status_code
         == 404
     )
+
+
+@pytest.mark.parametrize("route", ["datasets", "models"])
+@pytest.mark.parametrize("selection", ["foreign", "sibling-prefix", "traversal", "relative"])
+def test_complete_import_requests_cannot_cross_account_root(
+    client, tmp_path, monkeypatch, route, selection
+):
+    """Valid import schemas still stop at the account proxy before a legacy file/model reader runs."""
+    import studio.api as legacy
+    import studio.checkpoints as checkpoints
+
+    register(client)
+    unlock(client)
+    active = client.app.state.manager.active
+    choices = {
+        "foreign": str(tmp_path / "another-account"),
+        "sibling-prefix": str(active / "imports-shadow" / "model"),
+        "traversal": str(active / "imports" / ".." / "elsewhere"),
+        "relative": "../another-account",
+    }
+
+    def forbidden_reader(*args, **kwargs):
+        """A failed proxy guard must be visible even when the selected fixture path does not exist."""
+        raise AssertionError("An unauthorized path reached a legacy import reader")
+
+    monkeypatch.setattr(legacy, "import_dataset", forbidden_reader)
+    monkeypatch.setattr(legacy, "inspect_diffusers", forbidden_reader)
+    monkeypatch.setattr(checkpoints, "verify", forbidden_reader)
+    body = (
+        {"name": "synthetic", "paths": [choices[selection]], "rights_confirmed": True}
+        if route == "datasets"
+        else {
+            "name": "synthetic",
+            "path": choices[selection],
+            "kind": "native",
+            "license_note": "Owned synthetic fixture",
+        }
+    )
+    response = client.post("/private/api/" + route, json=body)
+    assert response.status_code == 400
+    assert "arbitrary machine paths are forbidden" in response.json()["detail"]
+    assert choices[selection] not in response.text
+
+
+def test_record_keys_never_become_paths_and_glossary_stays_account_scoped(client):
+    """Known dataset lookup grants only its owner's glossary; hostile/unknown job keys touch no files."""
+    from urllib.parse import quote
+
+    register(client)
+    unlock(client)
+    dataset = client.post("/private/api/datasets/synthetic", json={}).json()
+    glossary = f"/private/api/datasets/{dataset['id']}/glossary"
+    expected = {
+        "entries": {"fixture": {"definition": "Owned", "source": "Synthetic", "reviewed": True}}
+    }
+    assert client.put(glossary, json=expected).status_code == 200
+    assert client.get(glossary).json()["entries"] == expected["entries"]
+    active = client.app.state.manager.active
+    before = sorted(p.relative_to(active).as_posix() for p in active.rglob("*"))
+    for key in ("unknown", "' OR 1=1 --", "..\\another-job", "a" * 32):
+        response = client.post("/private/api/jobs/" + quote(key, safe="") + "/cancel", json={})
+        assert response.status_code == 404
+    assert sorted(p.relative_to(active).as_posix() for p in active.rglob("*")) == before
+    assert client.post("/private/logout", json={}).status_code == 200
+    register(client, "other_glossary_owner")
+    unlock(client)
+    assert client.get(glossary).status_code == 404
+    assert client.put(glossary, json=expected).status_code == 404
 
 
 @pytest.mark.parametrize(

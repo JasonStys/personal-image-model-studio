@@ -40,6 +40,11 @@ its inputs are the repository checkout already available on GitHub.
 
 ## Read and act on a result
 
+The [first full-main triage](reports/codeql-main-triage-2026-11-09.md) records
+actual pre-existing alert locations, the metadata CLI correction, independent
+account-boundary tests and the path-flow dispositions still requiring review.
+Passing analysis jobs do not close those findings.
+
 Open **Security → Code scanning** or the CodeQL check on the pull request. Confirm the
 workflow source, language/category, completed extraction and successful result processing.
 A passing job does not mean it found no alerts: inspect the actual alerts and source paths.

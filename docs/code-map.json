@@ -490,71 +490,77 @@
         "name": "previous",
         "line": 111,
         "kind": "variable",
-        "purpose": "previous = fs.existsSync(file)\n    ? fs.readFileSync(file, \"utf8\").replaceAll(\"\\r\\n\", \"\\n\")\n    : \"\""
+        "purpose": "previous"
+      },
+      {
+        "name": "error",
+        "line": 114,
+        "kind": "variable",
+        "purpose": "error"
       },
       {
         "name": "maps",
-        "line": 123,
+        "line": 128,
         "kind": "variable",
         "purpose": "maps = {}"
       },
       {
         "name": "file",
-        "line": 124,
+        "line": 129,
         "kind": "variable",
         "purpose": "file"
       },
       {
         "name": "source",
-        "line": 125,
+        "line": 130,
         "kind": "variable",
         "purpose": "source = fs.readFileSync(file, \"utf8\").replaceAll(\"\\r\\n\", \"\\n\")"
       },
       {
         "name": "marker",
-        "line": 126,
+        "line": 131,
         "kind": "variable",
         "purpose": "marker = file.endsWith(\".py\") ? \"# Index:\" : \"// Index:\""
       },
       {
         "name": "line",
-        "line": 127,
+        "line": 132,
         "kind": "parameter",
         "purpose": "line"
       },
       {
         "name": "lines",
-        "line": 129,
+        "line": 134,
         "kind": "variable",
         "purpose": "lines = source.split(\"\\n\")"
       },
       {
         "name": "result",
-        "line": 134,
+        "line": 139,
         "kind": "variable",
         "purpose": "result = inventory(file, source)"
       },
       {
         "name": "header",
-        "line": 135,
+        "line": 140,
         "kind": "variable",
         "purpose": "header = `${marker} declarations ${result.declarations.map((value) => `${value.name}@L${value.line}`).join(\", \") || \"none\"}; variables ${result.variables.map((value) => `${value.na"
       },
       {
         "name": "value",
-        "line": 135,
+        "line": 140,
         "kind": "parameter",
         "purpose": "value"
       },
       {
         "name": "value",
-        "line": 135,
+        "line": 140,
         "kind": "parameter",
         "purpose": "value"
       },
       {
         "name": "line",
-        "line": 140,
+        "line": 145,
         "kind": "parameter",
         "purpose": "line"
       }
@@ -12102,6 +12108,115 @@
       }
     ]
   },
+  "tests/code-index.test.mjs": {
+    "purpose": "Jason Stys: exercise the actual metadata CLI with disappearing and inaccessible output files.",
+    "declarations": [
+      {
+        "name": "fixture",
+        "line": 16,
+        "kind": "FunctionDeclaration",
+        "purpose": "/** Own only this temporary fixture tree; import the real checked-in CLI with existing locked tooling. */"
+      },
+      {
+        "name": "run",
+        "line": 35,
+        "kind": "FunctionDeclaration",
+        "purpose": "/** Invoke a fresh bounded CLI process; the preload faults only the fixture's generated JSON read. */"
+      }
+    ],
+    "variables": [
+      {
+        "name": "repository",
+        "line": 10,
+        "kind": "variable",
+        "purpose": "repository = path.resolve(\n  path.dirname(fileURLToPath(import.meta.url)),\n  \"..\",\n)"
+      },
+      {
+        "name": "parent",
+        "line": 17,
+        "kind": "variable",
+        "purpose": "parent = path.join(repository, \".runtime\")"
+      },
+      {
+        "name": "directory",
+        "line": 19,
+        "kind": "variable",
+        "purpose": "directory = fs.mkdtempSync(path.join(parent, \"index-regression-\"))"
+      },
+      {
+        "name": "name",
+        "line": 20,
+        "kind": "variable",
+        "purpose": "name"
+      },
+      {
+        "name": "name",
+        "line": 26,
+        "kind": "variable",
+        "purpose": "name"
+      },
+      {
+        "name": "directory",
+        "line": 35,
+        "kind": "parameter",
+        "purpose": "directory"
+      },
+      {
+        "name": "code",
+        "line": 35,
+        "kind": "parameter",
+        "purpose": "code"
+      },
+      {
+        "name": "args",
+        "line": 36,
+        "kind": "variable",
+        "purpose": "args = []"
+      },
+      {
+        "name": "preload",
+        "line": 38,
+        "kind": "variable",
+        "purpose": "preload = path.join(directory, \"inject.mjs\")"
+      },
+      {
+        "name": "code",
+        "line": 61,
+        "kind": "variable",
+        "purpose": "code"
+      },
+      {
+        "name": "directory",
+        "line": 63,
+        "kind": "variable",
+        "purpose": "directory = fixture()"
+      },
+      {
+        "name": "first",
+        "line": 65,
+        "kind": "variable",
+        "purpose": "first = run(directory)"
+      },
+      {
+        "name": "output",
+        "line": 67,
+        "kind": "variable",
+        "purpose": "output = path.join(directory, \"docs/code-map.json\")"
+      },
+      {
+        "name": "before",
+        "line": 68,
+        "kind": "variable",
+        "purpose": "before = fs.readFileSync(output, \"utf8\")"
+      },
+      {
+        "name": "result",
+        "line": 69,
+        "kind": "variable",
+        "purpose": "result = run(directory, code)"
+      }
+    ]
+  },
   "tests/private-ml.spec.ts": {
     "purpose": "Jason Stys: browser-to-real-account worker, learned model, generated image and encrypted relaunch.",
     "declarations": [],
@@ -14842,50 +14957,68 @@
         "purpose": "Only permitted browser-chunked data enters imports; no user-selected executable or other PC path."
       },
       {
+        "name": "module.test_complete_import_requests_cannot_cross_account_root",
+        "line": 233,
+        "kind": "FunctionDef",
+        "purpose": "Valid import schemas still stop at the account proxy before a legacy file/model reader runs."
+      },
+      {
+        "name": "test_complete_import_requests_cannot_cross_account_root.forbidden_reader",
+        "line": 250,
+        "kind": "FunctionDef",
+        "purpose": "A failed proxy guard must be visible even when the selected fixture path does not exist."
+      },
+      {
+        "name": "module.test_record_keys_never_become_paths_and_glossary_stays_account_scoped",
+        "line": 273,
+        "kind": "FunctionDef",
+        "purpose": "Known dataset lookup grants only its owner's glossary; hostile/unknown job keys touch no files."
+      },
+      {
         "name": "module.test_portable_archive_names",
-        "line": 235,
+        "line": 303,
         "kind": "FunctionDef",
         "purpose": "Reject traversal and platform-specific device/ambiguous paths before extraction."
       },
       {
         "name": "module.test_streaming_archive_integrity",
-        "line": 241,
+        "line": 309,
         "kind": "FunctionDef",
         "purpose": "Wrong keys and altered tags do not expose extracted plaintext or replace a valid existing workspace."
       },
       {
         "name": "module.test_reserved_archive_metadata",
-        "line": 262,
+        "line": 330,
         "kind": "FunctionDef",
         "purpose": "Reject reserved archive names at snapshot time, before any plaintext is removed."
       },
       {
         "name": "module.test_portable_snapshot_case_collision",
-        "line": 271,
+        "line": 339,
         "kind": "FunctionDef",
         "purpose": "A case-sensitive filesystem must not produce archives that cannot reopen on Windows/macOS."
       },
       {
         "name": "module.test_no_secret_fields_in_validation",
-        "line": 289,
+        "line": 357,
         "kind": "FunctionDef",
         "purpose": "Pydantic errors do not echo submitted secret strings."
       },
       {
         "name": "module.test_instance_lock_and_recovery_ownership",
-        "line": 298,
+        "line": 366,
         "kind": "FunctionDef",
         "purpose": "A second service cannot share a data root; interrupted plaintext stays owner-bound and recoverable."
       },
       {
         "name": "module.test_recovery_disk_failure_preserves_credentials",
-        "line": 325,
+        "line": 393,
         "kind": "FunctionDef",
         "purpose": "A snapshot failure keeps the old password/code and plaintext recovery files available for retry."
       },
       {
         "name": "test_recovery_disk_failure_preserves_credentials.unavailable",
-        "line": 334,
+        "line": 402,
         "kind": "FunctionDef",
         "purpose": "Simulate only the disposable account's encrypted snapshot failure."
       }
@@ -15162,189 +15295,315 @@
         "purpose": "completed = client.put('/private/files/' + start['id'], json={'offset': 0, 'content': base64.b64encode(b'hello').decode()})"
       },
       {
+        "name": "client",
+        "scope": "test_complete_import_requests_cannot_cross_account_root",
+        "line": 234,
+        "purpose": "Function parameter"
+      },
+      {
+        "name": "monkeypatch",
+        "scope": "test_complete_import_requests_cannot_cross_account_root",
+        "line": 234,
+        "purpose": "Function parameter"
+      },
+      {
+        "name": "route",
+        "scope": "test_complete_import_requests_cannot_cross_account_root",
+        "line": 234,
+        "purpose": "Function parameter"
+      },
+      {
+        "name": "selection",
+        "scope": "test_complete_import_requests_cannot_cross_account_root",
+        "line": 234,
+        "purpose": "Function parameter"
+      },
+      {
+        "name": "tmp_path",
+        "scope": "test_complete_import_requests_cannot_cross_account_root",
+        "line": 234,
+        "purpose": "Function parameter"
+      },
+      {
+        "name": "active",
+        "scope": "test_complete_import_requests_cannot_cross_account_root",
+        "line": 242,
+        "purpose": "active = client.app.state.manager.active"
+      },
+      {
+        "name": "choices",
+        "scope": "test_complete_import_requests_cannot_cross_account_root",
+        "line": 243,
+        "purpose": "choices = {'foreign': str(tmp_path / 'another-account'), 'sibling-prefix': str(active / 'imports-shadow' / 'model'), 'traversal': str(active / 'imports' / '..' / 'elsewhere'), 'rel"
+      },
+      {
+        "name": "args",
+        "scope": "test_complete_import_requests_cannot_cross_account_root.forbidden_reader",
+        "line": 250,
+        "purpose": "Function parameter"
+      },
+      {
+        "name": "kwargs",
+        "scope": "test_complete_import_requests_cannot_cross_account_root.forbidden_reader",
+        "line": 250,
+        "purpose": "Function parameter"
+      },
+      {
+        "name": "body",
+        "scope": "test_complete_import_requests_cannot_cross_account_root",
+        "line": 257,
+        "purpose": "body = {'name': 'synthetic', 'paths': [choices[selection]], 'rights_confirmed': True} if route == 'datasets' else {'name': 'synthetic', 'path': choices[selection], 'kind': 'native'"
+      },
+      {
+        "name": "response",
+        "scope": "test_complete_import_requests_cannot_cross_account_root",
+        "line": 267,
+        "purpose": "response = client.post('/private/api/' + route, json=body)"
+      },
+      {
+        "name": "client",
+        "scope": "test_record_keys_never_become_paths_and_glossary_stays_account_scoped",
+        "line": 273,
+        "purpose": "Function parameter"
+      },
+      {
+        "name": "dataset",
+        "scope": "test_record_keys_never_become_paths_and_glossary_stays_account_scoped",
+        "line": 279,
+        "purpose": "dataset = client.post('/private/api/datasets/synthetic', json={}).json()"
+      },
+      {
+        "name": "glossary",
+        "scope": "test_record_keys_never_become_paths_and_glossary_stays_account_scoped",
+        "line": 280,
+        "purpose": "glossary = f\"/private/api/datasets/{dataset['id']}/glossary\""
+      },
+      {
+        "name": "expected",
+        "scope": "test_record_keys_never_become_paths_and_glossary_stays_account_scoped",
+        "line": 281,
+        "purpose": "expected = {'entries': {'fixture': {'definition': 'Owned', 'source': 'Synthetic', 'reviewed': True}}}"
+      },
+      {
+        "name": "active",
+        "scope": "test_record_keys_never_become_paths_and_glossary_stays_account_scoped",
+        "line": 286,
+        "purpose": "active = client.app.state.manager.active"
+      },
+      {
+        "name": "before",
+        "scope": "test_record_keys_never_become_paths_and_glossary_stays_account_scoped",
+        "line": 287,
+        "purpose": "before = sorted((p.relative_to(active).as_posix() for p in active.rglob('*')))"
+      },
+      {
+        "name": "p",
+        "scope": "test_record_keys_never_become_paths_and_glossary_stays_account_scoped",
+        "line": 287,
+        "purpose": " for p in active.rglob('*')"
+      },
+      {
+        "name": "key",
+        "scope": "test_record_keys_never_become_paths_and_glossary_stays_account_scoped",
+        "line": 288,
+        "purpose": "for key in ('unknown', \"' OR 1=1 --\", '..\\\\another-job', 'a' * 32):\n    response = client.post('/private/api/jobs/' + quote(key, safe='') + '/cancel', json={})\n    assert response."
+      },
+      {
+        "name": "response",
+        "scope": "test_record_keys_never_become_paths_and_glossary_stays_account_scoped",
+        "line": 289,
+        "purpose": "response = client.post('/private/api/jobs/' + quote(key, safe='') + '/cancel', json={})"
+      },
+      {
+        "name": "p",
+        "scope": "test_record_keys_never_become_paths_and_glossary_stays_account_scoped",
+        "line": 291,
+        "purpose": " for p in active.rglob('*')"
+      },
+      {
         "name": "name",
         "scope": "test_portable_archive_names",
-        "line": 235,
+        "line": 303,
         "purpose": "Function parameter"
       },
       {
         "name": "tmp_path",
         "scope": "test_streaming_archive_integrity",
-        "line": 241,
+        "line": 309,
         "purpose": "Function parameter"
       },
       {
         "name": "original",
         "scope": "test_streaming_archive_integrity",
-        "line": 243,
+        "line": 311,
         "purpose": "original = tmp_path / 'original'"
       },
       {
         "name": "archive",
         "scope": "test_streaming_archive_integrity",
-        "line": 246,
+        "line": 314,
         "purpose": "archive = tmp_path / 'private.pimsvault'"
       },
       {
         "name": "key",
         "scope": "test_streaming_archive_integrity",
-        "line": 247,
+        "line": 315,
         "purpose": "key = b'x' * 32"
       },
       {
         "name": "output",
         "scope": "test_streaming_archive_integrity",
-        "line": 250,
+        "line": 318,
         "purpose": "output = tmp_path / 'restored'"
       },
       {
         "name": "damaged",
         "scope": "test_streaming_archive_integrity",
-        "line": 253,
+        "line": 321,
         "purpose": "damaged = bytearray(archive.read_bytes())"
       },
       {
         "name": "name",
         "scope": "test_reserved_archive_metadata",
-        "line": 262,
+        "line": 330,
         "purpose": "Function parameter"
       },
       {
         "name": "tmp_path",
         "scope": "test_reserved_archive_metadata",
-        "line": 262,
+        "line": 330,
         "purpose": "Function parameter"
       },
       {
         "name": "root",
         "scope": "test_reserved_archive_metadata",
-        "line": 264,
+        "line": 332,
         "purpose": "root = tmp_path / 'original'"
       },
       {
         "name": "root",
         "scope": "test_portable_snapshot_case_collision",
-        "line": 275,
+        "line": 343,
         "purpose": "root = MagicMock()"
       },
       {
         "name": "paths",
         "scope": "test_portable_snapshot_case_collision",
-        "line": 276,
+        "line": 344,
         "purpose": "paths = [MagicMock(), MagicMock()]"
       },
       {
         "name": "name",
         "scope": "test_portable_snapshot_case_collision",
-        "line": 277,
+        "line": 345,
         "purpose": "(path, name)"
       },
       {
         "name": "path",
         "scope": "test_portable_snapshot_case_collision",
-        "line": 277,
+        "line": 345,
         "purpose": "(path, name)"
       },
       {
         "name": "client",
         "scope": "test_no_secret_fields_in_validation",
-        "line": 289,
+        "line": 357,
         "purpose": "Function parameter"
       },
       {
         "name": "result",
         "scope": "test_no_secret_fields_in_validation",
-        "line": 291,
+        "line": 359,
         "purpose": "result = client.post('/private/register', json={'alias': 'invalid <script>', 'password': PASSWORD, 'administrator': True})"
       },
       {
         "name": "tmp_path",
         "scope": "test_instance_lock_and_recovery_ownership",
-        "line": 298,
+        "line": 366,
         "purpose": "Function parameter"
       },
       {
         "name": "root",
         "scope": "test_instance_lock_and_recovery_ownership",
-        "line": 300,
+        "line": 368,
         "purpose": "root = tmp_path / 'private'"
       },
       {
         "name": "first",
         "scope": "test_instance_lock_and_recovery_ownership",
-        "line": 301,
+        "line": 369,
         "purpose": "first = create_private_app(root, 8056)"
       },
       {
         "name": "client",
         "scope": "test_instance_lock_and_recovery_ownership",
-        "line": 302,
+        "line": 370,
         "purpose": "TestClient(first, base_url='http://127.0.0.1:8056', headers=HEADERS) as client"
       },
       {
         "name": "manager",
         "scope": "test_instance_lock_and_recovery_ownership",
-        "line": 307,
+        "line": 375,
         "purpose": "manager = first.state.manager"
       },
       {
         "name": "second",
         "scope": "test_instance_lock_and_recovery_ownership",
-        "line": 312,
+        "line": 380,
         "purpose": "second = create_private_app(root, 8056)"
       },
       {
         "name": "client",
         "scope": "test_instance_lock_and_recovery_ownership",
-        "line": 313,
+        "line": 381,
         "purpose": "TestClient(second, base_url='http://127.0.0.1:8056', headers=HEADERS) as client"
       },
       {
         "name": "client",
         "scope": "test_recovery_disk_failure_preserves_credentials",
-        "line": 325,
+        "line": 393,
         "purpose": "Function parameter"
       },
       {
         "name": "monkeypatch",
         "scope": "test_recovery_disk_failure_preserves_credentials",
-        "line": 325,
+        "line": 393,
         "purpose": "Function parameter"
       },
       {
         "name": "recovery",
         "scope": "test_recovery_disk_failure_preserves_credentials",
-        "line": 329,
+        "line": 397,
         "purpose": "recovery = register(client)"
       },
       {
         "name": "original",
         "scope": "test_recovery_disk_failure_preserves_credentials",
-        "line": 332,
+        "line": 400,
         "purpose": "original = workspace.encrypt_workspace"
       },
       {
         "name": "args",
         "scope": "test_recovery_disk_failure_preserves_credentials.unavailable",
-        "line": 334,
+        "line": 402,
         "purpose": "Function parameter"
       },
       {
         "name": "kwargs",
         "scope": "test_recovery_disk_failure_preserves_credentials.unavailable",
-        "line": 334,
+        "line": 402,
         "purpose": "Function parameter"
       },
       {
         "name": "body",
         "scope": "test_recovery_disk_failure_preserves_credentials",
-        "line": 339,
+        "line": 407,
         "purpose": "body = {'alias': 'fictional_one', 'password': PASSWORD + '-new', 'recovery': recovery}"
       },
       {
         "name": "manager",
         "scope": "test_recovery_disk_failure_preserves_credentials",
-        "line": 341,
+        "line": 409,
         "purpose": "manager = client.app.state.manager"
       }
     ]
