@@ -8612,55 +8612,55 @@
       },
       {
         "name": "module.regular_bytes",
-        "line": 107,
+        "line": 106,
         "kind": "FunctionDef",
         "purpose": "Bound actual bytes from the admitted descriptor even if an owned file grows after stat."
       },
       {
         "name": "module.digest",
-        "line": 116,
+        "line": 115,
         "kind": "FunctionDef",
         "purpose": "Hash an admitted descriptor in bounded chunks, retaining no complete large model in memory."
       },
       {
         "name": "module.confined",
-        "line": 128,
+        "line": 127,
         "kind": "FunctionDef",
         "purpose": "Normalize a relative artifact and enforce full-component trusted-root containment before use."
       },
       {
         "name": "module.read_json",
-        "line": 151,
+        "line": 150,
         "kind": "FunctionDef",
         "purpose": "Read a size-bounded JSON object; reject duplicate keys and non-finite numbers."
       },
       {
         "name": "read_json.pairs",
-        "line": 155,
+        "line": 154,
         "kind": "FunctionDef",
         "purpose": "Reject duplicate keys instead of silently choosing the last value."
       },
       {
         "name": "module.replace_file",
-        "line": 172,
+        "line": 171,
         "kind": "FunctionDef",
         "purpose": "Atomically replace with at most eight attempts for Windows file-sharing errors; never relax ACLs."
       },
       {
         "name": "module.atomic_json",
-        "line": 186,
+        "line": 185,
         "kind": "FunctionDef",
         "purpose": "Publish complete JSON via same-directory replace; clean only this function's temp file."
       },
       {
         "name": "module.normalized_image",
-        "line": 201,
+        "line": 200,
         "kind": "FunctionDef",
         "purpose": "Decode one bounded supported raster, apply EXIF rotation and strip metadata on output."
       },
       {
         "name": "module.normalized_pixels",
-        "line": 206,
+        "line": 205,
         "kind": "FunctionDef",
         "purpose": "Decode exactly the bounded bytes already admitted/hashed by the caller, never reopen a pathname."
       }
@@ -8831,235 +8831,229 @@
       {
         "name": "stream",
         "scope": "regular_stream",
-        "line": 99,
-        "purpose": "os.fdopen(descriptor, 'rb') as stream"
-      },
-      {
-        "name": "descriptor",
-        "scope": "regular_stream",
         "line": 100,
-        "purpose": "descriptor = -1"
+        "purpose": "os.fdopen(descriptor, 'rb', closefd=False) as stream"
       },
       {
         "name": "limit",
         "scope": "regular_bytes",
-        "line": 107,
+        "line": 106,
         "purpose": "Function parameter"
       },
       {
         "name": "path",
         "scope": "regular_bytes",
-        "line": 107,
+        "line": 106,
         "purpose": "Function parameter"
       },
       {
         "name": "stream",
         "scope": "regular_bytes",
-        "line": 109,
+        "line": 108,
         "purpose": "regular_stream(path, limit) as stream"
       },
       {
         "name": "source",
         "scope": "regular_bytes",
-        "line": 110,
+        "line": 109,
         "purpose": "source = stream.read(limit + 1)"
       },
       {
         "name": "limit",
         "scope": "digest",
-        "line": 116,
+        "line": 115,
         "purpose": "Function parameter"
       },
       {
         "name": "path",
         "scope": "digest",
-        "line": 116,
+        "line": 115,
         "purpose": "Function parameter"
       },
       {
         "name": "stream",
         "scope": "digest",
-        "line": 118,
+        "line": 117,
         "purpose": "regular_stream(path, limit) as stream"
       },
       {
         "name": "result",
         "scope": "digest",
-        "line": 119,
+        "line": 118,
         "purpose": "(result, total)"
       },
       {
         "name": "total",
         "scope": "digest",
-        "line": 119,
+        "line": 118,
         "purpose": "(result, total)"
       },
       {
         "name": "block",
         "scope": "digest",
-        "line": 120,
+        "line": 119,
         "purpose": "(block := stream.read(min(1024 * 1024, limit - total + 1)))"
       },
       {
         "name": "total",
         "scope": "digest",
-        "line": 121,
+        "line": 120,
         "purpose": "total += len(block)"
       },
       {
         "name": "relative",
         "scope": "confined",
-        "line": 128,
+        "line": 127,
         "purpose": "Function parameter"
       },
       {
         "name": "root",
         "scope": "confined",
-        "line": 128,
+        "line": 127,
         "purpose": "Function parameter"
       },
       {
         "name": "base",
         "scope": "confined",
-        "line": 139,
+        "line": 138,
         "purpose": "base = os.path.realpath(root)"
       },
       {
         "name": "candidate",
         "scope": "confined",
-        "line": 140,
+        "line": 139,
         "purpose": "candidate = os.path.realpath(os.path.join(base, relative))"
       },
       {
         "name": "result",
         "scope": "confined",
-        "line": 142,
+        "line": 141,
         "purpose": "result = Path(base)"
       },
       {
         "name": "result",
         "scope": "confined",
-        "line": 144,
+        "line": 143,
         "purpose": "result = Path(candidate)"
       },
       {
         "name": "limit",
         "scope": "read_json",
-        "line": 151,
+        "line": 150,
         "purpose": "Function parameter"
       },
       {
         "name": "path",
         "scope": "read_json",
-        "line": 151,
+        "line": 150,
         "purpose": "Function parameter"
       },
       {
         "name": "source",
         "scope": "read_json",
-        "line": 153,
+        "line": 152,
         "purpose": "source = regular_bytes(path, limit)"
       },
       {
         "name": "items",
         "scope": "read_json.pairs",
-        "line": 155,
+        "line": 154,
         "purpose": "Function parameter"
       },
       {
         "name": "result",
         "scope": "read_json.pairs",
-        "line": 157,
+        "line": 156,
         "purpose": "result = dict(items)"
       },
       {
         "name": "value",
         "scope": "read_json",
-        "line": 162,
+        "line": 161,
         "purpose": "value = json.loads(source.decode('utf-8'), object_pairs_hook=pairs, parse_constant=lambda value: (_ for _ in ()).throw(ValueError('Non-finite JSON')))"
       },
       {
         "name": "_",
         "scope": "read_json",
-        "line": 165,
+        "line": 164,
         "purpose": " for _ in ()"
       },
       {
         "name": "value",
         "scope": "read_json",
-        "line": 165,
+        "line": 164,
         "purpose": "Function parameter"
       },
       {
         "name": "destination",
         "scope": "replace_file",
-        "line": 172,
+        "line": 171,
         "purpose": "Function parameter"
       },
       {
         "name": "source",
         "scope": "replace_file",
-        "line": 172,
+        "line": 171,
         "purpose": "Function parameter"
       },
       {
         "name": "attempt",
         "scope": "replace_file",
-        "line": 174,
+        "line": 173,
         "purpose": "for attempt in range(8):\n    try:\n        os.replace(source, destination)\n        return\n    except PermissionError as error:\n        if getattr(error, 'winerror', None) not in {5,"
       },
       {
         "name": "path",
         "scope": "atomic_json",
-        "line": 186,
+        "line": 185,
         "purpose": "Function parameter"
       },
       {
         "name": "value",
         "scope": "atomic_json",
-        "line": 186,
+        "line": 185,
         "purpose": "Function parameter"
       },
       {
         "name": "descriptor",
         "scope": "atomic_json",
-        "line": 190,
+        "line": 189,
         "purpose": "(descriptor, temporary)"
       },
       {
         "name": "temporary",
         "scope": "atomic_json",
-        "line": 190,
+        "line": 189,
         "purpose": "(descriptor, temporary)"
       },
       {
         "name": "stream",
         "scope": "atomic_json",
-        "line": 192,
+        "line": 191,
         "purpose": "os.fdopen(descriptor, 'w', encoding='utf-8') as stream"
       },
       {
         "name": "path",
         "scope": "normalized_image",
-        "line": 201,
+        "line": 200,
         "purpose": "Function parameter"
       },
       {
         "name": "content",
         "scope": "normalized_pixels",
-        "line": 206,
+        "line": 205,
         "purpose": "Function parameter"
       },
       {
         "name": "image",
         "scope": "normalized_pixels",
-        "line": 212,
+        "line": 211,
         "purpose": "Image.open(io.BytesIO(content)) as image"
       },
       {
         "name": "normalized",
         "scope": "normalized_pixels",
-        "line": 217,
+        "line": 216,
         "purpose": "normalized = ImageOps.exif_transpose(image).convert('RGB')"
       }
     ]
@@ -18560,6 +18554,18 @@
         "line": 122,
         "kind": "FunctionDef",
         "purpose": "The actual descriptor view refuses out-of-cap ZIP-style seeks/reads rather than trusting initial size."
+      },
+      {
+        "name": "module.test_stream_construction_failure_cannot_close_a_reused_owned_descriptor",
+        "line": 141,
+        "kind": "FunctionDef",
+        "purpose": "A wrapping failure after stream creation cannot transfer ownership then close somebody else's descriptor."
+      },
+      {
+        "name": "test_stream_construction_failure_cannot_close_a_reused_owned_descriptor.fail_after_creation",
+        "line": 149,
+        "kind": "FunctionDef",
+        "purpose": "Inject a real stream creation/close and open a second real owned file before failing."
       }
     ],
     "variables": [
@@ -18612,10 +18618,16 @@
         "purpose": "Function parameter"
       },
       {
+        "name": "options",
+        "scope": "test_one_descriptor_reads_original_bytes_after_path_replacement.replace_after_descriptor_validation",
+        "line": 24,
+        "purpose": "Function parameter"
+      },
+      {
         "name": "stream",
         "scope": "test_one_descriptor_reads_original_bytes_after_path_replacement.replace_after_descriptor_validation",
         "line": 26,
-        "purpose": "stream = fdopen(descriptor, mode)"
+        "purpose": "stream = fdopen(descriptor, mode, **options)"
       },
       {
         "name": "monkeypatch",
@@ -18654,10 +18666,16 @@
         "purpose": "Function parameter"
       },
       {
+        "name": "options",
+        "scope": "test_growth_is_capped_from_actual_descriptor_bytes_for_json_and_digest.grow_after_stat",
+        "line": 47,
+        "purpose": "Function parameter"
+      },
+      {
         "name": "stream",
         "scope": "test_growth_is_capped_from_actual_descriptor_bytes_for_json_and_digest.grow_after_stat",
         "line": 49,
-        "purpose": "stream = fdopen(descriptor, mode)"
+        "purpose": "stream = fdopen(descriptor, mode, **options)"
       },
       {
         "name": "writer",
@@ -18754,6 +18772,108 @@
         "scope": "test_seekable_zip_view_caps_grown_end_and_parser_read_requests",
         "line": 132,
         "purpose": "source.open('ab') as writer"
+      },
+      {
+        "name": "monkeypatch",
+        "scope": "test_stream_construction_failure_cannot_close_a_reused_owned_descriptor",
+        "line": 141,
+        "purpose": "Function parameter"
+      },
+      {
+        "name": "tmp_path",
+        "scope": "test_stream_construction_failure_cannot_close_a_reused_owned_descriptor",
+        "line": 141,
+        "purpose": "Function parameter"
+      },
+      {
+        "name": "source",
+        "scope": "test_stream_construction_failure_cannot_close_a_reused_owned_descriptor",
+        "line": 143,
+        "purpose": "(source, unrelated)"
+      },
+      {
+        "name": "unrelated",
+        "scope": "test_stream_construction_failure_cannot_close_a_reused_owned_descriptor",
+        "line": 143,
+        "purpose": "(source, unrelated)"
+      },
+      {
+        "name": "fdopen",
+        "scope": "test_stream_construction_failure_cannot_close_a_reused_owned_descriptor",
+        "line": 146,
+        "purpose": "fdopen = os.fdopen"
+      },
+      {
+        "name": "created",
+        "scope": "test_stream_construction_failure_cannot_close_a_reused_owned_descriptor",
+        "line": 147,
+        "purpose": "created = []"
+      },
+      {
+        "name": "descriptor",
+        "scope": "test_stream_construction_failure_cannot_close_a_reused_owned_descriptor.fail_after_creation",
+        "line": 149,
+        "purpose": "Function parameter"
+      },
+      {
+        "name": "mode",
+        "scope": "test_stream_construction_failure_cannot_close_a_reused_owned_descriptor.fail_after_creation",
+        "line": 149,
+        "purpose": "Function parameter"
+      },
+      {
+        "name": "options",
+        "scope": "test_stream_construction_failure_cannot_close_a_reused_owned_descriptor.fail_after_creation",
+        "line": 149,
+        "purpose": "Function parameter"
+      },
+      {
+        "name": "stream",
+        "scope": "test_stream_construction_failure_cannot_close_a_reused_owned_descriptor.fail_after_creation",
+        "line": 151,
+        "purpose": "stream = fdopen(descriptor, mode, **options)"
+      },
+      {
+        "name": "other",
+        "scope": "test_stream_construction_failure_cannot_close_a_reused_owned_descriptor.fail_after_creation",
+        "line": 153,
+        "purpose": "other = os.open(unrelated, os.O_RDONLY | getattr(os, 'O_BINARY', 0))"
+      },
+      {
+        "name": "original",
+        "scope": "test_stream_construction_failure_cannot_close_a_reused_owned_descriptor",
+        "line": 161,
+        "purpose": "(original, other, ownership)"
+      },
+      {
+        "name": "other",
+        "scope": "test_stream_construction_failure_cannot_close_a_reused_owned_descriptor",
+        "line": 161,
+        "purpose": "(original, other, ownership)"
+      },
+      {
+        "name": "ownership",
+        "scope": "test_stream_construction_failure_cannot_close_a_reused_owned_descriptor",
+        "line": 161,
+        "purpose": "(original, other, ownership)"
+      },
+      {
+        "name": "_original",
+        "scope": "test_stream_construction_failure_cannot_close_a_reused_owned_descriptor",
+        "line": 166,
+        "purpose": "(_original, other, _ownership)"
+      },
+      {
+        "name": "_ownership",
+        "scope": "test_stream_construction_failure_cannot_close_a_reused_owned_descriptor",
+        "line": 166,
+        "purpose": "(_original, other, _ownership)"
+      },
+      {
+        "name": "other",
+        "scope": "test_stream_construction_failure_cannot_close_a_reused_owned_descriptor",
+        "line": 166,
+        "purpose": "(_original, other, _ownership)"
       }
     ]
   },

@@ -1,6 +1,6 @@
 """Bounded JSON, atomic publications, path confinement and image normalization utilities."""
 
-# Index: declarations module.no_alias@L21, module.BoundedReader@L34, BoundedReader.__init__@L37, BoundedReader.tell@L41, BoundedReader.seek@L45, BoundedReader.read@L62, BoundedReader.seekable@L73, module.regular_stream@L79, module.regular_bytes@L107, module.digest@L116, module.confined@L128, module.read_json@L151, read_json.pairs@L155, module.replace_file@L172, module.atomic_json@L186, module.normalized_image@L201, module.normalized_pixels@L206; variables MAX_IMAGE_BYTES@L16, MAX_PIXELS@L17, path@L21, part@L23, status@L25, limit@L37, self@L37, stream@L37, self@L41, offset@L45, self@L45, whence@L45, target@L48, target@L50, size@L52, target@L55, self@L62, size@L62, remaining@L64, requested@L67, content@L68, self@L73, limit@L79, path@L79, flags@L86, descriptor@L92, status@L94, stream@L99, descriptor@L100, limit@L107, path@L107, stream@L109, source@L110, limit@L116, path@L116, stream@L118, result@L119, total@L119, block@L120, total@L121, relative@L128, root@L128, base@L139, candidate@L140, result@L142, result@L144, limit@L151, path@L151, source@L153, items@L155, result@L157, value@L162, _@L165, value@L165, destination@L172, source@L172, attempt@L174, path@L186, value@L186, descriptor@L190, temporary@L190, stream@L192, path@L201, content@L206, image@L212, normalized@L217. Purposes/parameters: docs/code-map.json.
+# Index: declarations module.no_alias@L21, module.BoundedReader@L34, BoundedReader.__init__@L37, BoundedReader.tell@L41, BoundedReader.seek@L45, BoundedReader.read@L62, BoundedReader.seekable@L73, module.regular_stream@L79, module.regular_bytes@L106, module.digest@L115, module.confined@L127, module.read_json@L150, read_json.pairs@L154, module.replace_file@L171, module.atomic_json@L185, module.normalized_image@L200, module.normalized_pixels@L205; variables MAX_IMAGE_BYTES@L16, MAX_PIXELS@L17, path@L21, part@L23, status@L25, limit@L37, self@L37, stream@L37, self@L41, offset@L45, self@L45, whence@L45, target@L48, target@L50, size@L52, target@L55, self@L62, size@L62, remaining@L64, requested@L67, content@L68, self@L73, limit@L79, path@L79, flags@L86, descriptor@L92, status@L94, stream@L100, limit@L106, path@L106, stream@L108, source@L109, limit@L115, path@L115, stream@L117, result@L118, total@L118, block@L119, total@L120, relative@L127, root@L127, base@L138, candidate@L139, result@L141, result@L143, limit@L150, path@L150, source@L152, items@L154, result@L156, value@L161, _@L164, value@L164, destination@L171, source@L171, attempt@L173, path@L185, value@L185, descriptor@L189, temporary@L189, stream@L191, path@L200, content@L205, image@L211, normalized@L216. Purposes/parameters: docs/code-map.json.
 import hashlib
 import io
 import json
@@ -96,12 +96,11 @@ def regular_stream(path: Path, limit: int):
             raise ValueError("Artifact must be a regular file with one link")
         if status.st_size > limit:
             raise ValueError("Artifact exceeds its byte limit")
-        with os.fdopen(descriptor, "rb") as stream:
-            descriptor = -1
+        # Keep a single descriptor owner even if stream construction/entry fails.
+        with os.fdopen(descriptor, "rb", closefd=False) as stream:
             yield BoundedReader(stream, limit)
     finally:
-        if descriptor != -1:
-            os.close(descriptor)
+        os.close(descriptor)
 
 
 def regular_bytes(path: Path, limit: int) -> bytes:
