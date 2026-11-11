@@ -289,11 +289,11 @@ def test_default_decoded_pixel_budget_stops_before_fifth_maximum_size_image(tmp_
 
 
 def test_product_versions_and_fresh_release_target_are_coherent():
-    """The new additive source ships as 0.3.0 without changing old release notes or private-store formats."""
+    """The additive native refresh ships as 0.3.1, retaining historical notes and immutable draft delivery."""
     from studio import __version__
 
     root = Path(__file__).resolve().parents[1]
-    assert __version__ == "0.3.0"
+    assert __version__ == "0.3.1"
     assert tomllib.loads((root / "pyproject.toml").read_text())["project"]["version"] == __version__
     assert json.loads((root / "package.json").read_text())["version"] == __version__
     assert (
@@ -301,7 +301,10 @@ def test_product_versions_and_fresh_release_target_are_coherent():
         == __version__
     )
     release = (root / ".github/workflows/release-native.yml").read_text()
-    assert "gh release create v0.3.0 --draft" in release
-    assert "gh release edit v0.2.0" not in release
+    assert "native-release-v0.3.1" in release
+    assert "scripts/native_release_guard.py prepare" in release
+    assert "--clobber" not in release and "--draft=false" not in release
+    assert "inputs.commit" not in release
+    assert (root / "docs/releases/v0.3.1.md").is_file()
     assert (root / "docs/releases/v0.3.0.md").is_file()
     assert (root / "docs/releases/v0.2.0.md").is_file()

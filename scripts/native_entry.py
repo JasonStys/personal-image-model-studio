@@ -3,9 +3,17 @@
 
 from multiprocessing import freeze_support
 
-from studio.private_cli import main
-
-
 if __name__ == "__main__":
     freeze_support()
-    main()
+    import sys
+
+    import studio.native_privacy  # noqa: F401 -- opt out before importing account/ML modules
+
+    if len(sys.argv) == 3 and sys.argv[1] == "--studio-worker":
+        from studio.private_cli import main
+
+        main()
+    else:
+        from studio.native_desktop import main
+
+        raise SystemExit(main())

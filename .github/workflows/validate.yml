@@ -28,7 +28,7 @@ jobs:
       - run: python -m pip install -e ".[dev]"
       - run: python -m ruff check studio scripts tests
       - run: python -m ruff format --check studio scripts tests
-      - run: python -m pytest tests/test_core.py tests/test_deviantart.py tests/test_quickdraw.py tests/test_jobs.py tests/test_private.py tests/test_dataset_review.py --cov=studio --cov-report=xml:artifacts/coverage.xml --junitxml=artifacts/contracts.xml -W error::ResourceWarning
+      - run: python -m pytest tests/test_core.py tests/test_deviantart.py tests/test_quickdraw.py tests/test_jobs.py tests/test_private.py tests/test_dataset_review.py tests/test_native_host.py tests/test_native_profile.py tests/test_native_identity.py tests/test_native_release_guard.py tests/test_native_distribution.py tests/test_native_diagnostics.py tests/test_browser_environment.py --cov=studio --cov-report=xml:artifacts/coverage.xml --junitxml=artifacts/contracts.xml -W error::ResourceWarning
       - run: python -m pip check
       - uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
         if: always() && vars.PIMS_UPLOAD_CI_ARTIFACTS == 'true'
@@ -37,6 +37,9 @@ jobs:
           path: artifacts/*.xml
   browsers:
     runs-on: ubuntu-24.04
+    container:
+      image: mcr.microsoft.com/playwright:v1.63.0-noble@sha256:eff16c30e6f3f4af0a03fa4b706120d5e9b0891c344a27d64559aff5900a4a27
+      options: --user 1001
     timeout-minutes: 20
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
@@ -50,40 +53,12 @@ jobs:
       - run: python -m pip install -e ".[dev]"
       - run: npm ci
       - run: npm run build
-      - run: npx prettier --check web tests/*.ts tests/*.mjs playwright*.ts scripts/code_index.mjs index.html tsconfig.json package.json
+      - run: npx prettier --check web tests/*.ts tests/*.mjs playwright*.ts scripts/code_index.mjs scripts/check_browser_host.mjs index.html tsconfig.json package.json
       - run: node scripts/code_index.mjs --check
       - run: npm run test:code-index
-      - name: Bound official Ubuntu mirror access on the disposable runner
-        timeout-minutes: 1
-        shell: bash
-        run: |
-          test "$GITHUB_ACTIONS" = "true"
-          test "$RUNNER_OS" = "Linux"
-          test "$(uname -m)" = "x86_64"
-          . /etc/os-release
-          test "$ID" = "ubuntu"
-          test "$VERSION_ID" = "24.04"
-          test -f /etc/apt/apt-mirrors.txt
-          test -f /usr/share/keyrings/ubuntu-archive-keyring.gpg
-          grep -Eq '^URIs:[[:space:]]+mirror[+]file:/etc/apt/apt-mirrors[.]txt[[:space:]]*$' /etc/apt/sources.list.d/ubuntu.sources
-          grep -Eq '^Signed-By:[[:space:]]+/usr/share/keyrings/ubuntu-archive-keyring[.]gpg[[:space:]]*$' /etc/apt/sources.list.d/ubuntu.sources
-          # Preserve source suites, components and signature checks; avoid the stalled HTTP Azure mirror.
-          printf 'https://archive.ubuntu.com/ubuntu/\tpriority:1\nhttps://security.ubuntu.com/ubuntu/\tpriority:2\n' |
-            sudo tee /etc/apt/apt-mirrors.txt >/dev/null
-          # APT reads this leaf after the runner defaults; these are acquire, not APT::Acquire, keys.
-          printf '%s\n' 'Acquire::Retries "1";' 'Acquire::http::Timeout "15";' 'Acquire::https::Timeout "15";' |
-            sudo tee /etc/apt/apt.conf.d/zzzz-portfolio-network >/dev/null
-          apt_network_config="$(apt-config dump Acquire::Retries Acquire::http::Timeout Acquire::https::Timeout)"
-          printf '%s\n' "$apt_network_config"
-          grep -Fx 'Acquire::Retries "1";' <<< "$apt_network_config"
-          grep -Fx 'Acquire::http::Timeout "15";' <<< "$apt_network_config"
-          grep -Fx 'Acquire::https::Timeout "15";' <<< "$apt_network_config"
-      - name: Install operating-system browser dependencies
-        timeout-minutes: 10
-        run: npx --no-install playwright install-deps chromium firefox webkit
-      - name: Install the exact locked browsers
+      - name: Validate all three real locked browsers and missing-executable rejection
         timeout-minutes: 5
-        run: npx --no-install playwright install chromium firefox webkit
+        run: node scripts/check_browser_host.mjs chromium firefox webkit
       - run: npm run test:browser
       - run: npm run test:private
       - run: npm audit --audit-level=low
@@ -96,7 +71,7 @@ jobs:
             artifacts/ui-*.png
             test-results/
   machine-learning:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     timeout-minutes: 30
     env:
       HF_HUB_OFFLINE: '1'
@@ -115,7 +90,11 @@ jobs:
       - run: python -m pip check
       - run: python -m pytest tests/test_ml.py tests/test_private_ml.py --junitxml=artifacts/ml.xml -W error::ResourceWarning
       - run: npm ci && npm run build
-      - run: npx playwright install --with-deps chromium
+      - name: Install and validate the exact locked Chromium on the stock runner
+        timeout-minutes: 5
+        run: |
+          npx --no-install playwright install chromium
+          node scripts/check_browser_host.mjs chromium
       - run: npm run test:browser
         env:
           RUN_ML_BROWSER: '1'

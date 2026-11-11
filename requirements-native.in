@@ -1,0 +1,18 @@
+# Jason Stys: minimal real CPU/native build graph; full LoRA tests use the separate ml extra.
+fastapi==0.142.1
+uvicorn==0.38.0
+pydantic==2.13.2
+Pillow==13.0.0
+httpx==0.28.1
+cryptography==50.0.2
+psutil==7.2.2
+diffusers==0.38.0
+safetensors==0.8.0
+numpy==2.5.4
+torch==2.14.0+cpu ; sys_platform == 'win32' or sys_platform == 'linux'
+torch==2.14.0 ; sys_platform == 'darwin'
+pyinstaller==6.22.3
+pytest==9.0.3
+packaging==26.3
+setuptools==84.2.1
+defusedxml==0.7.1

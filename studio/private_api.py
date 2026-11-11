@@ -1,5 +1,5 @@
 """Jason Stys: authenticated loopback accounts, private uploads and isolated real ML dispatch.
-# Index: declarations module.LocalBoundary@L34, LocalBoundary.__init__@L37, LocalBoundary.__call__@L43, LocalBoundary.__call__.guarded_send@L50, LocalBoundary.__call__.deny@L66, LocalBoundary.__call__.replay@L121, module.Closed@L132, module.Credentials@L138, module.Recovery@L145, module.Unlock@L151, module.Delete@L158, module.Activity@L165, module.UploadStart@L171, module.UploadChunk@L179, module.WorkspaceProxy@L186, WorkspaceProxy.__init__@L189, WorkspaceProxy.__call__@L193, WorkspaceProxy.__call__.replay@L263, module.create_private_app@L287, create_private_app.lifespan@L298, create_private_app.lifespan.idle_lock@L302, create_private_app.invalid@L339, create_private_app.bad_value@L344, create_private_app.bad_file@L349, create_private_app.identify@L358, create_private_app.signed@L362, create_private_app.auth_limit@L375, create_private_app.health@L383, create_private_app.register@L394, create_private_app.login@L406, create_private_app.reset@L415, create_private_app.account@L438, create_private_app.unlock@L449, create_private_app.activity@L461, create_private_app.save@L468, create_private_app.lock@L477, create_private_app.logout@L483, create_private_app.delete@L494, create_private_app.backup@L511, create_private_app.begin_file@L525, create_private_app.file_chunk@L570, create_private_app.callback@L602; variables COOKIE@L30, CSP@L31, app@L37, manager@L37, self@L37, receive@L43, scope@L43, self@L43, send@L43, raw@L47, headers@L48, k@L48, v@L48, message@L50, detail@L66, status@L66, _@L73, k@L73, callback@L76, accounts@L81, mutation@L86, cookies@L94, name@L99, token@L100, account@L101, public@L104, chunks@L107, total@L107, message@L109, body@L112, total@L113, consumed@L119, consumed@L125, model_config@L135, alias@L141, password@L142, recovery@L148, key@L154, salt@L155, password@L161, confirm@L162, idle_seconds@L168, path@L174, size@L175, batch@L176, offset@L182, content@L183, manager@L189, self@L189, receive@L193, scope@L193, self@L193, send@L193, account@L197, manager@L200, path@L206, parts@L218, message@L220, content@L224, data@L226, chosen@L227, item@L236, consumed@L260, original_receive@L261, consumed@L267, receive@L271, forwarded@L272, k@L277, v@L277, embedded@L288, interpreter@L288, port@L288, root@L288, static@L288, static@L293, manager@L294, app@L298, task@L317, app@L328, error@L339, request@L339, error@L344, request@L344, error@L349, request@L349, request@L358, body@L362, owner@L362, response@L364, alias@L375, data@L394, owner@L398, recovery@L398, data@L406, owner@L409, data@L415, db@L420, row@L421, fresh@L430, request@L438, data@L449, request@L449, owner@L451, result@L455, data@L461, request@L461, request@L468, result@L472, request@L477, request@L483, response@L489, data@L494, request@L494, owner@L496, db@L499, row@L500, response@L506, request@L511, owner@L513, path@L517, data@L525, request@L525, path@L529, maximum@L546, used@L546, batch@L549, destination@L550, identity@L554, temporary@L555, data@L570, identity@L570, request@L570, record@L574, content@L578, stream@L588, complete@L591, request@L602, params@L609, k@L610. Purposes/parameters: docs/code-map.json.
+# Index: declarations module.LocalBoundary@L35, LocalBoundary.__init__@L38, LocalBoundary.__call__@L44, LocalBoundary.__call__.guarded_send@L51, LocalBoundary.__call__.deny@L67, LocalBoundary.__call__.replay@L122, module.Closed@L133, module.Credentials@L139, module.Recovery@L146, module.Unlock@L152, module.Delete@L159, module.Activity@L166, module.UploadStart@L172, module.UploadChunk@L180, module.WorkspaceProxy@L187, WorkspaceProxy.__init__@L190, WorkspaceProxy.__call__@L194, WorkspaceProxy.__call__.replay@L264, module.create_private_app@L288, create_private_app.lifespan@L305, create_private_app.lifespan.idle_lock@L311, create_private_app.invalid@L348, create_private_app.bad_value@L353, create_private_app.bad_file@L358, create_private_app.identify@L367, create_private_app.signed@L371, create_private_app.auth_limit@L384, create_private_app.health@L392, create_private_app.register@L420, create_private_app.login@L432, create_private_app.reset@L441, create_private_app.account@L464, create_private_app.unlock@L475, create_private_app.activity@L487, create_private_app.save@L494, create_private_app.lock@L503, create_private_app.logout@L509, create_private_app.delete@L520, create_private_app.backup@L537, create_private_app.begin_file@L551, create_private_app.file_chunk@L596, create_private_app.callback@L628; variables COOKIE@L31, CSP@L32, app@L38, manager@L38, self@L38, receive@L44, scope@L44, self@L44, send@L44, raw@L48, headers@L49, k@L49, v@L49, message@L51, detail@L67, status@L67, _@L74, k@L74, callback@L77, accounts@L82, mutation@L87, cookies@L95, name@L100, token@L101, account@L102, public@L105, chunks@L108, total@L108, message@L110, body@L113, total@L114, consumed@L120, consumed@L126, model_config@L136, alias@L142, password@L143, recovery@L149, key@L155, salt@L156, password@L162, confirm@L163, idle_seconds@L169, path@L175, size@L176, batch@L177, offset@L183, content@L184, manager@L190, self@L190, receive@L194, scope@L194, self@L194, send@L194, account@L198, manager@L201, path@L207, parts@L219, message@L221, content@L225, data@L227, chosen@L228, item@L237, consumed@L261, original_receive@L262, consumed@L268, receive@L272, forwarded@L273, k@L278, v@L278, root@L289, port@L290, static@L291, interpreter@L292, embedded@L293, native_identity@L295, static@L300, manager@L301, app@L305, task@L326, app@L337, error@L348, request@L348, error@L353, request@L353, error@L358, request@L358, request@L367, body@L371, owner@L371, response@L373, alias@L384, result@L394, key@L404, data@L420, owner@L424, recovery@L424, data@L432, owner@L435, data@L441, db@L446, row@L447, fresh@L456, request@L464, data@L475, request@L475, owner@L477, result@L481, data@L487, request@L487, request@L494, result@L498, request@L503, request@L509, response@L515, data@L520, request@L520, owner@L522, db@L525, row@L526, response@L532, request@L537, owner@L539, path@L543, data@L551, request@L551, path@L555, maximum@L572, used@L572, batch@L575, destination@L576, identity@L580, temporary@L581, data@L596, identity@L596, request@L596, record@L600, content@L604, stream@L614, complete@L617, request@L628, params@L635, k@L636. Purposes/parameters: docs/code-map.json.
 
 Not a public-hosting API. No credentials appear in URLs, responses, logs or Git.
 """
@@ -24,6 +24,7 @@ from pydantic import BaseModel, ConfigDict, Field
 from starlette.concurrency import run_in_threadpool
 
 from studio.accounts import password_matches, digest
+from studio import __version__
 from studio.private_workspace import Workspaces
 from studio.vault import MAX_BYTES, safe_name
 
@@ -285,7 +286,13 @@ class WorkspaceProxy:
 
 
 def create_private_app(
-    root: Path, port: int, static: Path | None = None, interpreter=None, embedded=False
+    root: Path,
+    port: int,
+    static: Path | None = None,
+    interpreter=None,
+    embedded=False,
+    *,
+    native_identity=None,
 ):
     """Create a distinct, loopback-only account service; old plaintext runtime directories remain untouched."""
     if not 1024 <= port <= 65535:
@@ -298,6 +305,8 @@ def create_private_app(
     async def lifespan(app):
         """Expire unlocked keys independently of UI polling and preserve interrupted data if saving fails."""
         import asyncio
+
+        app.state.lifecycle_started = True
 
         async def idle_lock():
             """Check human-idle deadlines without renewing them on ordinary workspace polling."""
@@ -382,13 +391,30 @@ def create_private_app(
     @app.get("/health")
     def health():
         """Metadata-only readiness; no account identities, filesystem paths or secret parameters."""
-        return {
+        result = {
             "ready": True,
             "mode": "private-local-accounts",
-            "version": "0.3.0",
+            "version": __version__,
             "author": "Jason Stys",
             "validation_nonce": os.environ.get("PIMS_VALIDATION_NONCE"),
         }
+        if native_identity is not None:
+            result["native"] = {
+                key: native_identity[key]
+                for key in (
+                    "product",
+                    "version",
+                    "source",
+                    "source_dirty",
+                    "python",
+                    "tcl_version",
+                    "tk_version",
+                )
+            }
+            result["native"]["runtime_library_sha256"] = native_identity["runtime_library"][
+                "sha256"
+            ]
+        return result
 
     @app.post("/private/register")
     async def register(data: Credentials):

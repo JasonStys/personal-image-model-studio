@@ -6,6 +6,14 @@ A local-first image-generation workbench by **Jason Stys**, with real private ac
 
 ## Download and open
 
+The **0.3.1 native refresh** adds Open, Help, Runtime notices and safe Quit in a
+normal owner window, patched Python3.14.10, profile guards and full extracted-package
+CPU/browser acceptance. Account paths and encrypted formats remain compatible.
+See [native architecture and file responsibilities](docs/native-application.md)
+and the [development validation report](docs/reports/native-0.3.1-development-validation.md)
+for observed results and delivery steps still pending. Published packages retain
+their own immutable source identities.
+
 Get the checksummed CPU application for your OS from [Releases](https://github.com/JasonStys/personal-image-model-studio/releases). Extract and open `PersonalImageModelStudio` (`.exe` on Windows). It launches a private website in your normal browser, with no Python/npm setup for native-model training or generation. Keep the application process running. This is an **unsigned portable application**, not a signed installer or public hosted service.
 
 Create an alias/password, save the once-shown login recovery code and choose a separate vault phrase. Private files live outside Git and the installation. Locked workspaces use authenticated encryption; active ML needs temporary plaintext on your own device. OS administrators/compromised devices can access active data; crashes can leave protected recovery files. No telemetry, ad SDK, default external AI calls, automatic model downloads or developer account-access backdoor is included. Forgotten vault phrases cannot be recovered.
@@ -111,6 +119,7 @@ Demo outputs/checkpoints are local and ignored by Git. Use a new output director
 | `scripts/private_browser_server.py`, `playwright.private.config.ts`, `tests/private*.spec.ts` | Disposable profile services, real account browsers and genuine training workflows.                                                |
 | `tests/test_private.py`, `test_private_ml.py`                                                 | Ownership/authentication, boundary/crypto/corruption/recovery and actual encrypted ML lifecycle tests.                            |
 | `scripts/code_index.mjs`, `python_index.py`                                                   | Reproducible exact declaration/variable line headers and detailed code map.                                                       |
+| `scripts/check_browser_host.mjs`, `tests/test_browser_environment.py`                         | Exact locked real-browser launch, missing-executable rejection, and nonroot browser-image/workflow coverage guards.              |
 | `tests/test_dataset_review.py`, `tests/fixtures/dataset-review.json`                          | Owned gradient fixtures, independent hash oracle, input budgets, account privacy, unchanged-data and release-version regressions. |
 | `tests/test_core.py`, `test_deviantart.py`, `test_jobs.py`, `test_ml.py`                      | Core/privacy/property, mocked provider-contract, lifecycle and real ML regression tests.                                          |
 | `scripts/prepare_quickdraw.py`, `evaluate_quickdraw.py`, `tests/test_quickdraw.py`            | Opt-in licensed sketch sampling, genuine checkpoint/inference evaluation and offline bounded-input tests.                         |

@@ -1,92 +1,103 @@
+# Jason Stys: QA-gated portable downloads; upload to a draft Release, not scarce Actions artifact storage.
 name: Release native CPU applications
 on:
   workflow_dispatch:
-    inputs:
-      commit:
-        description: Exact validated commit or ref
-        required: true
-        default: main
+env:
+  HF_HUB_DISABLE_TELEMETRY: "1"
+  DO_NOT_TRACK: "1"
 permissions:
   contents: read
 concurrency:
-  group: native-release-v0.3.0
+  group: native-release-v0.3.1
   cancel-in-progress: false
 jobs:
   prepare:
+    if: github.ref == 'refs/heads/main'
     runs-on: ubuntu-latest
     permissions:
       contents: write
       actions: read
-    outputs:
-      sha: ${{ steps.gate.outputs.sha }}
+      security-events: read
     steps:
-      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
-        with:
-          ref: ${{ inputs.commit }}
-      - id: gate
+      - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09
+        with: { persist-credentials: false }
+      - name: Require passed validation for this exact commit
         env:
           GH_TOKEN: ${{ github.token }}
-        run: |
-          set -euo pipefail
-          sha=$(git rev-parse HEAD)
-          test "$(gh run list --workflow validate.yml --commit "$sha" --limit 1 --json conclusion --jq '.[0].conclusion')" = success
-          echo "sha=$sha" >> "$GITHUB_OUTPUT"
-          if gh release view v0.3.0 --json isDraft,targetCommitish > /tmp/pims-release.json 2>/dev/null; then
-            test "$(jq -r '.isDraft' /tmp/pims-release.json)" = true
-            test "$(jq -r '.targetCommitish' /tmp/pims-release.json)" = "$sha"
-          else
-            gh release create v0.3.0 --draft --target "$sha" --title "Personal Image Model Studio 0.3.0 — reviewable private local CPU app" --notes-file docs/releases/v0.3.0.md
-          fi
+          EXPECTED_SHA: ${{ github.sha }}
+        run: python scripts/native_release_guard.py source
+      - name: Create or resume an unpublished release for this exact commit
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: python scripts/native_release_guard.py prepare
   build:
     needs: prepare
+    name: Current native app / ${{ matrix.os }}
     strategy:
       fail-fast: false
       matrix:
-        os: [windows-latest, ubuntu-latest, macos-latest]
+        os: [ubuntu-24.04, windows-latest, macos-latest]
     runs-on: ${{ matrix.os }}
-    timeout-minutes: 35
+    timeout-minutes: 40
     permissions:
       contents: write
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
-        with:
-          ref: ${{ needs.prepare.outputs.sha }}
-      - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97
-        with:
-          python-version: '3.12'
-      - uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020
-        with:
-          node-version: '24'
-      - if: runner.os != 'macOS'
-        run: python -m pip install torch==2.14.0 --index-url https://download.pytorch.org/whl/cpu
-      - run: python -m pip install -e ".[cpu,desktop]"
+        with: { persist-credentials: false }
+      - uses: actions/setup-python@ece7cb06caefa5fff74198d8649806c4678c61a1
+        with: { python-version: "3.14.10", check-latest: true }
+      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1
+        with: { node-version: "24", package-manager-cache: false }
+      - run: python -m pip install --require-hashes -r requirements-native.lock
       - run: python -m pip check
-      - run: npm ci
+      - run: python -m pip install --no-build-isolation --no-deps -e .
+      - run: npm ci --ignore-scripts
       - run: npm run build
-      - run: python scripts/build_native.py
-      - if: runner.os == 'Windows'
-        run: python scripts/smoke_native.py artifacts/native/PersonalImageModelStudio.exe
-      - if: runner.os != 'Windows'
-        run: python scripts/smoke_native.py artifacts/native/PersonalImageModelStudio
-      - name: Attach verified package to draft release, not Actions storage
+      - name: Install the exact locked browser
+        timeout-minutes: 5
+        run: npx playwright install chromium
+      - name: Validate the real browser host and missing-executable rejection
+        timeout-minutes: 5
+        run: node scripts/check_browser_host.mjs chromium
+      - name: Build and exercise the actual extracted current native application
         shell: bash
-        env:
-          GH_TOKEN: ${{ github.token }}
         run: |
           set -euo pipefail
-          gh release upload v0.3.0 artifacts/native/PersonalImageModelStudio-0.3.0-*.sha256 --clobber
-          if [ "$RUNNER_OS" = Windows ]; then
-            gh release upload v0.3.0 artifacts/native/PersonalImageModelStudio-0.3.0-*.zip --clobber
+          if [ "$RUNNER_OS" = "Linux" ]; then
+            command -v xvfb-run
+            xvfb-run -a python -m pytest tests/test_native_owner.py tests/test_native_host.py tests/test_native_profile.py tests/test_native_identity.py tests/test_native_privacy.py tests/test_native_notices.py tests/test_runtime_terms.py -q
+            xvfb-run -a python scripts/build_native.py
+            xvfb-run -a python scripts/smoke_native.py release/bin/PersonalImageModelStudio
+            xvfb-run -a python scripts/native_acceptance.py --built-directory release
+          elif [ "$RUNNER_OS" = "Windows" ]; then
+            python -m pytest tests/test_native_owner.py tests/test_native_host.py tests/test_native_profile.py tests/test_native_identity.py tests/test_native_privacy.py tests/test_native_notices.py tests/test_runtime_terms.py -q
+            python scripts/build_native.py
+            python scripts/smoke_native.py release/bin/PersonalImageModelStudio.exe
+            python scripts/native_acceptance.py --built-directory release
           else
-            gh release upload v0.3.0 artifacts/native/PersonalImageModelStudio-0.3.0-*.tar.gz --clobber
+            python -m pytest tests/test_native_owner.py tests/test_native_host.py tests/test_native_profile.py tests/test_native_identity.py tests/test_native_privacy.py tests/test_native_notices.py tests/test_runtime_terms.py -q
+            python scripts/build_native.py
+            python scripts/smoke_native.py release/bin/PersonalImageModelStudio
+            python scripts/native_acceptance.py --built-directory release
           fi
-  publish:
-    needs: [prepare, build]
+      - name: Upload only the accepted immutable portable archive and checksum
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: python scripts/native_release_guard.py upload
+  verify-draft:
+    needs: build
     runs-on: ubuntu-latest
     permissions:
+      # GitHub requires push access to see unpublished drafts; this job only reads.
       contents: write
+      actions: read
+      security-events: read
     steps:
-      - env:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with: { persist-credentials: false }
+      - uses: actions/setup-python@ece7cb06caefa5fff74198d8649806c4678c61a1
+        with: { python-version: "3.12" }
+      - name: Verify complete draft; publication follows independent downloaded-app review
+        env:
           GH_TOKEN: ${{ github.token }}
-          GH_REPO: ${{ github.repository }}
-        run: gh release edit v0.3.0 --draft=false
+        run: python scripts/native_release_guard.py verify

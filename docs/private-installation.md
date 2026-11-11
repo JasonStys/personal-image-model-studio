@@ -1,4 +1,4 @@
-# Install Personal Image Model Studio 0.2 — Jason Stys
+# Install Personal Image Model Studio — Jason Stys
 
 ## Portable application
 
@@ -6,7 +6,9 @@ Download the OS/architecture archive and matching `.sha256` from the official
 [GitHub releases](https://github.com/JasonStys/personal-image-model-studio/releases).
 Verify the **whole checksum before launch**: Windows `Get-FileHash -Algorithm SHA256`,
 Linux `sha256sum`, macOS `shasum -a 256`. Extract into a folder you control and launch
-`PersonalImageModelStudio` (Windows `.exe`). Keep its console/process running.
+`PersonalImageModelStudio` (Windows `.exe`). In 0.3.1, keep the native owner window
+open and use Open application, Help and privacy, Runtime notices and Quit application.
+Earlier packages retain their original process/console controls.
 It opens your default browser at an automatically allocated `127.0.0.1` port.
 This is not a public URL. No firewall, startup, registry, GPU-driver or browser
 extension change is made. Closing the application stops its local account service.
