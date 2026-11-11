@@ -1,5 +1,5 @@
 """Jason Stys: replay the original private-account and real-ML browser journeys against an actual compiled app.
-# Index: declarations module.digest@L28, module.run@L34, module.main@L200; variables ROOT@L25, path@L28, stream@L30, executable@L34, output@L34, executable@L36, output@L39, copied@L45, inputs@L47, name@L48, original@L49, text@L50, text@L53, text@L54, temporary@L57, profile@L58, nonce@L59, reservation@L60, port@L62, origin@L63, log@L64, process@L65, normal@L73, client@L75, deadline@L76, response@L81, identity@L83, config@L93, node@L122, browser_log@L125, observed_tests@L140, stats@L143, normal@L154, stopped@L155, parser@L202, args@L205. Purposes/parameters: docs/code-map.json.
+# Index: declarations module.digest@L33, module.run@L39, module.main@L211; variables ROOT@L30, path@L33, stream@L35, executable@L39, output@L39, executable@L41, output@L44, copied@L50, inputs@L52, name@L53, original@L54, text@L55, text@L58, text@L59, temporary@L62, profile@L63, nonce@L64, reservation@L65, port@L67, origin@L68, log@L69, process@L70, normal@L78, client@L80, deadline@L81, response@L86, identity@L88, config@L98, node@L127, browser_log_path@L130, browser_log@L132, observed_tests@L150, stats@L153, normal@L164, stopped@L165, parser@L213, args@L216. Purposes/parameters: docs/code-map.json.
 
 Only output destinations and service startup are rebound. Original assertions,
 timeouts, file inputs, browser controls, encryption and real worker paths remain.
@@ -21,6 +21,11 @@ import tempfile
 import time
 
 import httpx
+
+if __package__:
+    from .native_diagnostics import emit_tail
+else:
+    from native_diagnostics import emit_tail
 
 ROOT = Path(__file__).resolve().parents[1]
 
@@ -122,21 +127,26 @@ def run(executable: Path, output: Path) -> None:
                 node = shutil.which("node")
                 if node is None:
                     raise ValueError("Use the trusted test environment's Node runtime")
-                with (output / "original-browser-journeys.log").open("xb") as browser_log:
-                    subprocess.run(
-                        [
-                            node,
-                            str(ROOT / "node_modules/@playwright/test/cli.js"),
-                            "test",
-                            "--config",
-                            str(config),
-                        ],
-                        cwd=ROOT,
-                        stdout=browser_log,
-                        stderr=subprocess.STDOUT,
-                        check=True,
-                        timeout=600,
-                    )
+                browser_log_path = output / "original-browser-journeys.log"
+                try:
+                    with browser_log_path.open("xb") as browser_log:
+                        subprocess.run(
+                            [
+                                node,
+                                str(ROOT / "node_modules/@playwright/test/cli.js"),
+                                "test",
+                                "--config",
+                                str(config),
+                            ],
+                            cwd=ROOT,
+                            stdout=browser_log,
+                            stderr=subprocess.STDOUT,
+                            check=True,
+                            timeout=600,
+                        )
+                except (subprocess.CalledProcessError, subprocess.TimeoutExpired):
+                    emit_tail(browser_log_path)
+                    raise
                 observed_tests = json.loads(
                     (output / "browser-results.json").read_text(encoding="utf-8")
                 )
@@ -187,6 +197,7 @@ def run(executable: Path, output: Path) -> None:
                 if process.stdin:
                     process.stdin.close()
                 if not normal:
+                    emit_tail(output / "native-owner.log")
                     print(
                         "Compiled-browser validation failed; original evidence is retained.",
                         flush=True,

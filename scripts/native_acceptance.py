@@ -1,5 +1,5 @@
 """Jason Stys: extract and validate the real compiled CPU application before any draft upload.
-# Index: declarations module.validate@L37, module.main@L155; variables allow_dirty@L37, folder@L37, machine@L40, system@L40, archive_name@L41, sidecar_name@L41, binary_name@L42, archive@L43, sidecar@L43, checksums@L44, proof@L48, extracted@L49, executable@L51, raw_metadata@L53, metadata@L54, source@L55, member@L68, data@L69, smoke@L75, arguments@L76, name@L76, timeout@L76, log@L100, cpu@L109, browser@L110, observed@L115, result@L128, output@L145, parser@L157, args@L160. Purposes/parameters: docs/code-map.json.
+# Index: declarations module.validate@L39, module.main@L162; variables allow_dirty@L39, folder@L39, machine@L42, system@L42, archive_name@L43, sidecar_name@L43, binary_name@L44, archive@L45, sidecar@L45, checksums@L46, proof@L50, extracted@L51, executable@L53, raw_metadata@L55, metadata@L56, source@L57, member@L70, data@L71, smoke@L77, arguments@L78, name@L78, timeout@L78, log_path@L102, log@L104, cpu@L116, browser@L117, observed@L122, result@L135, output@L152, parser@L164, args@L167. Purposes/parameters: docs/code-map.json.
 
 Runs the original native optimizer/sampler and six original browser journeys.
 No source server, outside model, provider credentials or user profile is used.
@@ -20,6 +20,7 @@ import uuid
 from PyInstaller.archive.readers import CArchiveReader
 
 if __package__:
+    from .native_diagnostics import emit_tail
     from .native_distribution import (
         ROOT,
         digest,
@@ -29,6 +30,7 @@ if __package__:
         require,
     )
 else:
+    from native_diagnostics import emit_tail
     from native_distribution import ROOT, digest, extract_archive, names_for, read_manifest, require
 from studio import __version__
 from studio.native_identity import bounded_bytes, unique_pairs
@@ -97,15 +99,20 @@ def validate(folder: Path, *, allow_dirty: bool = False) -> dict:
             700,
         ),
     ):
-        with (proof / (name + ".log")).open("xb") as log:
-            subprocess.run(
-                arguments,
-                cwd=ROOT,
-                stdout=log,
-                stderr=subprocess.STDOUT,
-                timeout=timeout,
-                check=True,
-            )
+        log_path = proof / (name + ".log")
+        try:
+            with log_path.open("xb") as log:
+                subprocess.run(
+                    arguments,
+                    cwd=ROOT,
+                    stdout=log,
+                    stderr=subprocess.STDOUT,
+                    timeout=timeout,
+                    check=True,
+                )
+        except (subprocess.CalledProcessError, subprocess.TimeoutExpired):
+            emit_tail(log_path)
+            raise
     cpu = json.loads(smoke.read_text())
     browser = json.loads((proof / "browser/acceptance.json").read_text())
     require(

@@ -629,13 +629,13 @@
     "declarations": [
       {
         "name": "module.validate",
-        "line": 37,
+        "line": 39,
         "kind": "FunctionDef",
         "purpose": "Bind archive, extracted binary, embedded metadata and observed service identity to actual source."
       },
       {
         "name": "module.main",
-        "line": 155,
+        "line": 162,
         "kind": "FunctionDef",
         "purpose": "Require the complete explicit build directory; local dirty evidence cannot authorize release."
       }
@@ -644,182 +644,255 @@
       {
         "name": "allow_dirty",
         "scope": "validate",
-        "line": 37,
+        "line": 39,
         "purpose": "Function parameter"
       },
       {
         "name": "folder",
         "scope": "validate",
-        "line": 37,
+        "line": 39,
         "purpose": "Function parameter"
       },
       {
         "name": "machine",
         "scope": "validate",
-        "line": 40,
+        "line": 42,
         "purpose": "(system, machine)"
       },
       {
         "name": "system",
         "scope": "validate",
-        "line": 40,
+        "line": 42,
         "purpose": "(system, machine)"
       },
       {
         "name": "archive_name",
         "scope": "validate",
-        "line": 41,
+        "line": 43,
         "purpose": "(archive_name, sidecar_name)"
       },
       {
         "name": "sidecar_name",
         "scope": "validate",
-        "line": 41,
+        "line": 43,
         "purpose": "(archive_name, sidecar_name)"
       },
       {
         "name": "binary_name",
         "scope": "validate",
-        "line": 42,
+        "line": 44,
         "purpose": "binary_name = 'PersonalImageModelStudio' + ('.exe' if system == 'windows' else '')"
       },
       {
         "name": "archive",
         "scope": "validate",
-        "line": 43,
+        "line": 45,
         "purpose": "(archive, sidecar)"
       },
       {
         "name": "sidecar",
         "scope": "validate",
-        "line": 43,
+        "line": 45,
         "purpose": "(archive, sidecar)"
       },
       {
         "name": "checksums",
         "scope": "validate",
-        "line": 44,
+        "line": 46,
         "purpose": "checksums = read_manifest(sidecar, archive_name, binary_name)"
       },
       {
         "name": "proof",
         "scope": "validate",
-        "line": 48,
+        "line": 50,
         "purpose": "proof = ROOT / '.runtime/native-archive-acceptance' / uuid.uuid4().hex"
       },
       {
         "name": "extracted",
         "scope": "validate",
-        "line": 49,
+        "line": 51,
         "purpose": "extracted = proof / 'app'"
       },
       {
         "name": "executable",
         "scope": "validate",
-        "line": 51,
+        "line": 53,
         "purpose": "executable = extract_archive(archive, extracted, binary_name, native_metadata=True)"
       },
       {
         "name": "raw_metadata",
         "scope": "validate",
-        "line": 53,
+        "line": 55,
         "purpose": "raw_metadata = bounded_bytes(extracted / 'NATIVE_SOURCE.json', 256 * 1024)"
       },
       {
         "name": "metadata",
         "scope": "validate",
-        "line": 54,
+        "line": 56,
         "purpose": "metadata = json.loads(raw_metadata, object_pairs_hook=unique_pairs)"
       },
       {
         "name": "source",
         "scope": "validate",
-        "line": 55,
+        "line": 57,
         "purpose": "source = subprocess.check_output(['git', 'rev-parse', 'HEAD'], cwd=ROOT, text=True).strip()"
       },
       {
         "name": "member",
         "scope": "validate",
-        "line": 68,
+        "line": 70,
         "purpose": "for member in ('LICENSE', 'NATIVE_NOTICES.txt'):\n    data = bounded_bytes(extracted / member, 4 * 1024 ** 2)\n    require(len(data) == metadata['resources'][member]['bytes'] and has"
       },
       {
         "name": "data",
         "scope": "validate",
-        "line": 69,
+        "line": 71,
         "purpose": "data = bounded_bytes(extracted / member, 4 * 1024 ** 2)"
       },
       {
         "name": "smoke",
         "scope": "validate",
-        "line": 75,
+        "line": 77,
         "purpose": "smoke = proof / 'compiled-cpu-smoke.json'"
       },
       {
         "name": "arguments",
         "scope": "validate",
-        "line": 76,
+        "line": 78,
         "purpose": "(name, arguments, timeout)"
       },
       {
         "name": "name",
         "scope": "validate",
-        "line": 76,
+        "line": 78,
         "purpose": "(name, arguments, timeout)"
       },
       {
         "name": "timeout",
         "scope": "validate",
-        "line": 76,
+        "line": 78,
         "purpose": "(name, arguments, timeout)"
+      },
+      {
+        "name": "log_path",
+        "scope": "validate",
+        "line": 102,
+        "purpose": "log_path = proof / (name + '.log')"
       },
       {
         "name": "log",
         "scope": "validate",
-        "line": 100,
-        "purpose": "(proof / (name + '.log')).open('xb') as log"
+        "line": 104,
+        "purpose": "log_path.open('xb') as log"
       },
       {
         "name": "cpu",
         "scope": "validate",
-        "line": 109,
+        "line": 116,
         "purpose": "cpu = json.loads(smoke.read_text())"
       },
       {
         "name": "browser",
         "scope": "validate",
-        "line": 110,
+        "line": 117,
         "purpose": "browser = json.loads((proof / 'browser/acceptance.json').read_text())"
       },
       {
         "name": "observed",
         "scope": "validate",
-        "line": 115,
+        "line": 122,
         "purpose": "observed = browser['identity']['native']"
       },
       {
         "name": "result",
         "scope": "validate",
-        "line": 128,
+        "line": 135,
         "purpose": "result = {'mode': 'built', 'version': __version__, 'built_source': source, 'source_dirty': metadata['source_dirty'], 'archive_sha256': checksums[archive_name], 'binary_sha256': che"
       },
       {
         "name": "output",
         "scope": "validate",
-        "line": 145,
+        "line": 152,
         "purpose": "output = ROOT / 'artifacts' / f'native-acceptance-{system}.json'"
       },
       {
         "name": "parser",
         "scope": "main",
-        "line": 157,
+        "line": 164,
         "purpose": "parser = argparse.ArgumentParser(description=__doc__)"
       },
       {
         "name": "args",
         "scope": "main",
-        "line": 160,
+        "line": 167,
         "purpose": "args = parser.parse_args()"
+      }
+    ]
+  },
+  "scripts/native_diagnostics.py": {
+    "purpose": "Jason Stys: bounded escaped diagnostics from owned synthetic acceptance logs; never a validation waiver.",
+    "declarations": [
+      {
+        "name": "module.emit_tail",
+        "line": 13,
+        "kind": "FunctionDef",
+        "purpose": "Expose an actual failed child's bounded tail without terminal controls or replacing its original failure."
+      }
+    ],
+    "variables": [
+      {
+        "name": "MAX_TAIL",
+        "scope": "module",
+        "line": 10,
+        "purpose": "MAX_TAIL = 16384"
+      },
+      {
+        "name": "path",
+        "scope": "emit_tail",
+        "line": 13,
+        "purpose": "Function parameter"
+      },
+      {
+        "name": "before",
+        "scope": "emit_tail",
+        "line": 16,
+        "purpose": "before = path.lstat()"
+      },
+      {
+        "name": "descriptor",
+        "scope": "emit_tail",
+        "line": 19,
+        "purpose": "descriptor = os.open(path, os.O_RDONLY | getattr(os, 'O_BINARY', 0) | getattr(os, 'O_NONBLOCK', 0) | getattr(os, 'O_NOFOLLOW', 0))"
+      },
+      {
+        "name": "stream",
+        "scope": "emit_tail",
+        "line": 26,
+        "purpose": "os.fdopen(descriptor, 'rb') as stream"
+      },
+      {
+        "name": "opened",
+        "scope": "emit_tail",
+        "line": 27,
+        "purpose": "opened = os.fstat(stream.fileno())"
+      },
+      {
+        "name": "raw",
+        "scope": "emit_tail",
+        "line": 35,
+        "purpose": "raw = stream.read(MAX_TAIL)"
+      },
+      {
+        "name": "record",
+        "scope": "emit_tail",
+        "line": 36,
+        "purpose": "record = {'owned_failed_log': path.name, 'tail': raw.decode('utf-8', errors='replace')}"
+      },
+      {
+        "name": "record",
+        "scope": "emit_tail",
+        "line": 38,
+        "purpose": "record = {'owned_failed_log': path.name, 'diagnostic_unavailable': type(error).__name__}"
       }
     ]
   },
@@ -3614,19 +3687,19 @@
     "declarations": [
       {
         "name": "module.digest",
-        "line": 28,
+        "line": 33,
         "kind": "FunctionDef",
         "purpose": "Hash actual opened app/source bytes for reproducible consumer provenance."
       },
       {
         "name": "module.run",
-        "line": 34,
+        "line": 39,
         "kind": "FunctionDef",
         "purpose": "Own one real compiled app, six unchanged Chromium journeys and normal nonce-authorized native Quit."
       },
       {
         "name": "module.main",
-        "line": 200,
+        "line": 211,
         "kind": "FunctionDef",
         "purpose": "Require an explicit actual executable and a fresh private proof output."
       }
@@ -3635,217 +3708,223 @@
       {
         "name": "ROOT",
         "scope": "module",
-        "line": 25,
+        "line": 30,
         "purpose": "ROOT = Path(__file__).resolve().parents[1]"
       },
       {
         "name": "path",
         "scope": "digest",
-        "line": 28,
+        "line": 33,
         "purpose": "Function parameter"
       },
       {
         "name": "stream",
         "scope": "digest",
-        "line": 30,
+        "line": 35,
         "purpose": "path.open('rb') as stream"
       },
       {
         "name": "executable",
         "scope": "run",
-        "line": 34,
+        "line": 39,
         "purpose": "Function parameter"
-      },
-      {
-        "name": "output",
-        "scope": "run",
-        "line": 34,
-        "purpose": "Function parameter"
-      },
-      {
-        "name": "executable",
-        "scope": "run",
-        "line": 36,
-        "purpose": "executable = executable.resolve(strict=True)"
       },
       {
         "name": "output",
         "scope": "run",
         "line": 39,
+        "purpose": "Function parameter"
+      },
+      {
+        "name": "executable",
+        "scope": "run",
+        "line": 41,
+        "purpose": "executable = executable.resolve(strict=True)"
+      },
+      {
+        "name": "output",
+        "scope": "run",
+        "line": 44,
         "purpose": "output = output.resolve()"
       },
       {
         "name": "copied",
         "scope": "run",
-        "line": 45,
+        "line": 50,
         "purpose": "copied = output / 'original-tests'"
       },
       {
         "name": "inputs",
         "scope": "run",
-        "line": 47,
+        "line": 52,
         "purpose": "inputs = {}"
       },
       {
         "name": "name",
         "scope": "run",
-        "line": 48,
+        "line": 53,
         "purpose": "for name in ('private.spec.ts', 'private-ml.spec.ts'):\n    original = ROOT / 'tests' / name\n    text = original.read_text(encoding='utf-8')\n    text = text.replace('\"artifacts/', j"
       },
       {
         "name": "original",
         "scope": "run",
-        "line": 49,
+        "line": 54,
         "purpose": "original = ROOT / 'tests' / name"
       },
       {
         "name": "text",
         "scope": "run",
-        "line": 50,
+        "line": 55,
         "purpose": "text = original.read_text(encoding='utf-8')"
       },
       {
         "name": "text",
         "scope": "run",
-        "line": 53,
+        "line": 58,
         "purpose": "text = text.replace('\"artifacts/', json.dumps(output.as_posix() + '/')[0:-1])"
       },
       {
         "name": "text",
         "scope": "run",
-        "line": 54,
+        "line": 59,
         "purpose": "text = text.replace('`artifacts/', '`' + output.as_posix() + '/')"
       },
       {
         "name": "temporary",
         "scope": "run",
-        "line": 57,
+        "line": 62,
         "purpose": "tempfile.TemporaryDirectory(prefix='pims-native-browser-') as temporary"
       },
       {
         "name": "profile",
         "scope": "run",
-        "line": 58,
+        "line": 63,
         "purpose": "profile = Path(temporary).resolve() / 'synthetic-accounts'"
       },
       {
         "name": "nonce",
         "scope": "run",
-        "line": 59,
+        "line": 64,
         "purpose": "nonce = secrets.token_hex(32)"
       },
       {
         "name": "reservation",
         "scope": "run",
-        "line": 60,
+        "line": 65,
         "purpose": "socket.socket() as reservation"
       },
       {
         "name": "port",
         "scope": "run",
-        "line": 62,
+        "line": 67,
         "purpose": "port = reservation.getsockname()[1]"
       },
       {
         "name": "origin",
         "scope": "run",
-        "line": 63,
+        "line": 68,
         "purpose": "origin = f'http://127.0.0.1:{port}'"
       },
       {
         "name": "log",
         "scope": "run",
-        "line": 64,
+        "line": 69,
         "purpose": "(output / 'native-owner.log').open('xb') as log"
       },
       {
         "name": "process",
         "scope": "run",
-        "line": 65,
+        "line": 70,
         "purpose": "process = subprocess.Popen([str(executable), '--no-browser', '--port', str(port), '--data', str(profile)], cwd=ROOT, env={**os.environ, 'PIMS_ACCEPTANCE_NONCE': nonce, 'PIMS_NO_BRO"
       },
       {
         "name": "normal",
         "scope": "run",
-        "line": 73,
+        "line": 78,
         "purpose": "normal = False"
       },
       {
         "name": "client",
         "scope": "run",
-        "line": 75,
+        "line": 80,
         "purpose": "httpx.Client(base_url=origin, timeout=3, trust_env=False) as client"
       },
       {
         "name": "deadline",
         "scope": "run",
-        "line": 76,
+        "line": 81,
         "purpose": "deadline = time.monotonic() + 120"
       },
       {
         "name": "response",
         "scope": "run",
-        "line": 81,
+        "line": 86,
         "purpose": "response = client.get('/health')"
       },
       {
         "name": "identity",
         "scope": "run",
-        "line": 83,
+        "line": 88,
         "purpose": "identity = response.json()"
       },
       {
         "name": "config",
         "scope": "run",
-        "line": 93,
+        "line": 98,
         "purpose": "config = output / 'playwright.config.mjs'"
       },
       {
         "name": "node",
         "scope": "run",
-        "line": 122,
+        "line": 127,
         "purpose": "node = shutil.which('node')"
+      },
+      {
+        "name": "browser_log_path",
+        "scope": "run",
+        "line": 130,
+        "purpose": "browser_log_path = output / 'original-browser-journeys.log'"
       },
       {
         "name": "browser_log",
         "scope": "run",
-        "line": 125,
-        "purpose": "(output / 'original-browser-journeys.log').open('xb') as browser_log"
+        "line": 132,
+        "purpose": "browser_log_path.open('xb') as browser_log"
       },
       {
         "name": "observed_tests",
         "scope": "run",
-        "line": 140,
+        "line": 150,
         "purpose": "observed_tests = json.loads((output / 'browser-results.json').read_text(encoding='utf-8'))"
       },
       {
         "name": "stats",
         "scope": "run",
-        "line": 143,
+        "line": 153,
         "purpose": "stats = observed_tests['stats']"
       },
       {
         "name": "normal",
         "scope": "run",
-        "line": 154,
+        "line": 164,
         "purpose": "normal = True"
       },
       {
         "name": "stopped",
         "scope": "run",
-        "line": 155,
+        "line": 165,
         "purpose": "socket.socket() as stopped"
       },
       {
         "name": "parser",
         "scope": "main",
-        "line": 202,
+        "line": 213,
         "purpose": "parser = argparse.ArgumentParser(description=__doc__)"
       },
       {
         "name": "args",
         "scope": "main",
-        "line": 205,
+        "line": 216,
         "purpose": "args = parser.parse_args()"
       }
     ]
@@ -18367,6 +18446,115 @@
         "scope": "test_pretrained_shard_index_cannot_escape_or_crash",
         "line": 310,
         "purpose": "base = random_sd(tmp_path / 'base')"
+      }
+    ]
+  },
+  "tests/test_native_diagnostics.py": {
+    "purpose": "Jason Stys: real bounded diagnostic files cannot execute terminal controls or replace failed acceptance.",
+    "declarations": [
+      {
+        "name": "module.test_actual_large_log_tail_is_bounded_escaped_and_file_unchanged",
+        "line": 11,
+        "kind": "FunctionDef",
+        "purpose": "Retain the meaningful last bytes while earlier contents/control sequences remain unprinted as controls."
+      },
+      {
+        "name": "module.test_missing_or_special_diagnostic_never_masks_the_original_failure",
+        "line": 24,
+        "kind": "FunctionDef",
+        "purpose": "An unavailable diagnostic cannot create success or raise over the real child error."
+      },
+      {
+        "name": "module.test_real_alias_diagnostic_is_not_read",
+        "line": 31,
+        "kind": "FunctionDef",
+        "purpose": "Refuse actual hard-linked logs so diagnostics cannot borrow unrelated file content."
+      }
+    ],
+    "variables": [
+      {
+        "name": "capsys",
+        "scope": "test_actual_large_log_tail_is_bounded_escaped_and_file_unchanged",
+        "line": 11,
+        "purpose": "Function parameter"
+      },
+      {
+        "name": "tmp_path",
+        "scope": "test_actual_large_log_tail_is_bounded_escaped_and_file_unchanged",
+        "line": 11,
+        "purpose": "Function parameter"
+      },
+      {
+        "name": "path",
+        "scope": "test_actual_large_log_tail_is_bounded_escaped_and_file_unchanged",
+        "line": 13,
+        "purpose": "path = tmp_path / 'failed-child.log'"
+      },
+      {
+        "name": "original",
+        "scope": "test_actual_large_log_tail_is_bounded_escaped_and_file_unchanged",
+        "line": 14,
+        "purpose": "original = b'PRIVATE-PREFIX' + b'x' * (MAX_TAIL * 3) + b'\\x1b[31m\\nactual-tail'"
+      },
+      {
+        "name": "raw",
+        "scope": "test_actual_large_log_tail_is_bounded_escaped_and_file_unchanged",
+        "line": 17,
+        "purpose": "raw = capsys.readouterr().err"
+      },
+      {
+        "name": "value",
+        "scope": "test_actual_large_log_tail_is_bounded_escaped_and_file_unchanged",
+        "line": 18,
+        "purpose": "value = json.loads(raw)"
+      },
+      {
+        "name": "capsys",
+        "scope": "test_missing_or_special_diagnostic_never_masks_the_original_failure",
+        "line": 24,
+        "purpose": "Function parameter"
+      },
+      {
+        "name": "tmp_path",
+        "scope": "test_missing_or_special_diagnostic_never_masks_the_original_failure",
+        "line": 24,
+        "purpose": "Function parameter"
+      },
+      {
+        "name": "path",
+        "scope": "test_missing_or_special_diagnostic_never_masks_the_original_failure",
+        "line": 26,
+        "purpose": "for path in (tmp_path / 'missing.log', tmp_path):\n    emit_tail(path)\n    assert 'diagnostic_unavailable' in json.loads(capsys.readouterr().err)"
+      },
+      {
+        "name": "capsys",
+        "scope": "test_real_alias_diagnostic_is_not_read",
+        "line": 31,
+        "purpose": "Function parameter"
+      },
+      {
+        "name": "tmp_path",
+        "scope": "test_real_alias_diagnostic_is_not_read",
+        "line": 31,
+        "purpose": "Function parameter"
+      },
+      {
+        "name": "original",
+        "scope": "test_real_alias_diagnostic_is_not_read",
+        "line": 33,
+        "purpose": "original = tmp_path / 'retained.txt'"
+      },
+      {
+        "name": "alias",
+        "scope": "test_real_alias_diagnostic_is_not_read",
+        "line": 35,
+        "purpose": "alias = tmp_path / 'alias.log'"
+      },
+      {
+        "name": "raw",
+        "scope": "test_real_alias_diagnostic_is_not_read",
+        "line": 38,
+        "purpose": "raw = capsys.readouterr().err"
       }
     ]
   },

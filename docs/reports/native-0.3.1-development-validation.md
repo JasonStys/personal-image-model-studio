@@ -94,3 +94,15 @@ Two earlier local controller runs used an invalid synthetic-temp configuration
 (inside the protected app tree, then a missing external parent); their failure
 logs are retained. The product's private-data guard was not relaxed. The
 successful full run used an existing dedicated external test directory.
+
+The exact `fbd9c70` current native Linux and macOS jobs passed, including the
+actual per-OS crypto/compiler observation. Windows compiled successfully and
+passed all 12 CPU checks; its later extracted-app browser child failed.
+The wrapper retained the child's actual log on the disposable runner but did
+not expose that log in the workflow output, so the specific assertion was not
+observable. The original decoded job log is retained privately. A follow-up
+adds bounded, JSON-escaped tails of only owned synthetic acceptance logs to
+both wrapper failure paths. Real-file tests cover truncation, terminal-control
+escaping, missing/special inputs and actual hard-link refusal. Original failures
+still propagate; no assertion, retry policy, success criterion or deadline is
+changed. Current hosted Windows investigation remains pending the diagnostic run.
