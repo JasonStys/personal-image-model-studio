@@ -60,7 +60,7 @@ python -m studio.private_cli
 
 The launcher opens a token-free loopback URL at an available port. Sign in, then unlock the separate vault. Source mode with full ML extras preserves compatible classic SD/LoRA; the bundled CPU application supports native models only. `python scripts/build_native.py` builds that CPU package after the UI build. No model weights or GPU drivers are bundled.
 
-**Legacy developer mode:** `python -m studio.cli --port 8016` / `--desktop` and `scripts/build_desktop.py` remain for historical reproducibility. They use a single-user bearer-token workspace, not the new encrypted account mode. Do not expose either launcher to a public network. Existing legacy data is preserved and not silently migrated.
+**Legacy developer mode:** `python -m studio.cli --port 8016` / `--desktop` and `scripts/build_desktop.py` remain for historical reproducibility. They use a single-user bearer-token workspace, not the new encrypted account mode. Do not expose either launcher to a public network. Existing legacy data is preserved and not silently migrated. Legacy file/runtime selection now uses launcher-owned grants: the workspace, OS-owner home and resolved configured interpreter directory. An additional approved external local directory requires repeatable `--allow-local-root PATH`; filesystem/network roots are refused. Account mode remains imports-only and refuses browser runtime changes. See [local path and artifact boundaries](docs/local-path-boundaries.md).
 
 [Installation and packaging](docs/installation.md) · [Walkthrough](docs/user-guide.md) · [DeviantArt setup](docs/deviantart.md)
 
@@ -71,7 +71,7 @@ Live DeviantArt authorization and identity lookup were verified. The approved ow
 ## Reproduce validation
 
 ```bash
-python -m pytest tests/test_core.py tests/test_deviantart.py tests/test_quickdraw.py tests/test_jobs.py tests/test_dataset_review.py
+python -m pytest tests/test_local_paths.py tests/test_local_files.py tests/test_core.py tests/test_deviantart.py tests/test_quickdraw.py tests/test_jobs.py tests/test_dataset_review.py
 python -m pytest tests/test_ml.py
 python -m pytest tests/test_private.py tests/test_private_ml.py
 python -m ruff check studio scripts tests

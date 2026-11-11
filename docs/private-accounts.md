@@ -99,3 +99,8 @@ and a public-hosted privacy architecture remain future gates, not certifications
 [psutil process lifecycle](https://psutil.io/api/),
 [Microsoft directory ACLs](https://learn.microsoft.com/en-us/windows-server/administration/windows-commands/icacls),
 [Diffusers safe model formats](https://huggingface.co/docs/diffusers/main/using-diffusers/other-formats).
+
+
+## Local artifact boundaries
+
+Account model/dataset requests are constrained to the active account imports directory twice: the authenticated proxy and independently configured inner API grants. Browser requests cannot add grants or change the runtime. Canonical UUID32 keys precede lookup; glossary/image/job artifact layouts derive from the workspace rather than saved absolute text. Actual descriptor/type/link/byte checks and same-byte image decoding retain bounded file handling. See [local path boundaries](local-path-boundaries.md) for legacy owner grants, compatibility and static-admission limits.

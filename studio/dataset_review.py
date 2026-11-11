@@ -1,5 +1,5 @@
 """Read-only, bounded dataset readiness review by Jason Stys.
-# Index: declarations module.manifest_records@L30, module.difference_hash@L81, module.review_dataset@L92, module.dataset_thumbnail@L215; variables MAX_RECORDS@L22, MAX_SAMPLE@L23, MAX_SAMPLE_BYTES@L24, MAX_SAMPLE_PIXELS@L25, MAX_PAIRS_SHOWN@L26, ORIGINS@L27, expected@L30, root@L30, manifest@L32, records@L33, seen@L42, record@L43, identity@L46, fingerprint@L68, r@L70, image@L81, gray@L83, small@L83, pixels@L84, value@L85, row@L86, column@L87, value@L88, expected@L92, root@L92, _@L94, records@L94, origins@L95, record@L95, eligible@L96, r@L96, splits@L97, r@L98, r@L98, split@L99, selected@L102, index@L103, split@L104, errors@L107, sampled@L107, used_bytes@L108, used_pixels@L108, budget_stopped@L109, record@L110, file@L112, status@L113, size@L116, budget_stopped@L120, stream@L122, content@L123, header@L126, pixels@L127, budget_stopped@L129, used_bytes@L131, used_pixels@L132, image@L133, candidates@L148, comparisons@L149, pair_count@L149, index@L150, left@L150, left_hash@L150, right@L151, right_hash@L151, comparisons@L154, distance@L155, pair_count@L157, key@L161, key@L162, captions@L166, r@L166, report@L167, r@L172, r@L173, r@L177, expected@L215, identity@L215, root@L215, _@L219, records@L219, item@L220, record@L220, file@L223, stream@L226, content@L227, source@L235, image@L238, output@L246. Purposes/parameters: docs/code-map.json.
+# Index: declarations module.manifest_records@L29, module.difference_hash@L80, module.review_dataset@L91, module.dataset_thumbnail@L208; variables MAX_RECORDS@L21, MAX_SAMPLE@L22, MAX_SAMPLE_BYTES@L23, MAX_SAMPLE_PIXELS@L24, MAX_PAIRS_SHOWN@L25, ORIGINS@L26, expected@L29, root@L29, manifest@L31, records@L32, seen@L41, record@L42, identity@L45, fingerprint@L67, r@L69, image@L80, gray@L82, small@L82, pixels@L83, value@L84, row@L85, column@L86, value@L87, expected@L91, root@L91, _@L93, records@L93, origins@L94, record@L94, eligible@L95, r@L95, splits@L96, r@L97, r@L97, split@L98, selected@L101, index@L102, split@L103, errors@L106, sampled@L106, used_bytes@L107, used_pixels@L107, budget_stopped@L108, record@L109, file@L111, content@L112, size@L113, budget_stopped@L115, header@L119, pixels@L120, budget_stopped@L122, used_bytes@L124, used_pixels@L125, image@L126, candidates@L141, comparisons@L142, pair_count@L142, index@L143, left@L143, left_hash@L143, right@L144, right_hash@L144, comparisons@L147, distance@L148, pair_count@L150, key@L154, key@L155, captions@L159, r@L159, report@L160, r@L165, r@L166, r@L170, expected@L208, identity@L208, root@L208, _@L212, records@L212, item@L213, record@L213, file@L216, content@L217, source@L225, image@L228, output@L236. Purposes/parameters: docs/code-map.json.
 
 Summarizes caption/provenance/split evidence and sampled cross-split visual
 similarity. Candidates are review aids, never proof of leakage or authorization.
@@ -11,13 +11,12 @@ import json
 import io
 import warnings
 import re
-import stat
 from collections import Counter
 from pathlib import Path
 
 from PIL import Image
 
-from studio.files import confined, normalized_image, read_json
+from studio.files import confined, normalized_pixels, read_json, regular_bytes
 
 MAX_RECORDS = 10_000
 MAX_SAMPLE = 64
@@ -110,27 +109,21 @@ def review_dataset(root: Path, expected: str) -> dict:
     for record in selected:
         try:
             file = confined(root, record["file"])
-            status = file.stat()
-            if not stat.S_ISREG(status.st_mode):
-                raise ValueError("Dataset image must be a regular file")
-            size = status.st_size
-            if size > 20 * 1024 * 1024:
-                raise ValueError("Image exceeds the existing 20 MiB image limit")
+            content = regular_bytes(file, 20 * 1024 * 1024)
+            size = len(content)
             if used_bytes + size > MAX_SAMPLE_BYTES:
                 budget_stopped = True
                 break
-            with file.open("rb") as stream:
-                content = stream.read(size + 1)
-            if len(content) != size or hashlib.sha256(content).hexdigest() != record["file_sha256"]:
+            if hashlib.sha256(content).hexdigest() != record["file_sha256"]:
                 raise ValueError("Image file fingerprint differs from the imported record")
-            with Image.open(file) as header:
+            with Image.open(io.BytesIO(content)) as header:
                 pixels = header.width * header.height
             if used_pixels + pixels > MAX_SAMPLE_PIXELS:
                 budget_stopped = True
                 break
             used_bytes += size
             used_pixels += pixels
-            with normalized_image(file) as image:
+            with normalized_pixels(content) as image:
                 if (
                     hashlib.sha256(f"{image.size}".encode() + image.tobytes()).hexdigest()
                     != record["hash"]
@@ -221,10 +214,7 @@ def dataset_thumbnail(root: Path, expected: str, identity: str) -> bytes:
     if record is None:
         raise KeyError("Unknown dataset image")
     file = confined(root, record["file"])
-    if not stat.S_ISREG(file.stat().st_mode):
-        raise ValueError("Dataset image must be a regular file")
-    with file.open("rb") as stream:
-        content = stream.read(20 * 1024 * 1024 + 1)
+    content = regular_bytes(file, 20 * 1024 * 1024)
     if (
         len(content) > 20 * 1024 * 1024
         or hashlib.sha256(content).hexdigest() != record["file_sha256"]

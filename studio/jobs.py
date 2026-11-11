@@ -1,6 +1,6 @@
 """One bounded local ML worker at a time; persistent status, timeout, cancellation and safe publication."""
 
-# Index: declarations module.Jobs@L19, Jobs.__init__@L22, Jobs.submit@L45, Jobs.cancel@L72, Jobs.execute@L79, Jobs.close@L246; variables TERMINAL@L16, interpreter@L23, self@L23, store@L23, worker_source@L23, record@L33, config@L45, kind@L45, references@L45, self@L45, j@L52, identity@L54, directory@L55, request@L57, record@L59, identity@L72, self@L72, record@L74, directory@L79, identity@L79, self@L79, record@L81, request@L86, timeout@L87, started@L88, permitted_environment@L89, environment@L111, key@L112, value@L112, flags@L128, log@L130, process@L131, cancellation_started@L145, cancellation_started@L148, progress_path@L157, progress@L159, current@L160, result@L171, status@L172, model_path@L178, model@L179, image_path@L193, adapter_path@L208, adapter@L209, current@L227, current@L234, self@L246, record@L250. Purposes/parameters: docs/code-map.json.
+# Index: declarations module.Jobs@L20, Jobs.__init__@L23, Jobs.submit@L46, Jobs.cancel@L73, Jobs.execute@L81, Jobs.close@L254; variables TERMINAL@L17, interpreter@L24, self@L24, store@L24, worker_source@L24, record@L34, config@L46, kind@L46, references@L46, self@L46, j@L53, identity@L55, directory@L56, request@L58, record@L60, identity@L73, self@L73, record@L75, selected@L77, directory@L81, identity@L81, self@L81, record@L83, request@L88, timeout@L89, started@L90, permitted_environment@L91, environment@L113, key@L114, value@L114, flags@L130, log@L132, process@L133, cancellation_started@L147, cancellation_started@L150, progress_path@L159, progress@L161, current@L162, result@L173, status@L180, model_path@L186, model@L187, image_path@L201, adapter_path@L216, adapter@L217, current@L235, current@L242, self@L254, record@L258. Purposes/parameters: docs/code-map.json.
 import os
 import subprocess
 import sys
@@ -12,6 +12,7 @@ from concurrent.futures import ThreadPoolExecutor
 from pathlib import Path
 from studio.files import atomic_json, confined, read_json
 from studio.store import Store
+from studio.local_paths import canonical_id
 
 TERMINAL = {"completed", "failed", "cancelled", "interrupted"}
 
@@ -73,7 +74,8 @@ class Jobs:
         """Set a job-scoped cancellation flag; no unrelated process is interrupted."""
         record = self.store.get("job", identity)
         if record["status"] not in TERMINAL:
-            confined(self.store.root, f"jobs/{identity}/cancel").touch()
+            selected = canonical_id(record["id"])
+            confined(self.store.root, f"jobs/{selected}/cancel").touch()
         return record
 
     def execute(self, identity: str, directory: Path) -> None:
@@ -169,6 +171,12 @@ class Jobs:
             if not (directory / "result.json").exists():
                 raise ValueError("Worker did not publish a result; inspect its private log")
             result = read_json(directory / "result.json", 2_000_000)
+            if (
+                result.get("model") not in (None, "model")
+                or result.get("lora") not in (None, "model")
+                or result.get("image") not in (None, "image.png")
+            ):
+                raise ValueError("Worker artifact layout differs from its fixed contract")
             status = result.get("status", "failed")
             if process.returncode != 0 or status not in {"completed", "cancelled"}:
                 raise ValueError(result.get("error", "Worker failed"))

@@ -4752,253 +4752,277 @@
     "declarations": [
       {
         "name": "module.Boundary",
-        "line": 29,
+        "line": 33,
         "kind": "ClassDef",
         "purpose": "Authenticate before body parsing and restrict Host/Origin and total request bytes."
       },
       {
         "name": "Boundary.__init__",
-        "line": 32,
+        "line": 36,
         "kind": "FunctionDef",
         "purpose": "Bind a strong private process token and exact localhost origin."
       },
       {
         "name": "Boundary.__call__",
-        "line": 38,
+        "line": 42,
         "kind": "AsyncFunctionDef",
         "purpose": "Validate headers and incrementally cap bodies before FastAPI receives input."
       },
       {
         "name": "Boundary.__call__.replay",
-        "line": 73,
+        "line": 77,
         "kind": "AsyncFunctionDef",
         "purpose": "Replay one bounded body; preserve the real receiver for later disconnect checks."
       },
       {
         "name": "Boundary.__call__.private_send",
-        "line": 81,
+        "line": 85,
         "kind": "AsyncFunctionDef",
         "purpose": "Apply private cache and browser isolation headers to every normal response."
       },
       {
         "name": "module.Upload",
-        "line": 99,
+        "line": 103,
         "kind": "ClassDef",
         "purpose": "Single base64 raster upload; filenames are labels, never filesystem paths."
       },
       {
         "name": "module.Policy",
-        "line": 107,
+        "line": 111,
         "kind": "ClassDef",
         "purpose": "Local transparent phrase blocks, not a semantic/visual safety classifier."
       },
       {
         "name": "module.AccountConnect",
-        "line": 114,
+        "line": 118,
         "kind": "ClassDef",
         "purpose": "Public application identifier only; this application never accepts a website password/secret."
       },
       {
         "name": "module.GalleryImport",
-        "line": 121,
+        "line": 125,
         "kind": "ClassDef",
         "purpose": "An own-gallery sample needs separate training-rights and provider-terms confirmation."
       },
       {
         "name": "module.RuntimeChoice",
-        "line": 131,
+        "line": 135,
         "kind": "ClassDef",
         "purpose": "Explicit operator-selected trusted Python executable, never shell text or interpreter arguments."
       },
       {
         "name": "module.create_app",
-        "line": 139,
+        "line": 143,
         "kind": "FunctionDef",
         "purpose": "Construct a single-user private workspace without changing other apps or requesting cloud credentials."
       },
       {
+        "name": "create_app.known",
+        "line": 172,
+        "kind": "FunctionDef",
+        "purpose": "Validate the server-generated canonical identity before the exact database lookup."
+      },
+      {
+        "name": "create_app.dataset_path",
+        "line": 176,
+        "kind": "FunctionDef",
+        "purpose": "Derive one registered dataset directory from trusted workspace and UUID, never record path text."
+      },
+      {
+        "name": "create_app.image_path",
+        "line": 182,
+        "kind": "FunctionDef",
+        "purpose": "Select a fixed uploaded/generated artifact layout; stored arbitrary paths are never served."
+      },
+      {
+        "name": "create_app.model_path",
+        "line": 193,
+        "kind": "FunctionDef",
+        "purpose": "Admit a generated model layout or an explicitly launcher-granted registered import."
+      },
+      {
         "name": "create_app.lifespan",
-        "line": 159,
+        "line": 204,
         "kind": "AsyncFunctionDef",
         "purpose": "Cancel only this workspace's workers at shutdown; preserve all completed artifacts."
       },
       {
         "name": "create_app.invalid",
-        "line": 177,
+        "line": 222,
         "kind": "AsyncFunctionDef",
         "purpose": "Return concise validation messages without echoing base64 images or private prompts."
       },
       {
         "name": "create_app.bad_value",
-        "line": 185,
+        "line": 230,
         "kind": "AsyncFunctionDef",
         "purpose": "Surface bounded known application errors; no stack traces in browser responses."
       },
       {
         "name": "create_app.missing",
-        "line": 190,
+        "line": 235,
         "kind": "AsyncFunctionDef",
         "purpose": "Unknown object identities yield a generic 404."
       },
       {
         "name": "create_app.file_error",
-        "line": 195,
+        "line": 240,
         "kind": "AsyncFunctionDef",
         "purpose": "Invalid/inaccessible files must not expose machine paths or traceback text to the browser."
       },
       {
         "name": "create_app.account_status",
-        "line": 200,
+        "line": 245,
         "kind": "FunctionDef",
         "purpose": "Return public connection state without credentials."
       },
       {
         "name": "create_app.account_connect",
-        "line": 205,
+        "line": 250,
         "kind": "FunctionDef",
         "purpose": "Provide an official browser authorization link for a registered public application."
       },
       {
         "name": "create_app.account_disconnect",
-        "line": 210,
+        "line": 255,
         "kind": "FunctionDef",
         "purpose": "Forget this process's credentials; provider-side revocation is a separate user action."
       },
       {
         "name": "create_app.account_callback",
-        "line": 216,
+        "line": 261,
         "kind": "FunctionDef",
         "purpose": "Authenticate the provider callback by one-use state rather than the app's private bearer token."
       },
       {
         "name": "create_app.account_import",
-        "line": 227,
+        "line": 272,
         "kind": "FunctionDef",
         "purpose": "Normalize an explicit bounded own-gallery sample, retain labels and separate AI-origin records."
       },
       {
         "name": "create_app.feedback_export",
-        "line": 245,
+        "line": 290,
         "kind": "FunctionDef",
         "purpose": "Download explicitly consenting feedback data; generated images stay labelled AI-origin."
       },
       {
         "name": "create_app.health",
-        "line": 254,
+        "line": 299,
         "kind": "FunctionDef",
         "purpose": "Return process readiness without exposing workspace data or token."
       },
       {
         "name": "create_app.runtime_status",
-        "line": 259,
+        "line": 304,
         "kind": "FunctionDef",
         "purpose": "Show which private local interpreter will run trusted ML modules."
       },
       {
         "name": "create_app.runtime_choice",
-        "line": 264,
+        "line": 309,
         "kind": "FunctionDef",
         "purpose": "Change future worker executable only while idle, with explicit local trust acknowledgement."
       },
       {
         "name": "create_app.workspace",
-        "line": 281,
+        "line": 326,
         "kind": "FunctionDef",
         "purpose": "Return bounded model/dataset/image/job metadata to the authenticated local tab."
       },
       {
         "name": "create_app.dataset",
-        "line": 286,
+        "line": 331,
         "kind": "FunctionDef",
         "purpose": "Import explicit rights-approved directories/ZIPs and retain AI quarantine metadata separately."
       },
       {
         "name": "create_app.dataset_review",
-        "line": 303,
+        "line": 349,
         "kind": "FunctionDef",
         "purpose": "Review a known account-scoped dataset; caller input never chooses a machine path or model."
       },
       {
         "name": "create_app.dataset_review_image",
-        "line": 313,
+        "line": 355,
         "kind": "FunctionDef",
         "purpose": "Read-only account-scoped thumbnail; guessed IDs and paths never resolve arbitrary files."
       },
       {
         "name": "create_app.synthetic",
-        "line": 326,
+        "line": 362,
         "kind": "FunctionDef",
         "purpose": "Create and register owned procedural data for a genuine offline training test."
       },
       {
         "name": "create_app.glossary",
-        "line": 342,
+        "line": 378,
         "kind": "FunctionDef",
         "purpose": "Read operator-reviewed tag meanings stored inside the chosen dataset."
       },
       {
         "name": "create_app.glossary_save",
-        "line": 347,
+        "line": 383,
         "kind": "FunctionDef",
         "purpose": "Persist reviewed definitions with citations; never label a web search result verified automatically."
       },
       {
         "name": "create_app.model",
-        "line": 373,
+        "line": 409,
         "kind": "FunctionDef",
         "purpose": "Register an operator-selected verified local model; never downloads or executes custom model code."
       },
       {
         "name": "create_app.upload",
-        "line": 405,
+        "line": 441,
         "kind": "FunctionDef",
         "purpose": "Normalize one raster input into a private generated-identity PNG and strip EXIF metadata."
       },
       {
         "name": "create_app.image_file",
-        "line": 433,
+        "line": 469,
         "kind": "FunctionDef",
         "purpose": "Serve only registered local image artifacts behind the private session boundary."
       },
       {
         "name": "create_app.training",
-        "line": 442,
+        "line": 481,
         "kind": "FunctionDef",
         "purpose": "Validate selections before admitting a real training job; no placeholder training exists."
       },
       {
         "name": "create_app.generation",
-        "line": 462,
+        "line": 499,
         "kind": "FunctionDef",
         "purpose": "Compile numeric weights, enforce local policy and queue a supported learned inference job."
       },
       {
         "name": "create_app.cancellation",
-        "line": 481,
+        "line": 520,
         "kind": "FunctionDef",
         "purpose": "Cancel one known workspace job; completed results remain intact."
       },
       {
         "name": "create_app.report",
-        "line": 486,
+        "line": 525,
         "kind": "FunctionDef",
         "purpose": "Download an auditable job report; source paths/prompts are private and not telemetry."
       },
       {
         "name": "create_app.feedback_save",
-        "line": 494,
+        "line": 533,
         "kind": "FunctionDef",
         "purpose": "Store human notes and consent; a new revision/training run must be explicitly requested."
       },
       {
         "name": "create_app.feedback_read",
-        "line": 500,
+        "line": 539,
         "kind": "FunctionDef",
         "purpose": "Return recorded human feedback without fabricating model-generated scores."
       },
       {
         "name": "create_app.policy_save",
-        "line": 505,
+        "line": 544,
         "kind": "FunctionDef",
         "purpose": "Configure simple transparent phrase rules without claiming semantic enforcement."
       }
@@ -5007,769 +5031,853 @@
       {
         "name": "app",
         "scope": "Boundary.__init__",
-        "line": 32,
+        "line": 36,
         "purpose": "Function parameter"
       },
       {
         "name": "port",
         "scope": "Boundary.__init__",
-        "line": 32,
+        "line": 36,
         "purpose": "Function parameter"
       },
       {
         "name": "self",
         "scope": "Boundary.__init__",
-        "line": 32,
+        "line": 36,
         "purpose": "Function parameter"
       },
       {
         "name": "token",
         "scope": "Boundary.__init__",
-        "line": 32,
+        "line": 36,
         "purpose": "Function parameter"
       },
       {
         "name": "receive",
         "scope": "Boundary.__call__",
-        "line": 38,
+        "line": 42,
         "purpose": "Function parameter"
       },
       {
         "name": "scope",
         "scope": "Boundary.__call__",
-        "line": 38,
+        "line": 42,
         "purpose": "Function parameter"
       },
       {
         "name": "self",
         "scope": "Boundary.__call__",
-        "line": 38,
+        "line": 42,
         "purpose": "Function parameter"
       },
       {
         "name": "send",
         "scope": "Boundary.__call__",
-        "line": 38,
+        "line": 42,
         "purpose": "Function parameter"
       },
       {
         "name": "headers",
         "scope": "Boundary.__call__",
-        "line": 42,
+        "line": 46,
         "purpose": "headers = {k.decode().lower(): v.decode() for k, v in scope['headers']}"
       },
       {
         "name": "k",
         "scope": "Boundary.__call__",
-        "line": 42,
+        "line": 46,
         "purpose": "(k, v)"
       },
       {
         "name": "v",
         "scope": "Boundary.__call__",
-        "line": 42,
+        "line": 46,
         "purpose": "(k, v)"
       },
       {
         "name": "size",
         "scope": "Boundary.__call__",
-        "line": 56,
+        "line": 60,
         "purpose": "size = 0"
       },
       {
         "name": "chunks",
         "scope": "Boundary.__call__",
-        "line": 57,
+        "line": 61,
         "purpose": "chunks = []"
       },
       {
         "name": "message",
         "scope": "Boundary.__call__",
-        "line": 59,
+        "line": 63,
         "purpose": "message = await receive()"
       },
       {
         "name": "chunk",
         "scope": "Boundary.__call__",
-        "line": 62,
+        "line": 66,
         "purpose": "chunk = message.get('body', b'')"
       },
       {
         "name": "size",
         "scope": "Boundary.__call__",
-        "line": 63,
+        "line": 67,
         "purpose": "size += len(chunk)"
       },
       {
         "name": "consumed",
         "scope": "Boundary.__call__",
-        "line": 71,
+        "line": 75,
         "purpose": "consumed = False"
       },
       {
         "name": "consumed",
         "scope": "Boundary.__call__.replay",
-        "line": 77,
+        "line": 81,
         "purpose": "consumed = True"
       },
       {
         "name": "message",
         "scope": "Boundary.__call__.private_send",
-        "line": 81,
+        "line": 85,
         "purpose": "Function parameter"
       },
       {
         "name": "model_config",
         "scope": "Upload",
-        "line": 102,
+        "line": 106,
         "purpose": "model_config = ConfigDict(extra='forbid')"
       },
       {
         "name": "name",
         "scope": "Upload",
-        "line": 103,
+        "line": 107,
         "purpose": "name: str = Field(min_length=1, max_length=100)"
       },
       {
         "name": "content",
         "scope": "Upload",
-        "line": 104,
+        "line": 108,
         "purpose": "content: str = Field(max_length=7000000)"
       },
       {
         "name": "model_config",
         "scope": "Policy",
-        "line": 110,
+        "line": 114,
         "purpose": "model_config = ConfigDict(extra='forbid')"
       },
       {
         "name": "denied_terms",
         "scope": "Policy",
-        "line": 111,
+        "line": 115,
         "purpose": "denied_terms: list[str] = Field(default_factory=list, max_length=100)"
       },
       {
         "name": "model_config",
         "scope": "AccountConnect",
-        "line": 117,
+        "line": 121,
         "purpose": "model_config = ConfigDict(extra='forbid')"
       },
       {
         "name": "client_id",
         "scope": "AccountConnect",
-        "line": 118,
+        "line": 122,
         "purpose": "client_id: str = Field(pattern='^[0-9]{1,12}$')"
       },
       {
         "name": "model_config",
         "scope": "GalleryImport",
-        "line": 124,
+        "line": 128,
         "purpose": "model_config = ConfigDict(extra='forbid')"
       },
       {
         "name": "name",
         "scope": "GalleryImport",
-        "line": 125,
+        "line": 129,
         "purpose": "name: str = Field(min_length=1, max_length=80)"
       },
       {
         "name": "max_items",
         "scope": "GalleryImport",
-        "line": 126,
+        "line": 130,
         "purpose": "max_items: int = Field(default=24, ge=1, le=96)"
       },
       {
         "name": "rights_confirmed",
         "scope": "GalleryImport",
-        "line": 127,
+        "line": 131,
         "purpose": "rights_confirmed: Literal[True]"
       },
       {
         "name": "provider_terms_reviewed",
         "scope": "GalleryImport",
-        "line": 128,
+        "line": 132,
         "purpose": "provider_terms_reviewed: Literal[True]"
       },
       {
         "name": "model_config",
         "scope": "RuntimeChoice",
-        "line": 134,
+        "line": 138,
         "purpose": "model_config = ConfigDict(extra='forbid')"
       },
       {
         "name": "python",
         "scope": "RuntimeChoice",
-        "line": 135,
+        "line": 139,
         "purpose": "python: str = Field(min_length=1, max_length=1024)"
       },
       {
         "name": "trusted",
         "scope": "RuntimeChoice",
-        "line": 136,
+        "line": 140,
         "purpose": "trusted: Literal[True]"
       },
       {
         "name": "root",
         "scope": "create_app",
-        "line": 140,
+        "line": 144,
         "purpose": "Function parameter"
       },
       {
         "name": "token",
         "scope": "create_app",
-        "line": 141,
+        "line": 145,
         "purpose": "Function parameter"
       },
       {
         "name": "port",
         "scope": "create_app",
-        "line": 142,
+        "line": 146,
         "purpose": "Function parameter"
       },
       {
         "name": "static",
         "scope": "create_app",
-        "line": 143,
+        "line": 147,
         "purpose": "Function parameter"
       },
       {
         "name": "interpreter",
         "scope": "create_app",
-        "line": 144,
+        "line": 148,
         "purpose": "Function parameter"
       },
       {
         "name": "connector_transport",
         "scope": "create_app",
-        "line": 145,
+        "line": 149,
         "purpose": "Function parameter"
       },
       {
         "name": "worker_source",
         "scope": "create_app",
-        "line": 146,
+        "line": 150,
+        "purpose": "Function parameter"
+      },
+      {
+        "name": "import_roots",
+        "scope": "create_app",
+        "line": 152,
         "purpose": "Function parameter"
       },
       {
         "name": "store",
         "scope": "create_app",
-        "line": 149,
+        "line": 155,
         "purpose": "store = Store(root)"
       },
       {
         "name": "interpreter",
         "scope": "create_app",
-        "line": 152,
+        "line": 158,
         "purpose": "interpreter = store.get('runtime', 'worker')['python']"
       },
       {
         "name": "jobs",
         "scope": "create_app",
-        "line": 155,
+        "line": 161,
         "purpose": "jobs = Jobs(store, interpreter, worker_source)"
+      },
+      {
+        "name": "grants",
+        "scope": "create_app",
+        "line": 162,
+        "purpose": "grants = LocalPaths(import_roots if import_roots is not None else (store.root, Path.home(), Path(os.path.realpath(jobs.interpreter or sys.executable)).parent))"
+      },
+      {
+        "name": "identity",
+        "scope": "create_app.known",
+        "line": 172,
+        "purpose": "Function parameter"
+      },
+      {
+        "name": "kind",
+        "scope": "create_app.known",
+        "line": 172,
+        "purpose": "Function parameter"
+      },
+      {
+        "name": "identity",
+        "scope": "create_app.dataset_path",
+        "line": 176,
+        "purpose": "Function parameter"
+      },
+      {
+        "name": "identity",
+        "scope": "create_app.dataset_path",
+        "line": 178,
+        "purpose": "identity = canonical_id(identity)"
+      },
+      {
+        "name": "identity",
+        "scope": "create_app.image_path",
+        "line": 182,
+        "purpose": "Function parameter"
+      },
+      {
+        "name": "identity",
+        "scope": "create_app.image_path",
+        "line": 184,
+        "purpose": "identity = canonical_id(identity)"
+      },
+      {
+        "name": "record",
+        "scope": "create_app.image_path",
+        "line": 185,
+        "purpose": "record = known('image', identity)"
+      },
+      {
+        "name": "relative",
+        "scope": "create_app.image_path",
+        "line": 186,
+        "purpose": "relative = 'images/' + identity + '.png' if record.get('details', {}).get('source') == 'user-upload' else 'jobs/' + identity + '/image.png'"
+      },
+      {
+        "name": "record",
+        "scope": "create_app.model_path",
+        "line": 193,
+        "purpose": "Function parameter"
+      },
+      {
+        "name": "identity",
+        "scope": "create_app.model_path",
+        "line": 195,
+        "purpose": "identity = canonical_id(record['id'])"
+      },
+      {
+        "name": "generated",
+        "scope": "create_app.model_path",
+        "line": 196,
+        "purpose": "generated = confined(store.root, 'jobs/' + identity + '/model')"
       },
       {
         "name": "connector",
         "scope": "create_app",
-        "line": 156,
+        "line": 201,
         "purpose": "connector = DeviantArt(port, connector_transport)"
       },
       {
         "name": "app",
         "scope": "create_app.lifespan",
-        "line": 159,
+        "line": 204,
         "purpose": "Function parameter"
       },
       {
         "name": "app",
         "scope": "create_app",
-        "line": 165,
+        "line": 210,
         "purpose": "app = FastAPI(title='Personal Image Model Studio', docs_url=None, redoc_url=None, openapi_url=None, lifespan=lifespan)"
       },
       {
         "name": "error",
         "scope": "create_app.invalid",
-        "line": 177,
+        "line": 222,
         "purpose": "Function parameter"
       },
       {
         "name": "request",
         "scope": "create_app.invalid",
-        "line": 177,
+        "line": 222,
         "purpose": "Function parameter"
       },
       {
         "name": "e",
         "scope": "create_app.invalid",
-        "line": 180,
+        "line": 225,
         "purpose": " for e in error.errors()"
       },
       {
         "name": "error",
         "scope": "create_app.bad_value",
-        "line": 185,
+        "line": 230,
         "purpose": "Function parameter"
       },
       {
         "name": "request",
         "scope": "create_app.bad_value",
-        "line": 185,
+        "line": 230,
         "purpose": "Function parameter"
       },
       {
         "name": "error",
         "scope": "create_app.missing",
-        "line": 190,
+        "line": 235,
         "purpose": "Function parameter"
       },
       {
         "name": "request",
         "scope": "create_app.missing",
-        "line": 190,
+        "line": 235,
         "purpose": "Function parameter"
       },
       {
         "name": "error",
         "scope": "create_app.file_error",
-        "line": 195,
+        "line": 240,
         "purpose": "Function parameter"
       },
       {
         "name": "request",
         "scope": "create_app.file_error",
-        "line": 195,
+        "line": 240,
         "purpose": "Function parameter"
       },
       {
         "name": "data",
         "scope": "create_app.account_connect",
-        "line": 205,
+        "line": 250,
         "purpose": "Function parameter"
       },
       {
         "name": "request",
         "scope": "create_app.account_callback",
-        "line": 216,
+        "line": 261,
         "purpose": "Function parameter"
       },
       {
         "name": "params",
         "scope": "create_app.account_callback",
-        "line": 218,
+        "line": 263,
         "purpose": "params = request.query_params"
       },
       {
         "name": "key",
         "scope": "create_app.account_callback",
-        "line": 219,
+        "line": 264,
         "purpose": " for key in params"
       },
       {
         "name": "data",
         "scope": "create_app.account_import",
-        "line": 227,
+        "line": 272,
         "purpose": "Function parameter"
       },
       {
         "name": "identity",
         "scope": "create_app.account_import",
-        "line": 229,
+        "line": 274,
         "purpose": "identity = uuid.uuid4().hex"
       },
       {
         "name": "path",
         "scope": "create_app.account_import",
-        "line": 230,
+        "line": 275,
         "purpose": "path = store.root / 'datasets' / identity"
       },
       {
         "name": "result",
         "scope": "create_app.account_import",
-        "line": 231,
+        "line": 276,
         "purpose": "result = connector.gallery(path, data.name, data.max_items)"
       },
       {
         "name": "record",
         "scope": "create_app.account_import",
-        "line": 232,
+        "line": 277,
         "purpose": "record = {'id': identity, 'name': data.name, 'path': str(path), 'counts': result['counts'], 'fingerprint': result['fingerprint'], 'connector': result['connector']}"
       },
       {
         "name": "data",
         "scope": "create_app.runtime_choice",
-        "line": 264,
+        "line": 309,
         "purpose": "Function parameter"
       },
       {
         "name": "path",
         "scope": "create_app.runtime_choice",
-        "line": 266,
-        "purpose": "path = Path(data.python).resolve(strict=True)"
+        "line": 311,
+        "purpose": "path = grants.selected(data.python)"
       },
       {
         "name": "job",
         "scope": "create_app.runtime_choice",
-        "line": 274,
+        "line": 319,
         "purpose": " for job in store.list('job')"
       },
       {
         "name": "kind",
         "scope": "create_app.workspace",
-        "line": 283,
+        "line": 328,
         "purpose": " for kind in ('model', 'dataset', 'image', 'job')"
       },
       {
         "name": "data",
         "scope": "create_app.dataset",
-        "line": 286,
+        "line": 331,
         "purpose": "Function parameter"
       },
       {
         "name": "identity",
         "scope": "create_app.dataset",
-        "line": 288,
+        "line": 333,
         "purpose": "identity = uuid.uuid4().hex"
       },
       {
         "name": "path",
         "scope": "create_app.dataset",
-        "line": 289,
+        "line": 334,
         "purpose": "path = store.root / 'datasets' / identity"
+      },
+      {
+        "name": "selected",
+        "scope": "create_app.dataset",
+        "line": 335,
+        "purpose": "selected = [str(grants.selected(value)) for value in data.paths]"
+      },
+      {
+        "name": "value",
+        "scope": "create_app.dataset",
+        "line": 335,
+        "purpose": " for value in data.paths"
       },
       {
         "name": "result",
         "scope": "create_app.dataset",
-        "line": 290,
-        "purpose": "result = import_dataset(data.paths, path, data.name)"
+        "line": 336,
+        "purpose": "result = import_dataset(selected, path, data.name)"
       },
       {
         "name": "record",
         "scope": "create_app.dataset",
-        "line": 291,
+        "line": 337,
         "purpose": "record = {'id': identity, 'name': data.name, 'path': str(path), 'counts': result['counts'], 'fingerprint': result['fingerprint']}"
       },
       {
         "name": "identity",
         "scope": "create_app.dataset_review",
-        "line": 303,
+        "line": 349,
         "purpose": "Function parameter"
-      },
-      {
-        "name": "character",
-        "scope": "create_app.dataset_review",
-        "line": 306,
-        "purpose": " for character in identity"
       },
       {
         "name": "record",
         "scope": "create_app.dataset_review",
-        "line": 309,
-        "purpose": "record = store.get('dataset', identity)"
+        "line": 351,
+        "purpose": "record = known('dataset', identity)"
       },
       {
         "name": "identity",
         "scope": "create_app.dataset_review_image",
-        "line": 313,
+        "line": 355,
         "purpose": "Function parameter"
       },
       {
         "name": "image_hash",
         "scope": "create_app.dataset_review_image",
-        "line": 313,
+        "line": 355,
         "purpose": "Function parameter"
-      },
-      {
-        "name": "character",
-        "scope": "create_app.dataset_review_image",
-        "line": 316,
-        "purpose": " for character in identity"
       },
       {
         "name": "record",
         "scope": "create_app.dataset_review_image",
-        "line": 319,
-        "purpose": "record = store.get('dataset', identity)"
+        "line": 357,
+        "purpose": "record = known('dataset', identity)"
       },
       {
         "name": "content",
         "scope": "create_app.dataset_review_image",
-        "line": 320,
-        "purpose": "content = dataset_thumbnail(confined(store.root, f'datasets/{identity}'), record['fingerprint'], image_hash)"
+        "line": 358,
+        "purpose": "content = dataset_thumbnail(dataset_path(identity), record['fingerprint'], image_hash)"
       },
       {
         "name": "identity",
         "scope": "create_app.synthetic",
-        "line": 328,
+        "line": 364,
         "purpose": "identity = uuid.uuid4().hex"
       },
       {
         "name": "path",
         "scope": "create_app.synthetic",
-        "line": 329,
+        "line": 365,
         "purpose": "path = store.root / 'datasets' / identity"
       },
       {
         "name": "result",
         "scope": "create_app.synthetic",
-        "line": 330,
+        "line": 366,
         "purpose": "result = synthetic_dataset(path)"
       },
       {
         "name": "record",
         "scope": "create_app.synthetic",
-        "line": 331,
+        "line": 367,
         "purpose": "record = {'id': identity, 'name': result['name'], 'path': str(path), 'counts': result['counts'], 'fingerprint': result['fingerprint']}"
       },
       {
         "name": "identity",
         "scope": "create_app.glossary",
-        "line": 342,
+        "line": 378,
         "purpose": "Function parameter"
       },
       {
         "name": "body",
         "scope": "create_app.glossary_save",
-        "line": 347,
+        "line": 383,
         "purpose": "Function parameter"
       },
       {
         "name": "identity",
         "scope": "create_app.glossary_save",
-        "line": 347,
+        "line": 383,
         "purpose": "Function parameter"
       },
       {
         "name": "entries",
         "scope": "create_app.glossary_save",
-        "line": 349,
+        "line": 385,
         "purpose": "entries = body.get('entries', {})"
       },
       {
         "name": "term",
         "scope": "create_app.glossary_save",
-        "line": 352,
+        "line": 388,
         "purpose": "(term, value)"
       },
       {
         "name": "value",
         "scope": "create_app.glossary_save",
-        "line": 352,
+        "line": 388,
         "purpose": "(term, value)"
       },
       {
         "name": "path",
         "scope": "create_app.glossary_save",
-        "line": 368,
-        "purpose": "path = Path(store.get('dataset', identity)['path']) / 'glossary.json'"
+        "line": 404,
+        "purpose": "path = dataset_path(identity) / 'glossary.json'"
       },
       {
         "name": "data",
         "scope": "create_app.model",
-        "line": 373,
+        "line": 409,
         "purpose": "Function parameter"
       },
       {
         "name": "path",
         "scope": "create_app.model",
-        "line": 375,
-        "purpose": "path = Path(data.path).resolve(strict=True)"
+        "line": 411,
+        "purpose": "path = grants.selected(data.path)"
       },
       {
         "name": "details",
         "scope": "create_app.model",
-        "line": 379,
+        "line": 415,
         "purpose": "details = verify(path)"
       },
       {
         "name": "summary",
         "scope": "create_app.model",
-        "line": 380,
+        "line": 416,
         "purpose": "summary = {'resolution': details['resolution'], 'trained_steps': details['trained_steps'], **details['validation']}"
       },
       {
         "name": "summary",
         "scope": "create_app.model",
-        "line": 388,
+        "line": 424,
         "purpose": "summary = {'family': 'classic Stable Diffusion', 'inspection': 'Fixed component classes and safe tensor files inspected; worker validates tensor loading'}"
       },
       {
         "name": "identity",
         "scope": "create_app.model",
-        "line": 392,
+        "line": 428,
         "purpose": "identity = uuid.uuid4().hex"
       },
       {
         "name": "result",
         "scope": "create_app.model",
-        "line": 393,
+        "line": 429,
         "purpose": "result = {'id': identity, 'name': data.name, 'kind': data.kind, 'path': str(path), 'license_note': data.license_note, 'details': summary}"
       },
       {
         "name": "data",
         "scope": "create_app.upload",
-        "line": 405,
+        "line": 441,
         "purpose": "Function parameter"
       },
       {
         "name": "content",
         "scope": "create_app.upload",
-        "line": 408,
+        "line": 444,
         "purpose": "content = base64.b64decode(data.content, validate=True)"
       },
       {
         "name": "identity",
         "scope": "create_app.upload",
-        "line": 411,
+        "line": 447,
         "purpose": "identity = uuid.uuid4().hex"
       },
       {
         "name": "directory",
         "scope": "create_app.upload",
-        "line": 412,
+        "line": 448,
         "purpose": "directory = store.root / 'images'"
       },
       {
         "name": "temporary",
         "scope": "create_app.upload",
-        "line": 414,
+        "line": 450,
         "purpose": "temporary = directory / f'{identity}.upload'"
       },
       {
         "name": "path",
         "scope": "create_app.upload",
-        "line": 415,
+        "line": 451,
         "purpose": "path = directory / f'{identity}.png'"
       },
       {
         "name": "image",
         "scope": "create_app.upload",
-        "line": 418,
+        "line": 454,
         "purpose": "normalized_image(temporary) as image"
       },
       {
         "name": "record",
         "scope": "create_app.upload",
-        "line": 422,
+        "line": 458,
         "purpose": "record = {'id': identity, 'name': data.name, 'path': str(path), 'request': None, 'details': {'source': 'user-upload'}}"
       },
       {
         "name": "identity",
         "scope": "create_app.image_file",
-        "line": 433,
+        "line": 469,
         "purpose": "Function parameter"
+      },
+      {
+        "name": "content",
+        "scope": "create_app.image_file",
+        "line": 471,
+        "purpose": "content = regular_bytes(image_path(identity), MAX_IMAGE_BYTES)"
       },
       {
         "name": "settings",
         "scope": "create_app.training",
-        "line": 442,
+        "line": 481,
         "purpose": "Function parameter"
       },
       {
         "name": "references",
         "scope": "create_app.training",
-        "line": 444,
-        "purpose": "references = {'datasets': [store.get('dataset', identity)['path'] for identity in settings.dataset_ids]}"
+        "line": 483,
+        "purpose": "references = {'datasets': [str(dataset_path(identity)) for identity in settings.dataset_ids]}"
       },
       {
         "name": "identity",
         "scope": "create_app.training",
-        "line": 446,
+        "line": 484,
         "purpose": " for identity in settings.dataset_ids"
       },
       {
         "name": "resumed",
         "scope": "create_app.training",
-        "line": 450,
-        "purpose": "resumed = store.get('model', settings.resume_model_id)"
+        "line": 487,
+        "purpose": "resumed = known('model', settings.resume_model_id)"
       },
       {
         "name": "base",
         "scope": "create_app.training",
-        "line": 455,
-        "purpose": "base = store.get('model', settings.base_model_id)"
+        "line": 492,
+        "purpose": "base = known('model', settings.base_model_id)"
       },
       {
         "name": "settings",
         "scope": "create_app.generation",
-        "line": 462,
+        "line": 499,
         "purpose": "Function parameter"
       },
       {
         "name": "compiled",
         "scope": "create_app.generation",
-        "line": 464,
+        "line": 501,
         "purpose": "compiled = compile_prompt(settings.prompt.model_dump())"
       },
       {
         "name": "policy",
         "scope": "create_app.generation",
-        "line": 465,
+        "line": 502,
         "purpose": "policy = store.list('policy', 1)"
       },
       {
         "name": "selected",
         "scope": "create_app.generation",
-        "line": 467,
-        "purpose": "selected = store.get('model', settings.model_id)"
+        "line": 504,
+        "purpose": "selected = known('model', settings.model_id)"
       },
       {
         "name": "references",
         "scope": "create_app.generation",
-        "line": 468,
-        "purpose": "references = {'model_kind': selected['kind'], 'model': selected.get('base', selected['path'])}"
+        "line": 505,
+        "purpose": "references = {'model_kind': selected['kind'], 'model': str(grants.selected(selected['base'])) if selected.get('base') else str(model_path(selected))}"
       },
       {
         "name": "identity",
         "scope": "create_app.cancellation",
-        "line": 481,
+        "line": 520,
         "purpose": "Function parameter"
       },
       {
         "name": "identity",
         "scope": "create_app.report",
-        "line": 486,
+        "line": 525,
         "purpose": "Function parameter"
       },
       {
         "name": "job",
         "scope": "create_app.report",
-        "line": 488,
-        "purpose": "job = store.get('job', identity)"
+        "line": 527,
+        "purpose": "job = known('job', identity)"
       },
       {
         "name": "feedback",
         "scope": "create_app.feedback_save",
-        "line": 494,
+        "line": 533,
         "purpose": "Function parameter"
       },
       {
         "name": "identity",
         "scope": "create_app.feedback_save",
-        "line": 494,
+        "line": 533,
         "purpose": "Function parameter"
       },
       {
         "name": "identity",
         "scope": "create_app.feedback_read",
-        "line": 500,
+        "line": 539,
         "purpose": "Function parameter"
       },
       {
         "name": "policy",
         "scope": "create_app.policy_save",
-        "line": 505,
+        "line": 544,
         "purpose": "Function parameter"
       },
       {
         "name": "term",
         "scope": "create_app.policy_save",
-        "line": 507,
+        "line": 546,
         "purpose": " for term in policy.denied_terms"
       },
       {
         "name": "static",
         "scope": "create_app",
-        "line": 512,
+        "line": 551,
         "purpose": "static = static or Path(__file__).resolve().parents[1] / 'dist'"
       }
     ]
@@ -6119,79 +6227,79 @@
       {
         "name": "args",
         "scope": "main",
-        "line": 22,
+        "line": 29,
         "purpose": "args = parser.parse_args()"
       },
       {
         "name": "frozen",
         "scope": "main",
-        "line": 25,
+        "line": 32,
         "purpose": "frozen = getattr(sys, 'frozen', False)"
       },
       {
         "name": "root",
         "scope": "main",
-        "line": 26,
+        "line": 33,
         "purpose": "root = Path(getattr(sys, '_MEIPASS', Path(__file__).resolve().parents[1]))"
       },
       {
         "name": "data",
         "scope": "main",
-        "line": 27,
+        "line": 34,
         "purpose": "data = args.data or (Path(os.environ.get('LOCALAPPDATA', Path.home() / '.local' / 'share')) / 'PersonalImageModelStudio' if frozen else Path('runtime/default'))"
       },
       {
         "name": "interpreter",
         "scope": "main",
-        "line": 33,
+        "line": 40,
         "purpose": "interpreter = args.worker_python"
       },
       {
         "name": "interpreter",
         "scope": "main",
-        "line": 38,
+        "line": 45,
         "purpose": "interpreter = Store(data).get('runtime', 'worker')['python']"
       },
       {
         "name": "interpreter",
         "scope": "main",
-        "line": 40,
+        "line": 47,
         "purpose": "interpreter = ''"
       },
       {
         "name": "token",
         "scope": "main",
-        "line": 41,
+        "line": 48,
         "purpose": "token = os.environ.get('IMAGE_STUDIO_TOKEN') or secrets.token_urlsafe(32)"
       },
       {
         "name": "app",
         "scope": "main",
-        "line": 42,
-        "purpose": "app = create_app(data, token, args.port, root / 'dist', interpreter, worker_source=root / 'studio-source' if frozen else None)"
+        "line": 49,
+        "purpose": "app = create_app(data, token, args.port, root / 'dist', interpreter, worker_source=root / 'studio-source' if frozen else None, import_roots=tuple([data, Path.home(), Path(os.path.r"
       },
       {
         "name": "server",
         "scope": "main",
-        "line": 50,
+        "line": 65,
         "purpose": "server = uvicorn.Server(uvicorn.Config(app, host='127.0.0.1', port=args.port, log_level='warning', log_config=None if frozen else uvicorn.config.LOGGING_CONFIG))"
       },
       {
         "name": "url",
         "scope": "main",
-        "line": 59,
+        "line": 74,
         "purpose": "url = f'http://127.0.0.1:{args.port}/#token={token}'"
       },
       {
         "name": "thread",
         "scope": "main",
-        "line": 63,
+        "line": 78,
         "purpose": "thread = threading.Thread(target=server.run, daemon=True)"
       },
       {
         "name": "deadline",
         "scope": "main",
-        "line": 65,
+        "line": 80,
         "purpose": "deadline = time.monotonic() + 20"
       }
     ]
@@ -6658,25 +6766,25 @@
     "declarations": [
       {
         "name": "module.manifest_records",
-        "line": 30,
+        "line": 29,
         "kind": "FunctionDef",
         "purpose": "Validate exact normalized imported identities and the existing dataset fingerprint."
       },
       {
         "name": "module.difference_hash",
-        "line": 81,
+        "line": 80,
         "kind": "FunctionDef",
         "purpose": "Compute 64 horizontal grayscale comparisons; collisions and semantic differences remain possible."
       },
       {
         "name": "module.review_dataset",
-        "line": 92,
+        "line": 91,
         "kind": "FunctionDef",
         "purpose": "Inspect only normalized local data without altering manifests, training selection, models or pixels."
       },
       {
         "name": "module.dataset_thumbnail",
-        "line": 215,
+        "line": 208,
         "kind": "FunctionDef",
         "purpose": "Return a metadata-free bounded PNG only for a known, integrity-checked imported record."
       }
@@ -6685,529 +6793,511 @@
       {
         "name": "MAX_RECORDS",
         "scope": "module",
-        "line": 22,
+        "line": 21,
         "purpose": "MAX_RECORDS = 10000"
       },
       {
         "name": "MAX_SAMPLE",
         "scope": "module",
-        "line": 23,
+        "line": 22,
         "purpose": "MAX_SAMPLE = 64"
       },
       {
         "name": "MAX_SAMPLE_BYTES",
         "scope": "module",
-        "line": 24,
+        "line": 23,
         "purpose": "MAX_SAMPLE_BYTES = 32 * 1024 * 1024"
       },
       {
         "name": "MAX_SAMPLE_PIXELS",
         "scope": "module",
-        "line": 25,
+        "line": 24,
         "purpose": "MAX_SAMPLE_PIXELS = 16777216"
       },
       {
         "name": "MAX_PAIRS_SHOWN",
         "scope": "module",
-        "line": 26,
+        "line": 25,
         "purpose": "MAX_PAIRS_SHOWN = 32"
       },
       {
         "name": "ORIGINS",
         "scope": "module",
-        "line": 27,
+        "line": 26,
         "purpose": "ORIGINS = {'human', 'synthetic_procedural', 'ai_generated', 'ai_assisted', 'unknown'}"
       },
       {
         "name": "expected",
         "scope": "manifest_records",
-        "line": 30,
+        "line": 29,
         "purpose": "Function parameter"
       },
       {
         "name": "root",
         "scope": "manifest_records",
-        "line": 30,
+        "line": 29,
         "purpose": "Function parameter"
       },
       {
         "name": "manifest",
         "scope": "manifest_records",
-        "line": 32,
+        "line": 31,
         "purpose": "manifest = read_json(root / 'dataset.json', 8 * 1024 * 1024)"
       },
       {
         "name": "records",
         "scope": "manifest_records",
-        "line": 33,
+        "line": 32,
         "purpose": "records = manifest.get('records')"
       },
       {
         "name": "seen",
         "scope": "manifest_records",
-        "line": 42,
+        "line": 41,
         "purpose": "seen = set()"
       },
       {
         "name": "record",
         "scope": "manifest_records",
-        "line": 43,
+        "line": 42,
         "purpose": "for record in records:\n    if not isinstance(record, dict):\n        raise ValueError('Invalid dataset review record')\n    identity = record.get('hash')\n    if not isinstance(identi"
       },
       {
         "name": "identity",
         "scope": "manifest_records",
-        "line": 46,
+        "line": 45,
         "purpose": "identity = record.get('hash')"
       },
       {
         "name": "fingerprint",
         "scope": "manifest_records",
-        "line": 68,
+        "line": 67,
         "purpose": "fingerprint = hashlib.sha256(json.dumps(sorted(((r['hash'], r['caption'], r['origin'], r['split']) for r in records)), ensure_ascii=False).encode()).hexdigest()"
       },
       {
         "name": "r",
         "scope": "manifest_records",
-        "line": 70,
+        "line": 69,
         "purpose": " for r in records"
       },
       {
         "name": "image",
         "scope": "difference_hash",
-        "line": 81,
+        "line": 80,
         "purpose": "Function parameter"
       },
       {
         "name": "gray",
         "scope": "difference_hash",
-        "line": 83,
+        "line": 82,
         "purpose": "image.convert('L') as gray"
       },
       {
         "name": "small",
         "scope": "difference_hash",
-        "line": 83,
+        "line": 82,
         "purpose": "gray.resize((9, 8), Image.Resampling.LANCZOS) as small"
       },
       {
         "name": "pixels",
         "scope": "difference_hash",
-        "line": 84,
+        "line": 83,
         "purpose": "pixels = small.tobytes()"
       },
       {
         "name": "value",
         "scope": "difference_hash",
-        "line": 85,
+        "line": 84,
         "purpose": "value = 0"
       },
       {
         "name": "row",
         "scope": "difference_hash",
-        "line": 86,
+        "line": 85,
         "purpose": "for row in range(8):\n    for column in range(8):\n        value = value << 1 | (pixels[row * 9 + column] > pixels[row * 9 + column + 1])"
       },
       {
         "name": "column",
         "scope": "difference_hash",
-        "line": 87,
+        "line": 86,
         "purpose": "for column in range(8):\n    value = value << 1 | (pixels[row * 9 + column] > pixels[row * 9 + column + 1])"
       },
       {
         "name": "value",
         "scope": "difference_hash",
-        "line": 88,
+        "line": 87,
         "purpose": "value = value << 1 | (pixels[row * 9 + column] > pixels[row * 9 + column + 1])"
       },
       {
         "name": "expected",
         "scope": "review_dataset",
-        "line": 92,
+        "line": 91,
         "purpose": "Function parameter"
       },
       {
         "name": "root",
         "scope": "review_dataset",
-        "line": 92,
+        "line": 91,
         "purpose": "Function parameter"
       },
       {
         "name": "_",
         "scope": "review_dataset",
-        "line": 94,
+        "line": 93,
         "purpose": "(_, records)"
       },
       {
         "name": "records",
         "scope": "review_dataset",
-        "line": 94,
+        "line": 93,
         "purpose": "(_, records)"
       },
       {
         "name": "origins",
         "scope": "review_dataset",
-        "line": 95,
+        "line": 94,
         "purpose": "origins = Counter((record['origin'] for record in records))"
       },
       {
         "name": "record",
         "scope": "review_dataset",
-        "line": 95,
+        "line": 94,
         "purpose": " for record in records"
       },
       {
         "name": "eligible",
         "scope": "review_dataset",
-        "line": 96,
+        "line": 95,
         "purpose": "eligible = [r for r in records if r['caption'].strip() and (not r['origin'].startswith('ai_'))]"
       },
       {
         "name": "r",
         "scope": "review_dataset",
-        "line": 96,
+        "line": 95,
         "purpose": " for r in records if r['caption'].strip() and (not r['origin'].startswith('ai_'))"
       },
       {
         "name": "splits",
         "scope": "review_dataset",
-        "line": 97,
+        "line": 96,
         "purpose": "splits = {split: sorted((r for r in eligible if r['split'] == split), key=lambda r: r['hash']) for split in ('train', 'validation')}"
       },
       {
         "name": "r",
         "scope": "review_dataset",
-        "line": 98,
+        "line": 97,
         "purpose": " for r in eligible if r['split'] == split"
       },
       {
         "name": "r",
         "scope": "review_dataset",
-        "line": 98,
+        "line": 97,
         "purpose": "Function parameter"
       },
       {
         "name": "split",
         "scope": "review_dataset",
-        "line": 99,
+        "line": 98,
         "purpose": " for split in ('train', 'validation')"
       },
       {
         "name": "selected",
         "scope": "review_dataset",
-        "line": 102,
+        "line": 101,
         "purpose": "selected = []"
       },
       {
         "name": "index",
         "scope": "review_dataset",
-        "line": 103,
+        "line": 102,
         "purpose": "for index in range(MAX_SAMPLE):\n    for split in ('train', 'validation'):\n        if index < len(splits[split]) and len(selected) < MAX_SAMPLE:\n            selected.append(splits[s"
       },
       {
         "name": "split",
         "scope": "review_dataset",
-        "line": 104,
+        "line": 103,
         "purpose": "for split in ('train', 'validation'):\n    if index < len(splits[split]) and len(selected) < MAX_SAMPLE:\n        selected.append(splits[split][index])"
       },
       {
         "name": "errors",
         "scope": "review_dataset",
-        "line": 107,
+        "line": 106,
         "purpose": "(sampled, errors)"
       },
       {
         "name": "sampled",
         "scope": "review_dataset",
-        "line": 107,
+        "line": 106,
         "purpose": "(sampled, errors)"
       },
       {
         "name": "used_bytes",
         "scope": "review_dataset",
-        "line": 108,
+        "line": 107,
         "purpose": "used_bytes = used_pixels = 0"
       },
       {
         "name": "used_pixels",
         "scope": "review_dataset",
-        "line": 108,
+        "line": 107,
         "purpose": "used_bytes = used_pixels = 0"
       },
       {
         "name": "budget_stopped",
         "scope": "review_dataset",
-        "line": 109,
+        "line": 108,
         "purpose": "budget_stopped = False"
       },
       {
         "name": "record",
         "scope": "review_dataset",
-        "line": 110,
-        "purpose": "for record in selected:\n    try:\n        file = confined(root, record['file'])\n        status = file.stat()\n        if not stat.S_ISREG(status.st_mode):\n            raise ValueErro"
+        "line": 109,
+        "purpose": "for record in selected:\n    try:\n        file = confined(root, record['file'])\n        content = regular_bytes(file, 20 * 1024 * 1024)\n        size = len(content)\n        if used_b"
       },
       {
         "name": "file",
         "scope": "review_dataset",
-        "line": 112,
+        "line": 111,
         "purpose": "file = confined(root, record['file'])"
-      },
-      {
-        "name": "status",
-        "scope": "review_dataset",
-        "line": 113,
-        "purpose": "status = file.stat()"
-      },
-      {
-        "name": "size",
-        "scope": "review_dataset",
-        "line": 116,
-        "purpose": "size = status.st_size"
-      },
-      {
-        "name": "budget_stopped",
-        "scope": "review_dataset",
-        "line": 120,
-        "purpose": "budget_stopped = True"
-      },
-      {
-        "name": "stream",
-        "scope": "review_dataset",
-        "line": 122,
-        "purpose": "file.open('rb') as stream"
       },
       {
         "name": "content",
         "scope": "review_dataset",
-        "line": 123,
-        "purpose": "content = stream.read(size + 1)"
+        "line": 112,
+        "purpose": "content = regular_bytes(file, 20 * 1024 * 1024)"
+      },
+      {
+        "name": "size",
+        "scope": "review_dataset",
+        "line": 113,
+        "purpose": "size = len(content)"
+      },
+      {
+        "name": "budget_stopped",
+        "scope": "review_dataset",
+        "line": 115,
+        "purpose": "budget_stopped = True"
       },
       {
         "name": "header",
         "scope": "review_dataset",
-        "line": 126,
-        "purpose": "Image.open(file) as header"
+        "line": 119,
+        "purpose": "Image.open(io.BytesIO(content)) as header"
       },
       {
         "name": "pixels",
         "scope": "review_dataset",
-        "line": 127,
+        "line": 120,
         "purpose": "pixels = header.width * header.height"
       },
       {
         "name": "budget_stopped",
         "scope": "review_dataset",
-        "line": 129,
+        "line": 122,
         "purpose": "budget_stopped = True"
       },
       {
         "name": "used_bytes",
         "scope": "review_dataset",
-        "line": 131,
+        "line": 124,
         "purpose": "used_bytes += size"
       },
       {
         "name": "used_pixels",
         "scope": "review_dataset",
-        "line": 132,
+        "line": 125,
         "purpose": "used_pixels += pixels"
       },
       {
         "name": "image",
         "scope": "review_dataset",
-        "line": 133,
-        "purpose": "normalized_image(file) as image"
+        "line": 126,
+        "purpose": "normalized_pixels(content) as image"
       },
       {
         "name": "candidates",
         "scope": "review_dataset",
-        "line": 148,
+        "line": 141,
         "purpose": "candidates = []"
       },
       {
         "name": "comparisons",
         "scope": "review_dataset",
-        "line": 149,
+        "line": 142,
         "purpose": "pair_count = comparisons = 0"
       },
       {
         "name": "pair_count",
         "scope": "review_dataset",
-        "line": 149,
+        "line": 142,
         "purpose": "pair_count = comparisons = 0"
       },
       {
         "name": "index",
         "scope": "review_dataset",
-        "line": 150,
+        "line": 143,
         "purpose": "(index, (left, left_hash))"
       },
       {
         "name": "left",
         "scope": "review_dataset",
-        "line": 150,
+        "line": 143,
         "purpose": "(left, left_hash)"
       },
       {
         "name": "left_hash",
         "scope": "review_dataset",
-        "line": 150,
+        "line": 143,
         "purpose": "(left, left_hash)"
       },
       {
         "name": "right",
         "scope": "review_dataset",
-        "line": 151,
+        "line": 144,
         "purpose": "(right, right_hash)"
       },
       {
         "name": "right_hash",
         "scope": "review_dataset",
-        "line": 151,
+        "line": 144,
         "purpose": "(right, right_hash)"
       },
       {
         "name": "comparisons",
         "scope": "review_dataset",
-        "line": 154,
+        "line": 147,
         "purpose": "comparisons += 1"
       },
       {
         "name": "distance",
         "scope": "review_dataset",
-        "line": 155,
+        "line": 148,
         "purpose": "distance = (left_hash ^ right_hash).bit_count()"
       },
       {
         "name": "pair_count",
         "scope": "review_dataset",
-        "line": 157,
+        "line": 150,
         "purpose": "pair_count += 1"
       },
       {
         "name": "key",
         "scope": "review_dataset",
-        "line": 161,
+        "line": 154,
         "purpose": " for key in ('hash', 'name', 'split')"
       },
       {
         "name": "key",
         "scope": "review_dataset",
-        "line": 162,
+        "line": 155,
         "purpose": " for key in ('hash', 'name', 'split')"
       },
       {
         "name": "captions",
         "scope": "review_dataset",
-        "line": 166,
+        "line": 159,
         "purpose": "captions = Counter((r['caption'].strip().casefold() for r in eligible))"
       },
       {
         "name": "r",
         "scope": "review_dataset",
-        "line": 166,
+        "line": 159,
         "purpose": " for r in eligible"
       },
       {
         "name": "report",
         "scope": "review_dataset",
-        "line": 167,
+        "line": 160,
         "purpose": "report = {'schema': 1, 'dataset_fingerprint': expected, 'counts': {'total': len(records), 'missing_captions': sum((not r['caption'].strip() for r in records)), 'ai_excluded': sum(("
       },
       {
         "name": "r",
         "scope": "review_dataset",
-        "line": 172,
+        "line": 165,
         "purpose": " for r in records"
       },
       {
         "name": "r",
         "scope": "review_dataset",
-        "line": 173,
+        "line": 166,
         "purpose": " for r in records"
       },
       {
         "name": "r",
         "scope": "review_dataset",
-        "line": 177,
+        "line": 170,
         "purpose": " for r in records"
       },
       {
         "name": "expected",
         "scope": "dataset_thumbnail",
-        "line": 215,
+        "line": 208,
         "purpose": "Function parameter"
       },
       {
         "name": "identity",
         "scope": "dataset_thumbnail",
-        "line": 215,
+        "line": 208,
         "purpose": "Function parameter"
       },
       {
         "name": "root",
         "scope": "dataset_thumbnail",
-        "line": 215,
+        "line": 208,
         "purpose": "Function parameter"
       },
       {
         "name": "_",
         "scope": "dataset_thumbnail",
-        "line": 219,
+        "line": 212,
         "purpose": "(_, records)"
       },
       {
         "name": "records",
         "scope": "dataset_thumbnail",
-        "line": 219,
+        "line": 212,
         "purpose": "(_, records)"
       },
       {
         "name": "item",
         "scope": "dataset_thumbnail",
-        "line": 220,
+        "line": 213,
         "purpose": " for item in records if item['hash'] == identity"
       },
       {
         "name": "record",
         "scope": "dataset_thumbnail",
-        "line": 220,
+        "line": 213,
         "purpose": "record = next((item for item in records if item['hash'] == identity), None)"
       },
       {
         "name": "file",
         "scope": "dataset_thumbnail",
-        "line": 223,
+        "line": 216,
         "purpose": "file = confined(root, record['file'])"
-      },
-      {
-        "name": "stream",
-        "scope": "dataset_thumbnail",
-        "line": 226,
-        "purpose": "file.open('rb') as stream"
       },
       {
         "name": "content",
         "scope": "dataset_thumbnail",
-        "line": 227,
-        "purpose": "content = stream.read(20 * 1024 * 1024 + 1)"
+        "line": 217,
+        "purpose": "content = regular_bytes(file, 20 * 1024 * 1024)"
       },
       {
         "name": "source",
         "scope": "dataset_thumbnail",
-        "line": 235,
+        "line": 225,
         "purpose": "Image.open(io.BytesIO(content)) as source"
       },
       {
         "name": "image",
         "scope": "dataset_thumbnail",
-        "line": 238,
+        "line": 228,
         "purpose": "source.convert('RGB') as image"
       },
       {
         "name": "output",
         "scope": "dataset_thumbnail",
-        "line": 246,
+        "line": 236,
         "purpose": "output = io.BytesIO()"
       }
     ]
@@ -7217,37 +7307,37 @@
     "declarations": [
       {
         "name": "module.extract_zip",
-        "line": 19,
+        "line": 27,
         "kind": "FunctionDef",
         "purpose": "Validate every member before extraction; block traversal, links, bombs and encrypted ZIPs."
       },
       {
         "name": "module.scan",
-        "line": 45,
+        "line": 51,
         "kind": "FunctionDef",
         "purpose": "Yield bounded image paths without following symlinks; count all files to bound scanning work."
       },
       {
         "name": "module.image_record",
-        "line": 58,
+        "line": 65,
         "kind": "FunctionDef",
         "purpose": "Combine safe sidecar metadata/caption with normalized pixels and explicit origin evidence."
       },
       {
         "name": "module.import_dataset",
-        "line": 100,
+        "line": 105,
         "kind": "FunctionDef",
         "purpose": "Atomically publish a dataset; deduplicate normalized pixels before deterministic splitting."
       },
       {
         "name": "module.eligible",
-        "line": 174,
+        "line": 179,
         "kind": "FunctionDef",
         "purpose": "Only captioned non-AI-origin records in the chosen split may enter ordinary training."
       },
       {
         "name": "module.synthetic_dataset",
-        "line": 183,
+        "line": 188,
         "kind": "FunctionDef",
         "purpose": "Create licensed procedural shapes and captions; no pretrained model or downloaded art is used."
       }
@@ -7256,439 +7346,445 @@
       {
         "name": "EXTENSIONS",
         "scope": "module",
-        "line": 14,
+        "line": 22,
         "purpose": "EXTENSIONS = {'.png', '.jpg', '.jpeg', '.webp', '.bmp'}"
       },
       {
         "name": "MAX_ITEMS",
         "scope": "module",
-        "line": 15,
+        "line": 23,
         "purpose": "MAX_ITEMS = 10000"
       },
       {
         "name": "MAX_ZIP_BYTES",
         "scope": "module",
-        "line": 16,
+        "line": 24,
         "purpose": "MAX_ZIP_BYTES = 200 * 1024 * 1024"
       },
       {
         "name": "destination",
         "scope": "extract_zip",
-        "line": 19,
+        "line": 27,
         "purpose": "Function parameter"
       },
       {
         "name": "path",
         "scope": "extract_zip",
-        "line": 19,
+        "line": 27,
         "purpose": "Function parameter"
       },
       {
         "name": "archive",
         "scope": "extract_zip",
-        "line": 23,
-        "purpose": "zipfile.ZipFile(path) as archive"
+        "line": 29,
+        "purpose": "zipfile.ZipFile(stream) as archive"
+      },
+      {
+        "name": "stream",
+        "scope": "extract_zip",
+        "line": 29,
+        "purpose": "regular_stream(path, MAX_ZIP_BYTES) as stream"
       },
       {
         "name": "members",
         "scope": "extract_zip",
-        "line": 24,
+        "line": 30,
         "purpose": "members = archive.infolist()"
       },
       {
         "name": "m",
         "scope": "extract_zip",
-        "line": 25,
+        "line": 31,
         "purpose": " for m in members"
       },
       {
         "name": "member",
         "scope": "extract_zip",
-        "line": 27,
+        "line": 33,
         "purpose": "for member in members:\n    name = PurePosixPath(member.filename)\n    unsafe = name.is_absolute() or '..' in name.parts or '\\\\' in member.orig_filename or (':' in member.orig_filena"
       },
       {
         "name": "name",
         "scope": "extract_zip",
-        "line": 28,
+        "line": 34,
         "purpose": "name = PurePosixPath(member.filename)"
       },
       {
         "name": "unsafe",
         "scope": "extract_zip",
-        "line": 29,
+        "line": 35,
         "purpose": "unsafe = name.is_absolute() or '..' in name.parts or '\\\\' in member.orig_filename or (':' in member.orig_filename) or ('\\x00' in member.orig_filename)"
       },
       {
         "name": "root",
         "scope": "scan",
-        "line": 45,
+        "line": 51,
         "purpose": "Function parameter"
       },
       {
         "name": "count",
         "scope": "scan",
-        "line": 47,
+        "line": 53,
         "purpose": "count = 0"
       },
       {
         "name": "path",
         "scope": "scan",
-        "line": 48,
-        "purpose": "for path in root.rglob('*'):\n    count += 1\n    if count > MAX_ITEMS * 4:\n        raise ValueError('Source contains too many files')\n    if path.is_symlink():\n        raise ValueEr"
+        "line": 54,
+        "purpose": "for path in root.rglob('*'):\n    count += 1\n    if count > MAX_ITEMS * 4:\n        raise ValueError('Source contains too many files')\n    if path.is_symlink() or getattr(path.lstat("
       },
       {
         "name": "count",
         "scope": "scan",
-        "line": 49,
+        "line": 55,
         "purpose": "count += 1"
       },
       {
         "name": "path",
         "scope": "image_record",
-        "line": 58,
+        "line": 65,
         "purpose": "Function parameter"
       },
       {
         "name": "metadata_path",
         "scope": "image_record",
-        "line": 60,
+        "line": 67,
         "purpose": "metadata_path = path.with_suffix('.json')"
       },
       {
         "name": "metadata",
         "scope": "image_record",
-        "line": 61,
+        "line": 68,
         "purpose": "metadata = read_json(metadata_path, 32000) if metadata_path.exists() else {}"
       },
       {
         "name": "caption_path",
         "scope": "image_record",
-        "line": 62,
+        "line": 69,
         "purpose": "caption_path = path.with_suffix('.txt')"
       },
       {
         "name": "caption",
         "scope": "image_record",
-        "line": 65,
-        "purpose": "caption = caption_path.read_text(encoding='utf-8').strip() if caption_path.exists() else metadata.get('caption', '')"
+        "line": 70,
+        "purpose": "caption = regular_bytes(caption_path, 8000).decode('utf-8').strip() if caption_path.exists() else metadata.get('caption', '')"
       },
       {
         "name": "tags",
         "scope": "image_record",
-        "line": 72,
+        "line": 77,
         "purpose": "tags = metadata.get('tags', [])"
       },
       {
         "name": "t",
         "scope": "image_record",
-        "line": 76,
+        "line": 81,
         "purpose": " for t in tags"
       },
       {
         "name": "origin",
         "scope": "image_record",
-        "line": 79,
+        "line": 84,
         "purpose": "origin = metadata.get('origin', 'unknown')"
       },
       {
         "name": "t",
         "scope": "image_record",
-        "line": 83,
+        "line": 88,
         "purpose": " for t in tags"
       },
       {
         "name": "origin",
         "scope": "image_record",
-        "line": 85,
+        "line": 90,
         "purpose": "origin = 'ai_generated'"
       },
       {
         "name": "image",
         "scope": "image_record",
-        "line": 86,
+        "line": 91,
         "purpose": "image = normalized_image(path)"
       },
       {
         "name": "pixel_hash",
         "scope": "image_record",
-        "line": 87,
+        "line": 92,
         "purpose": "pixel_hash = hashlib.sha256(f'{image.size}'.encode() + image.tobytes()).hexdigest()"
       },
       {
         "name": "record",
         "scope": "image_record",
-        "line": 88,
+        "line": 93,
         "purpose": "record = {'hash': pixel_hash, 'caption': caption, 'tags': tags, 'origin': origin, 'name': str(metadata.get('name', path.stem))[:200], 'artist': str(metadata.get('artist', ''))[:200"
       },
       {
         "name": "name",
         "scope": "import_dataset",
-        "line": 100,
+        "line": 105,
         "purpose": "Function parameter"
       },
       {
         "name": "output",
         "scope": "import_dataset",
-        "line": 100,
+        "line": 105,
         "purpose": "Function parameter"
       },
       {
         "name": "paths",
         "scope": "import_dataset",
-        "line": 100,
+        "line": 105,
         "purpose": "Function parameter"
       },
       {
         "name": "temporary",
         "scope": "import_dataset",
-        "line": 105,
+        "line": 110,
         "purpose": "tempfile.TemporaryDirectory(prefix='.import-', dir=output.parent) as temporary"
       },
       {
         "name": "staging",
         "scope": "import_dataset",
-        "line": 106,
+        "line": 111,
         "purpose": "staging = Path(temporary)"
       },
       {
         "name": "prepared",
         "scope": "import_dataset",
-        "line": 107,
+        "line": 112,
         "purpose": "prepared = staging / 'prepared'"
       },
       {
         "name": "records",
         "scope": "import_dataset",
-        "line": 109,
+        "line": 114,
         "purpose": "(records, seen)"
       },
       {
         "name": "seen",
         "scope": "import_dataset",
-        "line": 109,
+        "line": 114,
         "purpose": "(records, seen)"
       },
       {
         "name": "index",
         "scope": "import_dataset",
-        "line": 110,
+        "line": 115,
         "purpose": "(index, source)"
       },
       {
         "name": "source",
         "scope": "import_dataset",
-        "line": 110,
+        "line": 115,
         "purpose": "(index, source)"
       },
       {
         "name": "source_path",
         "scope": "import_dataset",
-        "line": 111,
+        "line": 116,
         "purpose": "source_path = Path(source).resolve(strict=True)"
       },
       {
         "name": "root",
         "scope": "import_dataset",
-        "line": 113,
+        "line": 118,
         "purpose": "root = staging / f'zip-{index}'"
       },
       {
         "name": "images",
         "scope": "import_dataset",
-        "line": 116,
+        "line": 121,
         "purpose": "images = scan(root)"
       },
       {
         "name": "images",
         "scope": "import_dataset",
-        "line": 120,
+        "line": 125,
         "purpose": "images = scan(source_path)"
       },
       {
         "name": "path",
         "scope": "import_dataset",
-        "line": 123,
+        "line": 128,
         "purpose": "for path in images:\n    record, image = image_record(path)\n    if record['hash'] in seen:\n        image.close()\n        previous = seen[record['hash']]\n        if (record['origin']"
       },
       {
         "name": "image",
         "scope": "import_dataset",
-        "line": 124,
+        "line": 129,
         "purpose": "(record, image)"
       },
       {
         "name": "record",
         "scope": "import_dataset",
-        "line": 124,
+        "line": 129,
         "purpose": "(record, image)"
       },
       {
         "name": "previous",
         "scope": "import_dataset",
-        "line": 127,
+        "line": 132,
         "purpose": "previous = seen[record['hash']]"
       },
       {
         "name": "bucket",
         "scope": "import_dataset",
-        "line": 140,
+        "line": 145,
         "purpose": "bucket = 'flagged' if record['origin'].startswith('ai_') else 'images'"
       },
       {
         "name": "target",
         "scope": "import_dataset",
-        "line": 141,
+        "line": 146,
         "purpose": "target = prepared / bucket / f\"{record['hash']}.png\""
       },
       {
         "name": "fingerprint",
         "scope": "import_dataset",
-        "line": 151,
+        "line": 156,
         "purpose": "fingerprint = hashlib.sha256(json.dumps(sorted(((r['hash'], r['caption'], r['origin'], r['split']) for r in records)), ensure_ascii=False).encode()).hexdigest()"
       },
       {
         "name": "r",
         "scope": "import_dataset",
-        "line": 153,
+        "line": 158,
         "purpose": " for r in records"
       },
       {
         "name": "manifest",
         "scope": "import_dataset",
-        "line": 157,
+        "line": 162,
         "purpose": "manifest = {'schema': 1, 'name': name, 'fingerprint': fingerprint, 'records': records, 'rights_confirmed': True, 'counts': {'total': len(records), 'flagged': sum((r['origin'].start"
       },
       {
         "name": "r",
         "scope": "import_dataset",
-        "line": 165,
+        "line": 170,
         "purpose": " for r in records"
       },
       {
         "name": "manifest",
         "scope": "eligible",
-        "line": 174,
+        "line": 179,
         "purpose": "Function parameter"
       },
       {
         "name": "split",
         "scope": "eligible",
-        "line": 174,
+        "line": 179,
         "purpose": "Function parameter"
       },
       {
         "name": "r",
         "scope": "eligible",
-        "line": 178,
+        "line": 183,
         "purpose": " for r in manifest['records'] if r['split'] == split and r['caption'].strip() and (not r['origin'].startswith('ai_'))"
       },
       {
         "name": "count",
         "scope": "synthetic_dataset",
-        "line": 183,
+        "line": 188,
         "purpose": "Function parameter"
       },
       {
         "name": "output",
         "scope": "synthetic_dataset",
-        "line": 183,
+        "line": 188,
         "purpose": "Function parameter"
       },
       {
         "name": "seed",
         "scope": "synthetic_dataset",
-        "line": 183,
+        "line": 188,
         "purpose": "Function parameter"
       },
       {
         "name": "rng",
         "scope": "synthetic_dataset",
-        "line": 189,
+        "line": 194,
         "purpose": "rng = random.Random(seed)"
       },
       {
         "name": "temporary",
         "scope": "synthetic_dataset",
-        "line": 191,
+        "line": 196,
         "purpose": "tempfile.TemporaryDirectory(prefix='.synthetic-', dir=output.parent) as temporary"
       },
       {
         "name": "root",
         "scope": "synthetic_dataset",
-        "line": 192,
+        "line": 197,
         "purpose": "root = Path(temporary)"
       },
       {
         "name": "colors",
         "scope": "synthetic_dataset",
-        "line": 193,
+        "line": 198,
         "purpose": "colors = {'red': (235, 55, 70), 'green': (45, 190, 105), 'blue': (45, 110, 230)}"
       },
       {
         "name": "index",
         "scope": "synthetic_dataset",
-        "line": 194,
+        "line": 199,
         "purpose": "for index in range(count):\n    color = list(colors)[index % 3]\n    shape = ('circle', 'square', 'triangle')[index // 3 % 3]\n    image = Image.new('RGB', (32, 32), (245, 245, 245))\n"
       },
       {
         "name": "color",
         "scope": "synthetic_dataset",
-        "line": 195,
+        "line": 200,
         "purpose": "color = list(colors)[index % 3]"
       },
       {
         "name": "shape",
         "scope": "synthetic_dataset",
-        "line": 196,
+        "line": 201,
         "purpose": "shape = ('circle', 'square', 'triangle')[index // 3 % 3]"
       },
       {
         "name": "image",
         "scope": "synthetic_dataset",
-        "line": 197,
+        "line": 202,
         "purpose": "image = Image.new('RGB', (32, 32), (245, 245, 245))"
       },
       {
         "name": "drawing",
         "scope": "synthetic_dataset",
-        "line": 198,
+        "line": 203,
         "purpose": "drawing = ImageDraw.Draw(image)"
       },
       {
         "name": "left",
         "scope": "synthetic_dataset",
-        "line": 199,
+        "line": 204,
         "purpose": "(left, top)"
       },
       {
         "name": "top",
         "scope": "synthetic_dataset",
-        "line": 199,
+        "line": 204,
         "purpose": "(left, top)"
       },
       {
         "name": "bottom",
         "scope": "synthetic_dataset",
-        "line": 200,
+        "line": 205,
         "purpose": "(right, bottom)"
       },
       {
         "name": "right",
         "scope": "synthetic_dataset",
-        "line": 200,
+        "line": 205,
         "purpose": "(right, bottom)"
       },
       {
         "name": "box",
         "scope": "synthetic_dataset",
-        "line": 201,
+        "line": 206,
         "purpose": "box = (left, top, right, bottom)"
       },
       {
         "name": "path",
         "scope": "synthetic_dataset",
-        "line": 210,
+        "line": 215,
         "purpose": "path = root / f'sample-{index:04d}.png'"
       }
     ]
@@ -8467,209 +8563,509 @@
     "purpose": "Bounded JSON, atomic publications, path confinement and image normalization utilities.",
     "declarations": [
       {
-        "name": "module.digest",
-        "line": 19,
+        "name": "module.no_alias",
+        "line": 21,
         "kind": "FunctionDef",
-        "purpose": "Stream a SHA-256 digest without retaining a whole model in memory."
+        "purpose": "Reject pre-existing linked/reparse components and multi-link files without claiming race isolation."
+      },
+      {
+        "name": "module.BoundedReader",
+        "line": 34,
+        "kind": "ClassDef",
+        "purpose": "A seekable descriptor view whose actual read positions cannot cross the caller's fixed byte cap."
+      },
+      {
+        "name": "BoundedReader.__init__",
+        "line": 37,
+        "kind": "FunctionDef",
+        "purpose": "Retain an already owned regular descriptor; the surrounding context alone closes it."
+      },
+      {
+        "name": "BoundedReader.tell",
+        "line": 41,
+        "kind": "FunctionDef",
+        "purpose": "Expose the current descriptor position without reopening a pathname."
+      },
+      {
+        "name": "BoundedReader.seek",
+        "line": 45,
+        "kind": "FunctionDef",
+        "purpose": "Refuse positions outside the byte view, including a grown physical end-of-file."
+      },
+      {
+        "name": "BoundedReader.read",
+        "line": 62,
+        "kind": "FunctionDef",
+        "purpose": "Cap the allocation and bytes actually returned even when a parser asks for an unbounded read."
+      },
+      {
+        "name": "BoundedReader.seekable",
+        "line": 73,
+        "kind": "FunctionDef",
+        "purpose": "Allow the standard ZIP parser's fixed local-file seeking interface."
+      },
+      {
+        "name": "module.regular_stream",
+        "line": 79,
+        "kind": "FunctionDef",
+        "purpose": "Open one nonblocking/no-follow descriptor and enforce regular single-link size before any read."
+      },
+      {
+        "name": "module.regular_bytes",
+        "line": 107,
+        "kind": "FunctionDef",
+        "purpose": "Bound actual bytes from the admitted descriptor even if an owned file grows after stat."
+      },
+      {
+        "name": "module.digest",
+        "line": 116,
+        "kind": "FunctionDef",
+        "purpose": "Hash an admitted descriptor in bounded chunks, retaining no complete large model in memory."
       },
       {
         "name": "module.confined",
-        "line": 25,
+        "line": 128,
         "kind": "FunctionDef",
-        "purpose": "Resolve a known relative artifact path and reject traversal/symlink escapes."
+        "purpose": "Normalize a relative artifact and enforce full-component trusted-root containment before use."
       },
       {
         "name": "module.read_json",
-        "line": 33,
+        "line": 149,
         "kind": "FunctionDef",
         "purpose": "Read a size-bounded JSON object; reject duplicate keys and non-finite numbers."
       },
       {
         "name": "read_json.pairs",
-        "line": 42,
+        "line": 153,
         "kind": "FunctionDef",
         "purpose": "Reject duplicate keys instead of silently choosing the last value."
       },
       {
         "name": "module.replace_file",
-        "line": 59,
+        "line": 170,
         "kind": "FunctionDef",
         "purpose": "Atomically replace with at most eight attempts for Windows file-sharing errors; never relax ACLs."
       },
       {
         "name": "module.atomic_json",
-        "line": 73,
+        "line": 184,
         "kind": "FunctionDef",
         "purpose": "Publish complete JSON via same-directory replace; clean only this function's temp file."
       },
       {
         "name": "module.normalized_image",
-        "line": 87,
+        "line": 199,
         "kind": "FunctionDef",
         "purpose": "Decode one bounded supported raster, apply EXIF rotation and strip metadata on output."
+      },
+      {
+        "name": "module.normalized_pixels",
+        "line": 204,
+        "kind": "FunctionDef",
+        "purpose": "Decode exactly the bounded bytes already admitted/hashed by the caller, never reopen a pathname."
       }
     ],
     "variables": [
       {
         "name": "MAX_IMAGE_BYTES",
         "scope": "module",
-        "line": 14,
+        "line": 16,
         "purpose": "MAX_IMAGE_BYTES = 20 * 1024 * 1024"
       },
       {
         "name": "MAX_PIXELS",
         "scope": "module",
-        "line": 15,
+        "line": 17,
         "purpose": "MAX_PIXELS = 4194304"
       },
       {
         "name": "path",
+        "scope": "no_alias",
+        "line": 21,
+        "purpose": "Function parameter"
+      },
+      {
+        "name": "part",
+        "scope": "no_alias",
+        "line": 23,
+        "purpose": "for part in (*reversed(path.absolute().parents), path.absolute()):\n    try:\n        status = part.lstat()\n    except FileNotFoundError:\n        continue\n    if stat.S_ISLNK(status."
+      },
+      {
+        "name": "status",
+        "scope": "no_alias",
+        "line": 25,
+        "purpose": "status = part.lstat()"
+      },
+      {
+        "name": "limit",
+        "scope": "BoundedReader.__init__",
+        "line": 37,
+        "purpose": "Function parameter"
+      },
+      {
+        "name": "self",
+        "scope": "BoundedReader.__init__",
+        "line": 37,
+        "purpose": "Function parameter"
+      },
+      {
+        "name": "stream",
+        "scope": "BoundedReader.__init__",
+        "line": 37,
+        "purpose": "Function parameter"
+      },
+      {
+        "name": "self",
+        "scope": "BoundedReader.tell",
+        "line": 41,
+        "purpose": "Function parameter"
+      },
+      {
+        "name": "offset",
+        "scope": "BoundedReader.seek",
+        "line": 45,
+        "purpose": "Function parameter"
+      },
+      {
+        "name": "self",
+        "scope": "BoundedReader.seek",
+        "line": 45,
+        "purpose": "Function parameter"
+      },
+      {
+        "name": "whence",
+        "scope": "BoundedReader.seek",
+        "line": 45,
+        "purpose": "Function parameter"
+      },
+      {
+        "name": "target",
+        "scope": "BoundedReader.seek",
+        "line": 48,
+        "purpose": "target = offset"
+      },
+      {
+        "name": "target",
+        "scope": "BoundedReader.seek",
+        "line": 50,
+        "purpose": "target = self.tell() + offset"
+      },
+      {
+        "name": "size",
+        "scope": "BoundedReader.seek",
+        "line": 52,
+        "purpose": "size = os.fstat(self.stream.fileno()).st_size"
+      },
+      {
+        "name": "target",
+        "scope": "BoundedReader.seek",
+        "line": 55,
+        "purpose": "target = size + offset"
+      },
+      {
+        "name": "self",
+        "scope": "BoundedReader.read",
+        "line": 62,
+        "purpose": "Function parameter"
+      },
+      {
+        "name": "size",
+        "scope": "BoundedReader.read",
+        "line": 62,
+        "purpose": "Function parameter"
+      },
+      {
+        "name": "remaining",
+        "scope": "BoundedReader.read",
+        "line": 64,
+        "purpose": "remaining = self.limit - self.tell()"
+      },
+      {
+        "name": "requested",
+        "scope": "BoundedReader.read",
+        "line": 67,
+        "purpose": "requested = remaining + 1 if size < 0 else min(size, remaining + 1)"
+      },
+      {
+        "name": "content",
+        "scope": "BoundedReader.read",
+        "line": 68,
+        "purpose": "content = self.stream.read(requested)"
+      },
+      {
+        "name": "self",
+        "scope": "BoundedReader.seekable",
+        "line": 73,
+        "purpose": "Function parameter"
+      },
+      {
+        "name": "limit",
+        "scope": "regular_stream",
+        "line": 79,
+        "purpose": "Function parameter"
+      },
+      {
+        "name": "path",
+        "scope": "regular_stream",
+        "line": 79,
+        "purpose": "Function parameter"
+      },
+      {
+        "name": "flags",
+        "scope": "regular_stream",
+        "line": 86,
+        "purpose": "flags = os.O_RDONLY | getattr(os, 'O_BINARY', 0) | getattr(os, 'O_NONBLOCK', 0) | getattr(os, 'O_NOFOLLOW', 0)"
+      },
+      {
+        "name": "descriptor",
+        "scope": "regular_stream",
+        "line": 92,
+        "purpose": "descriptor = os.open(path, flags)"
+      },
+      {
+        "name": "status",
+        "scope": "regular_stream",
+        "line": 94,
+        "purpose": "status = os.fstat(descriptor)"
+      },
+      {
+        "name": "stream",
+        "scope": "regular_stream",
+        "line": 99,
+        "purpose": "os.fdopen(descriptor, 'rb') as stream"
+      },
+      {
+        "name": "descriptor",
+        "scope": "regular_stream",
+        "line": 100,
+        "purpose": "descriptor = -1"
+      },
+      {
+        "name": "limit",
+        "scope": "regular_bytes",
+        "line": 107,
+        "purpose": "Function parameter"
+      },
+      {
+        "name": "path",
+        "scope": "regular_bytes",
+        "line": 107,
+        "purpose": "Function parameter"
+      },
+      {
+        "name": "stream",
+        "scope": "regular_bytes",
+        "line": 109,
+        "purpose": "regular_stream(path, limit) as stream"
+      },
+      {
+        "name": "source",
+        "scope": "regular_bytes",
+        "line": 110,
+        "purpose": "source = stream.read(limit + 1)"
+      },
+      {
+        "name": "limit",
         "scope": "digest",
-        "line": 19,
+        "line": 116,
+        "purpose": "Function parameter"
+      },
+      {
+        "name": "path",
+        "scope": "digest",
+        "line": 116,
         "purpose": "Function parameter"
       },
       {
         "name": "stream",
         "scope": "digest",
-        "line": 21,
-        "purpose": "path.open('rb') as stream"
+        "line": 118,
+        "purpose": "regular_stream(path, limit) as stream"
+      },
+      {
+        "name": "result",
+        "scope": "digest",
+        "line": 119,
+        "purpose": "(result, total)"
+      },
+      {
+        "name": "total",
+        "scope": "digest",
+        "line": 119,
+        "purpose": "(result, total)"
+      },
+      {
+        "name": "block",
+        "scope": "digest",
+        "line": 120,
+        "purpose": "(block := stream.read(min(1024 * 1024, limit - total + 1)))"
+      },
+      {
+        "name": "total",
+        "scope": "digest",
+        "line": 121,
+        "purpose": "total += len(block)"
       },
       {
         "name": "relative",
         "scope": "confined",
-        "line": 25,
+        "line": 128,
         "purpose": "Function parameter"
       },
       {
         "name": "root",
         "scope": "confined",
-        "line": 25,
+        "line": 128,
         "purpose": "Function parameter"
       },
       {
-        "name": "path",
+        "name": "base",
         "scope": "confined",
-        "line": 27,
-        "purpose": "path = (root / relative).resolve()"
+        "line": 139,
+        "purpose": "base = os.path.realpath(root)"
+      },
+      {
+        "name": "candidate",
+        "scope": "confined",
+        "line": 140,
+        "purpose": "candidate = os.path.realpath(os.path.join(base, relative))"
+      },
+      {
+        "name": "base_comparable",
+        "scope": "confined",
+        "line": 141,
+        "purpose": "(comparable, base_comparable)"
+      },
+      {
+        "name": "comparable",
+        "scope": "confined",
+        "line": 141,
+        "purpose": "(comparable, base_comparable)"
+      },
+      {
+        "name": "result",
+        "scope": "confined",
+        "line": 144,
+        "purpose": "result = Path(candidate)"
       },
       {
         "name": "limit",
         "scope": "read_json",
-        "line": 33,
+        "line": 149,
         "purpose": "Function parameter"
       },
       {
         "name": "path",
         "scope": "read_json",
-        "line": 33,
+        "line": 149,
         "purpose": "Function parameter"
-      },
-      {
-        "name": "stream",
-        "scope": "read_json",
-        "line": 37,
-        "purpose": "path.open('rb') as stream"
       },
       {
         "name": "source",
         "scope": "read_json",
-        "line": 38,
-        "purpose": "source = stream.read(limit + 1)"
+        "line": 151,
+        "purpose": "source = regular_bytes(path, limit)"
       },
       {
         "name": "items",
         "scope": "read_json.pairs",
-        "line": 42,
+        "line": 153,
         "purpose": "Function parameter"
       },
       {
         "name": "result",
         "scope": "read_json.pairs",
-        "line": 44,
+        "line": 155,
         "purpose": "result = dict(items)"
       },
       {
         "name": "value",
         "scope": "read_json",
-        "line": 49,
+        "line": 160,
         "purpose": "value = json.loads(source.decode('utf-8'), object_pairs_hook=pairs, parse_constant=lambda value: (_ for _ in ()).throw(ValueError('Non-finite JSON')))"
       },
       {
         "name": "_",
         "scope": "read_json",
-        "line": 52,
+        "line": 163,
         "purpose": " for _ in ()"
       },
       {
         "name": "value",
         "scope": "read_json",
-        "line": 52,
+        "line": 163,
         "purpose": "Function parameter"
       },
       {
         "name": "destination",
         "scope": "replace_file",
-        "line": 59,
+        "line": 170,
         "purpose": "Function parameter"
       },
       {
         "name": "source",
         "scope": "replace_file",
-        "line": 59,
+        "line": 170,
         "purpose": "Function parameter"
       },
       {
         "name": "attempt",
         "scope": "replace_file",
-        "line": 61,
+        "line": 172,
         "purpose": "for attempt in range(8):\n    try:\n        os.replace(source, destination)\n        return\n    except PermissionError as error:\n        if getattr(error, 'winerror', None) not in {5,"
       },
       {
         "name": "path",
         "scope": "atomic_json",
-        "line": 73,
+        "line": 184,
         "purpose": "Function parameter"
       },
       {
         "name": "value",
         "scope": "atomic_json",
-        "line": 73,
+        "line": 184,
         "purpose": "Function parameter"
       },
       {
         "name": "descriptor",
         "scope": "atomic_json",
-        "line": 76,
+        "line": 188,
         "purpose": "(descriptor, temporary)"
       },
       {
         "name": "temporary",
         "scope": "atomic_json",
-        "line": 76,
+        "line": 188,
         "purpose": "(descriptor, temporary)"
       },
       {
         "name": "stream",
         "scope": "atomic_json",
-        "line": 78,
+        "line": 190,
         "purpose": "os.fdopen(descriptor, 'w', encoding='utf-8') as stream"
       },
       {
         "name": "path",
         "scope": "normalized_image",
-        "line": 87,
+        "line": 199,
+        "purpose": "Function parameter"
+      },
+      {
+        "name": "content",
+        "scope": "normalized_pixels",
+        "line": 204,
         "purpose": "Function parameter"
       },
       {
         "name": "image",
-        "scope": "normalized_image",
-        "line": 93,
-        "purpose": "Image.open(path) as image"
+        "scope": "normalized_pixels",
+        "line": 210,
+        "purpose": "Image.open(io.BytesIO(content)) as image"
       },
       {
         "name": "normalized",
-        "scope": "normalized_image",
-        "line": 98,
+        "scope": "normalized_pixels",
+        "line": 215,
         "purpose": "normalized = ImageOps.exif_transpose(image).convert('RGB')"
       }
     ]
@@ -8685,7 +9081,7 @@
       },
       {
         "name": "module.model_fingerprint",
-        "line": 102,
+        "line": 104,
         "kind": "FunctionDef",
         "purpose": "Bind adapters to all inspected base files, not merely a reusable model-index class declaration."
       }
@@ -8773,7 +9169,7 @@
         "name": "file",
         "scope": "inspect_diffusers",
         "line": 59,
-        "purpose": "for file in path.rglob('*'):\n    count += 1\n    if count > 10000 or file.is_symlink() or file.suffix.casefold() in {'.py', '.pkl', '.pickle', '.bin', '.pt', '.pth', '.ckpt'}:\n     "
+        "purpose": "for file in path.rglob('*'):\n    count += 1\n    if count > 10000 or file.is_symlink() or getattr(file.lstat(), 'st_file_attributes', 0) & 1024 or (file.suffix.casefold() in {'.py',"
       },
       {
         "name": "count",
@@ -8784,61 +9180,61 @@
       {
         "name": "size",
         "scope": "inspect_diffusers",
-        "line": 68,
+        "line": 70,
         "purpose": "size += file.stat().st_size"
       },
       {
         "name": "index",
         "scope": "inspect_diffusers",
-        "line": 72,
+        "line": 74,
         "purpose": "index = read_json(file, 4 * 1024 * 1024)"
       },
       {
         "name": "mapping",
         "scope": "inspect_diffusers",
-        "line": 73,
+        "line": 75,
         "purpose": "mapping = index.get('weight_map')"
       },
       {
         "name": "shard",
         "scope": "inspect_diffusers",
-        "line": 76,
+        "line": 78,
         "purpose": " for shard in mapping.values()"
       },
       {
         "name": "shard",
         "scope": "inspect_diffusers",
-        "line": 78,
+        "line": 80,
         "purpose": "for shard in set(mapping.values()):\n    if not isinstance(shard, str) or Path(shard).is_absolute() or '\\\\' in shard or (':' in shard) or ('..' in Path(shard).parts):\n        raise "
       },
       {
         "name": "target",
         "scope": "inspect_diffusers",
-        "line": 87,
+        "line": 89,
         "purpose": "target = confined(file.parent, shard)"
       },
       {
         "name": "component",
         "scope": "inspect_diffusers",
-        "line": 96,
+        "line": 98,
         "purpose": "for component in ('unet', 'vae', 'text_encoder'):\n    if not list((path / component).glob('*.safetensors')):\n        raise ValueError('Pretrained components need safe tensor weight"
       },
       {
         "name": "path",
         "scope": "model_fingerprint",
-        "line": 102,
+        "line": 104,
         "purpose": "Function parameter"
       },
       {
         "name": "signature",
         "scope": "model_fingerprint",
-        "line": 105,
+        "line": 107,
         "purpose": "signature = hashlib.sha256()"
       },
       {
         "name": "file",
         "scope": "model_fingerprint",
-        "line": 106,
+        "line": 108,
         "purpose": "for file in sorted(path.rglob('*')):\n    if file.is_file():\n        signature.update(file.relative_to(path).as_posix().encode())\n        signature.update(digest(file).encode())"
       }
     ]
@@ -8848,37 +9244,37 @@
     "declarations": [
       {
         "name": "module.Jobs",
-        "line": 19,
+        "line": 20,
         "kind": "ClassDef",
         "purpose": "Serialize resource-heavy jobs while keeping HTTP/UI responsive; never execute applicant/user scripts."
       },
       {
         "name": "Jobs.__init__",
-        "line": 22,
+        "line": 23,
         "kind": "FunctionDef",
         "purpose": "Recover stale statuses on restart; callers explicitly decide whether to resume a model."
       },
       {
         "name": "Jobs.submit",
-        "line": 45,
+        "line": 46,
         "kind": "FunctionDef",
         "purpose": "Admit at most eight queued/running jobs under one lock and persist before execution."
       },
       {
         "name": "Jobs.cancel",
-        "line": 72,
+        "line": 73,
         "kind": "FunctionDef",
         "purpose": "Set a job-scoped cancellation flag; no unrelated process is interrupted."
       },
       {
         "name": "Jobs.execute",
-        "line": 79,
+        "line": 81,
         "kind": "FunctionDef",
         "purpose": "Launch trusted module without shell, enforce deadline, and register only complete verified results."
       },
       {
         "name": "Jobs.close",
-        "line": 246,
+        "line": 254,
         "kind": "FunctionDef",
         "purpose": "Cancel this application's active jobs and wait for cooperative workers to finish."
       }
@@ -8887,290 +9283,405 @@
       {
         "name": "TERMINAL",
         "scope": "module",
-        "line": 16,
+        "line": 17,
         "purpose": "TERMINAL = {'completed', 'failed', 'cancelled', 'interrupted'}"
       },
       {
         "name": "interpreter",
         "scope": "Jobs.__init__",
-        "line": 23,
+        "line": 24,
         "purpose": "Function parameter"
       },
       {
         "name": "self",
         "scope": "Jobs.__init__",
-        "line": 23,
+        "line": 24,
         "purpose": "Function parameter"
       },
       {
         "name": "store",
         "scope": "Jobs.__init__",
-        "line": 23,
+        "line": 24,
         "purpose": "Function parameter"
       },
       {
         "name": "worker_source",
         "scope": "Jobs.__init__",
-        "line": 23,
+        "line": 24,
         "purpose": "Function parameter"
       },
       {
         "name": "record",
         "scope": "Jobs.__init__",
-        "line": 33,
+        "line": 34,
         "purpose": "for record in self.store.list('job'):\n    if record['status'] not in TERMINAL:\n        self.store.put('job', record['id'], {**record, 'status': 'interrupted', 'error': 'Application"
       },
       {
         "name": "config",
         "scope": "Jobs.submit",
-        "line": 45,
+        "line": 46,
         "purpose": "Function parameter"
       },
       {
         "name": "kind",
         "scope": "Jobs.submit",
-        "line": 45,
+        "line": 46,
         "purpose": "Function parameter"
       },
       {
         "name": "references",
         "scope": "Jobs.submit",
-        "line": 45,
+        "line": 46,
         "purpose": "Function parameter"
       },
       {
         "name": "self",
         "scope": "Jobs.submit",
-        "line": 45,
+        "line": 46,
         "purpose": "Function parameter"
       },
       {
         "name": "j",
         "scope": "Jobs.submit",
-        "line": 52,
+        "line": 53,
         "purpose": " for j in self.store.list('job')"
       },
       {
         "name": "identity",
         "scope": "Jobs.submit",
-        "line": 54,
+        "line": 55,
         "purpose": "identity = uuid.uuid4().hex"
       },
       {
         "name": "directory",
         "scope": "Jobs.submit",
-        "line": 55,
+        "line": 56,
         "purpose": "directory = self.store.root / 'jobs' / identity"
       },
       {
         "name": "request",
         "scope": "Jobs.submit",
-        "line": 57,
+        "line": 58,
         "purpose": "request = {'kind': kind, 'config': config, 'references': references}"
       },
       {
         "name": "record",
         "scope": "Jobs.submit",
-        "line": 59,
+        "line": 60,
         "purpose": "record = {'id': identity, 'kind': kind, 'status': 'queued', 'created': time.time(), 'progress': {}, 'result': None, 'error': None}"
       },
       {
         "name": "identity",
         "scope": "Jobs.cancel",
-        "line": 72,
+        "line": 73,
         "purpose": "Function parameter"
       },
       {
         "name": "self",
         "scope": "Jobs.cancel",
-        "line": 72,
+        "line": 73,
         "purpose": "Function parameter"
       },
       {
         "name": "record",
         "scope": "Jobs.cancel",
-        "line": 74,
+        "line": 75,
         "purpose": "record = self.store.get('job', identity)"
+      },
+      {
+        "name": "selected",
+        "scope": "Jobs.cancel",
+        "line": 77,
+        "purpose": "selected = canonical_id(record['id'])"
       },
       {
         "name": "directory",
         "scope": "Jobs.execute",
-        "line": 79,
+        "line": 81,
         "purpose": "Function parameter"
       },
       {
         "name": "identity",
         "scope": "Jobs.execute",
-        "line": 79,
+        "line": 81,
         "purpose": "Function parameter"
       },
       {
         "name": "self",
         "scope": "Jobs.execute",
-        "line": 79,
+        "line": 81,
         "purpose": "Function parameter"
       },
       {
         "name": "record",
         "scope": "Jobs.execute",
-        "line": 81,
+        "line": 83,
         "purpose": "record = self.store.get('job', identity)"
       },
       {
         "name": "request",
         "scope": "Jobs.execute",
-        "line": 86,
+        "line": 88,
         "purpose": "request = read_json(directory / 'request.json')"
       },
       {
         "name": "timeout",
         "scope": "Jobs.execute",
-        "line": 87,
+        "line": 89,
         "purpose": "timeout = request['config'].get('max_seconds', 300) + 180"
       },
       {
         "name": "started",
         "scope": "Jobs.execute",
-        "line": 88,
+        "line": 90,
         "purpose": "started = time.monotonic()"
       },
       {
         "name": "permitted_environment",
         "scope": "Jobs.execute",
-        "line": 89,
+        "line": 91,
         "purpose": "permitted_environment = {'PATH', 'PATHEXT', 'SYSTEMROOT', 'WINDIR', 'TEMP', 'TMP', 'HOME', 'USERPROFILE', 'APPDATA', 'LOCALAPPDATA', 'VIRTUAL_ENV', 'LD_LIBRARY_PATH', 'DYLD_LIBRARY"
       },
       {
         "name": "environment",
         "scope": "Jobs.execute",
-        "line": 111,
+        "line": 113,
         "purpose": "environment = {key: value for key, value in os.environ.items() if key.upper() in permitted_environment}"
       },
       {
         "name": "key",
         "scope": "Jobs.execute",
-        "line": 112,
+        "line": 114,
         "purpose": "(key, value)"
       },
       {
         "name": "value",
         "scope": "Jobs.execute",
-        "line": 112,
+        "line": 114,
         "purpose": "(key, value)"
       },
       {
         "name": "flags",
         "scope": "Jobs.execute",
-        "line": 128,
+        "line": 130,
         "purpose": "flags = subprocess.CREATE_NO_WINDOW if os.name == 'nt' else 0"
       },
       {
         "name": "log",
         "scope": "Jobs.execute",
-        "line": 130,
+        "line": 132,
         "purpose": "(directory / 'worker.log').open('w', encoding='utf-8') as log"
       },
       {
         "name": "process",
         "scope": "Jobs.execute",
-        "line": 131,
+        "line": 133,
         "purpose": "process = subprocess.Popen([sys.executable, '--studio-worker', str(directory)] if self.embedded else [self.interpreter, '-m', 'studio.worker', str(directory)], stdin=subprocess.DEV"
       },
       {
         "name": "cancellation_started",
         "scope": "Jobs.execute",
-        "line": 145,
+        "line": 147,
         "purpose": "cancellation_started = None"
       },
       {
         "name": "cancellation_started",
         "scope": "Jobs.execute",
-        "line": 148,
+        "line": 150,
         "purpose": "cancellation_started = cancellation_started or time.monotonic()"
       },
       {
         "name": "progress_path",
         "scope": "Jobs.execute",
-        "line": 157,
+        "line": 159,
         "purpose": "progress_path = directory / 'progress.json'"
       },
       {
         "name": "progress",
         "scope": "Jobs.execute",
-        "line": 159,
+        "line": 161,
         "purpose": "progress = read_json(progress_path)"
       },
       {
         "name": "current",
         "scope": "Jobs.execute",
-        "line": 160,
+        "line": 162,
         "purpose": "current = self.store.get('job', identity)"
       },
       {
         "name": "result",
         "scope": "Jobs.execute",
-        "line": 171,
+        "line": 173,
         "purpose": "result = read_json(directory / 'result.json', 2000000)"
       },
       {
         "name": "status",
         "scope": "Jobs.execute",
-        "line": 172,
+        "line": 180,
         "purpose": "status = result.get('status', 'failed')"
       },
       {
         "name": "model_path",
         "scope": "Jobs.execute",
-        "line": 178,
+        "line": 186,
         "purpose": "model_path = confined(directory, result['model'])"
       },
       {
         "name": "model",
         "scope": "Jobs.execute",
-        "line": 179,
+        "line": 187,
         "purpose": "model = verify(model_path)"
       },
       {
         "name": "image_path",
         "scope": "Jobs.execute",
-        "line": 193,
+        "line": 201,
         "purpose": "image_path = confined(directory, result['image'])"
       },
       {
         "name": "adapter_path",
         "scope": "Jobs.execute",
-        "line": 208,
+        "line": 216,
         "purpose": "adapter_path = confined(directory, result['lora'])"
       },
       {
         "name": "adapter",
         "scope": "Jobs.execute",
-        "line": 209,
+        "line": 217,
         "purpose": "adapter = read_json(adapter_path / 'adapter.json')"
       },
       {
         "name": "current",
         "scope": "Jobs.execute",
-        "line": 227,
+        "line": 235,
         "purpose": "current = self.store.get('job', identity)"
       },
       {
         "name": "current",
         "scope": "Jobs.execute",
-        "line": 234,
+        "line": 242,
         "purpose": "current = self.store.get('job', identity)"
       },
       {
         "name": "self",
         "scope": "Jobs.close",
-        "line": 246,
+        "line": 254,
         "purpose": "Function parameter"
       },
       {
         "name": "record",
         "scope": "Jobs.close",
-        "line": 250,
+        "line": 258,
         "purpose": "for record in self.store.list('job'):\n    self.cancel(record['id'])"
+      }
+    ]
+  },
+  "studio/local_paths.py": {
+    "purpose": "Jason Stys: launcher-owned local grants and canonical artifact identities, never browser-provided grants.",
+    "declarations": [
+      {
+        "name": "module.canonical_id",
+        "line": 11,
+        "kind": "FunctionDef",
+        "purpose": "Accept only the exact lowercase UUID32 grammar generated by this application before any lookup."
+      },
+      {
+        "name": "module.LocalPaths",
+        "line": 18,
+        "kind": "ClassDef",
+        "purpose": "Constrain privileged legacy selections to independently configured, component-safe local roots."
+      },
+      {
+        "name": "LocalPaths.__init__",
+        "line": 21,
+        "kind": "FunctionDef",
+        "purpose": "Only trusted launcher/application construction supplies roots; filesystem roots are not grants."
+      },
+      {
+        "name": "LocalPaths.selected",
+        "line": 33,
+        "kind": "FunctionDef",
+        "purpose": "Normalize links first, then require equality or a complete separator-delimited granted prefix."
+      }
+    ],
+    "variables": [
+      {
+        "name": "value",
+        "scope": "canonical_id",
+        "line": 11,
+        "purpose": "Function parameter"
+      },
+      {
+        "name": "roots",
+        "scope": "LocalPaths.__init__",
+        "line": 21,
+        "purpose": "Function parameter"
+      },
+      {
+        "name": "self",
+        "scope": "LocalPaths.__init__",
+        "line": 21,
+        "purpose": "Function parameter"
+      },
+      {
+        "name": "normalized",
+        "scope": "LocalPaths.__init__",
+        "line": 25,
+        "purpose": "normalized = []"
+      },
+      {
+        "name": "root",
+        "scope": "LocalPaths.__init__",
+        "line": 26,
+        "purpose": "for root in roots:\n    value = os.path.normcase(os.path.realpath(os.fspath(root)))\n    if value == os.path.dirname(value) or value.startswith(('\\\\\\\\', '//')):\n        raise ValueEr"
+      },
+      {
+        "name": "value",
+        "scope": "LocalPaths.__init__",
+        "line": 27,
+        "purpose": "value = os.path.normcase(os.path.realpath(os.fspath(root)))"
+      },
+      {
+        "name": "self",
+        "scope": "LocalPaths.selected",
+        "line": 33,
+        "purpose": "Function parameter"
+      },
+      {
+        "name": "value",
+        "scope": "LocalPaths.selected",
+        "line": 33,
+        "purpose": "Function parameter"
+      },
+      {
+        "name": "raw",
+        "scope": "LocalPaths.selected",
+        "line": 35,
+        "purpose": "raw = os.fspath(value)"
+      },
+      {
+        "name": "c",
+        "scope": "LocalPaths.selected",
+        "line": 36,
+        "purpose": " for c in raw"
+      },
+      {
+        "name": "resolved",
+        "scope": "LocalPaths.selected",
+        "line": 40,
+        "purpose": "resolved = os.path.realpath(raw)"
+      },
+      {
+        "name": "comparable",
+        "scope": "LocalPaths.selected",
+        "line": 41,
+        "purpose": "comparable = os.path.normcase(resolved)"
+      },
+      {
+        "name": "root",
+        "scope": "LocalPaths.selected",
+        "line": 42,
+        "purpose": "for root in self.roots:\n    if comparable == root or comparable.startswith(root + os.sep):\n        return Path(resolved)"
       }
     ]
   },
@@ -12950,43 +13461,43 @@
       },
       {
         "name": "Workspaces.require",
-        "line": 276,
+        "line": 281,
         "kind": "FunctionDef",
         "purpose": "Authorize against the authenticated cookie owner before accessing the local engine."
       },
       {
         "name": "Workspaces.save",
-        "line": 282,
+        "line": 287,
         "kind": "FunctionDef",
         "purpose": "Seal idle changes only; ongoing workers/uploads continue without snapshotting inconsistent files."
       },
       {
         "name": "Workspaces.remove_active",
-        "line": 298,
+        "line": 303,
         "kind": "FunctionDef",
         "purpose": "Remove only the exact managed plaintext directory after verifying its ownership marker and scope."
       },
       {
         "name": "Workspaces.lock",
-        "line": 310,
+        "line": 315,
         "kind": "FunctionDef",
         "purpose": "Cancel only this account's workers, save successfully, disconnect providers, then drop plaintext/key."
       },
       {
         "name": "Workspaces.delete_data",
-        "line": 328,
+        "line": 333,
         "kind": "FunctionDef",
         "purpose": "Called only after current-password verification; remove this account's live data, not other workspaces."
       },
       {
         "name": "Workspaces.close",
-        "line": 340,
+        "line": 345,
         "kind": "FunctionDef",
         "purpose": "Clean shutdown locks the active account; a failed save remains recoverable and is not deleted."
       },
       {
         "name": "Workspaces.usage",
-        "line": 348,
+        "line": 353,
         "kind": "FunctionDef",
         "purpose": "Bound workspace accounting, including reserved in-flight uploads, without reading file content."
       }
@@ -13379,121 +13890,121 @@
       {
         "name": "owner",
         "scope": "Workspaces.require",
-        "line": 276,
+        "line": 281,
         "purpose": "Function parameter"
       },
       {
         "name": "self",
         "scope": "Workspaces.require",
-        "line": 276,
+        "line": 281,
         "purpose": "Function parameter"
       },
       {
         "name": "force",
         "scope": "Workspaces.save",
-        "line": 282,
+        "line": 287,
         "purpose": "Function parameter"
       },
       {
         "name": "self",
         "scope": "Workspaces.save",
-        "line": 282,
+        "line": 287,
         "purpose": "Function parameter"
       },
       {
         "name": "j",
         "scope": "Workspaces.save",
-        "line": 287,
+        "line": 292,
         "purpose": " for j in self.app.state.store.list('job')"
       },
       {
         "name": "current",
         "scope": "Workspaces.save",
-        "line": 292,
+        "line": 297,
         "purpose": "current = signature(self.active)"
       },
       {
         "name": "expected_owner",
         "scope": "Workspaces.remove_active",
-        "line": 298,
+        "line": 303,
         "purpose": "Function parameter"
       },
       {
         "name": "self",
         "scope": "Workspaces.remove_active",
-        "line": 298,
+        "line": 303,
         "purpose": "Function parameter"
       },
       {
         "name": "owner",
         "scope": "Workspaces.lock",
-        "line": 310,
+        "line": 315,
         "purpose": "Function parameter"
       },
       {
         "name": "self",
         "scope": "Workspaces.lock",
-        "line": 310,
+        "line": 315,
         "purpose": "Function parameter"
       },
       {
         "name": "app",
         "scope": "Workspaces.lock",
-        "line": 312,
+        "line": 317,
         "purpose": "app = self.require(owner)"
       },
       {
         "name": "upload",
         "scope": "Workspaces.lock",
-        "line": 315,
+        "line": 320,
         "purpose": "for upload in self.uploads.values():\n    upload['temporary'].unlink(missing_ok=True)"
       },
       {
         "name": "owner",
         "scope": "Workspaces.delete_data",
-        "line": 328,
+        "line": 333,
         "purpose": "Function parameter"
       },
       {
         "name": "self",
         "scope": "Workspaces.delete_data",
-        "line": 328,
+        "line": 333,
         "purpose": "Function parameter"
       },
       {
         "name": "self",
         "scope": "Workspaces.close",
-        "line": 340,
+        "line": 345,
         "purpose": "Function parameter"
       },
       {
         "name": "self",
         "scope": "Workspaces.usage",
-        "line": 348,
+        "line": 353,
         "purpose": "Function parameter"
       },
       {
         "name": "p",
         "scope": "Workspaces.usage",
-        "line": 350,
+        "line": 355,
         "purpose": " for p in members(self.active)"
       },
       {
         "name": "used",
         "scope": "Workspaces.usage",
-        "line": 350,
+        "line": 355,
         "purpose": "used = sum((p.stat().st_size for p in members(self.active)))"
       },
       {
         "name": "reserved",
         "scope": "Workspaces.usage",
-        "line": 351,
+        "line": 356,
         "purpose": "reserved = sum((u['size'] - u['written'] for u in self.uploads.values()))"
       },
       {
         "name": "u",
         "scope": "Workspaces.usage",
-        "line": 351,
+        "line": 356,
         "purpose": " for u in self.uploads.values()"
       }
     ]
@@ -18008,6 +18519,710 @@
         "scope": "test_worker_rejects_unknown_dispatch",
         "line": 59,
         "purpose": "Function parameter"
+      }
+    ]
+  },
+  "tests/test_local_files.py": {
+    "purpose": "Jason Stys: actual descriptor, bounds, alias and FIFO evidence for local artifact admission.",
+    "declarations": [
+      {
+        "name": "module.test_one_descriptor_reads_original_bytes_after_path_replacement",
+        "line": 16,
+        "kind": "FunctionDef",
+        "purpose": "Replacement after descriptor validation cannot redirect the read to the new path content."
+      },
+      {
+        "name": "test_one_descriptor_reads_original_bytes_after_path_replacement.replace_after_descriptor_validation",
+        "line": 24,
+        "kind": "FunctionDef",
+        "purpose": "Interleave actual replacement immediately before yielding the already-open descriptor."
+      },
+      {
+        "name": "module.test_growth_is_capped_from_actual_descriptor_bytes_for_json_and_digest",
+        "line": 41,
+        "kind": "FunctionDef",
+        "purpose": "Growth after fstat is refused by actual read accounting, not trusted metadata size."
+      },
+      {
+        "name": "test_growth_is_capped_from_actual_descriptor_bytes_for_json_and_digest.grow_after_stat",
+        "line": 47,
+        "kind": "FunctionDef",
+        "purpose": "Append real bytes after size admission while preserving the same underlying file."
+      },
+      {
+        "name": "module.test_real_hardlink_and_directory_refused_without_mutating_outside_bytes",
+        "line": 62,
+        "kind": "FunctionDef",
+        "purpose": "Real NTFS/POSIX links and wrong entry types fail before JSON/image/digest or atomic publication."
+      },
+      {
+        "name": "module.test_regular_to_fifo_swap_is_bounded_by_nonblocking_descriptor_admission",
+        "line": 83,
+        "kind": "FunctionDef",
+        "purpose": "A real FIFO inserted at open cannot wait for a writer or pass as a regular JSON source."
+      },
+      {
+        "name": "module.test_valid_digest_json_and_invalid_byte_limits",
+        "line": 111,
+        "kind": "FunctionDef",
+        "purpose": "Valid small files remain usable while booleans/unbounded limits and invalid JSON fail closed."
+      },
+      {
+        "name": "module.test_seekable_zip_view_caps_grown_end_and_parser_read_requests",
+        "line": 122,
+        "kind": "FunctionDef",
+        "purpose": "The actual descriptor view refuses out-of-cap ZIP-style seeks/reads rather than trusting initial size."
+      }
+    ],
+    "variables": [
+      {
+        "name": "monkeypatch",
+        "scope": "test_one_descriptor_reads_original_bytes_after_path_replacement",
+        "line": 16,
+        "purpose": "Function parameter"
+      },
+      {
+        "name": "tmp_path",
+        "scope": "test_one_descriptor_reads_original_bytes_after_path_replacement",
+        "line": 16,
+        "purpose": "Function parameter"
+      },
+      {
+        "name": "replacement",
+        "scope": "test_one_descriptor_reads_original_bytes_after_path_replacement",
+        "line": 18,
+        "purpose": "(source, replacement)"
+      },
+      {
+        "name": "source",
+        "scope": "test_one_descriptor_reads_original_bytes_after_path_replacement",
+        "line": 18,
+        "purpose": "(source, replacement)"
+      },
+      {
+        "name": "fdopen",
+        "scope": "test_one_descriptor_reads_original_bytes_after_path_replacement",
+        "line": 21,
+        "purpose": "fdopen = os.fdopen"
+      },
+      {
+        "name": "blocked",
+        "scope": "test_one_descriptor_reads_original_bytes_after_path_replacement",
+        "line": 22,
+        "purpose": "blocked = []"
+      },
+      {
+        "name": "descriptor",
+        "scope": "test_one_descriptor_reads_original_bytes_after_path_replacement.replace_after_descriptor_validation",
+        "line": 24,
+        "purpose": "Function parameter"
+      },
+      {
+        "name": "mode",
+        "scope": "test_one_descriptor_reads_original_bytes_after_path_replacement.replace_after_descriptor_validation",
+        "line": 24,
+        "purpose": "Function parameter"
+      },
+      {
+        "name": "stream",
+        "scope": "test_one_descriptor_reads_original_bytes_after_path_replacement.replace_after_descriptor_validation",
+        "line": 26,
+        "purpose": "stream = fdopen(descriptor, mode)"
+      },
+      {
+        "name": "monkeypatch",
+        "scope": "test_growth_is_capped_from_actual_descriptor_bytes_for_json_and_digest",
+        "line": 41,
+        "purpose": "Function parameter"
+      },
+      {
+        "name": "tmp_path",
+        "scope": "test_growth_is_capped_from_actual_descriptor_bytes_for_json_and_digest",
+        "line": 41,
+        "purpose": "Function parameter"
+      },
+      {
+        "name": "source",
+        "scope": "test_growth_is_capped_from_actual_descriptor_bytes_for_json_and_digest",
+        "line": 43,
+        "purpose": "source = tmp_path / 'source'"
+      },
+      {
+        "name": "fdopen",
+        "scope": "test_growth_is_capped_from_actual_descriptor_bytes_for_json_and_digest",
+        "line": 45,
+        "purpose": "fdopen = os.fdopen"
+      },
+      {
+        "name": "descriptor",
+        "scope": "test_growth_is_capped_from_actual_descriptor_bytes_for_json_and_digest.grow_after_stat",
+        "line": 47,
+        "purpose": "Function parameter"
+      },
+      {
+        "name": "mode",
+        "scope": "test_growth_is_capped_from_actual_descriptor_bytes_for_json_and_digest.grow_after_stat",
+        "line": 47,
+        "purpose": "Function parameter"
+      },
+      {
+        "name": "stream",
+        "scope": "test_growth_is_capped_from_actual_descriptor_bytes_for_json_and_digest.grow_after_stat",
+        "line": 49,
+        "purpose": "stream = fdopen(descriptor, mode)"
+      },
+      {
+        "name": "writer",
+        "scope": "test_growth_is_capped_from_actual_descriptor_bytes_for_json_and_digest.grow_after_stat",
+        "line": 50,
+        "purpose": "source.open('ab') as writer"
+      },
+      {
+        "name": "tmp_path",
+        "scope": "test_real_hardlink_and_directory_refused_without_mutating_outside_bytes",
+        "line": 62,
+        "purpose": "Function parameter"
+      },
+      {
+        "name": "alias",
+        "scope": "test_real_hardlink_and_directory_refused_without_mutating_outside_bytes",
+        "line": 64,
+        "purpose": "(source, alias)"
+      },
+      {
+        "name": "source",
+        "scope": "test_real_hardlink_and_directory_refused_without_mutating_outside_bytes",
+        "line": 64,
+        "purpose": "(source, alias)"
+      },
+      {
+        "name": "read",
+        "scope": "test_real_hardlink_and_directory_refused_without_mutating_outside_bytes",
+        "line": 67,
+        "purpose": "for read in (lambda: files.regular_bytes(alias, 100), lambda: files.digest(alias), lambda: files.atomic_json(alias, {'new': True})):\n    with pytest.raises(ValueError):\n        rea"
+      },
+      {
+        "name": "tmp_path",
+        "scope": "test_regular_to_fifo_swap_is_bounded_by_nonblocking_descriptor_admission",
+        "line": 83,
+        "purpose": "Function parameter"
+      },
+      {
+        "name": "source",
+        "scope": "test_regular_to_fifo_swap_is_bounded_by_nonblocking_descriptor_admission",
+        "line": 85,
+        "purpose": "source = tmp_path / 'source'"
+      },
+      {
+        "name": "program",
+        "scope": "test_regular_to_fifo_swap_is_bounded_by_nonblocking_descriptor_admission",
+        "line": 87,
+        "purpose": "program = \"\\nimport os,sys\\nfrom pathlib import Path\\nfrom studio import files\\npath=Path(sys.argv[1]);original=files.os.open\\n\\ndef swap(value,flags):\\n path.unlink();os.mkfifo(pa"
+      },
+      {
+        "name": "result",
+        "scope": "test_regular_to_fifo_swap_is_bounded_by_nonblocking_descriptor_admission",
+        "line": 101,
+        "purpose": "result = subprocess.run([sys.executable, '-c', program, str(source)], capture_output=True, text=True, timeout=2, check=False)"
+      },
+      {
+        "name": "tmp_path",
+        "scope": "test_valid_digest_json_and_invalid_byte_limits",
+        "line": 111,
+        "purpose": "Function parameter"
+      },
+      {
+        "name": "source",
+        "scope": "test_valid_digest_json_and_invalid_byte_limits",
+        "line": 113,
+        "purpose": "source = tmp_path / 'source'"
+      },
+      {
+        "name": "limit",
+        "scope": "test_valid_digest_json_and_invalid_byte_limits",
+        "line": 117,
+        "purpose": "for limit in (True, 0, -1, 20 * 1024 ** 3 + 1):\n    with pytest.raises(ValueError):\n        files.regular_bytes(source, limit)"
+      },
+      {
+        "name": "tmp_path",
+        "scope": "test_seekable_zip_view_caps_grown_end_and_parser_read_requests",
+        "line": 122,
+        "purpose": "Function parameter"
+      },
+      {
+        "name": "source",
+        "scope": "test_seekable_zip_view_caps_grown_end_and_parser_read_requests",
+        "line": 124,
+        "purpose": "source = tmp_path / 'source'"
+      },
+      {
+        "name": "stream",
+        "scope": "test_seekable_zip_view_caps_grown_end_and_parser_read_requests",
+        "line": 126,
+        "purpose": "files.regular_stream(source, 4) as stream"
+      },
+      {
+        "name": "writer",
+        "scope": "test_seekable_zip_view_caps_grown_end_and_parser_read_requests",
+        "line": 132,
+        "purpose": "source.open('ab') as writer"
+      }
+    ]
+  },
+  "tests/test_local_paths.py": {
+    "purpose": "Jason Stys: real local grant/HTTP boundaries and fixed artifact layouts, not scanner exclusions.",
+    "declarations": [
+      {
+        "name": "module.test_canonical_identity_rejects_ambiguous_or_nonserver_keys",
+        "line": 28,
+        "kind": "FunctionDef",
+        "purpose": "Only the actual internally generated lowercase UUID32 grammar can select an artifact."
+      },
+      {
+        "name": "module.test_grants_normalize_before_component_check_and_cannot_be_root",
+        "line": 35,
+        "kind": "FunctionDef",
+        "purpose": "A sibling-prefix and normalized traversal escape fail despite sharing the approved textual prefix."
+      },
+      {
+        "name": "module.test_valid_legacy_schemas_cannot_reach_readers_outside_launcher_grants",
+        "line": 57,
+        "kind": "FunctionDef",
+        "purpose": "The whole authorized HTTP request is rejected before dataset/model bytes are inspected."
+      },
+      {
+        "name": "test_valid_legacy_schemas_cannot_reach_readers_outside_launcher_grants.forbidden",
+        "line": 74,
+        "kind": "FunctionDef",
+        "purpose": "Any path reaching an import reader makes the denial fixture fail immediately."
+      },
+      {
+        "name": "module.test_explicit_legacy_grant_preserves_real_import_and_trusted_runtime_selection",
+        "line": 100,
+        "kind": "FunctionDef",
+        "purpose": "An independent startup grant admits real local pixels, while runtime selection remains explicit and idle-only."
+      },
+      {
+        "name": "module.test_legacy_fixed_artifact_paths_ignore_tampered_absolute_bodies",
+        "line": 130,
+        "kind": "FunctionDef",
+        "purpose": "A registered lookup never lets saved absolute text redirect a glossary write or image download."
+      },
+      {
+        "name": "module.test_malformed_route_ids_fail_before_lookup_and_file_read",
+        "line": 165,
+        "kind": "FunctionDef",
+        "purpose": "Every relevant route rejects malformed identifiers before querying the store or touching files."
+      },
+      {
+        "name": "test_malformed_route_ids_fail_before_lookup_and_file_read.forbidden",
+        "line": 172,
+        "kind": "FunctionDef",
+        "purpose": "A malformed key reaching SQL/file access is a hard regression, never a mocked success."
+      },
+      {
+        "name": "module.test_actual_directory_alias_cannot_escape_a_launcher_grant",
+        "line": 189,
+        "kind": "FunctionDef",
+        "purpose": "A real NTFS junction/POSIX symlink target outside the grant is refused before any reader."
+      },
+      {
+        "name": "test_actual_directory_alias_cannot_escape_a_launcher_grant.forbidden",
+        "line": 215,
+        "kind": "FunctionDef",
+        "purpose": "The actual alias must be refused without invoking a dataset reader."
+      }
+    ],
+    "variables": [
+      {
+        "name": "TOKEN",
+        "scope": "module",
+        "line": 21,
+        "purpose": "TOKEN = 'synthetic-path-boundary-' + 'x' * 40"
+      },
+      {
+        "name": "value",
+        "scope": "test_canonical_identity_rejects_ambiguous_or_nonserver_keys",
+        "line": 28,
+        "purpose": "Function parameter"
+      },
+      {
+        "name": "tmp_path",
+        "scope": "test_grants_normalize_before_component_check_and_cannot_be_root",
+        "line": 35,
+        "purpose": "Function parameter"
+      },
+      {
+        "name": "approved",
+        "scope": "test_grants_normalize_before_component_check_and_cannot_be_root",
+        "line": 37,
+        "purpose": "approved = tmp_path / 'approved'"
+      },
+      {
+        "name": "paths",
+        "scope": "test_grants_normalize_before_component_check_and_cannot_be_root",
+        "line": 40,
+        "purpose": "paths = LocalPaths((approved,))"
+      },
+      {
+        "name": "value",
+        "scope": "test_grants_normalize_before_component_check_and_cannot_be_root",
+        "line": 42,
+        "purpose": "for value in (tmp_path / 'approved-shadow', approved / '..' / 'private', '\\\\\\\\server\\\\share', '//server/share', 'bad\\x00path'):\n    with pytest.raises(ValueError):\n        paths.se"
+      },
+      {
+        "name": "monkeypatch",
+        "scope": "test_valid_legacy_schemas_cannot_reach_readers_outside_launcher_grants",
+        "line": 58,
+        "purpose": "Function parameter"
+      },
+      {
+        "name": "route",
+        "scope": "test_valid_legacy_schemas_cannot_reach_readers_outside_launcher_grants",
+        "line": 58,
+        "purpose": "Function parameter"
+      },
+      {
+        "name": "selection",
+        "scope": "test_valid_legacy_schemas_cannot_reach_readers_outside_launcher_grants",
+        "line": 58,
+        "purpose": "Function parameter"
+      },
+      {
+        "name": "tmp_path",
+        "scope": "test_valid_legacy_schemas_cannot_reach_readers_outside_launcher_grants",
+        "line": 58,
+        "purpose": "Function parameter"
+      },
+      {
+        "name": "approved",
+        "scope": "test_valid_legacy_schemas_cannot_reach_readers_outside_launcher_grants",
+        "line": 64,
+        "purpose": "approved = tmp_path / 'approved'"
+      },
+      {
+        "name": "choices",
+        "scope": "test_valid_legacy_schemas_cannot_reach_readers_outside_launcher_grants",
+        "line": 66,
+        "purpose": "choices = {'outside': tmp_path / 'outside', 'sibling': tmp_path / 'approved-shadow', 'normalized-escape': approved / '..' / 'outside'}"
+      },
+      {
+        "name": "app",
+        "scope": "test_valid_legacy_schemas_cannot_reach_readers_outside_launcher_grants",
+        "line": 71,
+        "purpose": "app = create_app(tmp_path / 'workspace', TOKEN, import_roots=(approved,))"
+      },
+      {
+        "name": "called",
+        "scope": "test_valid_legacy_schemas_cannot_reach_readers_outside_launcher_grants",
+        "line": 72,
+        "purpose": "called = []"
+      },
+      {
+        "name": "args",
+        "scope": "test_valid_legacy_schemas_cannot_reach_readers_outside_launcher_grants.forbidden",
+        "line": 74,
+        "purpose": "Function parameter"
+      },
+      {
+        "name": "kwargs",
+        "scope": "test_valid_legacy_schemas_cannot_reach_readers_outside_launcher_grants.forbidden",
+        "line": 74,
+        "purpose": "Function parameter"
+      },
+      {
+        "name": "data",
+        "scope": "test_valid_legacy_schemas_cannot_reach_readers_outside_launcher_grants",
+        "line": 82,
+        "purpose": "data = {'name': 'owned', 'paths': [str(choices[selection])], 'rights_confirmed': True} if route == 'datasets' else {'name': 'owned', 'path': str(choices[selection]), 'kind': 'nativ"
+      },
+      {
+        "name": "client",
+        "scope": "test_valid_legacy_schemas_cannot_reach_readers_outside_launcher_grants",
+        "line": 94,
+        "purpose": "TestClient(app, base_url='http://127.0.0.1:8016', headers={'Authorization': 'Bearer ' + TOKEN}) as client"
+      },
+      {
+        "name": "response",
+        "scope": "test_valid_legacy_schemas_cannot_reach_readers_outside_launcher_grants",
+        "line": 95,
+        "purpose": "response = client.post('/api/' + route, json=data)"
+      },
+      {
+        "name": "tmp_path",
+        "scope": "test_explicit_legacy_grant_preserves_real_import_and_trusted_runtime_selection",
+        "line": 100,
+        "purpose": "Function parameter"
+      },
+      {
+        "name": "source",
+        "scope": "test_explicit_legacy_grant_preserves_real_import_and_trusted_runtime_selection",
+        "line": 102,
+        "purpose": "source = tmp_path / 'external-approved'"
+      },
+      {
+        "name": "image",
+        "scope": "test_explicit_legacy_grant_preserves_real_import_and_trusted_runtime_selection",
+        "line": 104,
+        "purpose": "Image.new('RGB', (16, 16), 'green') as image"
+      },
+      {
+        "name": "app",
+        "scope": "test_explicit_legacy_grant_preserves_real_import_and_trusted_runtime_selection",
+        "line": 107,
+        "purpose": "app = create_app(tmp_path / 'workspace', TOKEN, import_roots=(source, Path(sys.executable).parent))"
+      },
+      {
+        "name": "client",
+        "scope": "test_explicit_legacy_grant_preserves_real_import_and_trusted_runtime_selection",
+        "line": 112,
+        "purpose": "TestClient(app, base_url='http://127.0.0.1:8016', headers={'Authorization': 'Bearer ' + TOKEN}) as client"
+      },
+      {
+        "name": "imported",
+        "scope": "test_explicit_legacy_grant_preserves_real_import_and_trusted_runtime_selection",
+        "line": 113,
+        "purpose": "imported = client.post('/api/datasets', json={'name': 'owned', 'paths': [str(source)], 'rights_confirmed': True})"
+      },
+      {
+        "name": "record",
+        "scope": "test_explicit_legacy_grant_preserves_real_import_and_trusted_runtime_selection",
+        "line": 118,
+        "purpose": "record = imported.json()"
+      },
+      {
+        "name": "runtime",
+        "scope": "test_explicit_legacy_grant_preserves_real_import_and_trusted_runtime_selection",
+        "line": 126,
+        "purpose": "runtime = client.put('/api/runtime', json={'python': sys.executable, 'trusted': True})"
+      },
+      {
+        "name": "tmp_path",
+        "scope": "test_legacy_fixed_artifact_paths_ignore_tampered_absolute_bodies",
+        "line": 130,
+        "purpose": "Function parameter"
+      },
+      {
+        "name": "outside",
+        "scope": "test_legacy_fixed_artifact_paths_ignore_tampered_absolute_bodies",
+        "line": 132,
+        "purpose": "outside = tmp_path / 'unrelated-sensitive.txt'"
+      },
+      {
+        "name": "original",
+        "scope": "test_legacy_fixed_artifact_paths_ignore_tampered_absolute_bodies",
+        "line": 133,
+        "purpose": "original = b'private outside sentinel'"
+      },
+      {
+        "name": "app",
+        "scope": "test_legacy_fixed_artifact_paths_ignore_tampered_absolute_bodies",
+        "line": 135,
+        "purpose": "app = create_app(tmp_path / 'workspace', TOKEN)"
+      },
+      {
+        "name": "client",
+        "scope": "test_legacy_fixed_artifact_paths_ignore_tampered_absolute_bodies",
+        "line": 138,
+        "purpose": "TestClient(app, base_url='http://127.0.0.1:8016', headers={'Authorization': 'Bearer ' + TOKEN}) as client"
+      },
+      {
+        "name": "dataset",
+        "scope": "test_legacy_fixed_artifact_paths_ignore_tampered_absolute_bodies",
+        "line": 139,
+        "purpose": "dataset = client.post('/api/datasets/synthetic').json()"
+      },
+      {
+        "name": "glossary",
+        "scope": "test_legacy_fixed_artifact_paths_ignore_tampered_absolute_bodies",
+        "line": 141,
+        "purpose": "glossary = {'entries': {'owned': {'definition': 'known', 'source': 'fixture', 'reviewed': True}}}"
+      },
+      {
+        "name": "response",
+        "scope": "test_legacy_fixed_artifact_paths_ignore_tampered_absolute_bodies",
+        "line": 144,
+        "purpose": "response = client.put(f\"/api/datasets/{dataset['id']}/glossary\", json=glossary)"
+      },
+      {
+        "name": "saved",
+        "scope": "test_legacy_fixed_artifact_paths_ignore_tampered_absolute_bodies",
+        "line": 146,
+        "purpose": "saved = json.loads((app.state.store.root / 'datasets' / dataset['id'] / 'glossary.json').read_bytes())"
+      },
+      {
+        "name": "stream",
+        "scope": "test_legacy_fixed_artifact_paths_ignore_tampered_absolute_bodies",
+        "line": 150,
+        "purpose": "stream = io.BytesIO()"
+      },
+      {
+        "name": "image",
+        "scope": "test_legacy_fixed_artifact_paths_ignore_tampered_absolute_bodies",
+        "line": 151,
+        "purpose": "Image.new('RGB', (16, 16), 'red') as image"
+      },
+      {
+        "name": "uploaded",
+        "scope": "test_legacy_fixed_artifact_paths_ignore_tampered_absolute_bodies",
+        "line": 153,
+        "purpose": "uploaded = client.post('/api/images', json={'name': 'owned', 'content': base64.b64encode(stream.getvalue()).decode()}).json()"
+      },
+      {
+        "name": "downloaded",
+        "scope": "test_legacy_fixed_artifact_paths_ignore_tampered_absolute_bodies",
+        "line": 158,
+        "purpose": "downloaded = client.get(f\"/api/images/{uploaded['id']}/file\")"
+      },
+      {
+        "name": "image",
+        "scope": "test_legacy_fixed_artifact_paths_ignore_tampered_absolute_bodies",
+        "line": 160,
+        "purpose": "Image.open(io.BytesIO(downloaded.content)) as image"
+      },
+      {
+        "name": "monkeypatch",
+        "scope": "test_malformed_route_ids_fail_before_lookup_and_file_read",
+        "line": 165,
+        "purpose": "Function parameter"
+      },
+      {
+        "name": "tmp_path",
+        "scope": "test_malformed_route_ids_fail_before_lookup_and_file_read",
+        "line": 165,
+        "purpose": "Function parameter"
+      },
+      {
+        "name": "app",
+        "scope": "test_malformed_route_ids_fail_before_lookup_and_file_read",
+        "line": 167,
+        "purpose": "app = create_app(tmp_path / 'workspace', TOKEN)"
+      },
+      {
+        "name": "client",
+        "scope": "test_malformed_route_ids_fail_before_lookup_and_file_read",
+        "line": 170,
+        "purpose": "TestClient(app, base_url='http://127.0.0.1:8016', headers={'Authorization': 'Bearer ' + TOKEN}) as client"
+      },
+      {
+        "name": "args",
+        "scope": "test_malformed_route_ids_fail_before_lookup_and_file_read.forbidden",
+        "line": 172,
+        "purpose": "Function parameter"
+      },
+      {
+        "name": "kwargs",
+        "scope": "test_malformed_route_ids_fail_before_lookup_and_file_read.forbidden",
+        "line": 172,
+        "purpose": "Function parameter"
+      },
+      {
+        "name": "data",
+        "scope": "test_malformed_route_ids_fail_before_lookup_and_file_read",
+        "line": 177,
+        "purpose": "(method, route, data)"
+      },
+      {
+        "name": "method",
+        "scope": "test_malformed_route_ids_fail_before_lookup_and_file_read",
+        "line": 177,
+        "purpose": "(method, route, data)"
+      },
+      {
+        "name": "route",
+        "scope": "test_malformed_route_ids_fail_before_lookup_and_file_read",
+        "line": 177,
+        "purpose": "(method, route, data)"
+      },
+      {
+        "name": "response",
+        "scope": "test_malformed_route_ids_fail_before_lookup_and_file_read",
+        "line": 185,
+        "purpose": "response = client.request(method, '/api/' + route, json=data)"
+      },
+      {
+        "name": "monkeypatch",
+        "scope": "test_actual_directory_alias_cannot_escape_a_launcher_grant",
+        "line": 189,
+        "purpose": "Function parameter"
+      },
+      {
+        "name": "tmp_path",
+        "scope": "test_actual_directory_alias_cannot_escape_a_launcher_grant",
+        "line": 189,
+        "purpose": "Function parameter"
+      },
+      {
+        "name": "approved",
+        "scope": "test_actual_directory_alias_cannot_escape_a_launcher_grant",
+        "line": 193,
+        "purpose": "(approved, outside)"
+      },
+      {
+        "name": "outside",
+        "scope": "test_actual_directory_alias_cannot_escape_a_launcher_grant",
+        "line": 193,
+        "purpose": "(approved, outside)"
+      },
+      {
+        "name": "sentinel",
+        "scope": "test_actual_directory_alias_cannot_escape_a_launcher_grant",
+        "line": 196,
+        "purpose": "sentinel = outside / 'original'"
+      },
+      {
+        "name": "alias",
+        "scope": "test_actual_directory_alias_cannot_escape_a_launcher_grant",
+        "line": 198,
+        "purpose": "alias = approved / 'redirected'"
+      },
+      {
+        "name": "command",
+        "scope": "test_actual_directory_alias_cannot_escape_a_launcher_grant",
+        "line": 200,
+        "purpose": "command = Path(os.environ.get('SYSTEMROOT', 'C:/Windows')) / 'System32/cmd.exe'"
+      },
+      {
+        "name": "result",
+        "scope": "test_actual_directory_alias_cannot_escape_a_launcher_grant",
+        "line": 201,
+        "purpose": "result = subprocess.run([str(command), '/d', '/c', 'mklink', '/J', str(alias), str(outside)], capture_output=True, check=False, timeout=5)"
+      },
+      {
+        "name": "grants",
+        "scope": "test_actual_directory_alias_cannot_escape_a_launcher_grant",
+        "line": 210,
+        "purpose": "grants = LocalPaths((approved,))"
+      },
+      {
+        "name": "app",
+        "scope": "test_actual_directory_alias_cannot_escape_a_launcher_grant",
+        "line": 213,
+        "purpose": "app = create_app(tmp_path / 'workspace', TOKEN, import_roots=(approved,))"
+      },
+      {
+        "name": "args",
+        "scope": "test_actual_directory_alias_cannot_escape_a_launcher_grant.forbidden",
+        "line": 215,
+        "purpose": "Function parameter"
+      },
+      {
+        "name": "kwargs",
+        "scope": "test_actual_directory_alias_cannot_escape_a_launcher_grant.forbidden",
+        "line": 215,
+        "purpose": "Function parameter"
+      },
+      {
+        "name": "client",
+        "scope": "test_actual_directory_alias_cannot_escape_a_launcher_grant",
+        "line": 222,
+        "purpose": "TestClient(app, base_url='http://127.0.0.1:8016', headers={'Authorization': 'Bearer ' + TOKEN}) as client"
+      },
+      {
+        "name": "response",
+        "scope": "test_actual_directory_alias_cannot_escape_a_launcher_grant",
+        "line": 223,
+        "purpose": "response = client.post('/api/datasets', json={'name': 'owned', 'paths': [str(alias)], 'rights_confirmed': True})"
       }
     ]
   },

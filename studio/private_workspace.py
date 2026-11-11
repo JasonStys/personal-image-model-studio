@@ -1,5 +1,5 @@
 """Jason Stys: one account-scoped local ML workspace; locked archives and crash-safe recovery ownership."""
-# Index: declarations module.InstanceLock@L27, InstanceLock.__init__@L30, InstanceLock.close@L75, module.rebase@L80, module.validate_workspace@L92, module.Workspaces@L136, Workspaces.__init__@L139, Workspaces._initialize_state@L168, Workspaces.archive@L189, Workspaces.status@L198, Workspaces.unlock@L209, Workspaces.require@L276, Workspaces.save@L282, Workspaces.remove_active@L298, Workspaces.lock@L310, Workspaces.delete_data@L328, Workspaces.close@L340, Workspaces.usage@L348; variables path@L30, self@L30, before@L32, descriptor@L33, actual@L43, self@L75, current@L80, old@L80, value@L80, suffix@L83, item@L86, key@L86, item@L88, original@L92, root@L92, name@L95, database@L96, database@L99, db@L101, rows@L102, identity@L105, kind@L105, text@L105, value@L108, field@L110, path@L115, request@L123, value@L124, field@L125, path@L125, selected@L128, embedded@L140, interpreter@L140, port@L140, root@L140, self@L140, static@L140, allowed@L145, p@L155, embedded@L168, interpreter@L168, port@L168, self@L168, static@L168, owner@L189, self@L189, c@L193, owner@L198, self@L198, config@L200, encoded@L209, owner@L209, salt@L209, self@L209, key@L217, current@L218, config@L219, plaintext@L222, nonce@L237, config@L238, original@L252, original@L254, path@L255, original@L258, owner@L276, self@L276, force@L282, self@L282, j@L287, current@L292, expected_owner@L298, self@L298, owner@L310, self@L310, app@L312, upload@L315, owner@L328, self@L328, self@L340, self@L348, p@L350, used@L350, reserved@L351, u@L351. Purposes/parameters: docs/code-map.json.
+# Index: declarations module.InstanceLock@L27, InstanceLock.__init__@L30, InstanceLock.close@L75, module.rebase@L80, module.validate_workspace@L92, module.Workspaces@L136, Workspaces.__init__@L139, Workspaces._initialize_state@L168, Workspaces.archive@L189, Workspaces.status@L198, Workspaces.unlock@L209, Workspaces.require@L281, Workspaces.save@L287, Workspaces.remove_active@L303, Workspaces.lock@L315, Workspaces.delete_data@L333, Workspaces.close@L345, Workspaces.usage@L353; variables path@L30, self@L30, before@L32, descriptor@L33, actual@L43, self@L75, current@L80, old@L80, value@L80, suffix@L83, item@L86, key@L86, item@L88, original@L92, root@L92, name@L95, database@L96, database@L99, db@L101, rows@L102, identity@L105, kind@L105, text@L105, value@L108, field@L110, path@L115, request@L123, value@L124, field@L125, path@L125, selected@L128, embedded@L140, interpreter@L140, port@L140, root@L140, self@L140, static@L140, allowed@L145, p@L155, embedded@L168, interpreter@L168, port@L168, self@L168, static@L168, owner@L189, self@L189, c@L193, owner@L198, self@L198, config@L200, encoded@L209, owner@L209, salt@L209, self@L209, key@L217, current@L218, config@L219, plaintext@L222, nonce@L237, config@L238, original@L252, original@L254, path@L255, original@L258, owner@L281, self@L281, force@L287, self@L287, j@L292, current@L297, expected_owner@L303, self@L303, owner@L315, self@L315, app@L317, upload@L320, owner@L333, self@L333, self@L345, self@L353, p@L355, used@L355, reserved@L356, u@L356. Purposes/parameters: docs/code-map.json.
 
 import asyncio
 import base64
@@ -265,7 +265,12 @@ class Workspaces:
             atomic_json(self.marker, {"owner": owner})
         validate_workspace(self.active, original)
         self.app = create_app(
-            self.active, self.internal_token, self.port, self.static, self.interpreter
+            self.active,
+            self.internal_token,
+            self.port,
+            self.static,
+            self.interpreter,
+            import_roots=(self.active / "imports",),
         )
         self.app.state.jobs.embedded = self.embedded
         self.owner, self.key = owner, key
