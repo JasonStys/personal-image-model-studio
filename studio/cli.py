@@ -1,6 +1,6 @@
 """Browser and native desktop launchers with local data roots and private per-process session links."""
 
-# Index: declarations module.main@L15; variables parser@L17, args@L22, frozen@L25, root@L26, data@L27, interpreter@L33, interpreter@L38, interpreter@L40, token@L41, app@L42, server@L50, url@L59, thread@L63, deadline@L65. Purposes/parameters: docs/code-map.json.
+# Index: declarations module.main@L15; variables parser@L17, args@L29, frozen@L32, root@L33, data@L34, interpreter@L40, interpreter@L45, interpreter@L47, token@L48, app@L49, server@L65, url@L74, thread@L78, deadline@L80. Purposes/parameters: docs/code-map.json.
 import argparse
 import os
 import secrets
@@ -19,6 +19,13 @@ def main():
     parser.add_argument("--port", type=int, default=8016)
     parser.add_argument("--desktop", action="store_true")
     parser.add_argument("--worker-python", default=os.environ.get("IMAGE_STUDIO_PYTHON"))
+    parser.add_argument(
+        "--allow-local-root",
+        action="append",
+        type=Path,
+        default=[],
+        help="Explicit trusted local import/runtime root outside the owner home/workspace; never a filesystem or network root",
+    )
     args = parser.parse_args()
     if not 1024 <= args.port <= 65535:
         raise SystemExit("Port must be 1024..65535")
@@ -46,6 +53,14 @@ def main():
         root / "dist",
         interpreter,
         worker_source=root / "studio-source" if frozen else None,
+        import_roots=tuple(
+            [
+                data,
+                Path.home(),
+                Path(os.path.realpath(interpreter or sys.executable)).parent,
+                *args.allow_local_root,
+            ]
+        ),
     )
     server = uvicorn.Server(
         uvicorn.Config(

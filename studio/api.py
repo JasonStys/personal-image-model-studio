@@ -1,9 +1,11 @@
 """Loopback-only authenticated API for datasets, models, job control, image history and feedback."""
 
-# Index: declarations module.Boundary@L29, Boundary.__init__@L32, Boundary.__call__@L38, Boundary.__call__.replay@L73, Boundary.__call__.private_send@L81, module.Upload@L99, module.Policy@L107, module.AccountConnect@L114, module.GalleryImport@L121, module.RuntimeChoice@L131, module.create_app@L139, create_app.lifespan@L159, create_app.invalid@L177, create_app.bad_value@L185, create_app.missing@L190, create_app.file_error@L195, create_app.account_status@L200, create_app.account_connect@L205, create_app.account_disconnect@L210, create_app.account_callback@L216, create_app.account_import@L227, create_app.feedback_export@L245, create_app.health@L254, create_app.runtime_status@L259, create_app.runtime_choice@L264, create_app.workspace@L281, create_app.dataset@L286, create_app.dataset_review@L303, create_app.dataset_review_image@L313, create_app.synthetic@L326, create_app.glossary@L342, create_app.glossary_save@L347, create_app.model@L373, create_app.upload@L405, create_app.image_file@L433, create_app.training@L442, create_app.generation@L462, create_app.cancellation@L481, create_app.report@L486, create_app.feedback_save@L494, create_app.feedback_read@L500, create_app.policy_save@L505; variables app@L32, port@L32, self@L32, token@L32, receive@L38, scope@L38, self@L38, send@L38, headers@L42, k@L42, v@L42, size@L56, chunks@L57, message@L59, chunk@L62, size@L63, consumed@L71, consumed@L77, message@L81, model_config@L102, name@L103, content@L104, model_config@L110, denied_terms@L111, model_config@L117, client_id@L118, model_config@L124, name@L125, max_items@L126, rights_confirmed@L127, provider_terms_reviewed@L128, model_config@L134, python@L135, trusted@L136, root@L140, token@L141, port@L142, static@L143, interpreter@L144, connector_transport@L145, worker_source@L146, store@L149, interpreter@L152, jobs@L155, connector@L156, app@L159, app@L165, error@L177, request@L177, e@L180, error@L185, request@L185, error@L190, request@L190, error@L195, request@L195, data@L205, request@L216, params@L218, key@L219, data@L227, identity@L229, path@L230, result@L231, record@L232, data@L264, path@L266, job@L274, kind@L283, data@L286, identity@L288, path@L289, result@L290, record@L291, identity@L303, character@L306, record@L309, identity@L313, image_hash@L313, character@L316, record@L319, content@L320, identity@L328, path@L329, result@L330, record@L331, identity@L342, body@L347, identity@L347, entries@L349, term@L352, value@L352, path@L368, data@L373, path@L375, details@L379, summary@L380, summary@L388, identity@L392, result@L393, data@L405, content@L408, identity@L411, directory@L412, temporary@L414, path@L415, image@L418, record@L422, identity@L433, settings@L442, references@L444, identity@L446, resumed@L450, base@L455, settings@L462, compiled@L464, policy@L465, selected@L467, references@L468, identity@L481, identity@L486, job@L488, feedback@L494, identity@L494, identity@L500, policy@L505, term@L507, static@L512. Purposes/parameters: docs/code-map.json.
+# Index: declarations module.Boundary@L33, Boundary.__init__@L36, Boundary.__call__@L42, Boundary.__call__.replay@L77, Boundary.__call__.private_send@L85, module.Upload@L103, module.Policy@L111, module.AccountConnect@L118, module.GalleryImport@L125, module.RuntimeChoice@L135, module.create_app@L143, create_app.known@L172, create_app.dataset_path@L176, create_app.image_path@L182, create_app.model_path@L193, create_app.lifespan@L204, create_app.invalid@L222, create_app.bad_value@L230, create_app.missing@L235, create_app.file_error@L240, create_app.account_status@L245, create_app.account_connect@L250, create_app.account_disconnect@L255, create_app.account_callback@L261, create_app.account_import@L272, create_app.feedback_export@L290, create_app.health@L299, create_app.runtime_status@L304, create_app.runtime_choice@L309, create_app.workspace@L326, create_app.dataset@L331, create_app.dataset_review@L349, create_app.dataset_review_image@L355, create_app.synthetic@L362, create_app.glossary@L378, create_app.glossary_save@L383, create_app.model@L409, create_app.upload@L441, create_app.image_file@L469, create_app.training@L481, create_app.generation@L499, create_app.cancellation@L520, create_app.report@L525, create_app.feedback_save@L533, create_app.feedback_read@L539, create_app.policy_save@L544; variables app@L36, port@L36, self@L36, token@L36, receive@L42, scope@L42, self@L42, send@L42, headers@L46, k@L46, v@L46, size@L60, chunks@L61, message@L63, chunk@L66, size@L67, consumed@L75, consumed@L81, message@L85, model_config@L106, name@L107, content@L108, model_config@L114, denied_terms@L115, model_config@L121, client_id@L122, model_config@L128, name@L129, max_items@L130, rights_confirmed@L131, provider_terms_reviewed@L132, model_config@L138, python@L139, trusted@L140, root@L144, token@L145, port@L146, static@L147, interpreter@L148, connector_transport@L149, worker_source@L150, import_roots@L152, store@L155, interpreter@L158, jobs@L161, grants@L162, identity@L172, kind@L172, identity@L176, identity@L178, identity@L182, identity@L184, record@L185, relative@L186, record@L193, identity@L195, generated@L196, connector@L201, app@L204, app@L210, error@L222, request@L222, e@L225, error@L230, request@L230, error@L235, request@L235, error@L240, request@L240, data@L250, request@L261, params@L263, key@L264, data@L272, identity@L274, path@L275, result@L276, record@L277, data@L309, path@L311, job@L319, kind@L328, data@L331, identity@L333, path@L334, selected@L335, value@L335, result@L336, record@L337, identity@L349, record@L351, identity@L355, image_hash@L355, record@L357, content@L358, identity@L364, path@L365, result@L366, record@L367, identity@L378, body@L383, identity@L383, entries@L385, term@L388, value@L388, path@L404, data@L409, path@L411, details@L415, summary@L416, summary@L424, identity@L428, result@L429, data@L441, content@L444, identity@L447, directory@L448, temporary@L450, path@L451, image@L454, record@L458, identity@L469, content@L471, settings@L481, references@L483, identity@L484, resumed@L487, base@L492, settings@L499, compiled@L501, policy@L502, selected@L504, references@L505, identity@L520, identity@L525, job@L527, feedback@L533, identity@L533, identity@L539, policy@L544, term@L546, static@L551. Purposes/parameters: docs/code-map.json.
 import base64
 import binascii
 import secrets
+import os
+import sys
 import re
 import uuid
 from contextlib import asynccontextmanager
@@ -11,7 +13,7 @@ from pathlib import Path
 from typing import Literal
 from fastapi import FastAPI, Request
 from fastapi.exceptions import RequestValidationError
-from fastapi.responses import FileResponse, JSONResponse, HTMLResponse, Response
+from fastapi.responses import JSONResponse, HTMLResponse, Response
 from fastapi.staticfiles import StaticFiles
 from pydantic import BaseModel, ConfigDict, Field
 from studio.contracts import DatasetImport, Generation, Training, Feedback, ModelImport
@@ -24,6 +26,8 @@ from studio.store import Store
 from studio.deviantart import DeviantArt
 from studio.feedback import export_feedback
 from studio.formats import inspect_diffusers
+from studio.local_paths import LocalPaths, canonical_id
+from studio.files import regular_bytes, MAX_IMAGE_BYTES
 
 
 class Boundary:
@@ -144,6 +148,8 @@ def create_app(
     interpreter: str | None = None,
     connector_transport=None,
     worker_source: Path | None = None,
+    *,
+    import_roots: tuple[Path, ...] | None = None,
 ):
     """Construct a single-user private workspace without changing other apps or requesting cloud credentials."""
     store = Store(root)
@@ -153,6 +159,45 @@ def create_app(
         except KeyError:
             pass
     jobs = Jobs(store, interpreter, worker_source)
+    grants = LocalPaths(
+        import_roots
+        if import_roots is not None
+        else (
+            store.root,
+            Path.home(),
+            Path(os.path.realpath(jobs.interpreter or sys.executable)).parent,
+        )
+    )
+
+    def known(kind: str, identity: str) -> dict:
+        """Validate the server-generated canonical identity before the exact database lookup."""
+        return store.get(kind, canonical_id(identity))
+
+    def dataset_path(identity: str) -> Path:
+        """Derive one registered dataset directory from trusted workspace and UUID, never record path text."""
+        identity = canonical_id(identity)
+        known("dataset", identity)
+        return confined(store.root, "datasets/" + identity)
+
+    def image_path(identity: str) -> Path:
+        """Select a fixed uploaded/generated artifact layout; stored arbitrary paths are never served."""
+        identity = canonical_id(identity)
+        record = known("image", identity)
+        relative = (
+            "images/" + identity + ".png"
+            if record.get("details", {}).get("source") == "user-upload"
+            else "jobs/" + identity + "/image.png"
+        )
+        return confined(store.root, relative)
+
+    def model_path(record: dict) -> Path:
+        """Admit a generated model layout or an explicitly launcher-granted registered import."""
+        identity = canonical_id(record["id"])
+        generated = confined(store.root, "jobs/" + identity + "/model")
+        if os.path.normcase(os.path.realpath(record["path"])) == os.path.normcase(str(generated)):
+            return generated
+        return grants.selected(record["path"])
+
     connector = DeviantArt(port, connector_transport)
 
     @asynccontextmanager
@@ -263,7 +308,7 @@ def create_app(
     @app.put("/api/runtime")
     def runtime_choice(data: RuntimeChoice):
         """Change future worker executable only while idle, with explicit local trust acknowledgement."""
-        path = Path(data.python).resolve(strict=True)
+        path = grants.selected(data.python)
         if not path.is_file() or not re.fullmatch(
             r"python(?:3(?:\.[0-9]+)?)?(?:\.exe)?", path.name, re.IGNORECASE
         ):
@@ -287,7 +332,8 @@ def create_app(
         """Import explicit rights-approved directories/ZIPs and retain AI quarantine metadata separately."""
         identity = uuid.uuid4().hex
         path = store.root / "datasets" / identity
-        result = import_dataset(data.paths, path, data.name)
+        selected = [str(grants.selected(value)) for value in data.paths]
+        result = import_dataset(selected, path, data.name)
         record = {
             "id": identity,
             "name": data.name,
@@ -302,24 +348,14 @@ def create_app(
     @app.get("/api/datasets/{identity}/review")
     def dataset_review(identity: str):
         """Review a known account-scoped dataset; caller input never chooses a machine path or model."""
-        if len(identity) != 32 or any(
-            character not in "0123456789abcdef" for character in identity
-        ):
-            raise KeyError("Unknown dataset")
-        record = store.get("dataset", identity)
-        return review_dataset(confined(store.root, f"datasets/{identity}"), record["fingerprint"])
+        record = known("dataset", identity)
+        return review_dataset(dataset_path(identity), record["fingerprint"])
 
     @app.get("/api/datasets/{identity}/review/images/{image_hash}")
     def dataset_review_image(identity: str, image_hash: str):
         """Read-only account-scoped thumbnail; guessed IDs and paths never resolve arbitrary files."""
-        if len(identity) != 32 or any(
-            character not in "0123456789abcdef" for character in identity
-        ):
-            raise KeyError("Unknown dataset")
-        record = store.get("dataset", identity)
-        content = dataset_thumbnail(
-            confined(store.root, f"datasets/{identity}"), record["fingerprint"], image_hash
-        )
+        record = known("dataset", identity)
+        content = dataset_thumbnail(dataset_path(identity), record["fingerprint"], image_hash)
         return Response(content, media_type="image/png")
 
     @app.post("/api/datasets/synthetic")
@@ -341,7 +377,7 @@ def create_app(
     @app.get("/api/datasets/{identity}/glossary")
     def glossary(identity: str):
         """Read operator-reviewed tag meanings stored inside the chosen dataset."""
-        return read_json(Path(store.get("dataset", identity)["path"]) / "glossary.json")
+        return read_json(dataset_path(identity) / "glossary.json")
 
     @app.put("/api/datasets/{identity}/glossary")
     def glossary_save(identity: str, body: dict):
@@ -365,14 +401,14 @@ def create_app(
                 or type(value["reviewed"]) is not bool
             ):
                 raise ValueError("Invalid glossary fields")
-        path = Path(store.get("dataset", identity)["path"]) / "glossary.json"
+        path = dataset_path(identity) / "glossary.json"
         atomic_json(path, {"schema": 1, "entries": entries})
         return {"saved": True}
 
     @app.post("/api/models")
     def model(data: ModelImport):
         """Register an operator-selected verified local model; never downloads or executes custom model code."""
-        path = Path(data.path).resolve(strict=True)
+        path = grants.selected(data.path)
         if data.kind == "native":
             from studio.checkpoints import verify
 
@@ -432,30 +468,31 @@ def create_app(
     @app.get("/api/images/{identity}/file")
     def image_file(identity: str):
         """Serve only registered local image artifacts behind the private session boundary."""
-        return FileResponse(
-            store.get("image", identity)["path"],
+        content = regular_bytes(image_path(identity), MAX_IMAGE_BYTES)
+        return Response(
+            content,
             media_type="image/png",
-            filename=f"image-{identity}.png",
+            headers={
+                "content-disposition": f'inline; filename="image-{canonical_id(identity)}.png"',
+            },
         )
 
     @app.post("/api/train")
     def training(settings: Training):
         """Validate selections before admitting a real training job; no placeholder training exists."""
         references = {
-            "datasets": [
-                store.get("dataset", identity)["path"] for identity in settings.dataset_ids
-            ]
+            "datasets": [str(dataset_path(identity)) for identity in settings.dataset_ids]
         }
         if settings.resume_model_id:
-            resumed = store.get("model", settings.resume_model_id)
+            resumed = known("model", settings.resume_model_id)
             if resumed["kind"] != "native":
                 raise ValueError("Native resume needs a native checkpoint")
-            references["resume"] = resumed["path"]
+            references["resume"] = str(model_path(resumed))
         if settings.base_model_id:
-            base = store.get("model", settings.base_model_id)
+            base = known("model", settings.base_model_id)
             if base["kind"] != "diffusers":
                 raise ValueError("LoRA needs a registered classic SD base")
-            references["base"] = base["path"]
+            references["base"] = str(model_path(base))
         return jobs.submit("train", settings.model_dump(), references)
 
     @app.post("/api/generate")
@@ -464,28 +501,30 @@ def create_app(
         compiled = compile_prompt(settings.prompt.model_dump())
         policy = store.list("policy", 1)
         enforce_policy(compiled, policy[0]["denied_terms"] if policy else [])
-        selected = store.get("model", settings.model_id)
+        selected = known("model", settings.model_id)
         references = {
             "model_kind": selected["kind"],
-            "model": selected.get("base", selected["path"]),
+            "model": str(grants.selected(selected["base"]))
+            if selected.get("base")
+            else str(model_path(selected)),
         }
         if selected["kind"] == "lora":
-            references["adapter"] = selected["path"]
+            references["adapter"] = str(model_path(selected))
         if settings.image_id:
-            references["source"] = store.get("image", settings.image_id)["path"]
+            references["source"] = str(image_path(settings.image_id))
         if settings.mask_id:
-            references["mask"] = store.get("image", settings.mask_id)["path"]
+            references["mask"] = str(image_path(settings.mask_id))
         return jobs.submit("generate", settings.model_dump(), references)
 
     @app.post("/api/jobs/{identity}/cancel")
     def cancellation(identity: str):
         """Cancel one known workspace job; completed results remain intact."""
-        return jobs.cancel(identity)
+        return jobs.cancel(canonical_id(identity))
 
     @app.get("/api/jobs/{identity}/report")
     def report(identity: str):
         """Download an auditable job report; source paths/prompts are private and not telemetry."""
-        job = store.get("job", identity)
+        job = known("job", identity)
         return JSONResponse(
             job, headers={"content-disposition": f'attachment; filename="job-{identity}.json"'}
         )
@@ -493,13 +532,13 @@ def create_app(
     @app.post("/api/images/{identity}/feedback")
     def feedback_save(identity: str, feedback: Feedback):
         """Store human notes and consent; a new revision/training run must be explicitly requested."""
-        store.add_feedback(identity, feedback.model_dump())
+        store.add_feedback(canonical_id(identity), feedback.model_dump())
         return {"saved": True}
 
     @app.get("/api/images/{identity}/feedback")
     def feedback_read(identity: str):
         """Return recorded human feedback without fabricating model-generated scores."""
-        return store.feedback(identity)
+        return store.feedback(canonical_id(identity))
 
     @app.put("/api/policy")
     def policy_save(policy: Policy):

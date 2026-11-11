@@ -12,11 +12,11 @@ from studio.files import atomic_json, read_json
 def test_restart_marks_unfinished_jobs_interrupted(tmp_path):
     """Recovery does not silently retrain or replace an old finished result."""
     store = Store(tmp_path)
-    store.put("job", "unfinished", {"id": "unfinished", "status": "running"})
-    store.put("job", "finished", {"id": "finished", "status": "completed"})
+    store.put("job", "a" * 32, {"id": "a" * 32, "status": "running"})
+    store.put("job", "b" * 32, {"id": "b" * 32, "status": "completed"})
     jobs = Jobs(store)
-    assert store.get("job", "unfinished")["status"] == "interrupted"
-    assert store.get("job", "finished")["status"] == "completed"
+    assert store.get("job", "a" * 32)["status"] == "interrupted"
+    assert store.get("job", "b" * 32)["status"] == "completed"
     jobs.close()
 
 

@@ -46,17 +46,17 @@ jobs:
           set -euo pipefail
           if [ "$RUNNER_OS" = "Linux" ]; then
             command -v xvfb-run
-            xvfb-run -a python -m pytest tests/test_native_owner.py tests/test_native_host.py tests/test_native_profile.py tests/test_native_identity.py tests/test_native_privacy.py tests/test_native_notices.py tests/test_runtime_terms.py -q
+            xvfb-run -a python -m pytest tests/test_native_owner.py tests/test_local_paths.py tests/test_local_files.py tests/test_native_host.py tests/test_native_profile.py tests/test_native_identity.py tests/test_native_privacy.py tests/test_native_notices.py tests/test_runtime_terms.py -q
             xvfb-run -a python scripts/build_native.py
             xvfb-run -a python scripts/smoke_native.py release/bin/PersonalImageModelStudio
             xvfb-run -a python scripts/native_acceptance.py --built-directory release
           elif [ "$RUNNER_OS" = "Windows" ]; then
-            python -m pytest tests/test_native_owner.py tests/test_native_host.py tests/test_native_profile.py tests/test_native_identity.py tests/test_native_privacy.py tests/test_native_notices.py tests/test_runtime_terms.py -q
+            python -m pytest tests/test_native_owner.py tests/test_local_paths.py tests/test_local_files.py tests/test_native_host.py tests/test_native_profile.py tests/test_native_identity.py tests/test_native_privacy.py tests/test_native_notices.py tests/test_runtime_terms.py -q
             python scripts/build_native.py
             python scripts/smoke_native.py release/bin/PersonalImageModelStudio.exe
             python scripts/native_acceptance.py --built-directory release
           else
-            python -m pytest tests/test_native_owner.py tests/test_native_host.py tests/test_native_profile.py tests/test_native_identity.py tests/test_native_privacy.py tests/test_native_notices.py tests/test_runtime_terms.py -q
+            python -m pytest tests/test_native_owner.py tests/test_local_paths.py tests/test_local_files.py tests/test_native_host.py tests/test_native_profile.py tests/test_native_identity.py tests/test_native_privacy.py tests/test_native_notices.py tests/test_runtime_terms.py -q
             python scripts/build_native.py
             python scripts/smoke_native.py release/bin/PersonalImageModelStudio
             python scripts/native_acceptance.py --built-directory release

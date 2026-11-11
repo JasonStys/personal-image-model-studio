@@ -1,9 +1,9 @@
 """Lightweight fixed-class pretrained model inspection; no ML imports or executable model code."""
 
-# Index: declarations module.inspect_diffusers@L19, module.model_fingerprint@L102; variables SCHEDULERS@L8, path@L19, model@L21, expected@L26, contract@L32, name@L32, scheduler@L35, allowed@L43, key@L43, key@L50, value@L50, count@L58, size@L58, file@L59, count@L60, size@L68, index@L72, mapping@L73, shard@L76, shard@L78, target@L87, component@L96, path@L102, signature@L105, file@L106. Purposes/parameters: docs/code-map.json.
+# Index: declarations module.inspect_diffusers@L19, module.model_fingerprint@L104; variables SCHEDULERS@L8, path@L19, model@L21, expected@L26, contract@L32, name@L32, scheduler@L35, allowed@L43, key@L43, key@L50, value@L50, count@L58, size@L58, file@L59, count@L60, size@L70, index@L74, mapping@L75, shard@L78, shard@L80, target@L89, component@L98, path@L104, signature@L107, file@L108. Purposes/parameters: docs/code-map.json.
 from pathlib import Path
 import hashlib
-from studio.files import read_json, digest, confined
+from studio.files import read_json, digest, confined, no_alias
 
 SCHEDULERS = {
     "DDPMScheduler",
@@ -61,10 +61,12 @@ def inspect_diffusers(path: Path) -> dict:
         if (
             count > 10000
             or file.is_symlink()
+            or getattr(file.lstat(), "st_file_attributes", 0) & 0x400
             or file.suffix.casefold() in {".py", ".pkl", ".pickle", ".bin", ".pt", ".pth", ".ckpt"}
         ):
             raise ValueError("Unsafe/oversized model tree, executable/pickle file or symbolic link")
         if file.is_file():
+            no_alias(file)
             size += file.stat().st_size
             if size > 20 * 1024**3:
                 raise ValueError("Model files exceed 20 GiB budget")

@@ -32,7 +32,7 @@ def verify(path: Path) -> dict:
         raise ValueError("Invalid checkpoint artifact list")
     for name, expected in artifacts.items():
         file = confined(path, name)
-        if file.stat().st_size > 100 * 1024 * 1024 or digest(file) != expected:
+        if digest(file, 100 * 1024 * 1024) != expected:
             raise ValueError("Checkpoint integrity failure")
     return manifest
 

@@ -28,7 +28,7 @@ jobs:
       - run: python -m pip install -e ".[dev]"
       - run: python -m ruff check studio scripts tests
       - run: python -m ruff format --check studio scripts tests
-      - run: python -m pytest tests/test_core.py tests/test_deviantart.py tests/test_quickdraw.py tests/test_jobs.py tests/test_private.py tests/test_dataset_review.py tests/test_native_host.py tests/test_native_profile.py tests/test_native_identity.py tests/test_native_release_guard.py tests/test_native_distribution.py tests/test_native_diagnostics.py tests/test_browser_environment.py --cov=studio --cov-report=xml:artifacts/coverage.xml --junitxml=artifacts/contracts.xml -W error::ResourceWarning
+      - run: python -m pytest tests/test_core.py tests/test_local_paths.py tests/test_local_files.py tests/test_deviantart.py tests/test_quickdraw.py tests/test_jobs.py tests/test_private.py tests/test_dataset_review.py tests/test_native_host.py tests/test_native_profile.py tests/test_native_identity.py tests/test_native_release_guard.py tests/test_native_distribution.py tests/test_native_diagnostics.py tests/test_browser_environment.py --cov=studio --cov-report=xml:artifacts/coverage.xml --junitxml=artifacts/contracts.xml -W error::ResourceWarning
       - run: python -m pip check
       - uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
         if: always() && vars.PIMS_UPLOAD_CI_ARTIFACTS == 'true'

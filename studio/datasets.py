@@ -1,6 +1,6 @@
 """Owned local/ZIP dataset ingestion with provenance, duplicate-aware splits and AI quarantine."""
 
-# Index: declarations module.extract_zip@L19, module.scan@L45, module.image_record@L58, module.import_dataset@L100, module.eligible@L174, module.synthetic_dataset@L183; variables EXTENSIONS@L14, MAX_ITEMS@L15, MAX_ZIP_BYTES@L16, destination@L19, path@L19, archive@L23, members@L24, m@L25, member@L27, name@L28, unsafe@L29, root@L45, count@L47, path@L48, count@L49, path@L58, metadata_path@L60, metadata@L61, caption_path@L62, caption@L65, tags@L72, t@L76, origin@L79, t@L83, origin@L85, image@L86, pixel_hash@L87, record@L88, name@L100, output@L100, paths@L100, temporary@L105, staging@L106, prepared@L107, records@L109, seen@L109, index@L110, source@L110, source_path@L111, root@L113, images@L116, images@L120, path@L123, image@L124, record@L124, previous@L127, bucket@L140, target@L141, fingerprint@L151, r@L153, manifest@L157, r@L165, manifest@L174, split@L174, r@L178, count@L183, output@L183, seed@L183, rng@L189, temporary@L191, root@L192, colors@L193, index@L194, color@L195, shape@L196, image@L197, drawing@L198, left@L199, top@L199, bottom@L200, right@L200, box@L201, path@L210. Purposes/parameters: docs/code-map.json.
+# Index: declarations module.extract_zip@L27, module.scan@L51, module.image_record@L65, module.import_dataset@L105, module.eligible@L179, module.synthetic_dataset@L188; variables EXTENSIONS@L22, MAX_ITEMS@L23, MAX_ZIP_BYTES@L24, destination@L27, path@L27, archive@L29, stream@L29, members@L30, m@L31, member@L33, name@L34, unsafe@L35, root@L51, count@L53, path@L54, count@L55, path@L65, metadata_path@L67, metadata@L68, caption_path@L69, caption@L70, tags@L77, t@L81, origin@L84, t@L88, origin@L90, image@L91, pixel_hash@L92, record@L93, name@L105, output@L105, paths@L105, temporary@L110, staging@L111, prepared@L112, records@L114, seen@L114, index@L115, source@L115, source_path@L116, root@L118, images@L121, images@L125, path@L128, image@L129, record@L129, previous@L132, bucket@L145, target@L146, fingerprint@L156, r@L158, manifest@L162, r@L170, manifest@L179, split@L179, r@L183, count@L188, output@L188, seed@L188, rng@L194, temporary@L196, root@L197, colors@L198, index@L199, color@L200, shape@L201, image@L202, drawing@L203, left@L204, top@L204, bottom@L205, right@L205, box@L206, path@L215. Purposes/parameters: docs/code-map.json.
 import hashlib
 import json
 import shutil
@@ -9,7 +9,15 @@ import tempfile
 import zipfile
 from pathlib import Path, PurePosixPath
 from PIL import Image, ImageDraw
-from studio.files import atomic_json, digest, normalized_image, read_json
+from studio.files import (
+    atomic_json,
+    digest,
+    normalized_image,
+    read_json,
+    regular_stream,
+    regular_bytes,
+    no_alias,
+)
 
 EXTENSIONS = {".png", ".jpg", ".jpeg", ".webp", ".bmp"}
 MAX_ITEMS = 10000
@@ -18,9 +26,7 @@ MAX_ZIP_BYTES = 200 * 1024 * 1024
 
 def extract_zip(path: Path, destination: Path) -> None:
     """Validate every member before extraction; block traversal, links, bombs and encrypted ZIPs."""
-    if path.stat().st_size > MAX_ZIP_BYTES:
-        raise ValueError("ZIP exceeds 200 MiB")
-    with zipfile.ZipFile(path) as archive:
+    with regular_stream(path, MAX_ZIP_BYTES) as stream, zipfile.ZipFile(stream) as archive:
         members = archive.infolist()
         if len(members) > MAX_ITEMS or sum(m.file_size for m in members) > MAX_ZIP_BYTES:
             raise ValueError("ZIP exceeds item/expanded-size limits")
@@ -49,9 +55,10 @@ def scan(root: Path):
         count += 1
         if count > MAX_ITEMS * 4:
             raise ValueError("Source contains too many files")
-        if path.is_symlink():
+        if path.is_symlink() or getattr(path.lstat(), "st_file_attributes", 0) & 0x400:
             raise ValueError("Dataset links are not followed")
         if path.is_file() and path.suffix.casefold() in EXTENSIONS:
+            no_alias(path)
             yield path
 
 
@@ -60,10 +67,8 @@ def image_record(path: Path) -> tuple[dict, Image.Image]:
     metadata_path = path.with_suffix(".json")
     metadata = read_json(metadata_path, 32000) if metadata_path.exists() else {}
     caption_path = path.with_suffix(".txt")
-    if caption_path.exists() and caption_path.stat().st_size > 8000:
-        raise ValueError("Caption exceeds 8 KiB")
     caption = (
-        caption_path.read_text(encoding="utf-8").strip()
+        regular_bytes(caption_path, 8000).decode("utf-8").strip()
         if caption_path.exists()
         else metadata.get("caption", "")
     )
