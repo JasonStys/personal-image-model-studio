@@ -157,3 +157,8 @@ guide; `validation-review.docx` separates actual source and dated test/scan scop
 `publications.json` binds exact reviewed bytes and source identities; and
 `documentation-refresh-2026-11-09.md` records the publication checks and limits.
 All edition artifacts are in `docs/reports/` except the handbook.
+
+
+### Release identity validation
+
+The [draft creation validation record](docs/reports/release-create-identity-2026-11-11.md) explains the observed create/readback failure and the exact returned-ID checks. Original source, model, native application and raw security gates remain mandatory; no published asset or existing draft is retargeted.

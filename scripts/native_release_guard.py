@@ -1,5 +1,5 @@
 """Jason Stys: exact-source draft-only uploads and complete portable verification.
-# Index: declarations module.version@L41, module.api@L50, module.successful_source_run@L64, module.source_ready@L100, module.security_ready@L135, module.accepted_build@L183, module.draft_ready@L200, module.release_for_version@L213, module.load_draft@L228, module.prepare_draft@L240, module.assets_ready@L267, module.main@L295; variables value@L43, endpoint@L50, sarif@L50, data@L64, source@L64, workflow@L64, rows@L70, run@L75, source@L100, workflow@L106, data@L107, current@L111, row@L116, raw@L118, run@L129, alerts@L135, analyses@L135, source@L135, expected@L142, current@L143, row@L144, category@L152, name@L155, row@L176, product_version@L183, report@L183, source@L183, product_version@L200, release@L200, source@L200, product_version@L213, rows@L213, row@L218, matches@L219, row@L219, row@L223, product_version@L228, source@L228, listed@L230, release@L232, product_version@L240, source@L240, listed@L243, notes@L245, payload@L250, temporary@L258, path@L259, complete@L267, product_version@L267, release@L267, expected@L269, machine@L270, system@L270, assets@L272, result@L274, asset@L275, name@L276, parser@L297, args@L299, source@L300, product_version@L308, release@L315, attached@L316, machine@L318, system@L318, names@L319, report@L320, files@L324, name@L324, file@L325, binary@L341, manifest@L342, file@L348, fresh@L366, actual@L368. Purposes/parameters: docs/code-map.json.
+# Index: declarations module.version@L41, module.api@L50, module.successful_source_run@L64, module.source_ready@L100, module.security_ready@L135, module.accepted_build@L183, module.draft_ready@L200, module.release_for_version@L213, module.identified_draft@L228, module.load_draft@L240, module.prepare_draft@L247, module.assets_ready@L290, module.main@L318; variables value@L43, endpoint@L50, sarif@L50, data@L64, source@L64, workflow@L64, rows@L70, run@L75, source@L100, workflow@L106, data@L107, current@L111, row@L116, raw@L118, run@L129, alerts@L135, analyses@L135, source@L135, expected@L142, current@L143, row@L144, category@L152, name@L155, row@L176, product_version@L183, report@L183, source@L183, product_version@L200, release@L200, source@L200, product_version@L213, rows@L213, row@L218, matches@L219, row@L219, row@L223, identity@L228, product_version@L228, source@L228, release@L231, product_version@L240, source@L240, listed@L242, product_version@L247, source@L247, listed@L250, notes@L252, payload@L257, temporary@L265, path@L266, created@L268, complete@L290, product_version@L290, release@L290, expected@L292, machine@L293, system@L293, assets@L295, result@L297, asset@L298, name@L299, parser@L320, args@L322, source@L323, product_version@L331, release@L338, attached@L339, machine@L341, system@L341, names@L342, report@L343, files@L347, name@L347, file@L348, binary@L364, manifest@L365, file@L371, fresh@L389, actual@L391. Purposes/parameters: docs/code-map.json.
 
 Called only by the trusted main-branch release workflow. Never overwrites an
 existing asset, accepts a published release, or logs token/environment values.
@@ -225,16 +225,23 @@ def release_for_version(rows, product_version):
     return row
 
 
+def identified_draft(identity, source, product_version):
+    """Read the exact returned release ID; reject any identity, publication or source change."""
+    require(type(identity) is int and 0 < identity < 2**63, "Invalid release identity")
+    release = api("releases/" + str(identity))
+    require(
+        isinstance(release, dict) and type(release.get("id")) is int and release["id"] == identity,
+        "Release identity changed",
+    )
+    draft_ready(release, source, product_version)
+    return release
+
+
 def load_draft(source, product_version):
     """Use the actual release ID; a draft need not have a published tag-name endpoint."""
     listed = release_for_version(api("releases?per_page=100"), product_version)
     require(listed is not None, "Create the exact-source unpublished draft first")
-    release = api("releases/" + str(listed["id"]))
-    require(
-        type(release.get("id")) is int and release["id"] == listed["id"], "Release identity changed"
-    )
-    draft_ready(release, source, product_version)
-    return release
+    return identified_draft(listed["id"], source, product_version)
 
 
 def prepare_draft(source, product_version):
@@ -258,10 +265,26 @@ def prepare_draft(source, product_version):
         with tempfile.TemporaryDirectory(prefix="pims-release-request-") as temporary:
             path = Path(temporary) / "release.json"
             path.write_text(json.dumps(payload), encoding="utf-8")
-            command(
-                ["gh", "api", f"repos/{REPO}/releases", "--method", "POST", "--input", str(path)]
+            created = json.loads(
+                command(
+                    [
+                        "gh",
+                        "api",
+                        f"repos/{REPO}/releases",
+                        "--method",
+                        "POST",
+                        "--input",
+                        str(path),
+                    ]
+                )
             )
-    load_draft(source, product_version)
+        require(isinstance(created, dict), "Malformed created draft response")
+        draft_ready(created, source, product_version)
+        # The POST response is the authoritative created identity. An immediate
+        # paginated listing can still omit it; never infer failure from that lag.
+        identified_draft(created.get("id"), source, product_version)
+    else:
+        identified_draft(listed["id"], source, product_version)
 
 
 def assets_ready(release, product_version, *, complete):

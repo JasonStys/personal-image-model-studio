@@ -1,5 +1,5 @@
 /** Jason Stys: browser-to-real-account worker, learned model, generated image and encrypted relaunch. */
-// Index: declarations none; variables page@L7, datasetChoice@L41, datasetId@L43, image@L92. Purposes/parameters: docs/code-map.json.
+// Index: declarations none; variables page@L7, datasetChoice@L41, datasetId@L43, image@L92, releaseLock@L133, lockGate@L134, resolve@L134, requestObserved@L137, lockRequested@L138, resolve@L138, route@L141. Purposes/parameters: docs/code-map.json.
 import { test, expect } from "@playwright/test";
 import { randomUUID } from "node:crypto";
 
@@ -128,7 +128,37 @@ test("real private custom training and generation through browser controls", asy
   await expect(page.locator("#models")).toContainText(
     "Real private browser model",
   );
-  await page
-    .getByRole("button", { name: "Lock workspace", exact: true })
-    .click();
+  // A completed click is not a completed encrypted lock. Hold the real request
+  // before sending it, prove the owner is still unlocked, then await its commit.
+  let releaseLock!: () => void;
+  const lockGate = new Promise<void>((resolve) => {
+    releaseLock = resolve;
+  });
+  let requestObserved!: () => void;
+  const lockRequested = new Promise<void>((resolve) => {
+    requestObserved = resolve;
+  });
+  await page.route("**/private/lock", async (route) => {
+    requestObserved();
+    await lockGate;
+    await route.continue();
+  });
+  try {
+    await page
+      .getByRole("button", { name: "Lock workspace", exact: true })
+      .click();
+    await lockRequested;
+    expect(
+      (await (await page.request.get("/private/account")).json()).unlocked,
+    ).toBe(true);
+  } finally {
+    releaseLock();
+  }
+  await expect(
+    page.getByRole("heading", { name: "Unlock your private image workspace" }),
+  ).toBeVisible();
+  expect(
+    (await (await page.request.get("/private/account")).json()).unlocked,
+  ).toBe(false);
+  await page.unroute("**/private/lock");
 });

@@ -1,5 +1,5 @@
 /** Jason Stys: real private login, account isolation, encrypted export, file pickers, recovery and accessible help. */
-// Index: declarations register@L12, unlock@L33, lock@L44; variables password@L8, phrase@L9, page@L12, alias@L17, recovery@L26, page@L33, page@L44, page@L54, destinations@L56, unlockBodies@L57, request@L58, identity@L66, event@L92, bytes@L96, url@L114, page@L133, browser@L134, context@L145, other@L146, page@L169, png@L176, archive@L180, response@L215, page@L228, identity@L230, page@L273, destinations@L276, request@L277, fixtures@L283, archive@L286, split@L287, fixture@L288, report@L322, images@L346, image@L348, downloading@L355, downloaded@L362, exported@L366, first@L380, second@L390, options@L392, option@L393, release@L395, held@L396, resolve@L396, responseReady@L399, ready@L400, resolve@L400, route@L403, response@L404, identity@L415, reopened@L446, images@L459, image@L461, url@L469. Purposes/parameters: docs/code-map.json.
+// Index: declarations register@L31, unlock@L52, lock@L63; variables password@L8, phrase@L9, page@L12, info@L12, message@L14, page@L31, alias@L36, recovery@L45, page@L52, page@L63, page@L73, destinations@L75, unlockBodies@L76, request@L77, identity@L85, event@L111, bytes@L115, url@L133, page@L152, browser@L153, context@L164, other@L165, page@L188, png@L195, archive@L199, response@L234, page@L247, identity@L249, page@L292, destinations@L295, request@L296, fixtures@L302, archive@L305, split@L306, fixture@L307, report@L341, images@L365, image@L367, downloading@L374, downloaded@L381, exported@L385, first@L399, second@L409, options@L411, option@L412, release@L414, held@L415, resolve@L415, responseReady@L418, ready@L419, resolve@L419, route@L422, response@L423, identity@L434, reopened@L465, images@L478, image@L480, url@L488. Purposes/parameters: docs/code-map.json.
 import { test, expect, type Page } from "@playwright/test";
 import AxeBuilder from "@axe-core/playwright";
 import { randomUUID } from "node:crypto";
@@ -7,6 +7,25 @@ import { readFileSync } from "node:fs";
 import { zipSync, strToU8 } from "fflate";
 const password = "synthetic-only-test-login-password";
 const phrase = "six synthetic random words protect this image workspace";
+
+/** Keep failure diagnostics nonidentifying: no passwords, keys, cookies or input values. */
+test.afterEach(async ({ page }, info) => {
+  if (info.status === info.expectedStatus) return;
+  const message = await page
+    .locator("#portal-status")
+    .textContent()
+    .catch(() => "");
+  console.log(
+    JSON.stringify({
+      privateFailureClassification: {
+        anotherOwnerActive: (message ?? "").includes("Another account"),
+        interruptedRecovery: (message ?? "").includes("interrupted workspace"),
+        keyRefused: (message ?? "").includes("Cannot unlock"),
+        rateLimited: (message ?? "").includes("Too many unlock"),
+      },
+    }),
+  );
+});
 
 /** Create only fictional QA accounts in this profile's disposable service. */
 async function register(page: Page) {
