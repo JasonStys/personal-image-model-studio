@@ -162,3 +162,14 @@ All edition artifacts are in `docs/reports/` except the handbook.
 ### Release identity validation
 
 The [draft creation validation record](docs/reports/release-create-identity-2026-11-11.md) explains the observed create/readback failure and the exact returned-ID checks. Original source, model, native application and raw security gates remain mandatory; no published asset or existing draft is retargeted.
+
+
+## Current Windows application guide
+
+The published **0.3.1** native application has a [four-page illustrated guide](docs/reports/windows-application-guide-0.3.1.docx) with actual installed screenshots, the dataset-to-model workflow, important source and recovery limits. The [current installed validation](docs/reports/installed-windows-0.3.1-2026-11-11.md) includes the real published 0.3.0 to installed 0.3.1 encrypted-account upgrade, model reuse and three normal shutdowns. The [review manifest](docs/reports/windows-application-guide-0.3.1.json) binds document, screenshot, source and inspected-page identities. Historical Office editions and released bytes are preserved.
+
+Added documentation:
+
+- [docs/reports/windows-application-guide-0.3.1.docx](docs/reports/windows-application-guide-0.3.1.docx): current application use, screenshots, code and measured results.
+- [docs/reports/windows-application-guide-0.3.1.json](docs/reports/windows-application-guide-0.3.1.json): Word, original screenshot, immutable code and individually reviewed page hashes.
+- [docs/reports/installed-windows-0.3.1-2026-11-11.md](docs/reports/installed-windows-0.3.1-2026-11-11.md): distribution identity, original installed journeys, retained encrypted-account upgrade and practical limits.

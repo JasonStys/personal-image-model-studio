@@ -1,0 +1,81 @@
+{
+  "schema": 1,
+  "repository": "personal-image-model-studio",
+  "runtimeVersion": "0.3.1",
+  "runtimeSource": "fb62b95a291ed2370d639e958d6f3039a7cdf0b6",
+  "createdAt": "2026-11-11T20:26:11.531Z",
+  "author": "Jason Stys",
+  "document": "windows-application-guide-0.3.1.docx",
+  "sha256": "5ccda6c2b63668a15a610e4bb082b76fb56c9d6c20f11df6a27b4394b3b79430",
+  "screenshots": [
+    {
+      "file": "private-real-model-ui.png",
+      "sha256": "b1104b458f083e8c3919c84c2b7aa05723c88d8fc9e104813c2d47712e781df3",
+      "width": 1280,
+      "height": 1668,
+      "caption": "A fresh synthetic account completed 20 CPU optimizer steps and generated a 32-pixel PNG using its learned weights. The noisy enlarged result proves execution; this short regression does not demonstrate useful image quality."
+    },
+    {
+      "file": "dataset-review-chromium.png",
+      "sha256": "9c7b3cee616586a4d80e5770ea9a1c16cc292851641abb4a036716fef5acebd6",
+      "width": 901,
+      "height": 1081,
+      "caption": "Two synthetic gradients have one near-duplicate candidate and insufficient training counts. Caption markup remains literal. Review neither changes splits nor establishes legal rights or model quality."
+    }
+  ],
+  "snippets": [
+    {
+      "file": "studio/vault.py",
+      "first": 157,
+      "last": 180,
+      "sha256": "644a665474879e4a480a09980a7c77447db9fe4518a5a7c158df17e36741fe66",
+      "url": "https://github.com/JasonStys/personal-image-model-studio/blob/fb62b95a291ed2370d639e958d6f3039a7cdf0b6/studio/vault.py#L157"
+    }
+  ],
+  "observedTests": [
+    {
+      "name": "Actual installed application",
+      "observed": "All 12 original CPU checks and six private-account/real-model browser journeys passed. Both owned processes exited zero and listeners closed. All five installed files remained unchanged.",
+      "result": "Passed"
+    },
+    {
+      "name": "Real 0.3.0 to 0.3.1 upgrade",
+      "observed": "Existing credentials, datasets, learned model, images, reports, glossary and feedback were retained. Wrong password/key refused; old model generated a new image; second new process restored exact history. Three normal zero exits.",
+      "result": "Passed"
+    },
+    {
+      "name": "Source, security and distribution",
+      "observed": "All 25 PR checks and fresh source/native/security workflows passed, including real extracted workflows on three platforms. Three actual raw CodeQL categories had no findings. All six downloaded assets matched provider hashes, sidecars and embedded clean-source identity.",
+      "result": "Passed"
+    }
+  ],
+  "visualReview": {
+    "approved": true,
+    "reviewer": "audit_cyber",
+    "ooxmlSchema": "passed",
+    "pages": [
+      {
+        "page": 1,
+        "sha256": "2c76326c848e5e82cfa7043ee47288c28643e40fcbf3b869f7bfd847567504b8",
+        "individuallyViewed": true
+      },
+      {
+        "page": 2,
+        "sha256": "c1ac181d579b9e2a8904fd84de55b58c10682e751ba0b45233cfc58276069687",
+        "individuallyViewed": true
+      },
+      {
+        "page": 3,
+        "sha256": "de9014e5c3196587ca9954196f7009edd3c1f01d8a59064ca055faf1f62cace3",
+        "individuallyViewed": true
+      },
+      {
+        "page": 4,
+        "sha256": "c1eab428817370600a78ed3a7fe86d21be40da6295d8ec0b054454c12356db94",
+        "individuallyViewed": true
+      }
+    ],
+    "scope": "Every final page individually inspected by root and independent peer; actual installed synthetic-profile screenshots and immutable code bytes.",
+    "checkedUtc": "2026-11-11T20:37:47.744760+00:00"
+  }
+}
