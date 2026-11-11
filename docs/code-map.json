@@ -89,6 +89,72 @@
     "declarations": [],
     "variables": []
   },
+  "scripts/check_browser_host.mjs": {
+    "purpose": "Jason Stys: launch each exact locked browser and fail closed on absent host dependencies; no profile or provider access.",
+    "declarations": [],
+    "variables": [
+      {
+        "name": "engines",
+        "line": 9,
+        "kind": "variable",
+        "purpose": "engines = { chromium, firefox, webkit }"
+      },
+      {
+        "name": "requested",
+        "line": 10,
+        "kind": "variable",
+        "purpose": "requested = process.argv.slice(2)"
+      },
+      {
+        "name": "name",
+        "line": 12,
+        "kind": "parameter",
+        "purpose": "name"
+      },
+      {
+        "name": "lock",
+        "line": 14,
+        "kind": "variable",
+        "purpose": "lock = JSON.parse(await fs.readFile(\"package-lock.json\", \"utf8\"))"
+      },
+      {
+        "name": "installed",
+        "line": 15,
+        "kind": "variable",
+        "purpose": "installed = JSON.parse(\n  await fs.readFile(\"node_modules/playwright-core/package.json\", \"utf8\"),\n)"
+      },
+      {
+        "name": "temporary",
+        "line": 22,
+        "kind": "variable",
+        "purpose": "temporary = await fs.mkdtemp(\n  path.join(os.tmpdir(), \"pims-browser-host-\"),\n)"
+      },
+      {
+        "name": "name",
+        "line": 26,
+        "kind": "variable",
+        "purpose": "name"
+      },
+      {
+        "name": "engine",
+        "line": 27,
+        "kind": "variable",
+        "purpose": "engine = engines[name]"
+      },
+      {
+        "name": "browser",
+        "line": 34,
+        "kind": "variable",
+        "purpose": "browser = await engine.launch()"
+      },
+      {
+        "name": "page",
+        "line": 36,
+        "kind": "variable",
+        "purpose": "page = await browser.newPage()"
+      }
+    ]
+  },
   "scripts/code_index.mjs": {
     "purpose": "Regenerate/check exact AST source indexes; file edits are bulk mechanical metadata updates only.",
     "declarations": [
@@ -16161,6 +16227,73 @@
         "line": 469,
         "kind": "parameter",
         "purpose": "url"
+      }
+    ]
+  },
+  "tests/test_browser_environment.py": {
+    "purpose": "Jason Stys: preserve real browser coverage and exact nonroot runner environment identities.",
+    "declarations": [
+      {
+        "name": "module.test_complete_browser_image_matches_the_locked_package_and_preserves_all_engines",
+        "line": 11,
+        "kind": "FunctionDef",
+        "purpose": "A browser update must review its nonroot image as well as the package lock; no engine disappears."
+      },
+      {
+        "name": "module.test_validation_and_release_use_the_same_real_native_host_probe",
+        "line": 30,
+        "kind": "FunctionDef",
+        "purpose": "Both build paths require actual launches; the existing three-platform native tests remain intact."
+      }
+    ],
+    "variables": [
+      {
+        "name": "ROOT",
+        "scope": "module",
+        "line": 8,
+        "purpose": "ROOT = Path(__file__).resolve().parents[1]"
+      },
+      {
+        "name": "source",
+        "scope": "test_complete_browser_image_matches_the_locked_package_and_preserves_all_engines",
+        "line": 13,
+        "purpose": "source = (ROOT / '.github/workflows/validate.yml').read_text(encoding='utf-8')"
+      },
+      {
+        "name": "browser",
+        "scope": "test_complete_browser_image_matches_the_locked_package_and_preserves_all_engines",
+        "line": 14,
+        "purpose": "browser = source.split('  browsers:\\n', 1)[1].split('  machine-learning:\\n', 1)[0]"
+      },
+      {
+        "name": "version",
+        "scope": "test_complete_browser_image_matches_the_locked_package_and_preserves_all_engines",
+        "line": 15,
+        "purpose": "version = json.loads((ROOT / 'package-lock.json').read_text())['packages']['node_modules/playwright-core']['version']"
+      },
+      {
+        "name": "configuration",
+        "scope": "test_complete_browser_image_matches_the_locked_package_and_preserves_all_engines",
+        "line": 25,
+        "purpose": "configuration = (ROOT / 'playwright.config.ts').read_text(encoding='utf-8')"
+      },
+      {
+        "name": "name",
+        "scope": "test_complete_browser_image_matches_the_locked_package_and_preserves_all_engines",
+        "line": 26,
+        "purpose": "for name in ('chromium', 'firefox', 'webkit', 'mobile'):\n    assert f'name: \"{name}\"' in configuration"
+      },
+      {
+        "name": "filename",
+        "scope": "test_validation_and_release_use_the_same_real_native_host_probe",
+        "line": 32,
+        "purpose": "for filename in ('native-validation.yml', 'release-native.yml'):\n    source = (ROOT / '.github/workflows' / filename).read_text(encoding='utf-8')\n    assert 'run: node scripts/chec"
+      },
+      {
+        "name": "source",
+        "scope": "test_validation_and_release_use_the_same_real_native_host_probe",
+        "line": 33,
+        "purpose": "source = (ROOT / '.github/workflows' / filename).read_text(encoding='utf-8')"
       }
     ]
   },

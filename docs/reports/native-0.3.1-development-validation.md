@@ -118,3 +118,36 @@ reported through the same bounded escaped diagnostic reader on failure. The
 complete source log and previous successful clean `fbd9c70` CPU/browser proof
 remain distinct. No mirror signature check, test, timeout or failure policy is
 relaxed, and no local network, account, Docker or OS setting is changed.
+
+### Dependency-complete browser lane and mandatory host probes
+
+At `6f4c54a`, Windows and macOS native jobs passed. The three remaining Linux
+failures again stopped during browser OS dependency acquisition, with explicit
+temporary DNS resolution failures. The Chromium setup log reports its required
+runtime libraries and Xvfb already installed; nine additional font packages
+triggered its failed APT transaction. The full three-engine source browser lane
+also requires additional WebKit libraries. An official-mirror change did not
+resolve the observed availability problem; no application or provider root cause
+is inferred from that result.
+
+The full Chromium/Firefox/WebKit/mobile lane now uses Playwright's official
+`v1.63.0-noble` dependency-complete image, matching the exact package lock. Its
+registry index was read directly from Microsoft Artifact Registry on 2026-11-11
+and its content hash independently matched
+`sha256:eff16c30e6f3f4af0a03fa4b706120d5e9b0891c344a27d64559aff5900a4a27`.
+The job runs as UID1001, with its original tests, audits and 20-minute deadline.
+The image applies only to this hosted test job, not the distributed application.
+
+The Chromium-only ML and native lanes retain the stock Ubuntu24.04 runner and
+download the exact locked browser. All browser lanes must actually launch their
+required engines through the same new host probe, exercise a real page, and
+reject a deliberately absent executable. Playwright's own host validation
+remains enabled; the probe rejects an environment that bypasses it. Any missing
+runtime library therefore fails before the unchanged original app tests. Native
+Linux Tk tests still run under real Xvfb. No browser, native platform, assertion,
+dependency audit or original test deadline is removed, and local Docker remains
+unchanged. Current hosted results for this change remain pending until observed.
+
+References: [Playwright CI](https://playwright.dev/docs/ci) and
+[official test images](https://playwright.dev/docs/docker). The image supplies
+browser system libraries; the project still installs its own exact package lock.
