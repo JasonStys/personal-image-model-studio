@@ -1,5 +1,5 @@
 """Jason Stys: real local grant/HTTP boundaries and fixed artifact layouts, not scanner exclusions."""
-# Index: declarations module.test_canonical_identity_rejects_ambiguous_or_nonserver_keys@L28, module.test_grants_normalize_before_component_check_and_cannot_be_root@L35, module.test_valid_legacy_schemas_cannot_reach_readers_outside_launcher_grants@L57, test_valid_legacy_schemas_cannot_reach_readers_outside_launcher_grants.forbidden@L74, module.test_explicit_legacy_grant_preserves_real_import_and_trusted_runtime_selection@L100, module.test_legacy_fixed_artifact_paths_ignore_tampered_absolute_bodies@L130, module.test_malformed_route_ids_fail_before_lookup_and_file_read@L165, test_malformed_route_ids_fail_before_lookup_and_file_read.forbidden@L172, module.test_actual_directory_alias_cannot_escape_a_launcher_grant@L189, test_actual_directory_alias_cannot_escape_a_launcher_grant.forbidden@L215; variables TOKEN@L21, value@L28, tmp_path@L35, approved@L37, paths@L40, value@L42, monkeypatch@L58, route@L58, selection@L58, tmp_path@L58, approved@L64, choices@L66, app@L71, called@L72, args@L74, kwargs@L74, data@L82, client@L94, response@L95, tmp_path@L100, source@L102, image@L104, app@L107, client@L112, imported@L113, record@L118, runtime@L126, tmp_path@L130, outside@L132, original@L133, app@L135, client@L138, dataset@L139, glossary@L141, response@L144, saved@L146, stream@L150, image@L151, uploaded@L153, downloaded@L158, image@L160, monkeypatch@L165, tmp_path@L165, app@L167, client@L170, args@L172, kwargs@L172, data@L177, method@L177, route@L177, response@L185, monkeypatch@L189, tmp_path@L189, approved@L193, outside@L193, sentinel@L196, alias@L198, command@L200, result@L201, grants@L210, app@L213, args@L215, kwargs@L215, client@L222, response@L223. Purposes/parameters: docs/code-map.json.
+# Index: declarations module.test_canonical_identity_rejects_ambiguous_or_nonserver_keys@L28, module.test_grants_normalize_before_component_check_and_cannot_be_root@L35, module.test_valid_legacy_schemas_cannot_reach_readers_outside_launcher_grants@L57, test_valid_legacy_schemas_cannot_reach_readers_outside_launcher_grants.forbidden@L74, module.test_explicit_legacy_grant_preserves_real_import_and_trusted_runtime_selection@L100, module.test_legacy_fixed_artifact_paths_ignore_tampered_absolute_bodies@L130, module.test_malformed_route_ids_fail_before_lookup_and_file_read@L165, test_malformed_route_ids_fail_before_lookup_and_file_read.forbidden@L172, module.test_actual_directory_alias_cannot_escape_a_launcher_grant@L189, test_actual_directory_alias_cannot_escape_a_launcher_grant.forbidden@L215, module.test_realpath_preserves_canonical_case_and_reselects_approved_root@L230; variables TOKEN@L21, value@L28, tmp_path@L35, approved@L37, paths@L40, value@L42, monkeypatch@L58, route@L58, selection@L58, tmp_path@L58, approved@L64, choices@L66, app@L71, called@L72, args@L74, kwargs@L74, data@L82, client@L94, response@L95, tmp_path@L100, source@L102, image@L104, app@L107, client@L112, imported@L113, record@L118, runtime@L126, tmp_path@L130, outside@L132, original@L133, app@L135, client@L138, dataset@L139, glossary@L141, response@L144, saved@L146, stream@L150, image@L151, uploaded@L153, downloaded@L158, image@L160, monkeypatch@L165, tmp_path@L165, app@L167, client@L170, args@L172, kwargs@L172, data@L177, method@L177, route@L177, response@L185, monkeypatch@L189, tmp_path@L189, approved@L193, outside@L193, sentinel@L196, alias@L198, command@L200, result@L201, grants@L210, app@L213, args@L215, kwargs@L215, client@L222, response@L223, tmp_path@L230, approved@L232, selected@L234, paths@L236. Purposes/parameters: docs/code-map.json.
 
 from __future__ import annotations
 
@@ -225,3 +225,18 @@ def test_actual_directory_alias_cannot_escape_a_launcher_grant(tmp_path, monkeyp
         )
         assert response.status_code == 400
     assert sentinel.read_bytes() == b"retained outside data"
+
+
+def test_realpath_preserves_canonical_case_and_reselects_approved_root(tmp_path):
+    """Actual filesystem normalization retains canonical paths needed by portable vault rebasing."""
+    approved = tmp_path / "MiXeDApproved"
+    approved.mkdir()
+    selected = approved / "MiXeDFile.json"
+    selected.write_bytes(b"{}")
+    paths = LocalPaths((approved,))
+    assert paths.selected(approved) == approved.resolve()
+    assert paths.selected(selected) == selected.resolve()
+    if os.name == "nt":
+        assert paths.selected(str(selected).swapcase()) == selected.resolve()
+        assert paths.selected(str(approved).swapcase()) == approved.resolve()
+    assert canonical_id("0123456789abcdef0123456789abcdef") == "0123456789abcdef0123456789abcdef"

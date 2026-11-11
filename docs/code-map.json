@@ -8630,37 +8630,37 @@
       },
       {
         "name": "module.read_json",
-        "line": 149,
+        "line": 151,
         "kind": "FunctionDef",
         "purpose": "Read a size-bounded JSON object; reject duplicate keys and non-finite numbers."
       },
       {
         "name": "read_json.pairs",
-        "line": 153,
+        "line": 155,
         "kind": "FunctionDef",
         "purpose": "Reject duplicate keys instead of silently choosing the last value."
       },
       {
         "name": "module.replace_file",
-        "line": 170,
+        "line": 172,
         "kind": "FunctionDef",
         "purpose": "Atomically replace with at most eight attempts for Windows file-sharing errors; never relax ACLs."
       },
       {
         "name": "module.atomic_json",
-        "line": 184,
+        "line": 186,
         "kind": "FunctionDef",
         "purpose": "Publish complete JSON via same-directory replace; clean only this function's temp file."
       },
       {
         "name": "module.normalized_image",
-        "line": 199,
+        "line": 201,
         "kind": "FunctionDef",
         "purpose": "Decode one bounded supported raster, apply EXIF rotation and strip metadata on output."
       },
       {
         "name": "module.normalized_pixels",
-        "line": 204,
+        "line": 206,
         "kind": "FunctionDef",
         "purpose": "Decode exactly the bounded bytes already admitted/hashed by the caller, never reopen a pathname."
       }
@@ -8931,16 +8931,10 @@
         "purpose": "candidate = os.path.realpath(os.path.join(base, relative))"
       },
       {
-        "name": "base_comparable",
+        "name": "result",
         "scope": "confined",
-        "line": 141,
-        "purpose": "(comparable, base_comparable)"
-      },
-      {
-        "name": "comparable",
-        "scope": "confined",
-        "line": 141,
-        "purpose": "(comparable, base_comparable)"
+        "line": 142,
+        "purpose": "result = Path(base)"
       },
       {
         "name": "result",
@@ -8951,121 +8945,121 @@
       {
         "name": "limit",
         "scope": "read_json",
-        "line": 149,
+        "line": 151,
         "purpose": "Function parameter"
       },
       {
         "name": "path",
         "scope": "read_json",
-        "line": 149,
+        "line": 151,
         "purpose": "Function parameter"
       },
       {
         "name": "source",
         "scope": "read_json",
-        "line": 151,
+        "line": 153,
         "purpose": "source = regular_bytes(path, limit)"
       },
       {
         "name": "items",
         "scope": "read_json.pairs",
-        "line": 153,
+        "line": 155,
         "purpose": "Function parameter"
       },
       {
         "name": "result",
         "scope": "read_json.pairs",
-        "line": 155,
+        "line": 157,
         "purpose": "result = dict(items)"
       },
       {
         "name": "value",
         "scope": "read_json",
-        "line": 160,
+        "line": 162,
         "purpose": "value = json.loads(source.decode('utf-8'), object_pairs_hook=pairs, parse_constant=lambda value: (_ for _ in ()).throw(ValueError('Non-finite JSON')))"
       },
       {
         "name": "_",
         "scope": "read_json",
-        "line": 163,
+        "line": 165,
         "purpose": " for _ in ()"
       },
       {
         "name": "value",
         "scope": "read_json",
-        "line": 163,
+        "line": 165,
         "purpose": "Function parameter"
       },
       {
         "name": "destination",
         "scope": "replace_file",
-        "line": 170,
+        "line": 172,
         "purpose": "Function parameter"
       },
       {
         "name": "source",
         "scope": "replace_file",
-        "line": 170,
+        "line": 172,
         "purpose": "Function parameter"
       },
       {
         "name": "attempt",
         "scope": "replace_file",
-        "line": 172,
+        "line": 174,
         "purpose": "for attempt in range(8):\n    try:\n        os.replace(source, destination)\n        return\n    except PermissionError as error:\n        if getattr(error, 'winerror', None) not in {5,"
       },
       {
         "name": "path",
         "scope": "atomic_json",
-        "line": 184,
+        "line": 186,
         "purpose": "Function parameter"
       },
       {
         "name": "value",
         "scope": "atomic_json",
-        "line": 184,
+        "line": 186,
         "purpose": "Function parameter"
       },
       {
         "name": "descriptor",
         "scope": "atomic_json",
-        "line": 188,
+        "line": 190,
         "purpose": "(descriptor, temporary)"
       },
       {
         "name": "temporary",
         "scope": "atomic_json",
-        "line": 188,
+        "line": 190,
         "purpose": "(descriptor, temporary)"
       },
       {
         "name": "stream",
         "scope": "atomic_json",
-        "line": 190,
+        "line": 192,
         "purpose": "os.fdopen(descriptor, 'w', encoding='utf-8') as stream"
       },
       {
         "name": "path",
         "scope": "normalized_image",
-        "line": 199,
+        "line": 201,
         "purpose": "Function parameter"
       },
       {
         "name": "content",
         "scope": "normalized_pixels",
-        "line": 204,
+        "line": 206,
         "purpose": "Function parameter"
       },
       {
         "name": "image",
         "scope": "normalized_pixels",
-        "line": 210,
+        "line": 212,
         "purpose": "Image.open(io.BytesIO(content)) as image"
       },
       {
         "name": "normalized",
         "scope": "normalized_pixels",
-        "line": 215,
+        "line": 217,
         "purpose": "normalized = ImageOps.exif_transpose(image).convert('RGB')"
       }
     ]
@@ -9581,25 +9575,25 @@
     "declarations": [
       {
         "name": "module.canonical_id",
-        "line": 11,
+        "line": 12,
         "kind": "FunctionDef",
         "purpose": "Accept only the exact lowercase UUID32 grammar generated by this application before any lookup."
       },
       {
         "name": "module.LocalPaths",
-        "line": 18,
+        "line": 19,
         "kind": "ClassDef",
         "purpose": "Constrain privileged legacy selections to independently configured, component-safe local roots."
       },
       {
         "name": "LocalPaths.__init__",
-        "line": 21,
+        "line": 22,
         "kind": "FunctionDef",
         "purpose": "Only trusted launcher/application construction supplies roots; filesystem roots are not grants."
       },
       {
         "name": "LocalPaths.selected",
-        "line": 33,
+        "line": 34,
         "kind": "FunctionDef",
         "purpose": "Normalize links first, then require equality or a complete separator-delimited granted prefix."
       }
@@ -9608,80 +9602,74 @@
       {
         "name": "value",
         "scope": "canonical_id",
-        "line": 11,
+        "line": 12,
         "purpose": "Function parameter"
       },
       {
         "name": "roots",
         "scope": "LocalPaths.__init__",
-        "line": 21,
+        "line": 22,
         "purpose": "Function parameter"
       },
       {
         "name": "self",
         "scope": "LocalPaths.__init__",
-        "line": 21,
+        "line": 22,
         "purpose": "Function parameter"
       },
       {
         "name": "normalized",
         "scope": "LocalPaths.__init__",
-        "line": 25,
+        "line": 26,
         "purpose": "normalized = []"
       },
       {
         "name": "root",
         "scope": "LocalPaths.__init__",
-        "line": 26,
-        "purpose": "for root in roots:\n    value = os.path.normcase(os.path.realpath(os.fspath(root)))\n    if value == os.path.dirname(value) or value.startswith(('\\\\\\\\', '//')):\n        raise ValueEr"
+        "line": 27,
+        "purpose": "for root in roots:\n    value = os.path.realpath(os.fspath(root))\n    if value == os.path.dirname(value) or value.startswith(('\\\\\\\\', '//')):\n        raise ValueError('A filesystem "
       },
       {
         "name": "value",
         "scope": "LocalPaths.__init__",
-        "line": 27,
-        "purpose": "value = os.path.normcase(os.path.realpath(os.fspath(root)))"
+        "line": 28,
+        "purpose": "value = os.path.realpath(os.fspath(root))"
       },
       {
         "name": "self",
         "scope": "LocalPaths.selected",
-        "line": 33,
+        "line": 34,
         "purpose": "Function parameter"
       },
       {
         "name": "value",
         "scope": "LocalPaths.selected",
-        "line": 33,
+        "line": 34,
         "purpose": "Function parameter"
       },
       {
         "name": "raw",
         "scope": "LocalPaths.selected",
-        "line": 35,
+        "line": 36,
         "purpose": "raw = os.fspath(value)"
       },
       {
         "name": "c",
         "scope": "LocalPaths.selected",
-        "line": 36,
+        "line": 37,
         "purpose": " for c in raw"
       },
       {
         "name": "resolved",
         "scope": "LocalPaths.selected",
-        "line": 40,
-        "purpose": "resolved = os.path.realpath(raw)"
-      },
-      {
-        "name": "comparable",
-        "scope": "LocalPaths.selected",
         "line": 41,
-        "purpose": "comparable = os.path.normcase(resolved)"
+        "purpose": "resolved = os.path.realpath(raw)"
       },
       {
         "name": "root",
         "scope": "LocalPaths.selected",
         "line": 42,
-        "purpose": "for root in self.roots:\n    if comparable == root or comparable.startswith(root + os.sep):\n        return Path(resolved)"
+        "purpose": "for root in self.roots:\n    if resolved == root:\n        return Path(root)\n    if resolved.startswith(root + os.sep):\n        return Path(resolved)"
       }
     ]
   },
@@ -18831,6 +18819,12 @@
         "line": 215,
         "kind": "FunctionDef",
         "purpose": "The actual alias must be refused without invoking a dataset reader."
+      },
+      {
+        "name": "module.test_realpath_preserves_canonical_case_and_reselects_approved_root",
+        "line": 230,
+        "kind": "FunctionDef",
+        "purpose": "Actual filesystem normalization retains canonical paths needed by portable vault rebasing."
       }
     ],
     "variables": [
@@ -19223,6 +19217,30 @@
         "scope": "test_actual_directory_alias_cannot_escape_a_launcher_grant",
         "line": 223,
         "purpose": "response = client.post('/api/datasets', json={'name': 'owned', 'paths': [str(alias)], 'rights_confirmed': True})"
+      },
+      {
+        "name": "tmp_path",
+        "scope": "test_realpath_preserves_canonical_case_and_reselects_approved_root",
+        "line": 230,
+        "purpose": "Function parameter"
+      },
+      {
+        "name": "approved",
+        "scope": "test_realpath_preserves_canonical_case_and_reselects_approved_root",
+        "line": 232,
+        "purpose": "approved = tmp_path / 'MiXeDApproved'"
+      },
+      {
+        "name": "selected",
+        "scope": "test_realpath_preserves_canonical_case_and_reselects_approved_root",
+        "line": 234,
+        "purpose": "selected = approved / 'MiXeDFile.json'"
+      },
+      {
+        "name": "paths",
+        "scope": "test_realpath_preserves_canonical_case_and_reselects_approved_root",
+        "line": 236,
+        "purpose": "paths = LocalPaths((approved,))"
       }
     ]
   },

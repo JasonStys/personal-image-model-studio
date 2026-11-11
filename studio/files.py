@@ -1,6 +1,6 @@
 """Bounded JSON, atomic publications, path confinement and image normalization utilities."""
 
-# Index: declarations module.no_alias@L21, module.BoundedReader@L34, BoundedReader.__init__@L37, BoundedReader.tell@L41, BoundedReader.seek@L45, BoundedReader.read@L62, BoundedReader.seekable@L73, module.regular_stream@L79, module.regular_bytes@L107, module.digest@L116, module.confined@L128, module.read_json@L149, read_json.pairs@L153, module.replace_file@L170, module.atomic_json@L184, module.normalized_image@L199, module.normalized_pixels@L204; variables MAX_IMAGE_BYTES@L16, MAX_PIXELS@L17, path@L21, part@L23, status@L25, limit@L37, self@L37, stream@L37, self@L41, offset@L45, self@L45, whence@L45, target@L48, target@L50, size@L52, target@L55, self@L62, size@L62, remaining@L64, requested@L67, content@L68, self@L73, limit@L79, path@L79, flags@L86, descriptor@L92, status@L94, stream@L99, descriptor@L100, limit@L107, path@L107, stream@L109, source@L110, limit@L116, path@L116, stream@L118, result@L119, total@L119, block@L120, total@L121, relative@L128, root@L128, base@L139, candidate@L140, base_comparable@L141, comparable@L141, result@L144, limit@L149, path@L149, source@L151, items@L153, result@L155, value@L160, _@L163, value@L163, destination@L170, source@L170, attempt@L172, path@L184, value@L184, descriptor@L188, temporary@L188, stream@L190, path@L199, content@L204, image@L210, normalized@L215. Purposes/parameters: docs/code-map.json.
+# Index: declarations module.no_alias@L21, module.BoundedReader@L34, BoundedReader.__init__@L37, BoundedReader.tell@L41, BoundedReader.seek@L45, BoundedReader.read@L62, BoundedReader.seekable@L73, module.regular_stream@L79, module.regular_bytes@L107, module.digest@L116, module.confined@L128, module.read_json@L151, read_json.pairs@L155, module.replace_file@L172, module.atomic_json@L186, module.normalized_image@L201, module.normalized_pixels@L206; variables MAX_IMAGE_BYTES@L16, MAX_PIXELS@L17, path@L21, part@L23, status@L25, limit@L37, self@L37, stream@L37, self@L41, offset@L45, self@L45, whence@L45, target@L48, target@L50, size@L52, target@L55, self@L62, size@L62, remaining@L64, requested@L67, content@L68, self@L73, limit@L79, path@L79, flags@L86, descriptor@L92, status@L94, stream@L99, descriptor@L100, limit@L107, path@L107, stream@L109, source@L110, limit@L116, path@L116, stream@L118, result@L119, total@L119, block@L120, total@L121, relative@L128, root@L128, base@L139, candidate@L140, result@L142, result@L144, limit@L151, path@L151, source@L153, items@L155, result@L157, value@L162, _@L165, value@L165, destination@L172, source@L172, attempt@L174, path@L186, value@L186, descriptor@L190, temporary@L190, stream@L192, path@L201, content@L206, image@L212, normalized@L217. Purposes/parameters: docs/code-map.json.
 import hashlib
 import io
 import json
@@ -138,10 +138,12 @@ def confined(root: Path, relative: str) -> Path:
         raise ValueError("Invalid relative artifact path")
     base = os.path.realpath(root)
     candidate = os.path.realpath(os.path.join(base, relative))
-    comparable, base_comparable = os.path.normcase(candidate), os.path.normcase(base)
-    if comparable != base_comparable and not comparable.startswith(base_comparable + os.sep):
+    if candidate == base:
+        result = Path(base)
+    elif candidate.startswith(base + os.sep):
+        result = Path(candidate)
+    else:
         raise ValueError("Artifact escapes its data root")
-    result = Path(candidate)
     no_alias(result)
     return result
 
