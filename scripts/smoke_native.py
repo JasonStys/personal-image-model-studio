@@ -1,5 +1,5 @@
 """Jason Stys: genuine compiled CPU app tests; only disposable aliases, owned pixels and synthetic keys."""
-# Index: declarations module.wait_job@L19, module.stop@L34, module.main@L59; variables client@L19, identity@L19, deadline@L21, response@L23, j@L25, job@L25, process@L34, children@L38, child@L39, _@L45, pending@L45, child@L46, parser@L61, args@L64, executable@L65, temporary@L66, root@L67, selected@L68, port@L70, flags@L71, log_path@L72, nonce@L73, owner_nonce@L74, log@L75, process@L76, client@L102, deadline@L103, health@L111, credentials@L130, key@L135, dataset@L140, review@L142, training@L147, model@L163, generated@L164, image@L177, result@L201, worker_log@L226. Purposes/parameters: docs/code-map.json.
+# Index: declarations module.wait_job@L24, module.stop@L39, module.main@L64; variables client@L24, identity@L24, deadline@L26, response@L28, j@L30, job@L30, process@L39, children@L43, child@L44, _@L50, pending@L50, child@L51, parser@L66, args@L69, executable@L70, temporary@L71, root@L72, selected@L73, port@L75, flags@L76, log_path@L77, nonce@L78, owner_nonce@L79, log@L80, process@L81, client@L107, deadline@L108, health@L116, credentials@L135, key@L140, dataset@L145, review@L147, training@L152, model@L168, generated@L169, image@L182, result@L206, worker_log@L232. Purposes/parameters: docs/code-map.json.
 
 import argparse
 import base64
@@ -13,6 +13,11 @@ import time
 from pathlib import Path
 
 import httpx
+
+if __package__:
+    from .native_diagnostics import emit_tail
+else:
+    from native_diagnostics import emit_tail
 import psutil
 
 
@@ -223,6 +228,7 @@ def main():
                 args.report.write_text(json.dumps(result, indent=2) + "\n", encoding="utf-8")
                 print("Packaged native CPU smoke: all 12 checks passed", flush=True)
             except Exception:
+                emit_tail(log_path)
                 for worker_log in (root / "data" / "active" / "jobs").glob("*/worker.log"):
                     print(
                         "Synthetic worker diagnostic:",

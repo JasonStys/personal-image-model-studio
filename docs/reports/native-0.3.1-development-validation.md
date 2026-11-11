@@ -106,3 +106,15 @@ both wrapper failure paths. Real-file tests cover truncation, terminal-control
 escaping, missing/special inputs and actual hard-link refusal. Original failures
 still propagate; no assertion, retry policy, success criterion or deadline is
 changed. Current hosted Windows investigation remains pending the diagnostic run.
+
+The following `fa721a8` run exposed independent setup failures: Ubuntu browser
+dependency downloads timed out, and the original ML job explicitly reported
+temporary DNS resolution failures for the official Azure, Ubuntu archive and
+security mirrors. Those jobs stopped before browser assertions; the logs do
+not establish an application regression or a specific provider root cause.
+The Windows direct smoke stopped at its original 120-second readiness deadline,
+before the extracted-browser wrapper ran. Its owned launcher log is now also
+reported through the same bounded escaped diagnostic reader on failure. The
+complete source log and previous successful clean `fbd9c70` CPU/browser proof
+remain distinct. No mirror signature check, test, timeout or failure policy is
+relaxed, and no local network, account, Docker or OS setting is changed.

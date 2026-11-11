@@ -3434,19 +3434,19 @@
     "declarations": [
       {
         "name": "module.wait_job",
-        "line": 19,
+        "line": 24,
         "kind": "FunctionDef",
         "purpose": "Require actual optimizer/sampler completion; a queued response is not a successful ML test."
       },
       {
         "name": "module.stop",
-        "line": 34,
+        "line": 39,
         "kind": "FunctionDef",
         "purpose": "Stop only this test's exact subprocess tree after locking; never a user's running app."
       },
       {
         "name": "module.main",
-        "line": 59,
+        "line": 64,
         "kind": "FunctionDef",
         "purpose": "Launch the exact binary, train fresh native tensors, sample pixels and verify encrypted persistence."
       }
@@ -3455,229 +3455,229 @@
       {
         "name": "client",
         "scope": "wait_job",
-        "line": 19,
+        "line": 24,
         "purpose": "Function parameter"
       },
       {
         "name": "identity",
         "scope": "wait_job",
-        "line": 19,
+        "line": 24,
         "purpose": "Function parameter"
       },
       {
         "name": "deadline",
         "scope": "wait_job",
-        "line": 21,
+        "line": 26,
         "purpose": "deadline = time.monotonic() + 180"
       },
       {
         "name": "response",
         "scope": "wait_job",
-        "line": 23,
+        "line": 28,
         "purpose": "response = client.get('/private/api/workspace')"
       },
       {
         "name": "j",
         "scope": "wait_job",
-        "line": 25,
+        "line": 30,
         "purpose": " for j in response.json()['job'] if j['id'] == identity"
       },
       {
         "name": "job",
         "scope": "wait_job",
-        "line": 25,
+        "line": 30,
         "purpose": "job = next((j for j in response.json()['job'] if j['id'] == identity))"
       },
       {
         "name": "process",
         "scope": "stop",
-        "line": 34,
+        "line": 39,
         "purpose": "Function parameter"
       },
       {
         "name": "children",
         "scope": "stop",
-        "line": 38,
+        "line": 43,
         "purpose": "children = psutil.Process(process.pid).children(recursive=True)"
       },
       {
         "name": "child",
         "scope": "stop",
-        "line": 39,
+        "line": 44,
         "purpose": "for child in reversed(children):\n    try:\n        child.terminate()\n    except psutil.NoSuchProcess:\n        pass"
       },
       {
         "name": "_",
         "scope": "stop",
-        "line": 45,
+        "line": 50,
         "purpose": "(_, pending)"
       },
       {
         "name": "pending",
         "scope": "stop",
-        "line": 45,
+        "line": 50,
         "purpose": "(_, pending)"
       },
       {
         "name": "child",
         "scope": "stop",
-        "line": 46,
+        "line": 51,
         "purpose": "for child in pending:\n    child.kill()"
       },
       {
         "name": "parser",
         "scope": "main",
-        "line": 61,
+        "line": 66,
         "purpose": "parser = argparse.ArgumentParser()"
       },
       {
         "name": "args",
         "scope": "main",
-        "line": 64,
+        "line": 69,
         "purpose": "args = parser.parse_args()"
       },
       {
         "name": "executable",
         "scope": "main",
-        "line": 65,
+        "line": 70,
         "purpose": "executable = args.executable.resolve(strict=True)"
       },
       {
         "name": "temporary",
         "scope": "main",
-        "line": 66,
+        "line": 71,
         "purpose": "tempfile.TemporaryDirectory(prefix='pims-packaged-smoke-') as temporary"
       },
       {
         "name": "root",
         "scope": "main",
-        "line": 67,
+        "line": 72,
         "purpose": "root = Path(temporary).resolve()"
       },
       {
         "name": "selected",
         "scope": "main",
-        "line": 68,
+        "line": 73,
         "purpose": "socket.socket() as selected"
       },
       {
         "name": "port",
         "scope": "main",
-        "line": 70,
+        "line": 75,
         "purpose": "port = selected.getsockname()[1]"
       },
       {
         "name": "flags",
         "scope": "main",
-        "line": 71,
+        "line": 76,
         "purpose": "flags = subprocess.CREATE_NO_WINDOW if os.name == 'nt' else 0"
       },
       {
         "name": "log_path",
         "scope": "main",
-        "line": 72,
+        "line": 77,
         "purpose": "log_path = root / 'launcher.log'"
       },
       {
         "name": "nonce",
         "scope": "main",
-        "line": 73,
+        "line": 78,
         "purpose": "nonce = secrets.token_hex(16)"
       },
       {
         "name": "owner_nonce",
         "scope": "main",
-        "line": 74,
+        "line": 79,
         "purpose": "owner_nonce = secrets.token_hex(32)"
       },
       {
         "name": "log",
         "scope": "main",
-        "line": 75,
+        "line": 80,
         "purpose": "log_path.open('wb') as log"
       },
       {
         "name": "process",
         "scope": "main",
-        "line": 76,
+        "line": 81,
         "purpose": "process = subprocess.Popen([str(executable), '--no-browser', '--port', str(port), '--data', str(root / 'data')], stdin=subprocess.PIPE, stdout=log, stderr=log, env={**os.environ, '"
       },
       {
         "name": "client",
         "scope": "main",
-        "line": 102,
+        "line": 107,
         "purpose": "httpx.Client(base_url=f'http://127.0.0.1:{port}', headers={'X-PIMS-Request': 'v1'}, timeout=30, trust_env=False) as client"
       },
       {
         "name": "deadline",
         "scope": "main",
-        "line": 103,
+        "line": 108,
         "purpose": "deadline = time.monotonic() + 120"
       },
       {
         "name": "health",
         "scope": "main",
-        "line": 111,
+        "line": 116,
         "purpose": "health = client.get('/health')"
       },
       {
         "name": "credentials",
         "scope": "main",
-        "line": 130,
+        "line": 135,
         "purpose": "credentials = {'alias': 'packaged_' + secrets.token_hex(6), 'password': 'synthetic-only-packaged-password'}"
       },
       {
         "name": "key",
         "scope": "main",
-        "line": 135,
+        "line": 140,
         "purpose": "key = {'key': base64.b64encode(b'k' * 32).decode(), 'salt': base64.b64encode(b's' * 16).decode()}"
       },
       {
         "name": "dataset",
         "scope": "main",
-        "line": 140,
+        "line": 145,
         "purpose": "dataset = client.post('/private/api/datasets/synthetic', json={})"
       },
       {
         "name": "review",
         "scope": "main",
-        "line": 142,
+        "line": 147,
         "purpose": "review = client.get(f\"/private/api/datasets/{dataset.json()['id']}/review\")"
       },
       {
         "name": "training",
         "scope": "main",
-        "line": 147,
+        "line": 152,
         "purpose": "training = client.post('/private/api/train', json={'name': 'Packaged genuine native model', 'dataset_ids': [dataset.json()['id']], 'steps': 2, 'batch_size': 2, 'resolution': 32, 'm"
       },
       {
         "name": "model",
         "scope": "main",
-        "line": 163,
+        "line": 168,
         "purpose": "model = client.get('/private/api/workspace').json()['model'][0]"
       },
       {
         "name": "generated",
         "scope": "main",
-        "line": 164,
+        "line": 169,
         "purpose": "generated = client.post('/private/api/generate', json={'model_id': model['id'], 'prompt': {'description': 'red circle on white background'}, 'width': 32, 'height': 32, 'steps': 2, "
       },
       {
         "name": "image",
         "scope": "main",
-        "line": 177,
+        "line": 182,
         "purpose": "image = client.get('/private/api/images/' + generated.json()['id'] + '/file')"
       },
       {
         "name": "result",
         "scope": "main",
-        "line": 201,
+        "line": 206,
         "purpose": "result = {'passed': True, 'version': '0.3.1', 'normal_owned_exit': True, 'normal_exit_code': 0, 'checks': ['exact packaged launcher', 'author/private mode/UI', 'unauthenticated den"
       },
       {
         "name": "worker_log",
         "scope": "main",
-        "line": 226,
+        "line": 232,
         "purpose": "for worker_log in (root / 'data' / 'active' / 'jobs').glob('*/worker.log'):\n    print('Synthetic worker diagnostic:', worker_log.read_text(errors='replace')[-2500:])"
       }
     ]
