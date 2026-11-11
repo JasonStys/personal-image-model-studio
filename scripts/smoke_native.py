@@ -1,5 +1,5 @@
 """Jason Stys: genuine compiled CPU app tests; only disposable aliases, owned pixels and synthetic keys."""
-# Index: declarations module.wait_job@L19, module.stop@L34, module.main@L55; variables client@L19, identity@L19, deadline@L21, response@L23, j@L25, job@L25, process@L34, children@L38, child@L39, _@L45, pending@L45, child@L46, parser@L57, args@L60, executable@L61, temporary@L62, root@L63, selected@L64, port@L66, flags@L67, log_path@L68, nonce@L69, log@L70, process@L71, client@L92, deadline@L93, health@L101, credentials@L120, key@L125, dataset@L130, review@L132, training@L137, model@L153, generated@L154, image@L167, result@L180, worker_log@L203. Purposes/parameters: docs/code-map.json.
+# Index: declarations module.wait_job@L19, module.stop@L34, module.main@L59; variables client@L19, identity@L19, deadline@L21, response@L23, j@L25, job@L25, process@L34, children@L38, child@L39, _@L45, pending@L45, child@L46, parser@L61, args@L64, executable@L65, temporary@L66, root@L67, selected@L68, port@L70, flags@L71, log_path@L72, nonce@L73, owner_nonce@L74, log@L75, process@L76, client@L102, deadline@L103, health@L111, credentials@L130, key@L135, dataset@L140, review@L142, training@L147, model@L163, generated@L164, image@L177, result@L201, worker_log@L226. Purposes/parameters: docs/code-map.json.
 
 import argparse
 import base64
@@ -52,6 +52,10 @@ def stop(process):
         process.wait()
 
 
+if not __debug__:
+    raise RuntimeError("Native validation refuses optimized Python")
+
+
 def main():
     """Launch the exact binary, train fresh native tensors, sample pixels and verify encrypted persistence."""
     parser = argparse.ArgumentParser()
@@ -60,13 +64,14 @@ def main():
     args = parser.parse_args()
     executable = args.executable.resolve(strict=True)
     with tempfile.TemporaryDirectory(prefix="pims-packaged-smoke-") as temporary:
-        root = Path(temporary)
+        root = Path(temporary).resolve()
         with socket.socket() as selected:
             selected.bind(("127.0.0.1", 0))
             port = selected.getsockname()[1]
         flags = subprocess.CREATE_NO_WINDOW if os.name == "nt" else 0
         log_path = root / "launcher.log"
         nonce = secrets.token_hex(16)  # Correlate readiness, not an authentication credential.
+        owner_nonce = secrets.token_hex(32)
         with log_path.open("wb") as log:
             process = subprocess.Popen(
                 [
@@ -77,10 +82,15 @@ def main():
                     "--data",
                     str(root / "data"),
                 ],
-                stdin=subprocess.DEVNULL,
+                stdin=subprocess.PIPE,
                 stdout=log,
                 stderr=log,
-                env={**os.environ, "PIMS_NO_BROWSER": "1", "PIMS_VALIDATION_NONCE": nonce},
+                env={
+                    **os.environ,
+                    "PIMS_NO_BROWSER": "1",
+                    "PIMS_VALIDATION_NONCE": nonce,
+                    "PIMS_ACCEPTANCE_NONCE": owner_nonce,
+                },
                 creationflags=flags,
             )
             try:
@@ -112,7 +122,7 @@ def main():
                     assert (
                         health.json()["mode"] == "private-local-accounts"
                         and health.json()["author"] == "Jason Stys"
-                        and health.json()["version"] == "0.3.0"
+                        and health.json()["version"] == "0.3.1"
                     )
                     assert client.get("/").status_code == 200
                     assert client.get("/private/api/workspace").status_code == 401
@@ -148,7 +158,7 @@ def main():
                         },
                     )
                     assert training.status_code == 200, training.text
-                    print("Packaged app ready; checking genuine CPU optimization…", flush=True)
+                    print("Packaged app ready; checking genuine CPU optimization...", flush=True)
                     wait_job(client, training.json()["id"])
                     model = client.get("/private/api/workspace").json()["model"][0]
                     generated = client.post(
@@ -177,9 +187,22 @@ def main():
                     )
                     assert client.post("/private/logout", json={}).status_code == 200
                     assert client.get("/private/account").status_code == 401
+                assert process.stdin is not None
+                process.stdin.write(f"quit {owner_nonce}\n".encode("ascii"))
+                process.stdin.flush()
+                process.stdin.close()
+                assert process.wait(timeout=20) == 0
+                try:
+                    httpx.get(f"http://127.0.0.1:{port}/health", timeout=1, trust_env=False)
+                except httpx.RequestError:
+                    pass
+                else:
+                    raise AssertionError("Owned listener remains after normal Quit")
                 result = {
                     "passed": True,
-                    "version": "0.3.0",
+                    "version": "0.3.1",
+                    "normal_owned_exit": True,
+                    "normal_exit_code": 0,
                     "checks": [
                         "exact packaged launcher",
                         "author/private mode/UI",
@@ -198,7 +221,7 @@ def main():
                 }
                 args.report.parent.mkdir(parents=True, exist_ok=True)
                 args.report.write_text(json.dumps(result, indent=2) + "\n", encoding="utf-8")
-                print("Packaged native CPU smoke: all 11 checks passed", flush=True)
+                print("Packaged native CPU smoke: all 12 checks passed", flush=True)
             except Exception:
                 for worker_log in (root / "data" / "active" / "jobs").glob("*/worker.log"):
                     print(

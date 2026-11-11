@@ -1,5 +1,5 @@
 """Jason Stys: one account-scoped local ML workspace; locked archives and crash-safe recovery ownership."""
-# Index: declarations module.InstanceLock@L25, InstanceLock.__init__@L28, InstanceLock.close@L50, module.rebase@L55, module.validate_workspace@L67, module.Workspaces@L111, Workspaces.__init__@L114, Workspaces.archive@L156, Workspaces.status@L165, Workspaces.unlock@L176, Workspaces.require@L243, Workspaces.save@L249, Workspaces.remove_active@L265, Workspaces.lock@L277, Workspaces.delete_data@L295, Workspaces.close@L307, Workspaces.usage@L315; variables path@L28, self@L28, self@L50, current@L55, old@L55, value@L55, suffix@L58, item@L61, key@L61, item@L63, original@L67, root@L67, name@L70, database@L71, database@L74, db@L76, rows@L77, identity@L80, kind@L80, text@L80, value@L83, field@L85, path@L90, request@L98, value@L99, field@L100, path@L100, selected@L103, embedded@L115, interpreter@L115, port@L115, root@L115, self@L115, static@L115, allowed@L120, p@L129, owner@L156, self@L156, c@L160, owner@L165, self@L165, config@L167, encoded@L176, owner@L176, salt@L176, self@L176, key@L184, current@L185, config@L186, plaintext@L189, nonce@L204, config@L205, original@L219, original@L221, path@L222, original@L225, owner@L243, self@L243, force@L249, self@L249, j@L254, current@L259, expected_owner@L265, self@L265, owner@L277, self@L277, app@L279, upload@L282, owner@L295, self@L295, self@L307, self@L315, p@L317, used@L317, reserved@L318, u@L318. Purposes/parameters: docs/code-map.json.
+# Index: declarations module.InstanceLock@L27, InstanceLock.__init__@L30, InstanceLock.close@L75, module.rebase@L80, module.validate_workspace@L92, module.Workspaces@L136, Workspaces.__init__@L139, Workspaces._initialize_state@L168, Workspaces.archive@L189, Workspaces.status@L198, Workspaces.unlock@L209, Workspaces.require@L276, Workspaces.save@L282, Workspaces.remove_active@L298, Workspaces.lock@L310, Workspaces.delete_data@L328, Workspaces.close@L340, Workspaces.usage@L348; variables path@L30, self@L30, before@L32, descriptor@L33, actual@L43, self@L75, current@L80, old@L80, value@L80, suffix@L83, item@L86, key@L86, item@L88, original@L92, root@L92, name@L95, database@L96, database@L99, db@L101, rows@L102, identity@L105, kind@L105, text@L105, value@L108, field@L110, path@L115, request@L123, value@L124, field@L125, path@L125, selected@L128, embedded@L140, interpreter@L140, port@L140, root@L140, self@L140, static@L140, allowed@L145, p@L155, embedded@L168, interpreter@L168, port@L168, self@L168, static@L168, owner@L189, self@L189, c@L193, owner@L198, self@L198, config@L200, encoded@L209, owner@L209, salt@L209, self@L209, key@L217, current@L218, config@L219, plaintext@L222, nonce@L237, config@L238, original@L252, original@L254, path@L255, original@L258, owner@L276, self@L276, force@L282, self@L282, j@L287, current@L292, expected_owner@L298, self@L298, owner@L310, self@L310, app@L312, upload@L315, owner@L328, self@L328, self@L340, self@L348, p@L350, used@L350, reserved@L351, u@L351. Purposes/parameters: docs/code-map.json.
 
 import asyncio
 import base64
@@ -8,6 +8,7 @@ import os
 import secrets
 import shutil
 import sqlite3
+import stat
 import sys
 from contextlib import closing
 from pathlib import Path
@@ -18,6 +19,7 @@ from studio.accounts import Accounts, decode_field
 from studio.api import create_app
 from studio.files import atomic_json, confined, read_json
 from studio.jobs import TERMINAL
+from studio.native_profile import admit_root, regular
 from studio.permissions import protect_directory
 from studio.vault import AAD, MAX_BYTES, decrypt_workspace, encrypt_workspace, members, signature
 
@@ -27,11 +29,28 @@ class InstanceLock:
 
     def __init__(self, path: Path):
         """Hold a nonblocking OS file lock until this exact application instance closes."""
-        self.stream = path.open("a+b")
-        self.stream.seek(0)
-        self.stream.write(b"1")
-        self.stream.flush()
-        self.stream.seek(0)
+        before = regular(path)
+        descriptor = os.open(
+            path,
+            os.O_RDWR
+            | os.O_CREAT
+            | (os.O_EXCL if before is None else 0)
+            | getattr(os, "O_NOFOLLOW", 0)
+            | getattr(os, "O_BINARY", 0),
+            0o600,
+        )
+        self.stream = os.fdopen(descriptor, "r+b")
+        actual = os.fstat(descriptor)
+        if (
+            not stat.S_ISREG(actual.st_mode)
+            or actual.st_nlink != 1
+            or (
+                before is not None
+                and (actual.st_dev, actual.st_ino) != (before.st_dev, before.st_ino)
+            )
+        ):
+            self.stream.close()
+            raise ValueError("Private account instance file changed before locking")
         try:
             if os.name == "nt":
                 import msvcrt
@@ -46,6 +65,12 @@ class InstanceLock:
             raise ValueError(
                 "Another instance uses this account data directory; close it first"
             ) from None
+        try:
+            self.stream.write(b"1")
+            self.stream.flush()
+        except BaseException:
+            self.stream.close()
+            raise
 
     def close(self):
         """Closing the held descriptor releases only this instance's advisory lock."""
@@ -115,11 +140,12 @@ class Workspaces:
         self, root: Path, port: int, static: Path, interpreter: str | None = None, embedded=False
     ):
         """Create a protected private data root without opening or migrating any legacy workspace."""
-        self.root = root.resolve()
+        self.root = admit_root(root)
         self.root.mkdir(parents=True, exist_ok=True, mode=0o700)
         allowed = {
             "instance.lock",
             "accounts.sqlite",
+            "accounts.sqlite-journal",
             "accounts.sqlite-wal",
             "accounts.sqlite-shm",
             "active",
@@ -132,7 +158,15 @@ class Workspaces:
             )
         protect_directory(self.root)
         self.instance = InstanceLock(self.root / "instance.lock")
-        self.accounts = Accounts(self.root / "accounts.sqlite")
+        try:
+            self.accounts = Accounts(self.root / "accounts.sqlite")
+            self._initialize_state(port, static, interpreter, embedded)
+        except BaseException:
+            self.instance.close()
+            raise
+
+    def _initialize_state(self, port, static, interpreter, embedded):
+        """Set up recovery bookkeeping under the constructor's ownership rollback guard."""
         self.port, self.static = port, static
         self.interpreter = interpreter if interpreter is not None else sys.executable
         self.embedded = embedded
@@ -148,7 +182,6 @@ class Workspaces:
         self.uploads = {}
         self.internal_token = secrets.token_urlsafe(32)
         if self.active.exists() != self.marker.exists():
-            self.instance.close()
             raise ValueError(
                 "Incomplete recovery state; preserve this data directory and contact support"
             )

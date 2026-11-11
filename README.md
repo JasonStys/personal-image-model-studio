@@ -6,6 +6,14 @@ A local-first image-generation workbench by **Jason Stys**, with real private ac
 
 ## Download and open
 
+The **0.3.1 native refresh** adds Open, Help, Runtime notices and safe Quit in a
+normal owner window, patched Python3.14.10, profile guards and full extracted-package
+CPU/browser acceptance. Account paths and encrypted formats remain compatible.
+See [native architecture and file responsibilities](docs/native-application.md)
+and the [development validation report](docs/reports/native-0.3.1-development-validation.md)
+for observed results and delivery steps still pending. Published packages retain
+their own immutable source identities.
+
 Get the checksummed CPU application for your OS from [Releases](https://github.com/JasonStys/personal-image-model-studio/releases). Extract and open `PersonalImageModelStudio` (`.exe` on Windows). It launches a private website in your normal browser, with no Python/npm setup for native-model training or generation. Keep the application process running. This is an **unsigned portable application**, not a signed installer or public hosted service.
 
 Create an alias/password, save the once-shown login recovery code and choose a separate vault phrase. Private files live outside Git and the installation. Locked workspaces use authenticated encryption; active ML needs temporary plaintext on your own device. OS administrators/compromised devices can access active data; crashes can leave protected recovery files. No telemetry, ad SDK, default external AI calls, automatic model downloads or developer account-access backdoor is included. Forgotten vault phrases cannot be recovered.
