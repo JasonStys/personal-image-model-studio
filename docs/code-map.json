@@ -2114,26 +2114,32 @@
         "purpose": "Find one version in the bounded authenticated release listing, including an unpublished draft."
       },
       {
-        "name": "module.load_draft",
+        "name": "module.identified_draft",
         "line": 228,
+        "kind": "FunctionDef",
+        "purpose": "Read the exact returned release ID; reject any identity, publication or source change."
+      },
+      {
+        "name": "module.load_draft",
+        "line": 240,
         "kind": "FunctionDef",
         "purpose": "Use the actual release ID; a draft need not have a published tag-name endpoint."
       },
       {
         "name": "module.prepare_draft",
-        "line": 240,
+        "line": 247,
         "kind": "FunctionDef",
         "purpose": "Create only a missing draft with structured JSON; never retarget or replace an existing release."
       },
       {
         "name": "module.assets_ready",
-        "line": 267,
+        "line": 290,
         "kind": "FunctionDef",
         "purpose": "Only the documented six platform artifacts may be attached to this draft."
       },
       {
         "name": "module.main",
-        "line": 295,
+        "line": 318,
         "kind": "FunctionDef",
         "purpose": "Perform one explicitly named release operation; there is no force/clobber path."
       }
@@ -2356,237 +2362,261 @@
         "purpose": "row = matches[0]"
       },
       {
+        "name": "identity",
+        "scope": "identified_draft",
+        "line": 228,
+        "purpose": "Function parameter"
+      },
+      {
         "name": "product_version",
-        "scope": "load_draft",
+        "scope": "identified_draft",
         "line": 228,
         "purpose": "Function parameter"
       },
       {
         "name": "source",
-        "scope": "load_draft",
+        "scope": "identified_draft",
         "line": 228,
         "purpose": "Function parameter"
-      },
-      {
-        "name": "listed",
-        "scope": "load_draft",
-        "line": 230,
-        "purpose": "listed = release_for_version(api('releases?per_page=100'), product_version)"
       },
       {
         "name": "release",
-        "scope": "load_draft",
-        "line": 232,
-        "purpose": "release = api('releases/' + str(listed['id']))"
+        "scope": "identified_draft",
+        "line": 231,
+        "purpose": "release = api('releases/' + str(identity))"
       },
       {
         "name": "product_version",
-        "scope": "prepare_draft",
+        "scope": "load_draft",
         "line": 240,
         "purpose": "Function parameter"
       },
       {
         "name": "source",
-        "scope": "prepare_draft",
+        "scope": "load_draft",
         "line": 240,
         "purpose": "Function parameter"
       },
       {
         "name": "listed",
+        "scope": "load_draft",
+        "line": 242,
+        "purpose": "listed = release_for_version(api('releases?per_page=100'), product_version)"
+      },
+      {
+        "name": "product_version",
         "scope": "prepare_draft",
-        "line": 243,
+        "line": 247,
+        "purpose": "Function parameter"
+      },
+      {
+        "name": "source",
+        "scope": "prepare_draft",
+        "line": 247,
+        "purpose": "Function parameter"
+      },
+      {
+        "name": "listed",
+        "scope": "prepare_draft",
+        "line": 250,
         "purpose": "listed = release_for_version(api('releases?per_page=100'), product_version)"
       },
       {
         "name": "notes",
         "scope": "prepare_draft",
-        "line": 245,
+        "line": 252,
         "purpose": "notes = ROOT / 'docs/releases' / ('v' + product_version + '.md')"
       },
       {
         "name": "payload",
         "scope": "prepare_draft",
-        "line": 250,
+        "line": 257,
         "purpose": "payload = {'tag_name': 'v' + product_version, 'target_commitish': source, 'name': 'Personal Image Model Studio ' + product_version, 'body': notes.read_text(encoding='utf-8'), 'draf"
       },
       {
         "name": "temporary",
         "scope": "prepare_draft",
-        "line": 258,
+        "line": 265,
         "purpose": "tempfile.TemporaryDirectory(prefix='pims-release-request-') as temporary"
       },
       {
         "name": "path",
         "scope": "prepare_draft",
-        "line": 259,
+        "line": 266,
         "purpose": "path = Path(temporary) / 'release.json'"
+      },
+      {
+        "name": "created",
+        "scope": "prepare_draft",
+        "line": 268,
+        "purpose": "created = json.loads(command(['gh', 'api', f'repos/{REPO}/releases', '--method', 'POST', '--input', str(path)]))"
       },
       {
         "name": "complete",
         "scope": "assets_ready",
-        "line": 267,
+        "line": 290,
         "purpose": "Function parameter"
       },
       {
         "name": "product_version",
         "scope": "assets_ready",
-        "line": 267,
+        "line": 290,
         "purpose": "Function parameter"
       },
       {
         "name": "release",
         "scope": "assets_ready",
-        "line": 267,
+        "line": 290,
         "purpose": "Function parameter"
       },
       {
         "name": "expected",
         "scope": "assets_ready",
-        "line": 269,
+        "line": 292,
         "purpose": "expected = set()"
       },
       {
         "name": "machine",
         "scope": "assets_ready",
-        "line": 270,
+        "line": 293,
         "purpose": "(system, machine)"
       },
       {
         "name": "system",
         "scope": "assets_ready",
-        "line": 270,
+        "line": 293,
         "purpose": "(system, machine)"
       },
       {
         "name": "assets",
         "scope": "assets_ready",
-        "line": 272,
+        "line": 295,
         "purpose": "assets = release.get('assets')"
       },
       {
         "name": "result",
         "scope": "assets_ready",
-        "line": 274,
+        "line": 297,
         "purpose": "result = {}"
       },
       {
         "name": "asset",
         "scope": "assets_ready",
-        "line": 275,
+        "line": 298,
         "purpose": "for asset in assets:\n    name = asset.get('name')\n    require(name in expected and name not in result, 'Unexpected or duplicate draft asset')\n    require(type(asset.get('size')) is"
       },
       {
         "name": "name",
         "scope": "assets_ready",
-        "line": 276,
+        "line": 299,
         "purpose": "name = asset.get('name')"
       },
       {
         "name": "parser",
         "scope": "main",
-        "line": 297,
+        "line": 320,
         "purpose": "parser = argparse.ArgumentParser()"
       },
       {
         "name": "args",
         "scope": "main",
-        "line": 299,
+        "line": 322,
         "purpose": "args = parser.parse_args()"
       },
       {
         "name": "source",
         "scope": "main",
-        "line": 300,
+        "line": 323,
         "purpose": "source = os.environ.get('GITHUB_SHA', '')"
       },
       {
         "name": "product_version",
         "scope": "main",
-        "line": 308,
+        "line": 331,
         "purpose": "product_version = version()"
       },
       {
         "name": "release",
         "scope": "main",
-        "line": 315,
+        "line": 338,
         "purpose": "release = load_draft(source, product_version)"
       },
       {
         "name": "attached",
         "scope": "main",
-        "line": 316,
+        "line": 339,
         "purpose": "attached = assets_ready(release, product_version, complete=args.operation == 'verify')"
       },
       {
         "name": "machine",
         "scope": "main",
-        "line": 318,
+        "line": 341,
         "purpose": "(system, machine)"
       },
       {
         "name": "system",
         "scope": "main",
-        "line": 318,
+        "line": 341,
         "purpose": "(system, machine)"
       },
       {
         "name": "names",
         "scope": "main",
-        "line": 319,
+        "line": 342,
         "purpose": "names = names_for(system, machine, product_version)"
       },
       {
         "name": "report",
         "scope": "main",
-        "line": 320,
+        "line": 343,
         "purpose": "report = json.loads((ROOT / 'artifacts' / f'native-acceptance-{system}.json').read_text(encoding='utf-8'))"
       },
       {
         "name": "files",
         "scope": "main",
-        "line": 324,
+        "line": 347,
         "purpose": "files = [ROOT / 'release' / name for name in names]"
       },
       {
         "name": "name",
         "scope": "main",
-        "line": 324,
+        "line": 347,
         "purpose": " for name in names"
       },
       {
         "name": "file",
         "scope": "main",
-        "line": 325,
+        "line": 348,
         "purpose": "for file in files:\n    require(file.is_file() and (not file.is_symlink()), 'Release asset must be a regular built file')\n    require(file.stat().st_size <= MAX_DOWNLOAD, 'Built ass"
       },
       {
         "name": "binary",
         "scope": "main",
-        "line": 341,
+        "line": 364,
         "purpose": "binary = 'PersonalImageModelStudio' + ('.exe' if system == 'windows' else '')"
       },
       {
         "name": "manifest",
         "scope": "main",
-        "line": 342,
+        "line": 365,
         "purpose": "manifest = read_manifest(files[1], files[0].name, binary)"
       },
       {
         "name": "file",
         "scope": "main",
-        "line": 348,
+        "line": 371,
         "purpose": "for file in files:\n    if file.name not in attached:\n        draft_ready(api('releases/' + str(release['id'])), source, product_version)\n        command(['gh', 'api', f\"https://upl"
       },
       {
         "name": "fresh",
         "scope": "main",
-        "line": 366,
+        "line": 389,
         "purpose": "fresh = api('releases/' + str(release['id']))"
       },
       {
         "name": "actual",
         "scope": "main",
-        "line": 368,
+        "line": 391,
         "purpose": "actual = assets_ready(fresh, product_version, complete=False)[file.name]"
       }
     ]
@@ -21535,6 +21565,30 @@
         "line": 420,
         "kind": "FunctionDef",
         "purpose": "The required notice reader loads actual Tk and must never run in a headless Linux preflight."
+      },
+      {
+        "name": "module.test_created_draft_is_verified_by_returned_id_when_listing_stays_stale",
+        "line": 435,
+        "kind": "FunctionDef",
+        "purpose": "The observed POST succeeds/list-stays-empty sequence must still recheck the exact created identity."
+      },
+      {
+        "name": "test_created_draft_is_verified_by_returned_id_when_listing_stays_stale.provider",
+        "line": 444,
+        "kind": "FunctionDef",
+        "purpose": "Keep the collection stale; only the independent ID read returns the actual created draft."
+      },
+      {
+        "name": "module.test_created_release_identity_is_checked_before_followup_io",
+        "line": 459,
+        "kind": "FunctionDef",
+        "purpose": "Malformed IDs never select an API resource, including bools that compare equal to integers."
+      },
+      {
+        "name": "module.test_created_id_readback_never_accepts_changed_or_published_release",
+        "line": 467,
+        "kind": "FunctionDef",
+        "purpose": "A successful create is insufficient when the separately read exact identity no longer matches."
       }
     ],
     "variables": [
@@ -21963,6 +22017,84 @@
         "scope": "test_linux_native_guards_run_with_an_actual_display",
         "line": 432,
         "purpose": " for command in commands"
+      },
+      {
+        "name": "monkeypatch",
+        "scope": "test_created_draft_is_verified_by_returned_id_when_listing_stays_stale",
+        "line": 435,
+        "purpose": "Function parameter"
+      },
+      {
+        "name": "tmp_path",
+        "scope": "test_created_draft_is_verified_by_returned_id_when_listing_stays_stale",
+        "line": 435,
+        "purpose": "Function parameter"
+      },
+      {
+        "name": "notes",
+        "scope": "test_created_draft_is_verified_by_returned_id_when_listing_stays_stale",
+        "line": 437,
+        "purpose": "notes = tmp_path / 'docs/releases/v0.3.1.md'"
+      },
+      {
+        "name": "_source",
+        "scope": "test_created_draft_is_verified_by_returned_id_when_listing_stays_stale",
+        "line": 441,
+        "purpose": "Function parameter"
+      },
+      {
+        "name": "calls",
+        "scope": "test_created_draft_is_verified_by_returned_id_when_listing_stays_stale",
+        "line": 442,
+        "purpose": "calls = []"
+      },
+      {
+        "name": "endpoint",
+        "scope": "test_created_draft_is_verified_by_returned_id_when_listing_stays_stale.provider",
+        "line": 444,
+        "purpose": "Function parameter"
+      },
+      {
+        "name": "_arguments",
+        "scope": "test_created_draft_is_verified_by_returned_id_when_listing_stays_stale",
+        "line": 453,
+        "purpose": "Function parameter"
+      },
+      {
+        "name": "identity",
+        "scope": "test_created_release_identity_is_checked_before_followup_io",
+        "line": 459,
+        "purpose": "Function parameter"
+      },
+      {
+        "name": "monkeypatch",
+        "scope": "test_created_release_identity_is_checked_before_followup_io",
+        "line": 459,
+        "purpose": "Function parameter"
+      },
+      {
+        "name": "_endpoint",
+        "scope": "test_created_release_identity_is_checked_before_followup_io",
+        "line": 461,
+        "purpose": "Function parameter"
+      },
+      {
+        "name": "change",
+        "scope": "test_created_id_readback_never_accepts_changed_or_published_release",
+        "line": 467,
+        "purpose": "Function parameter"
+      },
+      {
+        "name": "monkeypatch",
+        "scope": "test_created_id_readback_never_accepts_changed_or_published_release",
+        "line": 467,
+        "purpose": "Function parameter"
+      },
+      {
+        "name": "_endpoint",
+        "scope": "test_created_id_readback_never_accepts_changed_or_published_release",
+        "line": 469,
+        "purpose": "Function parameter"
       }
     ]
   },

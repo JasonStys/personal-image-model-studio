@@ -18,17 +18,17 @@ Get the checksummed CPU application for your OS from [Releases](https://github.c
 
 Create an alias/password, save the once-shown login recovery code and choose a separate vault phrase. Private files live outside Git and the installation. Locked workspaces use authenticated encryption; active ML needs temporary plaintext on your own device. OS administrators/compromised devices can access active data; crashes can leave protected recovery files. No telemetry, ad SDK, default external AI calls, automatic model downloads or developer account-access backdoor is included. Forgotten vault phrases cannot be recovered.
 
-[Private installation/help](docs/private-installation.md) · [Account security and limits](docs/private-accounts.md) · [New validation evidence](docs/reports/private-validation.md) · [Jason's contact](https://www.linkedin.com/in/jason-stys-31b30b351/)
+[Private installation/help](docs/private-installation.md) Â· [Account security and limits](docs/private-accounts.md) Â· [New validation evidence](docs/reports/private-validation.md) Â· [Jason's contact](https://www.linkedin.com/in/jason-stys-31b30b351/)
 
 It does not generate placeholder images when no model exists. Train a fresh compact native model or explicitly register an authorized, compatible local classic Stable Diffusion export. No third-party artwork or pretrained weights are distributed here.
 
 ![Real learned synthetic CPU samples](docs/reports/synthetic-cpu-samples.png)
 
-Rows: circle, square, triangle. Columns: red, green, blue. These samples came from real learned weights after 6,000 optimizer updates on owned procedural shapes, using the reference Torch 2.14 CPU environment—not a procedural renderer at inference time. The small model still produces rough edges and is **not a general-purpose or photorealistic generator**. See [validation evidence](docs/reports/validation.md), including exact runtime versions, separately retained earlier GPU evidence and limitations.
+Rows: circle, square, triangle. Columns: red, green, blue. These samples came from real learned weights after 6,000 optimizer updates on owned procedural shapes, using the reference Torch 2.14 CPU environmentâ€”not a procedural renderer at inference time. The small model still produces rough edges and is **not a general-purpose or photorealistic generator**. See [validation evidence](docs/reports/validation.md), including exact runtime versions, separately retained earlier GPU evidence and limitations.
 
 ## Review data before training
 
-Version **0.3.0** adds an account-scoped dataset review. Import owned or authorized images, select **Datasets & glossary → Dataset to review → Review dataset quality**, inspect missing captions, declared origins/license notes and eligible train/validation sizes, then preview possible cross-split near-duplicate pairs. Download the exact reviewed JSON if you need evidence before choosing training data. Changing the selection clears the report and export; stale responses cannot populate a different selection.
+Version **0.3.0** adds an account-scoped dataset review. Import owned or authorized images, select **Datasets & glossary â†’ Dataset to review â†’ Review dataset quality**, inspect missing captions, declared origins/license notes and eligible train/validation sizes, then preview possible cross-split near-duplicate pairs. Download the exact reviewed JSON if you need evidence before choosing training data. Changing the selection clears the report and export; stale responses cannot populate a different selection.
 
 This workflow is read-only. It does not change split assignments, captions, AI quarantine, training selection or weights. A grayscale visual hash produces **candidates**, not proven duplicates or a model-quality score. File/pixel checks cover an explicit bounded sample (64 images, 32 MiB encoded bytes, 16,777,216 decoded pixels); unchecked counts and pair truncation are displayed. Private 192px previews require matching imported identities and the active account. Rights/origin labels remain operator declarations. See [dataset review](docs/dataset-review.md).
 
@@ -62,7 +62,7 @@ The launcher opens a token-free loopback URL at an available port. Sign in, then
 
 **Legacy developer mode:** `python -m studio.cli --port 8016` / `--desktop` and `scripts/build_desktop.py` remain for historical reproducibility. They use a single-user bearer-token workspace, not the new encrypted account mode. Do not expose either launcher to a public network. Existing legacy data is preserved and not silently migrated. Legacy file/runtime selection now uses launcher-owned grants: the workspace, OS-owner home and resolved configured interpreter directory. An additional approved external local directory requires repeatable `--allow-local-root PATH`; filesystem/network roots are refused. Account mode remains imports-only and refuses browser runtime changes. See [local path and artifact boundaries](docs/local-path-boundaries.md).
 
-[Installation and packaging](docs/installation.md) · [Walkthrough](docs/user-guide.md) · [DeviantArt setup](docs/deviantart.md)
+[Installation and packaging](docs/installation.md) Â· [Walkthrough](docs/user-guide.md) Â· [DeviantArt setup](docs/deviantart.md)
 
 For a small real-artwork training example without an account, use the optional [licensed sketch sample](docs/licensed-sample.md). The actual app test trained a fresh 6,000-step model on 384 sketches and verified generation/seed replay; [measurements](docs/reports/quickdraw-training.json) also record its rough scribble-like outputs and weak category fidelity. Downloads require explicit opt-in; existing synthetic examples remain available.
 
@@ -134,7 +134,7 @@ Demo outputs/checkpoints are local and ignored by Git. Use a new output director
 
 ## Scope and responsible use
 
-Use only data/models you own or are permitted to process and train on. Account access is not a copyright/license grant. AI-origin detection uses explicit labels—not an infallible visual detector. A human checks captions, rights, image quality and safety. Accounts isolate local records, but only one account may unlock the engine at a time. This is not hardened multi-tenant hosting and must not be exposed to a public network. An archive download alone lacks account/key settings: cold-back up the complete protected data root. The [requirements matrix](docs/requirements.md) separates preserved capabilities and limitations.
+Use only data/models you own or are permitted to process and train on. Account access is not a copyright/license grant. AI-origin detection uses explicit labelsâ€”not an infallible visual detector. A human checks captions, rights, image quality and safety. Accounts isolate local records, but only one account may unlock the engine at a time. This is not hardened multi-tenant hosting and must not be exposed to a public network. An archive download alone lacks account/key settings: cold-back up the complete protected data root. The [requirements matrix](docs/requirements.md) separates preserved capabilities and limitations.
 
 ## CodeQL source security review
 
@@ -146,9 +146,9 @@ dependency, privacy and isolation checks; it does not certify every input or pla
 
 ## Documentation editions
 
-Start with the [organized handbook](docs/handbook.md) for current usage, design, security and test guidance. Reviewed downloadable editions: [project-guide.docx](docs/reports/project-guide.docx) · [validation-review.docx](docs/reports/validation-review.docx) · [validation-evidence.xlsx](docs/reports/validation-evidence.xlsx).
+Start with the [organized handbook](docs/handbook.md) for current usage, design, security and test guidance. Reviewed downloadable editions: [project-guide.docx](docs/reports/project-guide.docx) Â· [validation-review.docx](docs/reports/validation-review.docx) Â· [validation-evidence.xlsx](docs/reports/validation-evidence.xlsx).
 
-[Publication identities and source scope](docs/reports/publications.json) · [Documentation validation record](docs/reports/documentation-refresh-2026-11-09.md). Historical results retain their own tested revision and date.
+[Publication identities and source scope](docs/reports/publications.json) Â· [Documentation validation record](docs/reports/documentation-refresh-2026-11-09.md). Historical results retain their own tested revision and date.
 
 The edition files have distinct roles: `docs/handbook.md` organizes the editable
 usage/design/security/test material; `project-guide.docx` is the user/developer
@@ -157,3 +157,8 @@ guide; `validation-review.docx` separates actual source and dated test/scan scop
 `publications.json` binds exact reviewed bytes and source identities; and
 `documentation-refresh-2026-11-09.md` records the publication checks and limits.
 All edition artifacts are in `docs/reports/` except the handbook.
+
+
+### Release identity validation
+
+The [draft creation validation record](docs/reports/release-create-identity-2026-11-11.md) explains the observed create/readback failure and the exact returned-ID checks. Original source, model, native application and raw security gates remain mandatory; no published asset or existing draft is retargeted.

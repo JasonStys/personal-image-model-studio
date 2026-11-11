@@ -1,5 +1,5 @@
 """Jason Stys: independent exact-source, draft and portable-asset publication boundaries."""
-# Index: declarations module.test_source_gate_reads_actual_processed_sarif@L24, test_source_gate_reads_actual_processed_sarif.provider@L31, module.test_unpublished_verifier_has_draft_visibility_without_publication_operation@L65, module.run_fixture@L74, module.test_source_run_requires_exact_completed_main_identity@L93, module.test_source_run_rejects_unrelated_or_unfinished_metadata@L113, module.test_empty_duplicate_and_incomplete_run_pages_fail_closed@L121, module.test_draft_never_accepts_published_or_different_source@L142, module.assets_fixture@L150, module.test_publication_requires_all_six_platform_assets@L162, module.test_portable_metadata_rejects_duplicates_foreign_and_missing_hashes@L182, module.analyses_fixture@L190, module.test_actual_processed_security_records_are_required@L207, module.test_partial_foreign_and_failed_security_results_fail_closed@L230, module.test_latest_failed_same_source_analysis_cannot_be_hidden_by_an_older_success@L238, module.built_fixture@L246, module.test_upload_rejects_old_dirty_or_source_server_acceptance@L264, module.unpublished_release@L290, module.test_unpublished_draft_uses_listing_and_verified_id_without_published_tag@L302, test_unpublished_draft_uses_listing_and_verified_id_without_published_tag.provider@L307, module.test_ambiguous_incomplete_or_malformed_release_pages_fail_closed@L329, module.test_id_resolution_rejects_changed_published_or_different_source@L346, module.test_prepare_resumes_equal_draft_without_writes_or_retarget@L359, module.test_prepare_creates_only_missing_draft_with_literal_structured_notes@L375, test_prepare_creates_only_missing_draft_with_literal_structured_notes.provider@L385, test_prepare_creates_only_missing_draft_with_literal_structured_notes.command@L393, module.test_linux_native_guards_run_with_an_actual_display@L420; variables SOURCE@L20, monkeypatch@L24, raw_finding@L24, rows@L26, number@L27, row@L27, raw_reads@L29, endpoint@L31, sarif@L31, data@L36, workflow@L37, workflow@L67, verifier@L68, field@L113, value@L113, data@L115, data@L123, change@L142, data@L144, names@L152, machine@L154, system@L154, name@L155, name@L158, data@L164, partial@L166, r@L175, r@L176, r@L177, r@L178, r@L179, mutation@L182, data@L184, language@L203, rows@L209, changed@L211, row@L211, changed@L230, rows@L232, rows@L240, failed@L241, change@L267, change@L276, report@L284, monkeypatch@L302, release@L304, calls@L305, endpoint@L307, rows@L329, change@L346, monkeypatch@L346, endpoint@L351, monkeypatch@L359, source@L362, endpoint@L367, _args@L370, monkeypatch@L375, tmp_path@L375, notes@L377, content@L379, _source@L382, created@L383, endpoint@L385, arguments@L393, payload@L402, name@L422, source@L423, commands@L424, line@L426, command@L431, command@L432. Purposes/parameters: docs/code-map.json.
+# Index: declarations module.test_source_gate_reads_actual_processed_sarif@L24, test_source_gate_reads_actual_processed_sarif.provider@L31, module.test_unpublished_verifier_has_draft_visibility_without_publication_operation@L65, module.run_fixture@L74, module.test_source_run_requires_exact_completed_main_identity@L93, module.test_source_run_rejects_unrelated_or_unfinished_metadata@L113, module.test_empty_duplicate_and_incomplete_run_pages_fail_closed@L121, module.test_draft_never_accepts_published_or_different_source@L142, module.assets_fixture@L150, module.test_publication_requires_all_six_platform_assets@L162, module.test_portable_metadata_rejects_duplicates_foreign_and_missing_hashes@L182, module.analyses_fixture@L190, module.test_actual_processed_security_records_are_required@L207, module.test_partial_foreign_and_failed_security_results_fail_closed@L230, module.test_latest_failed_same_source_analysis_cannot_be_hidden_by_an_older_success@L238, module.built_fixture@L246, module.test_upload_rejects_old_dirty_or_source_server_acceptance@L264, module.unpublished_release@L290, module.test_unpublished_draft_uses_listing_and_verified_id_without_published_tag@L302, test_unpublished_draft_uses_listing_and_verified_id_without_published_tag.provider@L307, module.test_ambiguous_incomplete_or_malformed_release_pages_fail_closed@L329, module.test_id_resolution_rejects_changed_published_or_different_source@L346, module.test_prepare_resumes_equal_draft_without_writes_or_retarget@L359, module.test_prepare_creates_only_missing_draft_with_literal_structured_notes@L375, test_prepare_creates_only_missing_draft_with_literal_structured_notes.provider@L385, test_prepare_creates_only_missing_draft_with_literal_structured_notes.command@L393, module.test_linux_native_guards_run_with_an_actual_display@L420, module.test_created_draft_is_verified_by_returned_id_when_listing_stays_stale@L435, test_created_draft_is_verified_by_returned_id_when_listing_stays_stale.provider@L444, module.test_created_release_identity_is_checked_before_followup_io@L459, module.test_created_id_readback_never_accepts_changed_or_published_release@L467; variables SOURCE@L20, monkeypatch@L24, raw_finding@L24, rows@L26, number@L27, row@L27, raw_reads@L29, endpoint@L31, sarif@L31, data@L36, workflow@L37, workflow@L67, verifier@L68, field@L113, value@L113, data@L115, data@L123, change@L142, data@L144, names@L152, machine@L154, system@L154, name@L155, name@L158, data@L164, partial@L166, r@L175, r@L176, r@L177, r@L178, r@L179, mutation@L182, data@L184, language@L203, rows@L209, changed@L211, row@L211, changed@L230, rows@L232, rows@L240, failed@L241, change@L267, change@L276, report@L284, monkeypatch@L302, release@L304, calls@L305, endpoint@L307, rows@L329, change@L346, monkeypatch@L346, endpoint@L351, monkeypatch@L359, source@L362, endpoint@L367, _args@L370, monkeypatch@L375, tmp_path@L375, notes@L377, content@L379, _source@L382, created@L383, endpoint@L385, arguments@L393, payload@L402, name@L422, source@L423, commands@L424, line@L426, command@L431, command@L432, monkeypatch@L435, tmp_path@L435, notes@L437, _source@L441, calls@L442, endpoint@L444, _arguments@L453, identity@L459, monkeypatch@L459, _endpoint@L461, change@L467, monkeypatch@L467, _endpoint@L469. Purposes/parameters: docs/code-map.json.
 
 import copy
 import json
@@ -430,3 +430,42 @@ def test_linux_native_guards_run_with_an_actual_display():
         assert commands[0].startswith("xvfb-run -a python -m pytest")
         assert all("tests/test_native_owner.py" in command for command in commands)
         assert all(not command.startswith("- run:") for command in commands)
+
+
+def test_created_draft_is_verified_by_returned_id_when_listing_stays_stale(monkeypatch, tmp_path):
+    """The observed POST succeeds/list-stays-empty sequence must still recheck the exact created identity."""
+    notes = tmp_path / "docs/releases/v0.3.1.md"
+    notes.parent.mkdir(parents=True)
+    notes.write_text("Literal reviewed notes", encoding="utf-8")
+    monkeypatch.setattr(guard, "ROOT", tmp_path)
+    monkeypatch.setattr(guard, "source_ready", lambda _source: None)
+    calls = []
+
+    def provider(endpoint):
+        """Keep the collection stale; only the independent ID read returns the actual created draft."""
+        calls.append(endpoint)
+        if endpoint == "releases?per_page=100":
+            return []
+        assert endpoint == "releases/123"
+        return unpublished_release()
+
+    monkeypatch.setattr(guard, "api", provider)
+    monkeypatch.setattr(guard, "command", lambda _arguments: json.dumps(unpublished_release()))
+    guard.prepare_draft(SOURCE, "0.3.1")
+    assert calls == ["releases?per_page=100", "releases/123"]
+
+
+@pytest.mark.parametrize("identity", [None, True, "42", 0, -1, 2**63])
+def test_created_release_identity_is_checked_before_followup_io(monkeypatch, identity):
+    """Malformed IDs never select an API resource, including bools that compare equal to integers."""
+    monkeypatch.setattr(guard, "api", lambda _endpoint: pytest.fail("No metadata read allowed"))
+    with pytest.raises(ValueError, match="Invalid release identity"):
+        guard.identified_draft(identity, SOURCE, "0.3.1")
+
+
+@pytest.mark.parametrize("change", [{"id": 43}, {"draft": False}, {"target_commitish": "b" * 40}])
+def test_created_id_readback_never_accepts_changed_or_published_release(monkeypatch, change):
+    """A successful create is insufficient when the separately read exact identity no longer matches."""
+    monkeypatch.setattr(guard, "api", lambda _endpoint: {**unpublished_release(), **change})
+    with pytest.raises(ValueError):
+        guard.identified_draft(123, SOURCE, "0.3.1")
