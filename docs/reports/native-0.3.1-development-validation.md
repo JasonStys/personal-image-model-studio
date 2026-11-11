@@ -46,3 +46,51 @@ LoRA CPU engine. No password, vault phrase, token or ordinary user data is commi
 References: [Python directory metadata](https://docs.python.org/3/library/os.html#os.DirEntry.stat),
 [Hugging Face environment settings](https://huggingface.co/docs/huggingface_hub/en/package_reference/environment_variables),
 and [native architecture](../native-application.md).
+
+
+## First clean candidate and hosted display correction
+
+The clean `6b9ec5bfcaea50ec544c06530de21a75c1d60278` Windows archive passed
+actual extraction, embedded identity, all12 compiled CPU checks and all6 original
+private/ML browser journeys with normal exit0. ArchiveSHA256:
+`dabf7dc0403e045226706832c4824cb2f18fdd44c8fb51b13414a2f4b49c67f5`.
+These are exact clean-development-checkpoint results, not a published release.
+
+The first hosted source/CodeQL jobs and Windows/macOS native jobs passed. Linux's
+early notice test failed because its real Tk fixture ran before a display was
+provided. All13 mandatory notice cases failed at initialization, rather than
+being skipped or bypassed. The workflow now runs the entire native-boundary suite
+inside the same explicit Xvfb display phase on Linux; Windows/macOS retain their
+native displays. A workflow regression requires all three platform command paths
+and preserves the mandatory notice suite. This is a workflow setup correction;
+no app guard, notice oracle, timeout or platform was removed.
+
+
+### Original crypto/Rust runtime terms
+
+The build additionally retains 62 original license/copyright/NOTICE files for
+the actual cryptography 50.0.2 wheel's 32 external Rust crates and the original
+Rust 1.98.1 library copyright document. The captured public provider inventory
+contains 39 components including seven internal components. Each operating
+system's installed wheel must independently match every normalized
+name/version/license triple and reveal the reviewed compiler source commit
+`48a229ceaefd4985c50990b14116b6d856af0985`. Missing, mixed or different compiler
+observations stop the build for review. The observed Windows module hash is not
+used to admit Linux/macOS binaries. Exact original term and inventory hashes are
+checked before packaging; bounded, path-free observations are included with the
+notices. The inventory is a conservative all-target provider declaration, not a
+claim that every component is linked or a legal certification. Focused actual
+provider and changed/missing/duplicate component/compiler/text tests accompany
+the collector. Final three-platform checks remain required after this change.
+
+The final local source run after these corrections passed **267 tests** with
+Python 3.14.10, including all original optional ML contracts. Statement coverage
+was 82.01%, branch coverage 68.67%, and the combined measurement 78.90%, with
+zero excluded lines. These figures are source-test measurements, not a claim
+that compiled-app browser journeys were instrumented by pytest. The three real
+source-index error cases, TypeScript build, Ruff checks and exact source index
+also passed. All 68 focused release/runtime-notice contracts passed separately.
+Two earlier local controller runs used an invalid synthetic-temp configuration
+(inside the protected app tree, then a missing external parent); their failure
+logs are retained. The product's private-data guard was not relaxed. The
+successful full run used an existing dedicated external test directory.

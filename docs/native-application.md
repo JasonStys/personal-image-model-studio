@@ -94,3 +94,13 @@ or universal device certification.
 Profile validation is linear in bounded entry count. Hashing is linear in admitted
 bytes; archive copying streams bounded chunks. ML uses the existing bounded worker
 process, and service work does not manipulate native widgets from background threads.
+
+
+The Runtime notices window includes original crypto/Rust third-party terms.
+At build time `scripts/runtime_terms.py` checks the actual installed cryptography
+wheel's complete normalized provider inventory and compiler marker separately
+on every OS, then retains the captured original 62 crate terms and Rust library
+copyright document. It does not fetch code or terms during a build. An unknown
+wheel inventory/compiler stops packaging for review; the Windows binary hash
+does not authorize another platform. This conservative notice inventory is not
+a legal certification or a claim that every provider component is linked.

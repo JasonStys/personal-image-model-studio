@@ -1,7 +1,8 @@
 """Jason Stys: collect real runtime license notices, including DLL-embedded Tcl/Tk9 libraries. Symbol locations: generated source index."""
-# Index: declarations module.notice_paths@L22, module.read_tcl_notice@L36, module.gui_notice@L57, module.collect@L110; variables UPSTREAM_904@L10, info@L22, path@L26, part@L30, interpreter@L36, path@L36, channel@L41, code@L43, raw@L48, raw@L51, interpreter@L57, kind@L57, library@L57, root@L57, system@L57, version@L57, system@L59, path@L72, framework@L74, commit@L77, expected@L77, stream@L78, raw@L79, stream@L95, raw@L96, root@L110, window@L114, versions@L117, value@L121, blocks@L123, kind@L124, library@L124, version@L124, provenance@L128, raw@L128, project@L139, requested@L140, item@L141, pending@L141, selected@L142, name@L144, info@L148, raw@L149, requirement@L150, name@L153, info@L154, files@L155, path@L158, stream@L159, raw@L160, raw@L167, title@L167. Purposes/parameters: docs/code-map.json.
+# Index: declarations module.notice_paths@L23, module.read_tcl_notice@L37, module.gui_notice@L58, module.collect@L111; variables UPSTREAM_904@L11, info@L23, path@L27, part@L31, interpreter@L37, path@L37, channel@L42, code@L44, raw@L49, raw@L52, interpreter@L58, kind@L58, library@L58, root@L58, system@L58, version@L58, system@L60, path@L73, framework@L75, commit@L78, expected@L78, stream@L79, raw@L80, stream@L96, raw@L97, root@L111, window@L115, versions@L118, value@L122, blocks@L124, kind@L125, library@L125, version@L125, provenance@L129, raw@L129, project@L140, requested@L141, item@L142, pending@L142, selected@L143, name@L145, info@L149, raw@L150, requirement@L151, name@L154, info@L155, files@L156, path@L159, stream@L160, raw@L161, extra_terms@L170, observed_crypto@L170, raw@L178, title@L178. Purposes/parameters: docs/code-map.json.
 
 import hashlib
+import json
 import platform
 import sys
 from importlib.metadata import distribution
@@ -164,4 +165,14 @@ def collect(root: Path) -> tuple[dict, bytes]:
                 raise ValueError("Runtime notice contains binary data")
             raw.decode("utf-8")
             blocks.append((name + " — " + path.name, raw))
+    from scripts.runtime_terms import collect as collect_crypto_terms
+
+    extra_terms, observed_crypto = collect_crypto_terms(root / "licenses")
+    blocks.append(("Original crypto/Rust terms - actual per-OS wheel verified", extra_terms))
+    blocks.append(
+        (
+            "Path-free actual crypto/Rust build observation",
+            json.dumps(observed_crypto, indent=2, sort_keys=True).encode("utf-8"),
+        )
+    )
     return versions, b"\n\n".join(title.encode("utf-8") + b"\n" + raw for title, raw in blocks)

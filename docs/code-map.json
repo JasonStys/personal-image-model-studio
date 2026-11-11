@@ -1158,25 +1158,25 @@
     "declarations": [
       {
         "name": "module.notice_paths",
-        "line": 22,
+        "line": 23,
         "kind": "FunctionDef",
         "purpose": "Keep actual component terms, including LICENSE.APACHE forms, without compiled author-list bytecode."
       },
       {
         "name": "module.read_tcl_notice",
-        "line": 36,
+        "line": 37,
         "kind": "FunctionDef",
         "purpose": "Read actual filesystem/zipfs bytes through Tcl; only genuine ENOENT permits a reviewed alternative."
       },
       {
         "name": "module.gui_notice",
-        "line": 57,
+        "line": 58,
         "kind": "FunctionDef",
         "purpose": "Prefer actual runtime notices; explicit Ubuntu copyright and exact upstream Mac904 terms are reviewed alternatives."
       },
       {
         "name": "module.collect",
-        "line": 110,
+        "line": 111,
         "kind": "FunctionDef",
         "purpose": "Retain every locked Python runtime notice and the actual loaded GUI runtime's bounded license bytes."
       }
@@ -1185,313 +1185,325 @@
       {
         "name": "UPSTREAM_904",
         "scope": "module",
-        "line": 10,
+        "line": 11,
         "purpose": "UPSTREAM_904 = {'Tcl': ('c655b4770b1d6d32a8cbffd6cef59db6029fe19e', 'c0a69a2bfd757361ec7e6143973b103c90409316b49e9c88db26ad6388e79f16'), 'Tk': ('584f8fcf62c320d7c341e77171188cb4d79"
       },
       {
         "name": "info",
         "scope": "notice_paths",
-        "line": 22,
+        "line": 23,
         "purpose": "Function parameter"
       },
       {
         "name": "path",
         "scope": "notice_paths",
-        "line": 26,
+        "line": 27,
         "purpose": " for path in info.files or [] if Path(path).suffix.lower() not in {'.py', '.pyc', '.pyo'} and '__pycache__' not in Path(path).parts and ('licenses' in {part.lower() for part in Pat"
       },
       {
         "name": "part",
         "scope": "notice_paths",
-        "line": 30,
+        "line": 31,
         "purpose": " for part in Path(path).parts"
       },
       {
         "name": "interpreter",
         "scope": "read_tcl_notice",
-        "line": 36,
+        "line": 37,
         "purpose": "Function parameter"
       },
       {
         "name": "path",
         "scope": "read_tcl_notice",
-        "line": 36,
+        "line": 37,
         "purpose": "Function parameter"
       },
       {
         "name": "channel",
         "scope": "read_tcl_notice",
-        "line": 41,
+        "line": 42,
         "purpose": "channel = interpreter.call('open', path, 'rb')"
       },
       {
         "name": "code",
         "scope": "read_tcl_notice",
-        "line": 43,
+        "line": 44,
         "purpose": "code = interpreter.call('set', 'errorCode')"
       },
       {
         "name": "raw",
         "scope": "read_tcl_notice",
-        "line": 48,
+        "line": 49,
         "purpose": "raw = interpreter.call('read', channel, 65537)"
       },
       {
         "name": "raw",
         "scope": "read_tcl_notice",
-        "line": 51,
+        "line": 52,
         "purpose": "raw = raw.encode('utf-8') if isinstance(raw, str) else raw"
       },
       {
         "name": "interpreter",
         "scope": "gui_notice",
-        "line": 57,
+        "line": 58,
         "purpose": "Function parameter"
       },
       {
         "name": "kind",
         "scope": "gui_notice",
-        "line": 57,
+        "line": 58,
         "purpose": "Function parameter"
       },
       {
         "name": "library",
         "scope": "gui_notice",
-        "line": 57,
+        "line": 58,
         "purpose": "Function parameter"
       },
       {
         "name": "root",
         "scope": "gui_notice",
-        "line": 57,
+        "line": 58,
         "purpose": "Function parameter"
       },
       {
         "name": "system",
         "scope": "gui_notice",
-        "line": 57,
+        "line": 58,
         "purpose": "Function parameter"
       },
       {
         "name": "version",
         "scope": "gui_notice",
-        "line": 57,
+        "line": 58,
         "purpose": "Function parameter"
       },
       {
         "name": "system",
         "scope": "gui_notice",
-        "line": 59,
+        "line": 60,
         "purpose": "system = sys.platform if system is None else system"
       },
       {
         "name": "path",
         "scope": "gui_notice",
-        "line": 72,
+        "line": 73,
         "purpose": "path = f'/usr/share/doc/lib{kind.lower()}8.6/copyright'"
       },
       {
         "name": "framework",
         "scope": "gui_notice",
-        "line": 74,
+        "line": 75,
         "purpose": "framework = f'/Library/Frameworks/Python.framework/Versions/3.14/Frameworks/{kind}.framework/Versions/9.0/Resources/Scripts'"
       },
       {
         "name": "commit",
         "scope": "gui_notice",
-        "line": 77,
+        "line": 78,
         "purpose": "(commit, expected)"
       },
       {
         "name": "expected",
         "scope": "gui_notice",
-        "line": 77,
+        "line": 78,
         "purpose": "(commit, expected)"
       },
       {
         "name": "stream",
         "scope": "gui_notice",
-        "line": 78,
+        "line": 79,
         "purpose": "(root / f'licenses/{kind.upper()}-9.0.4.txt').open('rb') as stream"
       },
       {
         "name": "raw",
         "scope": "gui_notice",
-        "line": 79,
+        "line": 80,
         "purpose": "raw = stream.read(65537)"
       },
       {
         "name": "stream",
         "scope": "gui_notice",
-        "line": 95,
+        "line": 96,
         "purpose": "(root / 'licenses/TK-9.0.5-pre-33904f039f48ed64.txt').open('rb') as stream"
       },
       {
         "name": "raw",
         "scope": "gui_notice",
-        "line": 96,
+        "line": 97,
         "purpose": "raw = stream.read(65537)"
       },
       {
         "name": "root",
         "scope": "collect",
-        "line": 110,
+        "line": 111,
         "purpose": "Function parameter"
       },
       {
         "name": "window",
         "scope": "collect",
-        "line": 114,
+        "line": 115,
         "purpose": "window = tkinter.Tk()"
       },
       {
         "name": "versions",
         "scope": "collect",
-        "line": 117,
+        "line": 118,
         "purpose": "versions = {'tcl_version': str(window.tk.call('info', 'patchlevel')), 'tk_version': str(window.tk.call('package', 'require', 'Tk'))}"
       },
       {
         "name": "value",
         "scope": "collect",
-        "line": 121,
+        "line": 122,
         "purpose": " for value in versions.values()"
       },
       {
         "name": "blocks",
         "scope": "collect",
-        "line": 123,
+        "line": 124,
         "purpose": "blocks = []"
       },
       {
         "name": "kind",
         "scope": "collect",
-        "line": 124,
+        "line": 125,
         "purpose": "(kind, version, library)"
       },
       {
         "name": "library",
         "scope": "collect",
-        "line": 124,
+        "line": 125,
         "purpose": "(kind, version, library)"
       },
       {
         "name": "version",
         "scope": "collect",
-        "line": 124,
+        "line": 125,
         "purpose": "(kind, version, library)"
       },
       {
         "name": "provenance",
         "scope": "collect",
-        "line": 128,
+        "line": 129,
         "purpose": "(provenance, raw)"
       },
       {
         "name": "raw",
         "scope": "collect",
-        "line": 128,
+        "line": 129,
         "purpose": "(provenance, raw)"
       },
       {
         "name": "project",
         "scope": "collect",
-        "line": 139,
+        "line": 140,
         "purpose": "project = tomllib.loads((root / 'pyproject.toml').read_text())['project']"
       },
       {
         "name": "requested",
         "scope": "collect",
-        "line": 140,
+        "line": 141,
         "purpose": "requested = project['dependencies'] + project['optional-dependencies']['cpu']"
       },
       {
         "name": "item",
         "scope": "collect",
-        "line": 141,
+        "line": 142,
         "purpose": " for item in requested"
       },
       {
         "name": "pending",
         "scope": "collect",
-        "line": 141,
+        "line": 142,
         "purpose": "pending = [Requirement(item).name for item in requested] + ['pyinstaller']"
       },
       {
         "name": "selected",
         "scope": "collect",
-        "line": 142,
+        "line": 143,
         "purpose": "selected = set()"
       },
       {
         "name": "name",
         "scope": "collect",
-        "line": 144,
+        "line": 145,
         "purpose": "name = canonicalize_name(pending.pop())"
       },
       {
         "name": "info",
         "scope": "collect",
-        "line": 148,
+        "line": 149,
         "purpose": "info = distribution(name)"
       },
       {
         "name": "raw",
         "scope": "collect",
-        "line": 149,
+        "line": 150,
         "purpose": "for raw in info.requires or []:\n    requirement = Requirement(raw)\n    if requirement.marker is None or requirement.marker.evaluate({'extra': ''}):\n        pending.append(requireme"
       },
       {
         "name": "requirement",
         "scope": "collect",
-        "line": 150,
+        "line": 151,
         "purpose": "requirement = Requirement(raw)"
       },
       {
         "name": "name",
         "scope": "collect",
-        "line": 153,
+        "line": 154,
         "purpose": "for name in sorted(selected):\n    info = distribution(name)\n    files = notice_paths(info)\n    if not files:\n        raise ValueError('Runtime license notice missing: ' + name)\n   "
       },
       {
         "name": "info",
         "scope": "collect",
-        "line": 154,
+        "line": 155,
         "purpose": "info = distribution(name)"
       },
       {
         "name": "files",
         "scope": "collect",
-        "line": 155,
+        "line": 156,
         "purpose": "files = notice_paths(info)"
       },
       {
         "name": "path",
         "scope": "collect",
-        "line": 158,
+        "line": 159,
         "purpose": "for path in files:\n    with path.open('rb') as stream:\n        raw = stream.read(2 * 1024 * 1024 + 1)\n    if not 0 < len(raw) <= 2 * 1024 * 1024:\n        raise ValueError('Runtime "
       },
       {
         "name": "stream",
         "scope": "collect",
-        "line": 159,
+        "line": 160,
         "purpose": "path.open('rb') as stream"
       },
       {
         "name": "raw",
         "scope": "collect",
-        "line": 160,
+        "line": 161,
         "purpose": "raw = stream.read(2 * 1024 * 1024 + 1)"
+      },
+      {
+        "name": "extra_terms",
+        "scope": "collect",
+        "line": 170,
+        "purpose": "(extra_terms, observed_crypto)"
+      },
+      {
+        "name": "observed_crypto",
+        "scope": "collect",
+        "line": 170,
+        "purpose": "(extra_terms, observed_crypto)"
       },
       {
         "name": "raw",
         "scope": "collect",
-        "line": 167,
+        "line": 178,
         "purpose": "(title, raw)"
       },
       {
         "name": "title",
         "scope": "collect",
-        "line": 167,
+        "line": 178,
         "purpose": "(title, raw)"
       }
     ]
@@ -3082,6 +3094,265 @@
         "scope": "inventory",
         "line": 64,
         "purpose": "Function parameter"
+      }
+    ]
+  },
+  "scripts/runtime_terms.py": {
+    "purpose": "Verify captured original crypto/Rust terms against the actual installed wheel on each build OS. Jason Stys.",
+    "declarations": [
+      {
+        "name": "module.bounded",
+        "line": 19,
+        "kind": "FunctionDef",
+        "purpose": "Read one bounded regular descriptor without blocking on a FIFO; reject changed observations and links."
+      },
+      {
+        "name": "module.unique",
+        "line": 49,
+        "kind": "FunctionDef",
+        "purpose": "Reject duplicate metadata fields before projecting a provider component inventory."
+      },
+      {
+        "name": "module.normalized",
+        "line": 59,
+        "kind": "FunctionDef",
+        "purpose": "Bind the complete exact name/version/license inventory without provider build paths or platform hashes."
+      },
+      {
+        "name": "module.observations",
+        "line": 99,
+        "kind": "FunctionDef",
+        "purpose": "Inspect only the actually installed hash-locked cryptography wheel's SBOM and binding module."
+      },
+      {
+        "name": "module.collect",
+        "line": 118,
+        "kind": "FunctionDef",
+        "purpose": "Return exact original terms only after this OS's actual wheel inventory/compiler observation matches reviewed scope."
+      }
+    ],
+    "variables": [
+      {
+        "name": "INVENTORY_SHA256",
+        "scope": "module",
+        "line": 15,
+        "purpose": "INVENTORY_SHA256 = '9fbefc042a3212c768143a9a87117779718ae28dd4501c7b590534c0b988ad5c'"
+      },
+      {
+        "name": "COMPILER",
+        "scope": "module",
+        "line": 16,
+        "purpose": "COMPILER = '48a229ceaefd4985c50990b14116b6d856af0985'"
+      },
+      {
+        "name": "limit",
+        "scope": "bounded",
+        "line": 19,
+        "purpose": "Function parameter"
+      },
+      {
+        "name": "path",
+        "scope": "bounded",
+        "line": 19,
+        "purpose": "Function parameter"
+      },
+      {
+        "name": "descriptor",
+        "scope": "bounded",
+        "line": 21,
+        "purpose": "descriptor = os.open(path, os.O_RDONLY | getattr(os, 'O_BINARY', 0) | getattr(os, 'O_NOFOLLOW', 0) | getattr(os, 'O_NONBLOCK', 0))"
+      },
+      {
+        "name": "stream",
+        "scope": "bounded",
+        "line": 28,
+        "purpose": "os.fdopen(descriptor, 'rb') as stream"
+      },
+      {
+        "name": "before",
+        "scope": "bounded",
+        "line": 29,
+        "purpose": "before = os.fstat(stream.fileno())"
+      },
+      {
+        "name": "raw",
+        "scope": "bounded",
+        "line": 37,
+        "purpose": "raw = stream.read(limit + 1)"
+      },
+      {
+        "name": "after",
+        "scope": "bounded",
+        "line": 38,
+        "purpose": "after = os.fstat(stream.fileno())"
+      },
+      {
+        "name": "pairs",
+        "scope": "unique",
+        "line": 49,
+        "purpose": "Function parameter"
+      },
+      {
+        "name": "value",
+        "scope": "unique",
+        "line": 51,
+        "purpose": "value: dict[str, Any] = {}"
+      },
+      {
+        "name": "item",
+        "scope": "unique",
+        "line": 52,
+        "purpose": "(key, item)"
+      },
+      {
+        "name": "key",
+        "scope": "unique",
+        "line": 52,
+        "purpose": "(key, item)"
+      },
+      {
+        "name": "components",
+        "scope": "normalized",
+        "line": 59,
+        "purpose": "Function parameter"
+      },
+      {
+        "name": "rows",
+        "scope": "normalized",
+        "line": 63,
+        "purpose": "rows = []"
+      },
+      {
+        "name": "component",
+        "scope": "normalized",
+        "line": 64,
+        "purpose": "for component in components:\n    if not isinstance(component, dict):\n        raise ValueError('invalid crypto component')\n    name, version, licenses = (component.get('name'), comp"
+      },
+      {
+        "name": "licenses",
+        "scope": "normalized",
+        "line": 67,
+        "purpose": "(name, version, licenses)"
+      },
+      {
+        "name": "name",
+        "scope": "normalized",
+        "line": 67,
+        "purpose": "(name, version, licenses)"
+      },
+      {
+        "name": "version",
+        "scope": "normalized",
+        "line": 67,
+        "purpose": "(name, version, licenses)"
+      },
+      {
+        "name": "expression",
+        "scope": "normalized",
+        "line": 86,
+        "purpose": "expression = licenses[0]['expression']"
+      },
+      {
+        "name": "row",
+        "scope": "normalized",
+        "line": 94,
+        "purpose": " for row in rows"
+      },
+      {
+        "name": "distribution",
+        "scope": "observations",
+        "line": 103,
+        "purpose": "distribution = importlib.metadata.distribution('cryptography')"
+      },
+      {
+        "name": "names",
+        "scope": "observations",
+        "line": 106,
+        "purpose": "names = [entry for entry in distribution.files or [] if str(entry).replace('\\\\', '/').endswith('/sboms/cryptography-rust.cyclonedx.json')]"
+      },
+      {
+        "name": "entry",
+        "scope": "observations",
+        "line": 108,
+        "purpose": " for entry in distribution.files or [] if str(entry).replace('\\\\', '/').endswith('/sboms/cryptography-rust.cyclonedx.json')"
+      },
+      {
+        "name": "license_root",
+        "scope": "collect",
+        "line": 118,
+        "purpose": "Function parameter"
+      },
+      {
+        "name": "raw",
+        "scope": "collect",
+        "line": 120,
+        "purpose": "raw = bounded(license_root / 'cryptography-50.0.2-rust-inventory.json', 65536)"
+      },
+      {
+        "name": "inventory",
+        "scope": "collect",
+        "line": 123,
+        "purpose": "inventory = json.loads(raw, object_pairs_hook=unique)"
+      },
+      {
+        "name": "expected",
+        "scope": "collect",
+        "line": 124,
+        "purpose": "expected = inventory['internalComponents'] + [{'name': row['name'], 'version': row['version'], 'licenses': row['declaredLicenses']} for row in inventory['externalComponents']]"
+      },
+      {
+        "name": "row",
+        "scope": "collect",
+        "line": 130,
+        "purpose": " for row in inventory['externalComponents']"
+      },
+      {
+        "name": "module",
+        "scope": "collect",
+        "line": 132,
+        "purpose": "(sbom, module)"
+      },
+      {
+        "name": "sbom",
+        "scope": "collect",
+        "line": 132,
+        "purpose": "(sbom, module)"
+      },
+      {
+        "name": "actual",
+        "scope": "collect",
+        "line": 133,
+        "purpose": "actual = normalized(json.loads(sbom, object_pairs_hook=unique)['components'])"
+      },
+      {
+        "name": "commits",
+        "scope": "collect",
+        "line": 136,
+        "purpose": "commits = set(re.findall(b'[/\\\\\\\\]rustc[/\\\\\\\\]([0-9a-f]{40})', module))"
+      },
+      {
+        "name": "blocks",
+        "scope": "collect",
+        "line": 139,
+        "purpose": "blocks = []"
+      },
+      {
+        "name": "digest",
+        "scope": "collect",
+        "line": 140,
+        "purpose": "(name, digest)"
+      },
+      {
+        "name": "name",
+        "scope": "collect",
+        "line": 140,
+        "purpose": "(name, digest)"
+      },
+      {
+        "name": "original",
+        "scope": "collect",
+        "line": 144,
+        "purpose": "original = bounded(license_root / name, 4 * 1024 * 1024)"
       }
     ]
   },
@@ -19584,6 +19855,12 @@
         "line": 393,
         "kind": "FunctionDef",
         "purpose": "Inspect the exact structured draft creation payload without executing shell text."
+      },
+      {
+        "name": "module.test_linux_native_guards_run_with_an_actual_display",
+        "line": 420,
+        "kind": "FunctionDef",
+        "purpose": "The required notice reader loads actual Tk and must never run in a headless Linux preflight."
       }
     ],
     "variables": [
@@ -19976,6 +20253,42 @@
         "scope": "test_prepare_creates_only_missing_draft_with_literal_structured_notes.command",
         "line": 402,
         "purpose": "payload = json.loads(Path(arguments[-1]).read_text())"
+      },
+      {
+        "name": "name",
+        "scope": "test_linux_native_guards_run_with_an_actual_display",
+        "line": 422,
+        "purpose": "for name in ('native-validation.yml', 'release-native.yml'):\n    source = (guard.ROOT / '.github/workflows' / name).read_text(encoding='utf-8')\n    commands = [line.strip() for lin"
+      },
+      {
+        "name": "source",
+        "scope": "test_linux_native_guards_run_with_an_actual_display",
+        "line": 423,
+        "purpose": "source = (guard.ROOT / '.github/workflows' / name).read_text(encoding='utf-8')"
+      },
+      {
+        "name": "commands",
+        "scope": "test_linux_native_guards_run_with_an_actual_display",
+        "line": 424,
+        "purpose": "commands = [line.strip() for line in source.splitlines() if 'pytest' in line and 'test_native_notices.py' in line]"
+      },
+      {
+        "name": "line",
+        "scope": "test_linux_native_guards_run_with_an_actual_display",
+        "line": 426,
+        "purpose": " for line in source.splitlines() if 'pytest' in line and 'test_native_notices.py' in line"
+      },
+      {
+        "name": "command",
+        "scope": "test_linux_native_guards_run_with_an_actual_display",
+        "line": 431,
+        "purpose": " for command in commands"
+      },
+      {
+        "name": "command",
+        "scope": "test_linux_native_guards_run_with_an_actual_display",
+        "line": 432,
+        "purpose": " for command in commands"
       }
     ]
   },
@@ -21077,6 +21390,223 @@
         "scope": "test_insufficient_or_unavailable_sample_leaves_no_output",
         "line": 111,
         "purpose": "Function parameter"
+      }
+    ]
+  },
+  "tests/test_runtime_terms.py": {
+    "purpose": "Independent changed-inventory/compiler/notice refusal cases; actual native packaging observes the real wheel. Jason Stys.",
+    "declarations": [
+      {
+        "name": "module.fixture_observations",
+        "line": 17,
+        "kind": "FunctionDef",
+        "purpose": "Use the captured provider's exact public39-component declaration and an explicit inert compiler-marker fixture."
+      },
+      {
+        "name": "module.test_inventory_projection_ignores_only_unclaimed_metadata",
+        "line": 34,
+        "kind": "FunctionDef",
+        "purpose": "Row order and provider-local paths cannot change known name/version/license terms or leak into public receipts."
+      },
+      {
+        "name": "module.test_complete_component_identity_refuses_unreviewed_scope",
+        "line": 63,
+        "kind": "FunctionDef",
+        "purpose": "No missing/duplicated/changed component or alternate license may borrow a previously reviewed term set."
+      },
+      {
+        "name": "module.test_missing_different_or_mixed_compilers_fail_closed",
+        "line": 94,
+        "kind": "FunctionDef",
+        "purpose": "Other operating systems must be observed, never admitted under the Windows binary hash by assumption."
+      },
+      {
+        "name": "module.test_captured_original_texts_are_not_silently_replaced",
+        "line": 110,
+        "kind": "FunctionDef",
+        "purpose": "Actual source text corruption is refused before a package can claim the reviewed original notice identities."
+      },
+      {
+        "name": "module.test_actual_provider_observation_and_bounded_source_reader",
+        "line": 123,
+        "kind": "FunctionDef",
+        "purpose": "Read the installed wheel's actual declared inventory; this is source metadata, not a native runtime/compiler claim."
+      }
+    ],
+    "variables": [
+      {
+        "name": "LICENSES",
+        "scope": "module",
+        "line": 14,
+        "purpose": "LICENSES = Path(__file__).resolve().parents[1] / 'licenses'"
+      },
+      {
+        "name": "inventory",
+        "scope": "fixture_observations",
+        "line": 19,
+        "purpose": "inventory = json.loads((LICENSES / 'cryptography-50.0.2-rust-inventory.json').read_bytes())"
+      },
+      {
+        "name": "components",
+        "scope": "fixture_observations",
+        "line": 20,
+        "purpose": "components = inventory['internalComponents'] + [{'name': row['name'], 'version': row['version'], 'licenses': row['declaredLicenses']} for row in inventory['externalComponents']]"
+      },
+      {
+        "name": "row",
+        "scope": "fixture_observations",
+        "line": 26,
+        "purpose": " for row in inventory['externalComponents']"
+      },
+      {
+        "name": "monkeypatch",
+        "scope": "test_inventory_projection_ignores_only_unclaimed_metadata",
+        "line": 34,
+        "purpose": "Function parameter"
+      },
+      {
+        "name": "module",
+        "scope": "test_inventory_projection_ignores_only_unclaimed_metadata",
+        "line": 36,
+        "purpose": "(sbom, module)"
+      },
+      {
+        "name": "sbom",
+        "scope": "test_inventory_projection_ignores_only_unclaimed_metadata",
+        "line": 36,
+        "purpose": "(sbom, module)"
+      },
+      {
+        "name": "blocks",
+        "scope": "test_inventory_projection_ignores_only_unclaimed_metadata",
+        "line": 43,
+        "purpose": "(blocks, receipt)"
+      },
+      {
+        "name": "receipt",
+        "scope": "test_inventory_projection_ignores_only_unclaimed_metadata",
+        "line": 43,
+        "purpose": "(blocks, receipt)"
+      },
+      {
+        "name": "fault",
+        "scope": "test_complete_component_identity_refuses_unreviewed_scope",
+        "line": 63,
+        "purpose": "Function parameter"
+      },
+      {
+        "name": "monkeypatch",
+        "scope": "test_complete_component_identity_refuses_unreviewed_scope",
+        "line": 63,
+        "purpose": "Function parameter"
+      },
+      {
+        "name": "module",
+        "scope": "test_complete_component_identity_refuses_unreviewed_scope",
+        "line": 65,
+        "purpose": "(sbom, module)"
+      },
+      {
+        "name": "sbom",
+        "scope": "test_complete_component_identity_refuses_unreviewed_scope",
+        "line": 65,
+        "purpose": "(sbom, module)"
+      },
+      {
+        "name": "rows",
+        "scope": "test_complete_component_identity_refuses_unreviewed_scope",
+        "line": 66,
+        "purpose": "rows = sbom['components']"
+      },
+      {
+        "name": "module",
+        "scope": "test_missing_different_or_mixed_compilers_fail_closed",
+        "line": 94,
+        "purpose": "Function parameter"
+      },
+      {
+        "name": "monkeypatch",
+        "scope": "test_missing_different_or_mixed_compilers_fail_closed",
+        "line": 94,
+        "purpose": "Function parameter"
+      },
+      {
+        "name": "_",
+        "scope": "test_missing_different_or_mixed_compilers_fail_closed",
+        "line": 96,
+        "purpose": "(sbom, _)"
+      },
+      {
+        "name": "sbom",
+        "scope": "test_missing_different_or_mixed_compilers_fail_closed",
+        "line": 96,
+        "purpose": "(sbom, _)"
+      },
+      {
+        "name": "monkeypatch",
+        "scope": "test_captured_original_texts_are_not_silently_replaced",
+        "line": 110,
+        "purpose": "Function parameter"
+      },
+      {
+        "name": "name",
+        "scope": "test_captured_original_texts_are_not_silently_replaced",
+        "line": 110,
+        "purpose": "Function parameter"
+      },
+      {
+        "name": "tmp_path",
+        "scope": "test_captured_original_texts_are_not_silently_replaced",
+        "line": 110,
+        "purpose": "Function parameter"
+      },
+      {
+        "name": "source",
+        "scope": "test_captured_original_texts_are_not_silently_replaced",
+        "line": 112,
+        "purpose": "for source in LICENSES.glob('*'):\n    if source.is_file():\n        shutil.copyfile(source, tmp_path / source.name)"
+      },
+      {
+        "name": "path",
+        "scope": "test_captured_original_texts_are_not_silently_replaced",
+        "line": 115,
+        "purpose": "path = tmp_path / name"
+      },
+      {
+        "name": "module",
+        "scope": "test_captured_original_texts_are_not_silently_replaced",
+        "line": 117,
+        "purpose": "(sbom, module)"
+      },
+      {
+        "name": "sbom",
+        "scope": "test_captured_original_texts_are_not_silently_replaced",
+        "line": 117,
+        "purpose": "(sbom, module)"
+      },
+      {
+        "name": "tmp_path",
+        "scope": "test_actual_provider_observation_and_bounded_source_reader",
+        "line": 123,
+        "purpose": "Function parameter"
+      },
+      {
+        "name": "module",
+        "scope": "test_actual_provider_observation_and_bounded_source_reader",
+        "line": 125,
+        "purpose": "(sbom, module)"
+      },
+      {
+        "name": "sbom",
+        "scope": "test_actual_provider_observation_and_bounded_source_reader",
+        "line": 125,
+        "purpose": "(sbom, module)"
+      },
+      {
+        "name": "source",
+        "scope": "test_actual_provider_observation_and_bounded_source_reader",
+        "line": 127,
+        "purpose": "source = tmp_path / 'bounded.txt'"
       }
     ]
   },
