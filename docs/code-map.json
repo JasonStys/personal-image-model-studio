@@ -16395,6 +16395,48 @@
         "line": 92,
         "kind": "parameter",
         "purpose": "image: HTMLImageElement"
+      },
+      {
+        "name": "releaseLock",
+        "line": 133,
+        "kind": "variable",
+        "purpose": "releaseLock!: () => void"
+      },
+      {
+        "name": "lockGate",
+        "line": 134,
+        "kind": "variable",
+        "purpose": "lockGate = new Promise<void>((resolve) => {\n    releaseLock = resolve;\n  })"
+      },
+      {
+        "name": "resolve",
+        "line": 134,
+        "kind": "parameter",
+        "purpose": "resolve"
+      },
+      {
+        "name": "requestObserved",
+        "line": 137,
+        "kind": "variable",
+        "purpose": "requestObserved!: () => void"
+      },
+      {
+        "name": "lockRequested",
+        "line": 138,
+        "kind": "variable",
+        "purpose": "lockRequested = new Promise<void>((resolve) => {\n    requestObserved = resolve;\n  })"
+      },
+      {
+        "name": "resolve",
+        "line": 138,
+        "kind": "parameter",
+        "purpose": "resolve"
+      },
+      {
+        "name": "route",
+        "line": 141,
+        "kind": "parameter",
+        "purpose": "route"
       }
     ]
   },
@@ -16403,19 +16445,19 @@
     "declarations": [
       {
         "name": "register",
-        "line": 12,
+        "line": 31,
         "kind": "FunctionDeclaration",
         "purpose": "/** Create only fictional QA accounts in this profile's disposable service. */"
       },
       {
         "name": "unlock",
-        "line": 33,
+        "line": 52,
         "kind": "FunctionDeclaration",
         "purpose": "/** Browser KDF and actual local key unlock, not a mocked authentication response. */"
       },
       {
         "name": "lock",
-        "line": 44,
+        "line": 63,
         "kind": "FunctionDeclaration",
         "purpose": "/** Lock and wait for the new document, dropping the prior workspace and image blob references. */"
       }
@@ -16437,317 +16479,335 @@
         "name": "page",
         "line": 12,
         "kind": "parameter",
+        "purpose": "{ page }"
+      },
+      {
+        "name": "info",
+        "line": 12,
+        "kind": "parameter",
+        "purpose": "info"
+      },
+      {
+        "name": "message",
+        "line": 14,
+        "kind": "variable",
+        "purpose": "message = await page\n    .locator(\"#portal-status\")\n    .textContent()\n    .catch(() => \"\")"
+      },
+      {
+        "name": "page",
+        "line": 31,
+        "kind": "parameter",
         "purpose": "page: Page"
       },
       {
         "name": "alias",
-        "line": 17,
+        "line": 36,
         "kind": "variable",
         "purpose": "alias = \"qa_\" + randomUUID().replaceAll(\"-\", \"\").slice(0, 20)"
       },
       {
         "name": "recovery",
-        "line": 26,
+        "line": 45,
         "kind": "variable",
         "purpose": "recovery = await page.locator(\"#recovery-code\").innerText()"
       },
       {
         "name": "page",
-        "line": 33,
+        "line": 52,
         "kind": "parameter",
         "purpose": "page: Page"
       },
       {
         "name": "page",
-        "line": 44,
+        "line": 63,
         "kind": "parameter",
         "purpose": "page: Page"
       },
       {
         "name": "page",
-        "line": 54,
+        "line": 73,
         "kind": "parameter",
         "purpose": "{\n  page,\n}"
       },
       {
         "name": "destinations",
-        "line": 56,
+        "line": 75,
         "kind": "variable",
         "purpose": "destinations: string[] = []"
       },
       {
         "name": "unlockBodies",
-        "line": 57,
+        "line": 76,
         "kind": "variable",
         "purpose": "unlockBodies: string[] = []"
       },
       {
         "name": "request",
-        "line": 58,
+        "line": 77,
         "kind": "parameter",
         "purpose": "request"
       },
       {
         "name": "identity",
-        "line": 66,
+        "line": 85,
         "kind": "variable",
         "purpose": "identity = await register(page)"
       },
       {
         "name": "event",
-        "line": 92,
+        "line": 111,
         "kind": "variable",
         "purpose": "event = page.waitForEvent(\"download\")"
       },
       {
         "name": "bytes",
-        "line": 96,
+        "line": 115,
         "kind": "variable",
         "purpose": "bytes = readFileSync((await (await event).path())!)"
       },
       {
         "name": "url",
-        "line": 114,
+        "line": 133,
         "kind": "parameter",
         "purpose": "url"
       },
       {
         "name": "page",
-        "line": 133,
+        "line": 152,
         "kind": "parameter",
         "purpose": "{\n  page,\n  browser,\n}"
       },
       {
         "name": "browser",
-        "line": 134,
+        "line": 153,
         "kind": "parameter",
         "purpose": "{\n  page,\n  browser,\n}"
       },
       {
         "name": "context",
-        "line": 145,
+        "line": 164,
         "kind": "variable",
         "purpose": "context = await browser.newContext()"
       },
       {
         "name": "other",
-        "line": 146,
+        "line": 165,
         "kind": "variable",
         "purpose": "other = await context.newPage()"
       },
       {
         "name": "page",
-        "line": 169,
+        "line": 188,
         "kind": "parameter",
         "purpose": "{\n  page,\n}"
       },
       {
         "name": "png",
-        "line": 176,
+        "line": 195,
         "kind": "variable",
         "purpose": "png = Buffer.from(\n    \"iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mP8/x8AAwMCAO+aLMkAAAAASUVORK5CYII=\",\n    \"base64\",\n  )"
       },
       {
         "name": "archive",
-        "line": 180,
+        "line": 199,
         "kind": "variable",
         "purpose": "archive = zipSync({\n    \"art.png\": png,\n    \"art.txt\": strToU8(\"owned monochrome image\"),\n    \"art.json\": strToU8(\n      JSON.stringify({\n        origin: \"human\",\n        license: "
       },
       {
         "name": "response",
-        "line": 215,
+        "line": 234,
         "kind": "variable",
         "purpose": "response = await page.request.post(\"/private/api/datasets\", {\n    headers: { \"X-PIMS-Request\": \"v1\" },\n    data: {\n      name: \"forbidden\",\n      paths: [\"C:/Users/another/private\""
       },
       {
         "name": "page",
-        "line": 228,
+        "line": 247,
         "kind": "parameter",
         "purpose": "{\n  page,\n}"
       },
       {
         "name": "identity",
-        "line": 230,
+        "line": 249,
         "kind": "variable",
         "purpose": "identity = await register(page)"
       },
       {
         "name": "page",
-        "line": 273,
+        "line": 292,
         "kind": "parameter",
         "purpose": "{\n  page,\n}"
       },
       {
         "name": "destinations",
-        "line": 276,
+        "line": 295,
         "kind": "variable",
         "purpose": "destinations: string[] = []"
       },
       {
         "name": "request",
-        "line": 277,
+        "line": 296,
         "kind": "parameter",
         "purpose": "request"
       },
       {
         "name": "fixtures",
-        "line": 283,
+        "line": 302,
         "kind": "variable",
         "purpose": "fixtures = JSON.parse(\n    readFileSync(\"tests/fixtures/dataset-review.json\", \"utf8\"),\n  )"
       },
       {
         "name": "archive",
-        "line": 286,
+        "line": 305,
         "kind": "variable",
         "purpose": "archive: Record<string, Uint8Array> = {}"
       },
       {
         "name": "split",
-        "line": 287,
+        "line": 306,
         "kind": "variable",
         "purpose": "split"
       },
       {
         "name": "fixture",
-        "line": 288,
+        "line": 307,
         "kind": "variable",
         "purpose": "fixture = fixtures[split]"
       },
       {
         "name": "report",
-        "line": 322,
+        "line": 341,
         "kind": "variable",
         "purpose": "report = page.getByRole(\"region\", {\n    name: \"Dataset quality review\",\n    exact: true,\n  })"
       },
       {
         "name": "images",
-        "line": 346,
+        "line": 365,
         "kind": "parameter",
         "purpose": "images"
       },
       {
         "name": "image",
-        "line": 348,
+        "line": 367,
         "kind": "parameter",
         "purpose": "image"
       },
       {
         "name": "downloading",
-        "line": 355,
+        "line": 374,
         "kind": "variable",
         "purpose": "downloading = page.waitForEvent(\"download\")"
       },
       {
         "name": "downloaded",
-        "line": 362,
+        "line": 381,
         "kind": "variable",
         "purpose": "downloaded = await downloading"
       },
       {
         "name": "exported",
-        "line": 366,
+        "line": 385,
         "kind": "variable",
         "purpose": "exported = JSON.parse(readFileSync((await downloaded.path())!, \"utf8\"))"
       },
       {
         "name": "first",
-        "line": 380,
+        "line": 399,
         "kind": "variable",
         "purpose": "first = await page\n    .getByLabel(\"Dataset to review\", { exact: true })\n    .inputValue()"
       },
       {
         "name": "second",
-        "line": 390,
+        "line": 409,
         "kind": "variable",
         "purpose": "second = await page\n    .locator(\"#review-dataset option\")\n    .evaluateAll((options) =>\n      (options as HTMLOptionElement[]).map((option) => option.value),\n    )"
       },
       {
         "name": "options",
-        "line": 392,
+        "line": 411,
         "kind": "parameter",
         "purpose": "options"
       },
       {
         "name": "option",
-        "line": 393,
+        "line": 412,
         "kind": "parameter",
         "purpose": "option"
       },
       {
         "name": "release",
-        "line": 395,
+        "line": 414,
         "kind": "variable",
         "purpose": "release!: () => void"
       },
       {
         "name": "held",
-        "line": 396,
+        "line": 415,
         "kind": "variable",
         "purpose": "held = new Promise<void>((resolve) => {\n    release = resolve;\n  })"
       },
       {
         "name": "resolve",
-        "line": 396,
+        "line": 415,
         "kind": "parameter",
         "purpose": "resolve"
       },
       {
         "name": "responseReady",
-        "line": 399,
+        "line": 418,
         "kind": "variable",
         "purpose": "responseReady!: () => void"
       },
       {
         "name": "ready",
-        "line": 400,
+        "line": 419,
         "kind": "variable",
         "purpose": "ready = new Promise<void>((resolve) => {\n    responseReady = resolve;\n  })"
       },
       {
         "name": "resolve",
-        "line": 400,
+        "line": 419,
         "kind": "parameter",
         "purpose": "resolve"
       },
       {
         "name": "route",
-        "line": 403,
+        "line": 422,
         "kind": "parameter",
         "purpose": "route"
       },
       {
         "name": "response",
-        "line": 404,
+        "line": 423,
         "kind": "variable",
         "purpose": "response = await route.fetch()"
       },
       {
         "name": "identity",
-        "line": 415,
+        "line": 434,
         "kind": "parameter",
         "purpose": "identity"
       },
       {
         "name": "reopened",
-        "line": 446,
+        "line": 465,
         "kind": "variable",
         "purpose": "reopened = page.getByRole(\"region\", {\n    name: \"Dataset quality review\",\n    exact: true,\n  })"
       },
       {
         "name": "images",
-        "line": 459,
+        "line": 478,
         "kind": "parameter",
         "purpose": "images"
       },
       {
         "name": "image",
-        "line": 461,
+        "line": 480,
         "kind": "parameter",
         "purpose": "image"
       },
       {
         "name": "url",
-        "line": 469,
+        "line": 488,
         "kind": "parameter",
         "purpose": "url"
       }

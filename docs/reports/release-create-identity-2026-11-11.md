@@ -27,3 +27,28 @@ The held empty preflight and actual failed job evidence are preserved separately
 This correction changes only release tooling and its tests/documentation; the
 service, encrypted vault format, account paths, model code and Docker are unchanged.
 Its exact-source hosted checks and fresh guarded packaging are still required.
+
+## Packaged browser completion checks
+
+The subsequent exact-head Windows and macOS packaged checks passed. Linux
+passed all twelve original CPU checks and the actual training browser journey,
+then the five account journeys could not unlock. The training journey ended
+with a click on Lock without waiting for its encrypted operation to complete.
+That is an incomplete test boundary; it is a candidate explanation for the
+cross-account failure, not a confirmed diagnosis from the retained log alone.
+
+The same final lock now holds the real request before sending it, verifies that
+the account is still unlocked after the click, releases the unchanged request,
+and waits for both the locked interface and the actual unlocked false status.
+All original six journeys, assertions, deadlines and zero-retry gates remain.
+Failed account tests also emit only boolean diagnostic classifications, never
+credentials, keys, cookies, aliases or input contents. Service and vault code
+are unchanged. Fresh complete packaged checks must establish whether this
+completion correction resolves Linux or exposes another cause.
+
+Local verification used the previously hash-verified clean compiled fd4
+candidate, a fresh synthetic profile and the six original browser journeys.
+All six passed in 2.8 minutes, including the real held-lock boundary, training,
+generation, account isolation, encrypted reopen and recovery. The owned compiled
+process exited normally with code zero. This establishes the stronger test on
+that candidate; it does not replace new exact-head Linux or release validation.
